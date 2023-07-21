@@ -12,7 +12,7 @@ spring:
     url: jdbc:mariadb://192.168.0.144:3306/team_b
     username: team_b
     password: green502
-  #mybatis
+  #mybatisz
 
 
 mybatis:
