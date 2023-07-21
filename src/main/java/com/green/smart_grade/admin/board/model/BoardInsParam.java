@@ -1,12 +1,9 @@
 package com.green.smart_grade.admin.board.model;
 
+
 import lombok.Data;
-
-import java.time.LocalDateTime;
-
 @Data
-public class BoardInsDto {
-    private Long iboard;
+public class BoardInsParam {
     private Long iadmin;
     private String ctnt;
     private String title;

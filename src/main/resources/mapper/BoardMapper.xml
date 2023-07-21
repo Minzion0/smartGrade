@@ -4,34 +4,47 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.board.BoardMapper">
 
-    <insert id="insBoard">
+    <insert id="insBoard" useGeneratedKeys="true" keyProperty="iboard">
         INSERT INTO board
-        (iadmin, ctnt, importance)
+        (iadmin, title, ctnt, importance)
         VALUES
-        (#{iadmin}, #{ctnt}, #{importance})
+        (#{iadmin},#{title}, #{ctnt}, #{importance})
     </insert>
-
-    <select id="selBoard">
-        SELECT
-        FROM board
-    </select>
-
-    <select id="selByIdBoard">
-        SELECT
-        FROM board
-        WHERE iboard = #{iboard}
-    </select>
 
     <update id="updBoard">
         UPDATE board
-        SET
-        WHERE
+        SET ctnt = #{ctnt},
+        title = #{title},
+        importance = #{importance}
+        WHERE iboard = #{iboard}
     </update>
 
-    <update id="updDelYnBoard">
-        UPDATE board
-        SET
-        WHERE
-    </update>
+    <select id="selBoard">
+        SELECT iadmin, title,importance, created_at createdAt
+        FROM board
+        WHERE importance = 0
+        ORDER BY createdAt DESC
+    </select>
+
+    <select id="selBoardImportance">
+        SELECT iadmin, title, importance, created_at createdAt
+        FROM board
+        WHERE importance = 1
+        ORDER BY createdAt DESC
+    </select>
+
+
+    <!--    <select id="selByIdBoard">-->
+    <!--        SELECT-->
+    <!--        FROM board-->
+    <!--        WHERE iboard = #{iboard}-->
+    <!--    </select>-->
+
+
+<!--    <update id="updDelYnBoard">-->
+<!--        UPDATE board-->
+<!--        SET-->
+<!--        WHERE-->
+<!--    </update>-->
 
 </mapper>

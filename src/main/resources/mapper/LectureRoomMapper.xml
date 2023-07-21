@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smart_grade.lectureroom.LectureRoomMapper">
+    <insert id="insLectureRoom" useGeneratedKeys="true" keyProperty="ilectureRoom">
+        INSERT INTO lecture_room
+        SET lecture_room_name = #{lectureRoomName}
+        ,building_name = #{buildingName}
+        ,max_capacity = #{maxCapacity}
+    </insert>
+    
+    <select id="selLectureRoom">
+        SELECT ilecture_room ilectureRoom
+        , lecture_room_name lectureRoomName
+        , building_name buildingName
+        from lecture_room
+    </select>
+    <select id="selLectureRoomDetail">
+        SELECT ilecture_room ilectureRoom
+        , lecture_room_name lectureRoomName
+        , building_name buildingName
+        , max_capacity maxCapacity
+        , del_yn delYn
+        from lecture_room
+        WHERE del_yn = 0
+        AND ilecture_room = #{ilectureRoom}
+        AND building_name = #{buildingName}
+        AND lecture_room_name = #{lectureRoomName}
+    </select>
+
+    <update id="delLectureRoom">
+        UPDATE lecture_room
+        SET del_yn = 1
+        WHERE ilecture_room = #{ilectureRoom}
+        AND lecture_room_name = #{lectureRoomName}
+        AND building_name = #{buildingName}
+    </update>
+</mapper>

@@ -7,13 +7,24 @@ import java.time.LocalDate;
 @Data
 public class AdminInsStudentDto {
     private Long istudent;
-    private String password;
+    private String  studentNum;
+    private String studentPassword;
     private Long imajor;
-    private String name;
+    private String nm;
     private char gender;
-    private String birthdate;
+    private LocalDate birthdate;
     private String phone;
     private String email;
     private String address;
+    private Long majorCnt;
 
+    public AdminInsStudentDto(AdminInsStudentParam param) {
+        this.imajor = param.getImajor();
+        this.nm = param.getNm();
+        this.gender = param.getGender();
+        this.birthdate = param.getBirthdate();
+        this.phone = param.getPhone();
+        this.email = param.getEmail();
+        this.address = param.getAddress();
+    }
 }

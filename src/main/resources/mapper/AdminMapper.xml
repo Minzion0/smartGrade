@@ -3,15 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.AdminMapper">
-    <insert id="student_enrollment">
-        insert student
-        (istudent,password,imajor,name,gender,birthdate,phone,email,address)
-        select #{istudent}+max(istudent)+1,#{password},#{imajor}
-            ,#{name},#{gender},#{birthdate},#{phone}
-            ,#{email},#{address}
-        from student
-        where imajor = #{imajor}
-
+    <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
+        insert into student
+        (   student_num, student_password, imajor, nm, gender
+          , birthdate, phone, email, address
+        )
+        VALUES
+        ( concat(#{studentNum}, LPAD(#{majorCnt}, 4, 0)), #{studentPassword}, #{imajor}, #{nm}, #{gender}
+            ,#{birthdate},#{phone},#{email},#{address}
+        )
+        <selectKey order="BEFORE" resultType="Long" keyProperty="majorCnt">
+            select IFNULL(count(imajor),0) + 1 AS majorCnt
+            from student
+            where imajor = #{imajor}
+        </selectKey>
     </insert>
+
+    <select id="selStudent">
+        select istudent,student_num studentNum,student_password studentPassword
+                ,imajor,grade,nm,gender,pic,birthdate
+                ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
+        from student
+        where email=#{email}
+    </select>
 
 </mapper>
