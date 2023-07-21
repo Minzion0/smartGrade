@@ -18,7 +18,12 @@ public class MajorService {
 
     public MajorRes insMajor(MajorInsParam p) {
         MajorInsDto dto = new MajorInsDto();
-        MAPPER.insMajor(dto);
-        return new MajorRes(dto);
+        dto.setMajorName(p.getMajorName());
+        dto.setGraduationScore(p.getGraduationScore());
+        int result = MAPPER.insMajor(dto);
+        if (result == 1) {
+            new MajorRes(dto);
+        }
+        return null;
     }
 }
