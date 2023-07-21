@@ -5,7 +5,12 @@
 <mapper namespace="com.green.smart_grade.admin.AdminMapper">
     <insert id="student_enrollment">
         insert student
-        (istudent,password,imajor,name,gender,birthdate,phone,email,
+        (istudent,password,imajor,name,gender,birthdate,phone,email,address)
+        select #{istudent}+max(istudent)+1,#{password},#{imajor}
+            ,#{name},#{gender},#{birthdate},#{phone}
+            ,#{email},#{address}
+        from student
+        where imajor = #{imajor}
 
     </insert>
 
