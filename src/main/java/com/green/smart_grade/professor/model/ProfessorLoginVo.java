@@ -1,11 +1,13 @@
 package com.green.smart_grade.professor.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Data
-public class ProfessorInsDto {
+@Getter
+@AllArgsConstructor
+public class ProfessorLoginVo {
     private Long iprofessor;
     private Long imajor;
     private String password;
@@ -15,4 +17,5 @@ public class ProfessorInsDto {
     private String phone;
     private String email;
     private String address;
+
 }

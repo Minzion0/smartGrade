@@ -16,7 +16,6 @@ public class ProfessorEntity {
     private String phone;
     private String email;
     private String address;
-    private String grade;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 }

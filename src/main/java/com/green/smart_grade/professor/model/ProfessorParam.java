@@ -5,9 +5,8 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class ProfessorInsDto {
-    private Long iprofessor;
-    private Long imajor;
+public class ProfessorParam {
+     private Long imajor;
     private String password;
     private String name;
     private  char gender;

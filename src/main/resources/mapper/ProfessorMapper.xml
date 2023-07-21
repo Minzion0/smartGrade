@@ -2,24 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.professor.ProfessorMapper">
 
-    <insert id="insProfessor">
+    <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
         insert into professor
-        (iprofessor,imajor,password,name,gender,birthdate,phone,email,address,grade)
+        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
         values
-        (#{iprofessor},#{imajor},#{password},#{name},#{gender},#{birthdate},#{phone}
-        ,#{eamil},#{address},#{grade})
+        (#{imajor},#{password},#{name},#{gender},#{birthdate},#{phone},#{email},#{address})
     </insert>
 
 
     <select id="selProfessor">
-    select iprofessor,imajor,password,name,gender,birthdate,phone,email,address,grade
+    select iprofessor,imajor,nm name,gender,birthdate,phone,email,address
         from professor
+        ORDER BY iprofessor DESC
+        LIMIT #{startIdx}, #{row}
     </select>
+
+    <select id="selProfessorByUid" resultType="ProfessorLoginVo">
+        SELECT iprofessor,imajor,professor_password password, nm name, gender,birthdate,phone,email,address
+        FROM professor
+        WHERE iprofessor = #{iprofessor}
+    </select>
+
+
+    <update id="upProfessorPw">
+        update professor
+        set professor_password = #{password}
+        where iprofessor = #{iprofessor}
+    </update>
 
 
     <update id="upProfessor">
         update professor
-        set password = #{password}
+        set professor_password = #{password}
         ,phone = #{phone}
         ,email = #{email}
         ,address = #{address}
