@@ -1,14 +1,13 @@
 package com.green.smart_grade.admin.board;
 
-import com.green.smart_grade.admin.board.model.BoardInsDto;
+import com.green.smart_grade.admin.board.model.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/board")
@@ -20,8 +19,13 @@ public class BoardController {
 
     @PostMapping
     @Operation(summary = "게시판 등록")
-    public int insBoard (@RequestBody BoardInsDto dto) {
-        log.info("등록이 완료되었습니다.");
-        return SERVICE.insBoard(dto);
+    public BoardInsRes insBoard (@RequestBody BoardInsParam param) {
+        return SERVICE.insBoard(param);
+    }
+
+    @PutMapping
+    @Operation(summary = "게시판 수정")
+    public BoardUpdRes UpdBoard(@RequestBody BoardUpdParam param) {
+        return SERVICE.updBoard(param);
     }
 }

@@ -1,14 +1,16 @@
 package com.green.smart_grade.admin.board.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 
 import java.time.LocalDateTime;
 
-@Data
-public class BoardInsDto {
-    private Long iboard;
+@Getter
+@AllArgsConstructor
+public class BoardSelImportanceVo {
     private Long iadmin;
-    private String ctnt;
     private String title;
     private int importance;
+    private LocalDateTime createdAt;
 }
