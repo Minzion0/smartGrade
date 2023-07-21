@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smart_grade.professor.ProfessorMapper">
+
+    <insert id="insProfessor">
+        insert into professor
+        (iprofessor,imajor,password,name,gender,birthdate,phone,email,address,grade)
+        values
+        (#{iprofessor},#{imajor},#{password},#{name},#{gender},#{birthdate},#{phone}
+        ,#{eamil},#{address},#{grade})
+    </insert>
+
+
+    <select id="selProfessor">
+    select iprofessor,imajor,password,name,gender,birthdate,phone,email,address,grade
+        from professor
+    </select>
+
+
+    <update id="upProfessor">
+        update professor
+        set password = #{password}
+        ,phone = #{phone}
+        ,email = #{email}
+        ,address = #{address}
+        where iprofessor = #{iprofessor}
+    </update>
+
+
+
+
+
+
+
+
+
+
+</mapper>
