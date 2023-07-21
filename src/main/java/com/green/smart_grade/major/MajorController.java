@@ -22,7 +22,7 @@ public class MajorController {
     @PostMapping
     @Operation(summary = "전공 등록", description = "" +
             "majorName : 전공 이름 \n" +
-            "graduationScore : 졸업 학점")
+            "\n graduationScore : 졸업 학점")
     public MajorRes postMajor(@RequestParam String majorName, @RequestParam int graduationScore) {
         MajorInsParam p = new MajorInsParam();
         p.setMajorName(majorName);
@@ -37,16 +37,16 @@ public class MajorController {
     }
 
     @PostMapping("/detail")
-    @Operation(summary = "전공 이름으로 검색")
+    @Operation(summary = "전공 이름으로 검색", description = "" +
+            "majorName : 전공 이름")
     public MajorVo getMajorDetail(@RequestBody MajorDetailDto dto) {
-        dto.setMajorName(dto.getMajorName());
         return SERVICE.selMajorDetail(dto);
     }
 
     @DeleteMapping
     @Operation(summary = "전공 삭제 ( 삭제여부 0 1 변경)" , description = "" +
             "imajor : 전공 pk \n" +
-            "majorName : 전공 이름")
+            "\n majorName : 전공 이름")
     public int delMajor(@RequestParam Long imajor, @RequestParam String majorName) {
         MajorDelDto dto = new MajorDelDto();
         dto.setImajor(imajor);
