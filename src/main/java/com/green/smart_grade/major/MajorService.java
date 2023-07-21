@@ -1,12 +1,12 @@
 package com.green.smart_grade.major;
 
-import com.green.smart_grade.major.model.MajorInsDto;
-import com.green.smart_grade.major.model.MajorInsParam;
-import com.green.smart_grade.major.model.MajorRes;
+import com.green.smart_grade.major.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -18,7 +18,24 @@ public class MajorService {
 
     public MajorRes insMajor(MajorInsParam p) {
         MajorInsDto dto = new MajorInsDto();
-        MAPPER.insMajor(dto);
-        return new MajorRes(dto);
+        dto.setMajorName(p.getMajorName());
+        dto.setGraduationScore(p.getGraduationScore());
+        int result = MAPPER.insMajor(dto);
+        if (result == 1) {
+            new MajorRes(dto);
+        }
+        return null;
+    }
+
+    public List<MajorVo> selMajor() {
+        return MAPPER.selMajor();
+    }
+
+    public MajorVo selMajorDetail(MajorDetailDto dto) {
+        return MAPPER.selMajorDetail(dto);
+    }
+
+    public int delMajor(MajorDelDto dto) {
+        return MAPPER.delMajor(dto);
     }
 }
