@@ -28,4 +28,12 @@
         AND building_name = #{buildingName}
         AND lecture_room_name = #{lectureRoomName}
     </select>
+
+    <update id="delLectureRoom">
+        UPDATE lecture_room
+        SET del_yn = 1
+        WHERE ilecture_room = #{ilectureRoom}
+        AND lecture_room_name = #{lectureRoomName}
+        AND building_name = #{buildingName}
+    </update>
 </mapper>

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.major.MajorMapper">
-    <insert id="insMajor">
+    <insert id="insMajor" useGeneratedKeys="true" keyProperty="imajor">
         INSERT INTO major
         (major_name, graduation_score)
         VALUES
@@ -21,6 +21,7 @@
         , graduation_score graduationScore
         from major
         WHERE major_name = #{majorName}
+        AND imajor = #{imajor}
     </select>
     <update id="delMajor">
         UPDATE major

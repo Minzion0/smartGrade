@@ -15,4 +15,10 @@ public class LectureRoomRes {
         this.buildingName = dto.getBuildingName();
         this.maxCapacity = dto.getMaxCapacity();
     }
+
+    public LectureRoomRes(LectureRoomDelDto dto) {
+        this.ilectureRoom = dto.getIlectureRoom();
+        this.lectureRoomName = dto.getLectureRoomName();
+        this.buildingName = dto.getBuildingName();
+    }
 }

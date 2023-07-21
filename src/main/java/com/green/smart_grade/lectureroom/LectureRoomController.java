@@ -39,4 +39,14 @@ public class LectureRoomController {
         return SERVICE.selLectureRoomDetail(dto);
     }
 
+    @DeleteMapping
+    @Operation(summary = "강의실 삭제")
+    public LectureRoomRes delLectureRoom(@RequestParam Long ilectureRoom, @RequestParam String lectureRoomName
+                                , @RequestParam String buildingName) {
+        LectureRoomDelParam p = new LectureRoomDelParam();
+        p.setIlectureRoom(ilectureRoom);
+        p.setBuildingName(buildingName);
+        p.setLectureRoomName(lectureRoomName);
+        return SERVICE.delLectureRoom(p);
+    }
 }

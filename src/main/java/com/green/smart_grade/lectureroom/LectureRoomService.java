@@ -37,4 +37,16 @@ public class LectureRoomService {
         return MAPPER.selLectureRoomDetail(dto);
     }
 
+    public LectureRoomRes delLectureRoom(LectureRoomDelParam p) {
+        LectureRoomDelDto dto = new LectureRoomDelDto();
+        dto.setIlectureRoom(p.getIlectureRoom());
+        dto.setLectureRoomName(p.getLectureRoomName());
+        dto.setBuildingName(p.getBuildingName());
+        int result = MAPPER.delLectureRoom(dto);
+        if (result == 1) {
+            new LectureRoomRes(dto);
+        }
+        return null;
+    }
+
 }
