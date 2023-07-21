@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 
 @Component
 public class CommonUtils {
-    public String encodeSha256(String source) {
+    public  String encodeSha256(String source) {
         String mSalt = "abcd123";
         String result = "";
 
