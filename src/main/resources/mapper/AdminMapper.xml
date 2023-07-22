@@ -18,6 +18,13 @@
             where imajor = #{imajor}
         </selectKey>
     </insert>
+    
+    <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
+        insert into professor
+        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
+        values
+        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
+    </insert>
 
     <select id="selStudent">
         select istudent,student_num studentNum,student_password studentPassword
@@ -26,5 +33,52 @@
         from student
         where email=#{email}
     </select>
+    
+    <select id="findStudents">
+        SELECT A.istudent,A.student_num studentNum
+                ,A.grade,A.nm,c.major_name majoirName
+                ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
+                ,A.finished_yn finishedYn,ifnull(B.score,0) score
+        FROM student A
+            left JOIN (
+                SELECT A.istudent,SUM(B.score) score
+                FROM lecture_student A
+                INNER JOIN (
+                SELECT x.ilecture,y.score
+                FROM lecture_applly x
+                inner JOIN lecture_name y
+                ON x.ilecture_name=y.ilecture_name
+                )B
+                ON A.ilecture=B.ilecture
+                WHERE A.finished_yn=2
+            )B
+        ON A.istudent=B.istudent
+        inner JOIN major C
+        ON A.imajor=C.imajor
+        <if test="studentNum!=null">
+            WHERE A.student_num=#{studentNum} 
+        </if>
+        <if test="nm != null">
+            where A.nm=#{nm}
+        </if>
+        
+        
+    </select>
+
+    <select id="findProfessors">
+        SELECT iprofessor,major_name majorName,nm,gender,birthdate,phone,email,address,A.del_yn delYn
+        FROM professor A
+        INNER JOIN major B
+        ON A.imajor=B.imajor
+        ORDER BY A.imajor
+        LIMIT #{staIdx},10
+    </select>
+
+    <select id="countProfessor" >
+        select count(*)
+        from professor
+    </select>
+
+
 
 </mapper>
