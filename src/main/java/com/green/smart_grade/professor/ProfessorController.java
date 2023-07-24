@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ProfessorController {
     private final ProfessorService service;
 
 
-    @GetMapping
+    @GetMapping("/detail")
     @Operation(summary = "교수 리스트 보기",description = "Page : 페이지,기본적으로 1부터 시작"+"row : 리스트갯수 : 기본 10개 시작")
     public List<ProfessorVo> getProfessor(@RequestParam(defaultValue = "1") int page
             , @RequestParam(defaultValue = "10") int row) {
@@ -30,7 +31,7 @@ public class ProfessorController {
     }
 
 
-    @PatchMapping
+    @PatchMapping("/password")
     @Operation(summary = "교수 비밀번호 번경")
     public int patchProfessor(@RequestBody ProfessorUpPW dto) {
         return service.upProfessorPw(dto);
@@ -46,12 +47,23 @@ public class ProfessorController {
 
     @PutMapping("/{iprofessor}")
     @Operation(summary = "교수 프로필 수정")
-    public ProfessorInsRes putProfessor(@PathVariable Long iprofessor,@RequestBody ProfessorParam param) {
-        ProfessorEntity entity = new ProfessorEntity();
-        entity.setIprofessor(iprofessor);
-        return service.upProfessor(param);
+    public ProfessorUpRes putProfessor(@PathVariable Long iprofessor, @RequestBody ProfessorParam param) {
+        ProfessorParam param1 = new ProfessorParam();
+        param1.setIprofessor(iprofessor);
+        return service.upProfessor(param,iprofessor);
+    }
+    @GetMapping
+    @Operation(summary = "교수 프로필 전체 보기")
+    public List<ProfessorVo> gstAllProfessor() {
+        return service.selAllProfessor();
     }
 
+    @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값 "+" 쿼리스트링")
+    public String patchPicProfessor(@RequestPart MultipartFile pic, @RequestParam Long iprofessor) {
+        ProfessorPicDto dto = new ProfessorPicDto();
+        dto.setIprofessor(iprofessor);
 
-
+        return service.upPicProfessor(pic, dto);
+    }
 }
