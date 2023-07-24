@@ -50,4 +50,8 @@ public  class PagingUtils {
     public int getPage() {
         return page;
     }
+
+    public int getROW() {
+        return ROW;
+    }
 }
