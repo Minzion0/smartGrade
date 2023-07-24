@@ -33,7 +33,7 @@
 
     <update id="upProfessor">
         update professor
-        set professor_password = #{password}
+        set imajor = #{imajor}
         ,phone = #{phone}
         ,email = #{email}
         ,address = #{address}
@@ -41,6 +41,16 @@
     </update>
 
 
+    <select id="selAllProfessor">
+        select iprofessor,imajor,nm name,gender,birthdate,phone,email,address
+        from professor
+    </select>
+
+    <update id="upPicProfessor">
+        update professor
+        set pic = #{pic}
+        where iprofessor = #{iprofessor}
+    </update>
 
 
 

@@ -16,3 +16,4 @@ public class ProfessorInsDto {
     private String email;
     private String address;
 }
+
