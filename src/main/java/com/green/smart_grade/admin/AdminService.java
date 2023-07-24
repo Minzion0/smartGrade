@@ -67,16 +67,14 @@ public class AdminService {
         return null;
     }
 
-    public AdminProfessorRes findProFessors(int page){
-        int result = MAPPER.countProfessor();
-        int startIdx = PagingUtils.startIdx(page);
-        int maxPage = PagingUtils.maxPage(result);
-        int isMore = PagingUtils.isMore(maxPage, page);
+    public AdminProfessorRes findProfessors(int page){
+        int maxPage = MAPPER.countProfessor();
+        PagingUtils pagingUtils = new PagingUtils(page,maxPage);
 
-        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(startIdx);
+        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(pagingUtils.getStaIdx());
 
         return AdminProfessorRes.builder().professors(professors)
-                        .page(page).maxPage(maxPage).isMore(isMore).build();
+                .page(pagingUtils).build();
 
 
 

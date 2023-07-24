@@ -47,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/find/pro")
     public AdminProfessorRes findP(@RequestParam (defaultValue = "1") int page){
-        return SERVICE.findProFessors(page);
+        return SERVICE.findProfessors(page);
     }
 
 

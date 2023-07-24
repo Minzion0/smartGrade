@@ -1,5 +1,6 @@
 package com.green.smart_grade.admin.model;
 
+import com.green.smart_grade.utils.PagingUtils;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,8 +9,6 @@ import java.util.List;
 @Getter
 @Builder
 public class AdminProfessorRes {
-    private int page;
-    private int maxPage;
-    private int isMore;
+    private PagingUtils page;
     private List<AdminFindProfessorRes> professors;
 }
