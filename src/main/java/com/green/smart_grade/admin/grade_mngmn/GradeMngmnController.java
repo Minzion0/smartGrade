@@ -33,7 +33,18 @@ public class GradeMngmnController {
         return SERVICE.selGradeFindStudent(dto);
     }
     @GetMapping("/detail")
-    @Operation(summary = "상세보기")
+    @Operation(summary = "상세보기", description = "" +
+            "사진 pic \n" +
+            "이름 name \n" +
+            "성별 gender \n" +
+            "생년월일 birthdate\n" +
+            "전화번호 phone \n" +
+            "학번 student_num \n" +
+            "전공 major_name\n" +
+            "입학년도 created_at \n" +
+            "email email \n" +
+            "현재 학점 score \n" +
+            "평점 rating\n")
     public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int num
             , @RequestParam String name) {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
