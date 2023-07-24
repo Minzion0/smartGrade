@@ -1,9 +1,12 @@
 package com.green.smart_grade.admin.board;
 
 import com.green.smart_grade.admin.board.model.*;
+import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -35,5 +38,26 @@ public class BoardService {
             return new BoardUpdRes(dto);
         }
         return null;
+    }
+
+    public BoardRes selBoard (int page) {
+            int maxPage = MAPPER.countBoard();
+            PagingUtils utils = new PagingUtils(page, maxPage);
+
+            List<BoardSelVo> list = MAPPER.selBoard(utils.getStaIdx(), utils.getROW() - 3);
+            return BoardRes.builder()
+                    .page(utils)
+                    .list(list)
+                    .build();
+    }
+    public List<BoardSelImportanceVo>  selBoardImportance () {
+        return MAPPER.selBoardImportance();
+    }
+    public BoardSelDetailVo selBoardDetail (BoardSelDetailDto dto) {
+        return MAPPER.selByIdBoard(dto);
+    }
+
+    public int updDelYnBoard (BoardUpdYnDto dto) {
+        return MAPPER.updDelYnBoard(dto);
     }
 }
