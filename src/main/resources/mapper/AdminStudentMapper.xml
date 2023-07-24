@@ -54,6 +54,7 @@
         <if test="nm != null">
             where A.nm=#{nm}
         </if>
+        limit #{staIdx},#{row}
 
 
 
@@ -63,10 +64,10 @@
         select count(*)
         from student
         <if test="studentNum!=null">
-            WHERE A.student_num=#{studentNum}
+            WHERE student_num=#{studentNum}
         </if>
         <if test="nm != null">
-            where A.nm=#{nm}
+            where nm=#{nm}
         </if>
     </select>
 
