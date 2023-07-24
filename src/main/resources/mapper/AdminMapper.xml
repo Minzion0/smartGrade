@@ -14,16 +14,11 @@
             INNER JOIN lecture_name D
             ON A.ilecture_name=D.ilecture_name
         <where>
-            <if test="procedures>=0">
                 A.opening_procedures=#{procedures}
-            </if>
             <if test="nm!=null">
-                C.nm in (#{nm})
+               and C.nm in (#{nm})
             </if>
 
-            <if test="procedures>=0 and nm!=null ">
-                A.opening_procedures=#{procedures} and C.nm in (#{nm})
-            </if>
         </where>
         limit #{strIdx},#{row}
 
@@ -36,15 +31,13 @@
         inner join professor B
         on A.iprofessor=B.iprofessor
        <where>
-           <if test="procedures>=0">
+
                A.opening_procedures=#{procedures}
-           </if>
+
            <if test="nm!=null">
                B.nm=#{nm}
            </if>
-           <if test="procedures>=0 and nm!=null ">
-               A.opening_procedures=#{procedures} and B.nm in (#{nm})
-           </if>
+
        </where>
 
 

@@ -18,6 +18,10 @@ public interface BoardMapper {
     int countBoard();
     BoardSelDetailVo selByIdBoard(BoardSelDetailDto dto);
 
-    //게시판 삭제
+    // 게시판 삭제
     int updDelYnBoard (BoardUpdYnDto dto);
+
+    // 조회수 증가
+    int updViewBoard (BoardSelDetailDto dto);
+
 }

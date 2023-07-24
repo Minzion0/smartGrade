@@ -10,6 +10,10 @@ public  class PagingUtils {
     private int maxPage;
     private int isMore;
 
+    public PagingUtils(){
+        this.ROW = 10;
+    }
+
     public PagingUtils(int page, int maxPage) {
         this.ROW=10;
         this.page=page;
