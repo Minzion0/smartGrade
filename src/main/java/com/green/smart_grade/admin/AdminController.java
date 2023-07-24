@@ -1,7 +1,10 @@
 package com.green.smart_grade.admin;
 
 
+import com.green.smart_grade.admin.model.AdminSelLectureParam;
+import com.green.smart_grade.admin.model.AdminSelRes;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +21,14 @@ public class AdminController {
     private final AdminService SERVICE;
 
 
+    @GetMapping
+    public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam int procedures,@RequestParam (required = false) String nm){
+        AdminSelLectureParam param = new AdminSelLectureParam();
+        param.setNm(nm);
+        param.setPage(page);
+        param.setProcedures(procedures);
+        return SERVICE.selLecture(param);
+    }
 
 
 

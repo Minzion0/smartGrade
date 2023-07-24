@@ -4,6 +4,7 @@ package com.green.smart_grade.admin;
 import com.green.smart_grade.admin.model.AdminSelLectureDto;
 import com.green.smart_grade.admin.model.AdminSelLectureParam;
 import com.green.smart_grade.admin.model.AdminSelLectureRes;
+import com.green.smart_grade.admin.model.AdminSelRes;
 import com.green.smart_grade.utils.CommonUtils;
 
 import com.green.smart_grade.utils.PagingUtils;
@@ -24,10 +25,15 @@ public class AdminService {
     private final AdminMapper MAPPER;
     private final CommonUtils commonUtils;
 
-    public List<AdminSelLectureRes> selLecture(AdminSelLectureParam param){
+    public AdminSelRes selLecture(AdminSelLectureParam param){
         AdminSelLectureDto dto = new AdminSelLectureDto(param);
         int maxpage = MAPPER.countLceture(dto);
-        List<AdminSelLectureRes> res = MAPPER.selLecture();
+        PagingUtils utils = new PagingUtils(param.getPage(),maxpage);
+        dto.setRow(utils.getROW());
+        dto.setStrIdx(utils.getStaIdx());
+        List<AdminSelLectureRes> res = MAPPER.selLecture(dto);
+
+       return AdminSelRes.builder().lectures(res).page(utils).build();
 
     }
 

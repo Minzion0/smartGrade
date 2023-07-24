@@ -16,8 +16,8 @@ public class AdminSelLectureRes {
     private String buildingNm;
     private LocalDate strDate;
     private LocalDate endDate;
-    private LocalTime strTime;
-    private LocalTime endTime;
+    private String  strTime;
+    private String  endTime;
     private int maxPeople;
     private int procedures;
     private int delYn;
