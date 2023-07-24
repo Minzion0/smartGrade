@@ -14,6 +14,7 @@
         SELECT imajor, major_name majorName
         , graduation_score graduationScore
         from major
+        LIMIT #{staIdx},10
     </select>
 
     <select id="selMajorDetail">
@@ -29,4 +30,9 @@
         WHERE imajor = #{imajor}
         AND major_name = #{majorName}
     </update>
+
+    <select id="countMajor">
+        SELECT count(*)
+        from major
+    </select>
 </mapper>
