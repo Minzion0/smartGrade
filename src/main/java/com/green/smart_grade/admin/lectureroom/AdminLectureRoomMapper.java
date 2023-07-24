@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface LectureRoomMapper {
+public interface AdminLectureRoomMapper {
     int insLectureRoom(LectureRoomInsDto dto);
 
     List<LectureRoomVo> selLectureRoom();

@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/api/major")
 @RequiredArgsConstructor
 @Tag(name = "전공 관리",description = "")
-public class MajorController {
+public class AdminMajorController {
 
     @Autowired
-    private final MajorService SERVICE;
+    private final AdminMajorService SERVICE;
 
 
     @PostMapping

@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/api/lectureroom")
 @RequiredArgsConstructor
 @Tag(name = "강의실 관리")
-public class LectureRoomController {
+public class AdminLectureRoomController {
 
     @Autowired
-    private final LectureRoomService SERVICE;
+    private final AdminLectureRoomService SERVICE;
 
     @PostMapping
     @Operation(summary = "강의실 추가", description = "" +

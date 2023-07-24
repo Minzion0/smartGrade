@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class LectureRoomService {
+public class AdminLectureRoomService {
 
     @Autowired
-    private final LectureRoomMapper MAPPER;
+    private final AdminLectureRoomMapper MAPPER;
 
     public LectureRoomRes insLectureRoom(LectureRoomInsParam p) {
         LectureRoomInsDto dto = new LectureRoomInsDto();

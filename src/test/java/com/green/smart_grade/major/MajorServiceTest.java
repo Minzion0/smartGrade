@@ -1,7 +1,7 @@
 package com.green.smart_grade.major;
 
-import com.green.smart_grade.admin.major.MajorMapper;
-import com.green.smart_grade.admin.major.MajorService;
+import com.green.smart_grade.admin.major.AdminMajorMapper;
+import com.green.smart_grade.admin.major.AdminMajorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
-@Import({MajorService.class})
+@Import({AdminMajorService.class})
 class MajorServiceTest {
 
     @MockBean
-    private MajorMapper MAPPER;
+    private AdminMajorMapper MAPPER;
 
     @Autowired
-    private MajorService SERVICE;
+    private AdminMajorService SERVICE;
 
     @Test
     void insMajor() {

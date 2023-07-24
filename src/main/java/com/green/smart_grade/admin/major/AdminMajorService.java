@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class MajorService {
+public class AdminMajorService {
 
     @Autowired
-    private final MajorMapper MAPPER;
+    private final AdminMajorMapper MAPPER;
 
     public MajorRes insMajor(MajorInsParam p) {
         MajorInsDto dto = new MajorInsDto();
