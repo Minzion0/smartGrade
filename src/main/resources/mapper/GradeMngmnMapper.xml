@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smart_grade.grade_mngmn.GradeMngmnMapper">
+    <select id="selGradeFindStudent">
+        SELECT A.istudent, A.ilecture
+        , B.imajor,B.student_num,
+        B.nm, B.gender, B.birthdate, C.score
+        FROM lecture_student A
+        INNER JOIN student B
+        ON A.istudent = B.istudent
+        INNER JOIN student_semester_score C
+        ON B.istudent = C.istudent
+        <if test="studentNum != null">
+            WHERE B.student_num = #{studentNum}
+        </if>
+        <if test="name != null">
+            AND B.nm = #{name}
+        </if>
+    </select>
+    <select id="selGradeFindStudentDetail">
+        SELECT A.grade,
+        (SELECT semester
+        FROM semester
+        WHERE C.isemester = semester.isemester) semester,
+        (SELECT lecture_name
+        FROM lecture_name) lecture_name,
+        C.score, B.attendance, B.midterm_examination,
+        B.final_examination,
+        #{totalScore}
+        FROM student A
+        INNER JOIN lecture_student B
+        ON A.istudent = B.istudent
+        INNER JOIN student_semester_score C
+        ON A.istudent = C.istudent
+    </select>
+</mapper>

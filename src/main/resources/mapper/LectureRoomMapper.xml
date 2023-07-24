@@ -13,7 +13,7 @@
     <select id="selLectureRoom">
         SELECT ilecture_room ilectureRoom
         , lecture_room_name lectureRoomName
-        , building_name buildingName
+        , building_name buildingName , del_yn
         from lecture_room
     </select>
     <select id="selLectureRoomDetail">
