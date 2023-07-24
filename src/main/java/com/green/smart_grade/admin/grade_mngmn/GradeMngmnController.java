@@ -1,9 +1,6 @@
 package com.green.smart_grade.admin.grade_mngmn;
 
-import com.green.smart_grade.admin.grade_mngmn.model.GradeMngmnDetailSelDto;
-import com.green.smart_grade.admin.grade_mngmn.model.GradeMngmnDetailVo;
-import com.green.smart_grade.admin.grade_mngmn.model.GradeMngmnSelDto;
-import com.green.smart_grade.admin.grade_mngmn.model.GradeMngmnVo;
+import com.green.smart_grade.admin.grade_mngmn.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,25 +23,29 @@ public class GradeMngmnController {
     @Operation(summary = "이름 학번으로 검색", description = "" +
             "num : 학번\n" +
             "\nname : 이름\n")
-    public GradeMngmnVo getGradeFindStudent(@RequestParam int num, @RequestParam String name) {
+    public GradeMngmnRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
+                        , @RequestParam int num, @RequestParam String name) {
         GradeMngmnSelDto dto = new GradeMngmnSelDto();
-        dto.setStudentNum(num);
         dto.setName(name);
-        return SERVICE.selGradeFindStudent(dto);
+        dto.setStudentNum(num);
+        return SERVICE.selGradeFindStudent(dto,page);
+
     }
     @GetMapping("/detail")
     @Operation(summary = "상세보기", description = "" +
             "사진 pic \n" +
             "이름 name \n" +
             "성별 gender \n" +
-            "생년월일 birthdate\n" +
+            "\n생년월일 birthdate\n" +
             "전화번호 phone \n" +
             "학번 student_num \n" +
             "전공 major_name\n" +
-            "입학년도 created_at \n" +
+            "\n입학년도 created_at \n" +
             "email email \n" +
             "현재 학점 score \n" +
-            "평점 rating\n")
+            "평점 rating\n" +
+            "\nnum : 학번\n" +
+            "\nname : 이름")
     public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int num
             , @RequestParam String name) {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
