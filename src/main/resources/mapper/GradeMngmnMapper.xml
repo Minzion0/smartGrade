@@ -19,22 +19,36 @@
             AND B.nm = #{name}
         </if>
     </select>
+<!--    <select id="selGradeFindStudentDetail">-->
+<!--        SELECT A.grade,-->
+<!--        (SELECT semester-->
+<!--        FROM semester-->
+<!--        WHERE C.isemester = semester.isemester) semester,-->
+<!--        (SELECT lecture_name-->
+<!--        FROM lecture_name) lecture_name,-->
+<!--        C.score, B.attendance, B.midterm_examination,-->
+<!--        B.final_examination,-->
+<!--        B.total_score, #{rating}-->
+<!--        FROM student A-->
+<!--        INNER JOIN lecture_student B-->
+<!--        ON A.istudent = B.istudent-->
+<!--        INNER JOIN student_semester_score C-->
+<!--        ON A.istudent = C.istudent-->
+<!--        WHERE student_num = #{studentNum}-->
+<!--        AND nm = #{name}-->
+<!--    </select>-->
     <select id="selGradeFindStudentDetail">
-        SELECT A.grade,
-        (SELECT semester
-        FROM semester
-        WHERE C.isemester = semester.isemester) semester,
-        (SELECT lecture_name
-        FROM lecture_name) lecture_name,
-        C.score, B.attendance, B.midterm_examination,
-        B.final_examination,
-        B.total_score, #{rating}
+        SELECT A.pic, A.nm, A.gender
+        , A.birthdate, A.phone
+        , A.student_num, B.major_name
+        , A.created_at, A.email, C.score, #{rating}
         FROM student A
-        INNER JOIN lecture_student B
-        ON A.istudent = B.istudent
+        INNER JOIN major B
+        ON A.imajor = B.imajor
         INNER JOIN student_semester_score C
         ON A.istudent = C.istudent
-        WHERE student_num = #{studentNum}
-        AND nm = #{name}
+        WHERE A.istudent = #{istudent}
+        AND A.student_num = #{studentNum}
+        AND A.nm = #{name}
     </select>
 </mapper>
