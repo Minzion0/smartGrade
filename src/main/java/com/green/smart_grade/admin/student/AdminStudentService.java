@@ -38,8 +38,13 @@ public class AdminStudentService {
         return null;
 
     }
-    public List<AdminFindStudentRes> findStudents(AdminFindStudentDto dto,int page){
-        MAPPER.findStudents()
-        return MAPPER.findStudents(dto);
+    public AdminStudentRes findStudents(AdminFindStudentDto dto,int page){
+        int maxCount = MAPPER.countStudents(dto);
+        PagingUtils utils = new PagingUtils(page, maxCount);
+        dto.setRow(utils.getROW());
+        dto.setStaIdx(utils.getStaIdx());
+        List<AdminFindStudentRes> students = MAPPER.findStudents(dto);
+        return AdminStudentRes.builder().studnets(students).page(utils).build();
+
     }
 }

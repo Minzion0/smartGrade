@@ -24,9 +24,6 @@ public class AdminService {
 
 
 
-
-
-
     public AdminInsProfessorRes insProfessor(AdminInsProfessorParam param){
         AdminInsProfessorDto dto = new AdminInsProfessorDto(param);
 
