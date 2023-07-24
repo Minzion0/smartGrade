@@ -1,6 +1,7 @@
 package com.green.smart_grade.utils;
 
 public class PagingUtils {
+
     public static int startIdx(int page){
         int result = page - 1;
         return  result*10;

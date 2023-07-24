@@ -66,7 +66,9 @@
     </select>
 
     <select id="findProfessors">
-        SELECT iprofessor,major_name majorName,nm,gender,birthdate,phone,email,address,A.del_yn delYn
+        SELECT iprofessor,major_name majorName
+                ,nm,gender,birthdate,phone,email
+                ,address,A.del_yn delYn
         FROM professor A
         INNER JOIN major B
         ON A.imajor=B.imajor
