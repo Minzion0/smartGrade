@@ -44,9 +44,9 @@ public class BoardController {
     }
 
     @GetMapping("{iboard}")
-    @Operation(summary = "게시판 디테일")
+    @Operation(summary = "게시판 디테일 및 조회수 증가")
     public BoardSelDetailVo selByIdBoard(@PathVariable Long iboard) {
-        BoardSelDetailDto dto =new BoardSelDetailDto();
+        BoardSelDetailDto dto = new BoardSelDetailDto();
         dto.setIboard(iboard);
         return SERVICE.selBoardDetail(dto);
     }

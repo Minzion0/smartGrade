@@ -31,7 +31,10 @@ public class AdminMajorController {
     }
 
     @GetMapping
-    @Operation(summary = "전공리스트 전체 보기")
+    @Operation(summary = "전공리스트 전체 보기", description = "" +
+            "imajor : 전공 pk\n" +
+            "\nmajorName : 전공 이름\n" +
+            "\ngraduationScore : 졸업 시 필요한 학점")
     public List<MajorVo> getMajor() {
         return SERVICE.selMajor();
     }
