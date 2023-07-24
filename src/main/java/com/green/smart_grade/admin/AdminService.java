@@ -1,10 +1,7 @@
 package com.green.smart_grade.admin;
 
 
-import com.green.smart_grade.admin.model.AdminSelLectureDto;
-import com.green.smart_grade.admin.model.AdminSelLectureParam;
-import com.green.smart_grade.admin.model.AdminSelLectureRes;
-import com.green.smart_grade.admin.model.AdminSelRes;
+import com.green.smart_grade.admin.model.*;
 import com.green.smart_grade.utils.CommonUtils;
 
 import com.green.smart_grade.utils.PagingUtils;
@@ -12,7 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -32,9 +33,36 @@ public class AdminService {
         dto.setRow(utils.getROW());
         dto.setStrIdx(utils.getStaIdx());
         List<AdminSelLectureRes> res = MAPPER.selLecture(dto);
+        List<AdminSelLectureVo> list = new ArrayList<>();
+        for (AdminSelLectureRes re : res) {
+            AdminSelLectureVo vo = new AdminSelLectureVo(re);
+            String date = String.format("%s ~ %s", re.getStrDate(), re.getEndDate());
+            LocalTime strTime = LocalTime.parse(re.getStrTime());
+            LocalTime endTime = LocalTime.parse(re.getEndTime());
+            String  time = endTime.minusHours(strTime.getHour()).toString();
+            vo.setDate(date);
+            vo.setTime(time);
+            list.add(vo);
+        }
 
-       return AdminSelRes.builder().lectures(res).page(utils).build();
+       return AdminSelRes.builder().lectures(list).page(utils).build();
 
+    }
+    @Transactional(rollbackFor = Exception.class)
+    public AdminUpdLectureRes lectureModify(AdminUpdLectureDto dto){
+       try {
+
+           int upded = MAPPER.updLecture(dto);
+           if (dto.getProcedures()==0){
+               MAPPER.lectureModify(dto);
+           }
+           if ( upded==1){
+               return new AdminUpdLectureRes(dto);
+           }
+       }catch (Exception e){
+           return null;
+       }
+        return null;
     }
 
 

@@ -11,5 +11,5 @@ import java.util.List;
 @Builder
 public class AdminSelRes {
     private PagingUtils page;
-    private List<AdminSelLectureRes> lectures;
+    private List<AdminSelLectureVo> lectures;
 }
