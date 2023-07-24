@@ -3,21 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.AdminMapper">
-    <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
-        insert into student
-        (   student_num, student_password, imajor, nm, gender
-          , birthdate, phone, email, address
-        )
-        VALUES
-        ( concat(#{studentNum}, LPAD(#{majorCnt}, 4, 0)), #{studentPassword}, #{imajor}, #{nm}, #{gender}
-            ,#{birthdate},#{phone},#{email},#{address}
-        )
-        <selectKey order="BEFORE" resultType="Long" keyProperty="majorCnt">
-            select IFNULL(count(imajor),0) + 1 AS majorCnt
-            from student
-            where imajor = #{imajor}
-        </selectKey>
-    </insert>
+
     
     <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
         insert into professor
@@ -26,50 +12,20 @@
         (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
     </insert>
 
-    <select id="selStudent">
-        select istudent,student_num studentNum,student_password studentPassword
-                ,imajor,grade,nm,gender,pic,birthdate
-                ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
-        from student
-        where email=#{email}
-    </select>
+
     
-    <select id="findStudents">
-        SELECT A.istudent,A.student_num studentNum
-                ,A.grade,A.nm,c.major_name majoirName
-                ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
-                ,A.finished_yn finishedYn,ifnull(B.score,0) score
-        FROM student A
-            left JOIN (
-                SELECT A.istudent,SUM(B.score) score
-                FROM lecture_student A
-                INNER JOIN (
-                SELECT x.ilecture,y.score
-                FROM lecture_applly x
-                inner JOIN lecture_name y
-                ON x.ilecture_name=y.ilecture_name
-                )B
-                ON A.ilecture=B.ilecture
-                WHERE A.finished_yn=2
-            )B
-        ON A.istudent=B.istudent
-        inner JOIN major C
-        ON A.imajor=C.imajor
-        <if test="studentNum!=null">
-            WHERE A.student_num=#{studentNum} 
-        </if>
-        <if test="nm != null">
-            where A.nm=#{nm}
-        </if>
-        
-        
-    </select>
+
 
     <select id="findProfessors">
-        SELECT iprofessor,major_name majorName,nm,gender,birthdate,phone,email,address,A.del_yn delYn
+        SELECT iprofessor,major_name majorName
+                ,nm,gender,birthdate,phone,email
+                ,address,A.del_yn delYn
         FROM professor A
         INNER JOIN major B
         ON A.imajor=B.imajor
+        <if test="name!=null">
+            where A.nm in (#{name})
+        </if>
         ORDER BY A.imajor
         LIMIT #{staIdx},10
     </select>

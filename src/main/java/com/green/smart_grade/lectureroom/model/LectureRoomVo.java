@@ -8,4 +8,5 @@ public class LectureRoomVo {
     private String lectureRoomName;
     private String buildingName;
     private int maxCapacity;
+    private int delYn;
 }

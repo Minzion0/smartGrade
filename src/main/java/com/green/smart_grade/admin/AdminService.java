@@ -1,6 +1,7 @@
 package com.green.smart_grade.admin;
 
 import com.green.smart_grade.admin.model.*;
+import com.green.smart_grade.admin.student.model.*;
 import com.green.smart_grade.utils.CommonUtils;
 import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,33 +23,6 @@ public class AdminService {
     private final CommonUtils commonUtils;
 
 
-    public AdminIInsStudentRes insStudent(AdminInsStudentParam param){
-        String year = String.valueOf(LocalDate.now().getYear()).substring(2);
-        String format = String.format("%s%02d", year, param.getImajor());
-        AdminInsStudentDto dto = new AdminInsStudentDto(param);
-        //이메일 유효성검사도 해야할듯?
-        dto.setStudentNum(format);
-        String rePw = dto.getBirthdate().toString().replaceAll("-", "");
-        String nPw = commonUtils.encodeSha256(rePw);
-        dto.setStudentPassword(nPw);
-
-        try {
-            int result = MAPPER.insStudent(dto);
-            if (result==1){
-                return MAPPER.selStudent(dto.getEmail());
-            }
-        }catch (Exception e){
-           e.printStackTrace();
-           return null;
-        }
-
-        return null;
-
-    }
-
-    public List<AdminFindStudentRes> findStudents(AdminFindStudentDto dto){
-       return MAPPER.findStudents(dto);
-    }
 
     public AdminInsProfessorRes insProfessor(AdminInsProfessorParam param){
         AdminInsProfessorDto dto = new AdminInsProfessorDto(param);
@@ -67,16 +41,14 @@ public class AdminService {
         return null;
     }
 
-    public AdminProfessorRes findProFessors(int page){
-        int result = MAPPER.countProfessor();
-        int startIdx = PagingUtils.startIdx(page);
-        int maxPage = PagingUtils.maxPage(result);
-        int isMore = PagingUtils.isMore(maxPage, page);
+    public AdminProfessorRes findProfessors(int page,String name){
+        int maxPage = MAPPER.countProfessor();
+        PagingUtils pagingUtils = new PagingUtils(page,maxPage);
 
-        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(startIdx);
+        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(pagingUtils.getStaIdx(),name);
 
         return AdminProfessorRes.builder().professors(professors)
-                        .page(page).maxPage(maxPage).isMore(isMore).build();
+                .page(pagingUtils).build();
 
 
 

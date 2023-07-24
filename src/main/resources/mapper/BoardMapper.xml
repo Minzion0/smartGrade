@@ -15,36 +15,43 @@
         UPDATE board
         SET ctnt = #{ctnt},
         title = #{title},
-        importance = #{importance}
+        importance = #{importance},
+        updated_at = current_timestamp
         WHERE iboard = #{iboard}
     </update>
 
     <select id="selBoard">
-        SELECT iadmin, title,importance, created_at createdAt
+        SELECT iboard, iadmin, title,importance, created_at createdAt
         FROM board
         WHERE importance = 0
         ORDER BY createdAt DESC
+        LIMIT #{startIdx}, #{row}
     </select>
 
     <select id="selBoardImportance">
-        SELECT iadmin, title, importance, created_at createdAt
+        SELECT iboard, iadmin, title, importance, created_at createdAt
         FROM board
         WHERE importance = 1
         ORDER BY createdAt DESC
+        LIMIT 3
     </select>
 
 
-    <!--    <select id="selByIdBoard">-->
-    <!--        SELECT-->
-    <!--        FROM board-->
-    <!--        WHERE iboard = #{iboard}-->
-    <!--    </select>-->
+    <select id="selByIdBoard">
+        SELECT iboard, iadmin, title, ctnt, importance, created_at createdAt
+        FROM board
+        WHERE iboard = #{iboard}
+    </select>
 
+    <select id="countBoard">
+        SELECT COUNT(*)
+        FROM board
+    </select>
 
-<!--    <update id="updDelYnBoard">-->
-<!--        UPDATE board-->
-<!--        SET-->
-<!--        WHERE-->
-<!--    </update>-->
+    <update id="updDelYnBoard">
+        UPDATE board
+        SET del_yn = 1
+        WHERE iboard = #{iboard}
+    </update>
 
 </mapper>

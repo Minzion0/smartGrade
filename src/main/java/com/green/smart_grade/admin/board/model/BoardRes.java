@@ -1,4 +1,4 @@
-package com.green.smart_grade.admin.model;
+package com.green.smart_grade.admin.board.model;
 
 import com.green.smart_grade.utils.PagingUtils;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class AdminProfessorRes {
+public class BoardRes {
     private PagingUtils page;
-    private List<AdminFindProfessorRes> professors;
+    private List<BoardSelVo> list;
 }
