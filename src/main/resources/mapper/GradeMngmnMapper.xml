@@ -18,6 +18,7 @@
         <if test="name != null">
             AND B.nm = #{name}
         </if>
+        LIMIT #{staIdx}, 7
     </select>
 <!--    <select id="selGradeFindStudentDetail">-->
 <!--        SELECT A.grade,-->
