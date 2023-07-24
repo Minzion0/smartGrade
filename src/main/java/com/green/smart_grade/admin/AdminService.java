@@ -24,12 +24,12 @@ public class AdminService {
     private final AdminMapper MAPPER;
     private final CommonUtils commonUtils;
 
-    public List<AdminSelLectureRes> selLecture(AdminSelLectureParam param){
-        AdminSelLectureDto dto = new AdminSelLectureDto(param);
-        int maxpage = MAPPER.countLceture(dto);
-        List<AdminSelLectureRes> res = MAPPER.selLecture();
-
-    }
+//    public List<AdminSelLectureRes> selLecture(AdminSelLectureParam param){
+//        AdminSelLectureDto dto = new AdminSelLectureDto(param);
+//        int maxpage = MAPPER.countLceture(dto);
+//        List<AdminSelLectureRes> res = MAPPER.selLecture();
+//
+//    }
 
 
 

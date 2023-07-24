@@ -34,8 +34,8 @@ public class AdminLectureRoomController {
             "\n buildingname : 건물 이름\n" +
             "\n maxCapacity : 최대 수용인원\n" +
             "\n del_yn : 삭제여부 ")
-    public List<LectureRoomVo> getLectureRoom() {
-        return SERVICE.selLectureRoom();
+    public LectureRoomFindRes getLectureRoom(@RequestParam (defaultValue = ("1")) int page) {
+        return SERVICE.selLectureRoom(page);
     }
 
     @PostMapping("/detail")
