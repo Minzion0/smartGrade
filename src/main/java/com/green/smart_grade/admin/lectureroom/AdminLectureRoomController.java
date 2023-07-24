@@ -28,13 +28,21 @@ public class AdminLectureRoomController {
     }
 
     @GetMapping
-    @Operation(summary = "강의실 리스트 전체 보기")
-    public List<LectureRoomVo> getLectureRoom() {
-        return SERVICE.selLectureRoom();
+    @Operation(summary = "강의실 리스트 전체 보기", description = "" +
+            "ilectureRoom : 강의실 pk\n" +
+            "\n lectureRoomName : 강의실 이름\n" +
+            "\n buildingname : 건물 이름\n" +
+            "\n maxCapacity : 최대 수용인원\n" +
+            "\n del_yn : 삭제여부 ")
+    public LectureRoomFindRes getLectureRoom(@RequestParam (defaultValue = ("1")) int page) {
+        return SERVICE.selLectureRoom(page);
     }
 
     @PostMapping("/detail")
-    @Operation(summary = "강의실 한개 보기 (삭제 안된것만 가능)")
+    @Operation(summary = "강의실 한개 보기 (삭제 안된것만 가능)",description = "" +
+            "\nilectureRoom : 강의실 pk\n" +
+            "\n lectureRoomName : 강의실 이름\n" +
+            "\n buildingname : 건물 이름")
     public LectureRoomDetailVo getLectureRoomDetail(@RequestBody LectureRoomDetailDto dto) {
         return SERVICE.selLectureRoomDetail(dto);
     }

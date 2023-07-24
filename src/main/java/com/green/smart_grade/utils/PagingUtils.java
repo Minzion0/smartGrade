@@ -2,7 +2,7 @@ package com.green.smart_grade.utils;
 
 
 public  class PagingUtils {
-    private final int ROW = 10;
+    private final int ROW ;
 
 
     private int staIdx;
@@ -10,7 +10,17 @@ public  class PagingUtils {
     private int maxPage;
     private int isMore;
 
+    public PagingUtils(){
+        this.ROW = 10;
+    }
+
     public PagingUtils(int page, int maxPage) {
+        this.ROW=10;
+        this.page=page;
+        makePage(page,maxPage);
+    }
+    public PagingUtils(int page, int maxPage,int row) {
+        this.ROW=row;
         this.page=page;
         makePage(page,maxPage);
     }

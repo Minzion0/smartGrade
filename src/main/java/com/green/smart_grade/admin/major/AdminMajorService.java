@@ -1,6 +1,7 @@
 package com.green.smart_grade.admin.major;
 
 import com.green.smart_grade.admin.major.model.*;
+import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,15 @@ public class AdminMajorService {
         return null;
     }
 
-    public List<MajorVo> selMajor() {
-        return MAPPER.selMajor();
+    public MajorfindRes selMajor(int page) {
+        int maxPage = MAPPER.countMajor();
+        PagingUtils utils = new PagingUtils(page,maxPage);
+
+        List<MajorVo> major = MAPPER.selMajor(utils.getStaIdx());
+        return MajorfindRes.builder()
+                .major(major)
+                .page(utils)
+                .build();
     }
 
     public MajorVo selMajorDetail(MajorDetailDto dto) {

@@ -13,4 +13,6 @@ public class BoardSelVo {
     private String title;
     private int importance;
     private LocalDateTime createdAt;
+    private int delYn;
+    private int boardView;
 }

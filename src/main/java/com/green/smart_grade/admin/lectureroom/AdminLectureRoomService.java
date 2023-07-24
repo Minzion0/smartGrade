@@ -2,6 +2,7 @@ package com.green.smart_grade.admin.lectureroom;
 
 import com.green.smart_grade.admin.lectureroom.model.*;
 
+import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,15 @@ public class AdminLectureRoomService {
         return null;
     }
 
-    public List<LectureRoomVo> selLectureRoom() {
-        return MAPPER.selLectureRoom();
+    public LectureRoomFindRes selLectureRoom(int page) {
+        int maxPage = MAPPER.countLectureRoom();
+        PagingUtils utils = new PagingUtils(page,maxPage);
+
+        List<LectureRoomVo> lectureRoom = MAPPER.selLectureRoom(utils.getStaIdx());
+        return LectureRoomFindRes.builder()
+                .lectureRoom(lectureRoom)
+                .page(utils)
+                .build();
     }
 
     public LectureRoomDetailVo selLectureRoomDetail(LectureRoomDetailDto dto) {

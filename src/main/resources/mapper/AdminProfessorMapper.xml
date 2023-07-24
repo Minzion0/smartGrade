@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smart_grade.admin.professor.AdminProfessorMapper">
+    <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
+        insert into professor
+        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
+        values
+        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
+    </insert>
+
+    <select id="findProfessors">
+        SELECT iprofessor,major_name majorName
+        ,nm,gender,birthdate,phone,email
+        ,address,A.del_yn delYn
+        FROM professor A
+        INNER JOIN major B
+        ON A.imajor=B.imajor
+        <if test="name!=null">
+            where A.nm in (#{name})
+        </if>
+        ORDER BY A.imajor
+        LIMIT #{staIdx},10
+    </select>
+
+    <select id="countProfessor" >
+        select count(*)
+        from professor
+    </select>
+
+
+
+</mapper>

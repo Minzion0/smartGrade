@@ -1,15 +1,18 @@
 package com.green.smart_grade.admin;
 
-import com.green.smart_grade.admin.model.*;
-import com.green.smart_grade.admin.student.model.*;
+
+import com.green.smart_grade.admin.model.AdminSelLectureDto;
+import com.green.smart_grade.admin.model.AdminSelLectureParam;
+import com.green.smart_grade.admin.model.AdminSelLectureRes;
+import com.green.smart_grade.admin.model.AdminSelRes;
 import com.green.smart_grade.utils.CommonUtils;
+
 import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
@@ -22,36 +25,20 @@ public class AdminService {
     private final AdminMapper MAPPER;
     private final CommonUtils commonUtils;
 
+    public AdminSelRes selLecture(AdminSelLectureParam param){
+        AdminSelLectureDto dto = new AdminSelLectureDto(param);
+        int maxpage = MAPPER.countLceture(dto);
+        PagingUtils utils = new PagingUtils(param.getPage(),maxpage);
+        dto.setRow(utils.getROW());
+        dto.setStrIdx(utils.getStaIdx());
+        List<AdminSelLectureRes> res = MAPPER.selLecture(dto);
 
-
-    public AdminInsProfessorRes insProfessor(AdminInsProfessorParam param){
-        AdminInsProfessorDto dto = new AdminInsProfessorDto(param);
-
-        String rBd = param.getBirthdate().toString().replaceAll("-", "");
-        String nPw = commonUtils.encodeSha256(rBd);
-        dto.setProfessorPassword(nPw);
-
-        //이메일 유효성검사도 해야할듯?
-
-
-        int result = MAPPER.insProfessor(dto);
-        if (result==1){
-           return new AdminInsProfessorRes(dto);
-        }
-        return null;
-    }
-
-    public AdminProfessorRes findProfessors(int page,String name){
-        int maxPage = MAPPER.countProfessor();
-        PagingUtils pagingUtils = new PagingUtils(page,maxPage);
-
-        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(pagingUtils.getStaIdx(),name);
-
-        return AdminProfessorRes.builder().professors(professors)
-                .page(pagingUtils).build();
-
-
+       return AdminSelRes.builder().lectures(res).page(utils).build();
 
     }
+
+
+
+
 
 }

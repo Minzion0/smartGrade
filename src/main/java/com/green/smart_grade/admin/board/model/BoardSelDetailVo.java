@@ -15,4 +15,5 @@ public class BoardSelDetailVo {
     private String ctnt;
     private int importance;
     private LocalDateTime createdAt;
+    private int delYn;
 }

@@ -1,4 +1,4 @@
-package com.green.smart_grade.admin.model;
+package com.green.smart_grade.admin.professor.model;
 
 import lombok.Data;
 

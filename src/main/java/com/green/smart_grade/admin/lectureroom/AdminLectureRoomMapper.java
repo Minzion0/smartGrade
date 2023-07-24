@@ -10,10 +10,12 @@ import java.util.List;
 public interface AdminLectureRoomMapper {
     int insLectureRoom(LectureRoomInsDto dto);
 
-    List<LectureRoomVo> selLectureRoom();
+    List<LectureRoomVo> selLectureRoom(int staIdx);
 
     LectureRoomDetailVo selLectureRoomDetail(LectureRoomDetailDto dto);
 
     int delLectureRoom(LectureRoomDelDto dto);
+
+    int countLectureRoom();
 
 }

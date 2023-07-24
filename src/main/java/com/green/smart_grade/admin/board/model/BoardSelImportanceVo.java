@@ -14,4 +14,5 @@ public class BoardSelImportanceVo {
     private String title;
     private int importance;
     private LocalDateTime createdAt;
+    private int delYn;
 }

@@ -3,38 +3,45 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.AdminMapper">
+    <select id="selLecture">
+        SELECT ilecture,D.lecture_name lectureNm,isemester,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,lecture_str_date strDate,lecture_end_date endDate,lecture_str_time strTime,lecture_end_time endTime
+        ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn
+            from lecture_applly A
+            INNER JOIN lecture_room B
+            ON A.ilecture_room=B.ilecture_room
+            INNER JOIN professor C
+            ON A.iprofessor=C.iprofessor
+            INNER JOIN lecture_name D
+            ON A.ilecture_name=D.ilecture_name
+        <where>
+                A.opening_procedures=#{procedures}
+            <if test="nm!=null">
+               and C.nm in (#{nm})
+            </if>
 
-    
-    <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
-        insert into professor
-        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
-        values
-        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
-    </insert>
+        </where>
+        limit #{strIdx},#{row}
 
 
-    
-
-
-    <select id="findProfessors">
-        SELECT iprofessor,major_name majorName
-                ,nm,gender,birthdate,phone,email
-                ,address,A.del_yn delYn
-        FROM professor A
-        INNER JOIN major B
-        ON A.imajor=B.imajor
-        <if test="name!=null">
-            where A.nm in (#{name})
-        </if>
-        ORDER BY A.imajor
-        LIMIT #{staIdx},10
     </select>
 
-    <select id="countProfessor" >
+    <select id="countLceture">
         select count(*)
-        from professor
+        from lecture_applly A
+        inner join professor B
+        on A.iprofessor=B.iprofessor
+       <where>
+
+               A.opening_procedures=#{procedures}
+
+           <if test="nm!=null">
+               B.nm=#{nm}
+           </if>
+
+       </where>
+
+
+
     </select>
-
-
 
 </mapper>

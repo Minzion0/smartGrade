@@ -15,6 +15,7 @@
         , lecture_room_name lectureRoomName
         , building_name buildingName , del_yn
         from lecture_room
+        LIMIT #{staIdx}, 10
     </select>
     <select id="selLectureRoomDetail">
         SELECT ilecture_room ilectureRoom
@@ -36,4 +37,9 @@
         AND lecture_room_name = #{lectureRoomName}
         AND building_name = #{buildingName}
     </update>
+
+    <select id="countLectureRoom">
+        SELECT count(*)
+        from lecture_room
+    </select>
 </mapper>
