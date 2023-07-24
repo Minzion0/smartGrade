@@ -31,11 +31,10 @@
         inner join professor B
         on A.iprofessor=B.iprofessor
        <where>
-
                A.opening_procedures=#{procedures}
 
            <if test="nm!=null">
-               B.nm=#{nm}
+              and B.nm in (#{nm})
            </if>
 
        </where>
