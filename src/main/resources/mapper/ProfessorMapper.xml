@@ -52,11 +52,28 @@
         where iprofessor = #{iprofessor}
     </update>
 
+    <select id="selProfessorLecture">
+        SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate,
+        A.lecture_str_time lectureStrTime, A.lecture_end_time lectureEndTime,
+        A.opening_procedures openingProcedures, A.grade_limit gradeLimit,
+        B.lecture_name lectureName, B.score,
+        C.lecture_room_name lectureRoomName, C.max_capacity maxCapacity,
+        D.day_week dayWeek, E.semester
+        FROM lecture_applly A
+        INNER JOIN lecture_name B
+        ON A.ilecture_name = B.ilecture_name
+        INNER JOIN lecture_room C
+        ON A.ilecture_room = C.ilecture_room
+        INNER JOIN lecture_day_week D
+        ON A.ilecture = D.ilecture
+        INNER JOIN semester E
+        ON A.isemester = E.isemester
+        WHERE A.iprofessor = #{iprofessor}
+    </select>
 
-
-
-
-
-
-
+    <select id="selProfessorLectureCount">
+        SELECT COUNT(*)
+        FROM lecture_applly
+        WHERE iprofessor = #{iprofessor}
+    </select>
 </mapper>
