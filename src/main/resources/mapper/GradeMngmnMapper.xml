@@ -28,11 +28,13 @@
         FROM lecture_name) lecture_name,
         C.score, B.attendance, B.midterm_examination,
         B.final_examination,
-        #{totalScore}
+        B.total_score, #{rating}
         FROM student A
         INNER JOIN lecture_student B
         ON A.istudent = B.istudent
         INNER JOIN student_semester_score C
         ON A.istudent = C.istudent
+        WHERE student_num = #{studentNum}
+        AND nm = #{name}
     </select>
 </mapper>

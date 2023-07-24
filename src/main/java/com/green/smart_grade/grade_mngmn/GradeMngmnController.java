@@ -1,5 +1,7 @@
 package com.green.smart_grade.grade_mngmn;
 
+import com.green.smart_grade.grade_mngmn.model.GradeMngmnDetailSelDto;
+import com.green.smart_grade.grade_mngmn.model.GradeMngmnDetailVo;
 import com.green.smart_grade.grade_mngmn.model.GradeMngmnSelDto;
 import com.green.smart_grade.grade_mngmn.model.GradeMngmnVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,5 +31,14 @@ public class GradeMngmnController {
         dto.setStudentNum(num);
         dto.setName(name);
         return SERVICE.selGradeFindStudent(dto);
+    }
+    @GetMapping("/detail")
+    @Operation(summary = "상세보기")
+    public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int num
+            , @RequestParam String name) {
+        GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
+        dto.setStudentNum(num);
+        dto.setName(name);
+        return SERVICE.selGradeFindStudentDetail(dto);
     }
 }
