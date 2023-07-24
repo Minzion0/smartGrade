@@ -40,7 +40,10 @@ public class LectureRoomController {
     }
 
     @DeleteMapping
-    @Operation(summary = "강의실 삭제 ( 삭제여부 0 1 변경 )")
+    @Operation(summary = "강의실 삭제 ( 삭제여부 0 1 변경 )", description = "" +
+            "ilectureRoom : 강의실 pk \n" +
+            "\n lectureRoomName : 강의실 호수 \n" +
+            "\n buildingName : 건물 이름")
     public LectureRoomRes delLectureRoom(@RequestParam Long ilectureRoom, @RequestParam String lectureRoomName
                                 , @RequestParam String buildingName) {
         LectureRoomDelParam p = new LectureRoomDelParam();
