@@ -39,8 +39,8 @@ public class LectureAppllyService {
         dto.setDelYn(param.getDelYn());
 
         int garedLimit = param.getGaredLimit();
-        if (garedLimit < 1 || garedLimit >= 4) {
-            // garedLimit 값이 1부터 4 사이에 없는 경우, 기본값으로 1을 설정
+        if (garedLimit < 1 || garedLimit > 5) {
+            // garedLimit 값이 1부터 5 사이에 없는 경우, 기본값으로 1을 설정
             garedLimit = 1;
         }
         dto.setGaredLimit(garedLimit);
@@ -53,7 +53,7 @@ public class LectureAppllyService {
         dto.setLectureMaxPeople(lectureMaxPeople);
 
         int openingProcedures = param.getOpeningProcedures();
-        if (openingProcedures <= 0 || openingProcedures > 4) {
+        if (openingProcedures <= 0 || openingProcedures > 5) {
             openingProcedures = 1;
         }
         dto.setOpeningProcedures(openingProcedures);

@@ -59,7 +59,7 @@ public class ProfessorController {
     }
 
     @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값 "+" 쿼리스트링")
+    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값<br> "+" 쿼리스트링")
     public String patchPicProfessor(@RequestPart MultipartFile pic, @RequestParam Long iprofessor) {
         ProfessorPicDto dto = new ProfessorPicDto();
         dto.setIprofessor(iprofessor);
@@ -69,10 +69,13 @@ public class ProfessorController {
 
     @GetMapping("/{iprofessor}")
     @Operation(summary = "본인이 강의하고 있는 강의 목록 전체")
-    public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor, @RequestParam (defaultValue = "1") int page) {
+    public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor,
+                                                @RequestParam (defaultValue = "1") int page,
+                                                @RequestParam (required = false ) String openingProcedures) {
         ProfessorSelLectureDto dto = new ProfessorSelLectureDto();
         dto.setIprofessor(iprofessor);
         dto.setPage(page);
+        dto.setOpeningProcedures(openingProcedures);
         return service.selProfessorLecture(dto);
     }
 }

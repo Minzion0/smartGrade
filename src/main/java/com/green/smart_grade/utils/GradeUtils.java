@@ -2,40 +2,63 @@ package com.green.smart_grade.utils;
 
 public class GradeUtils {
     public int totalScore;
+    public double rating;
     private final String symbol = "+";
     private String result = "";
 
     public GradeUtils(int totalScore) {
         this.totalScore = totalScore;
     }
+    public String totalRating(double rating) {
+        String symbol = "";
+        if (rating == 4.5) {
+            symbol = "A+";
+        } else if (rating == 4.0) {
+            symbol = "A";
+        } else if (rating == 3.5) {
+            symbol = "B+";
+        } else if (rating == 3.0) {
+            symbol = "B";
+        } else if (rating == 2.5) {
+            symbol = "C+";
+        } else if (rating == 2.0) {
+            symbol = "C";
+        } else if (rating == 1.5) {
+            symbol = "D+";
+        } else if (rating == 1.0) {
+            symbol = "D";
+        } else {
+            symbol = "F";
+        }
+        return symbol;
+    }
 
-
-    public String TotalScore() {
+    public double totalScore() {
         if (totalScore >= 90) {
-            result = "A";
+            rating = 4.0;
             if (totalScore > 94) {
-                return result += symbol;
+                rating = 4.5;
             }
         } else if (totalScore >= 80) {
-            result = "B";
+            rating = 3.0;
             if (totalScore > 84) {
-                return result += symbol;
+                rating = 3.5;
             }
         } else if (totalScore >= 70) {
-            result = "C";
+            rating = 2.0;
             if (totalScore > 74) {
-                return result += symbol;
+                rating = 2.5;
             }
         } else if (totalScore >= 60) {
-            result = "D";
+            rating = 1.0;
             if (totalScore >= 64) {
-                return result += symbol;
+                rating = 1.5;
             }
         } else {
-            result = "F";
+            rating = 0;
         }
 
-        return result;
+        return rating;
     }
 
 
