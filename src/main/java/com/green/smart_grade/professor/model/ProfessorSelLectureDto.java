@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
+import java.util.List;
+
 @Data
 public class ProfessorSelLectureDto {
     private int iprofessor;
     private int startIdx;
     private int page;
+    private String openingProcedures;
 }

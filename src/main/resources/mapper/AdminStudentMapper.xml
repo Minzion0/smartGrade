@@ -33,15 +33,15 @@
             ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
             ,A.finished_yn finishedYn,ifnull(B.score,0) score
         FROM student A
-        left JOIN (
-        SELECT A.istudent,SUM(B.score) score
-        FROM lecture_student A
-        INNER JOIN (
-        SELECT x.ilecture,y.score
-        FROM lecture_applly x
-        inner JOIN lecture_name y
-        ON x.ilecture_name=y.ilecture_name
-        )B
+        inner JOIN (
+            SELECT A.istudent,SUM(B.score) score
+            FROM lecture_student A
+            INNER JOIN (
+            SELECT x.ilecture,y.score
+            FROM lecture_applly x
+            inner JOIN lecture_name y
+            ON x.ilecture_name=y.ilecture_name
+         )B
         ON A.ilecture=B.ilecture
         WHERE A.finished_yn=2
         )B

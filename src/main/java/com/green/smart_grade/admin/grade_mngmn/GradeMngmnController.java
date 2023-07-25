@@ -20,16 +20,18 @@ public class GradeMngmnController {
     private final GradeMngmnService SERVICE;
 
     @GetMapping
-    @Operation(summary = "이름 학번으로 검색", description = "" +
-            "num : 학번\n" +
+    @Operation(summary = "이름 학번으로 검색 (수정 필요 현재 안됨)", description = "" +
+            "page: 페이지번호\n" +
+            "\nistudent : 학생pk\n" +
+            "\nstudenNum : 학번\n" +
             "\nname : 이름\n")
-    public GradeMngmnRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
-                        , @RequestParam int num, @RequestParam String name) {
-        GradeMngmnSelDto dto = new GradeMngmnSelDto();
-        dto.setName(name);
-        dto.setStudentNum(num);
-        return SERVICE.selGradeFindStudent(dto,page);
-
+    public GradeMngmnFindRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page , @RequestParam Long istudent
+                        , @RequestParam (required = false) String studentNum, @RequestParam (required = false) String name) {
+        GradeMngmnInsParam p = new GradeMngmnInsParam();
+        p.setIstudent(istudent);
+        p.setName(name);
+        p.setStudentNum(studentNum);
+        return SERVICE.selGradeFindStudent(p,page);
     }
     @GetMapping("/detail")
     @Operation(summary = "상세보기", description = "" +
@@ -46,9 +48,10 @@ public class GradeMngmnController {
             "평점 rating\n" +
             "\nnum : 학번\n" +
             "\nname : 이름")
-    public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int num
+    public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int istudent ,@RequestParam int num
             , @RequestParam String name) {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
+        dto.setIstudent(istudent);
         dto.setStudentNum(num);
         dto.setName(name);
         return SERVICE.selGradeFindStudentDetail(dto);
