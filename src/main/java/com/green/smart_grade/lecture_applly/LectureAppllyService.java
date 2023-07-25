@@ -1,14 +1,16 @@
 package com.green.smart_grade.lecture_applly;
 
 import com.green.smart_grade.admin.lectureroom.model.LectureRoomRes;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyInsDto;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyInsParam;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyRes;
+import com.green.smart_grade.lecture_applly.model.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -50,6 +52,13 @@ public class LectureAppllyService {
         }
         dto.setLectureMaxPeople(lectureMaxPeople);
 
+        int openingProcedures = param.getOpeningProcedures();
+        if (openingProcedures <= 0 || openingProcedures > 4) {
+            openingProcedures = 1;
+        }
+        dto.setOpeningProcedures(openingProcedures);
+
+
 
 
         int result = mapper.InsApplly(dto);
@@ -58,5 +67,11 @@ public class LectureAppllyService {
         }
         return null;
     }
+
+    List<LectureAppllyListVo> selLectureApplly(LectureAppllyListOneDto dto) {
+        dto.setIprofessor(dto.getIprofessor());
+        return mapper.selLectureApplly(dto);
+    }
+
 
 }

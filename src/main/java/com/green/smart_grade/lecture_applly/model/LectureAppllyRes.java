@@ -15,8 +15,8 @@ public class LectureAppllyRes {
     private int openingProcedures;
     private LocalDate lectureStrDate;
     private LocalDate lectureEndDate;
-    private LocalDateTime lectureStrTime;
-    private LocalDateTime lectureEndTime;
+    private String lectureStrTime;
+    private String lectureEndTime;
     private int attendance;
     private int midtermExamination;
     private int finalExamination;
