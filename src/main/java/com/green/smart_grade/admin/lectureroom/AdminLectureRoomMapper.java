@@ -12,7 +12,7 @@ public interface AdminLectureRoomMapper {
 
     List<LectureRoomVo> selLectureRoom(int staIdx);
 
-    LectureRoomDetailVo selLectureRoomDetail(LectureRoomDetailDto dto);
+    List<LectureRoomDetailVo> selLectureRoomFind(LectureRoomDetailDto dto);
 
     int delLectureRoom(LectureRoomDelDto dto);
 

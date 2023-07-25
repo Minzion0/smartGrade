@@ -38,13 +38,13 @@ public class AdminLectureRoomController {
         return SERVICE.selLectureRoom(page);
     }
 
-    @PostMapping("/detail")
-    @Operation(summary = "강의실 한개 보기 (삭제 안된것만 가능)",description = "" +
-            "\nilectureRoom : 강의실 pk\n" +
-            "\n lectureRoomName : 강의실 이름\n" +
+    @GetMapping("/detail")
+    @Operation(summary = "강의실 건물별로 보기 (삭제 안된것만 가능)",description = "" +
             "\n buildingname : 건물 이름")
-    public LectureRoomDetailVo getLectureRoomDetail(@RequestBody LectureRoomDetailDto dto) {
-        return SERVICE.selLectureRoomDetail(dto);
+    public List<LectureRoomDetailVo> getLectureRoomDetail(@RequestParam String buildingName) {
+        LectureRoomDetailDto dto = new LectureRoomDetailDto();
+        dto.setBuildingName(buildingName);
+        return SERVICE.selLectureRoomFind(dto);
     }
 
     @DeleteMapping
