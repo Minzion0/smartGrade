@@ -9,9 +9,10 @@ public class GradeMngmnVo {
     private Long istudent;
     private Long ilecture;
     private Long imajor;
-    private int studentNum;
+    private String studentNum;
     private String name;
     private char gender;
     private LocalDate birthDate;
     private int score;
+    private double rating;
 }

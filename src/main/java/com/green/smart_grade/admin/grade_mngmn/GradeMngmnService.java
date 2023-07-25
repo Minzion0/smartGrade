@@ -19,20 +19,24 @@ public class GradeMngmnService {
     private final GradeMngmnMapper MAPPER;
 
 
-    public GradeMngmnRes selGradeFindStudent(GradeMngmnSelDto dto, int page) {
+    public GradeMngmnFindRes selGradeFindStudent(GradeMngmnInsParam p, int page) {
         int maxPage = MAPPER.countGradeFindStudent();
+        GradeMngmnSelDto dto = new GradeMngmnSelDto();
         PagingUtils utils = new PagingUtils(page,maxPage);
 
-        List<GradeMngmnVo> GradeMngmn = MAPPER.selGradeFindStudent(dto, utils.getStaIdx());
-        return GradeMngmnRes.builder()
-                .GradeMngmn(GradeMngmn)
+        dto.setStudentNum(p.getStudentNum());
+        dto.setName(p.getName());
+        dto.setIstudent(p.getIstudent());
+        dto.setStrIdx(utils.getStaIdx());
+
+        List<GradeMngmnVo> gradeMngmn = MAPPER.selGradeFindStudent(dto);
+        return GradeMngmnFindRes.builder()
+                .gradeMngmn(gradeMngmn)
                 .page(utils)
                 .build();
     }
 
     public GradeMngmnDetailVo selGradeFindStudentDetail(GradeMngmnDetailSelDto dto) {
-        GradeUtils utils = new GradeUtils(dto.getTotalScore());
-        dto.setRating(utils.TotalScore());
         return MAPPER.selGradeFindStudentDetail(dto);
     }
 }
