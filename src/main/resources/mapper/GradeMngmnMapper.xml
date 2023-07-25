@@ -3,46 +3,36 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.grade_mngmn.GradeMngmnMapper">
+    <update id="updRating">
+        UPDATE student_semester_score
+        SET rating = #{rating}
+        WHERE istudent = #{istudent}
+        AND isemester = #{isemester}
+    </update>
     <select id="selGradeFindStudent">
-        SELECT A.istudent, A.ilecture
-        , B.imajor,B.student_num,
-        B.nm, B.gender, B.birthdate, C.score
-        FROM lecture_student A
-        INNER JOIN student B
+        SELECT B.istudent, B.ilecture
+        , A.imajor, A.student_num studentNum,
+        A.nm name, A.gender, A.birthdate, C.score, C.rating
+        FROM student A
+        INNER JOIN lecture_student B
         ON A.istudent = B.istudent
         INNER JOIN student_semester_score C
         ON B.istudent = C.istudent
+        WHERE A.istudent = #{istudent}
         <if test="studentNum != null">
-            WHERE B.student_num = #{studentNum}
+            AND A.student_num = #{studentNum}
         </if>
         <if test="name != null">
-            AND B.nm = #{name}
+            AND A.nm = #{name}
         </if>
-        LIMIT #{staIdx}, 7
+        LIMIT #{strIdx}, 7
     </select>
-<!--    <select id="selGradeFindStudentDetail">-->
-<!--        SELECT A.grade,-->
-<!--        (SELECT semester-->
-<!--        FROM semester-->
-<!--        WHERE C.isemester = semester.isemester) semester,-->
-<!--        (SELECT lecture_name-->
-<!--        FROM lecture_name) lecture_name,-->
-<!--        C.score, B.attendance, B.midterm_examination,-->
-<!--        B.final_examination,-->
-<!--        B.total_score, #{rating}-->
-<!--        FROM student A-->
-<!--        INNER JOIN lecture_student B-->
-<!--        ON A.istudent = B.istudent-->
-<!--        INNER JOIN student_semester_score C-->
-<!--        ON A.istudent = C.istudent-->
-<!--        WHERE student_num = #{studentNum}-->
-<!--        AND nm = #{name}-->
-<!--    </select>-->
+
     <select id="selGradeFindStudentDetail">
-        SELECT A.pic, A.nm, A.gender
+        SELECT A.pic pic, A.nm name, A.gender
         , A.birthdate, A.phone
-        , A.student_num, B.major_name
-        , A.created_at, A.email, C.score, #{rating}
+        , A.student_num, B.major_name majorName
+        , A.created_at createdAt, A.email, C.score scoreStudent, rating
         FROM student A
         INNER JOIN major B
         ON A.imajor = B.imajor
@@ -51,5 +41,10 @@
         WHERE A.istudent = #{istudent}
         AND A.student_num = #{studentNum}
         AND A.nm = #{name}
+    </select>
+
+    <select id="countGradeFindStudent">
+        SELECT count(*)
+        from student
     </select>
 </mapper>

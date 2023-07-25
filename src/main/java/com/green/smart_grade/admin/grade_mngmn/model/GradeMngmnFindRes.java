@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class GradeMngmnRes {
+public class GradeMngmnFindRes {
     private PagingUtils page;
-    private List<GradeMngmnVo> GradeMngmn;
+    private List<GradeMngmnVo> gradeMngmn;
 }
