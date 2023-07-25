@@ -13,5 +13,4 @@ public interface GradeMngmnMapper {
 
     int countGradeFindStudent();
 
-    int updRating(GradeMngmnUpdDto dto);
 }

@@ -21,12 +21,9 @@ public class GradeMngmnService {
 
     public GradeMngmnFindRes selGradeFindStudent(GradeMngmnInsParam p, int page) {
         int maxPage = MAPPER.countGradeFindStudent();
-        GradeMngmnUpdDto updDto = new GradeMngmnUpdDto();
         GradeMngmnSelDto dto = new GradeMngmnSelDto();
         PagingUtils utils = new PagingUtils(page,maxPage);
-        GradeUtils gradeUtils = new GradeUtils(updDto.getTotalScore());
 
-        updDto.setRating(gradeUtils.totalScore);
         dto.setStudentNum(p.getStudentNum());
         dto.setName(p.getName());
         dto.setIstudent(p.getIstudent());
