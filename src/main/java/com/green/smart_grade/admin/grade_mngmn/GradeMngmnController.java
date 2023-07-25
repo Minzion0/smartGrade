@@ -21,7 +21,9 @@ public class GradeMngmnController {
 
     @GetMapping
     @Operation(summary = "이름 학번으로 검색 (수정 필요 현재 안됨)", description = "" +
-            "num : 학번\n" +
+            "page: 페이지번호" +
+            "istudent : 학생pk\n" +
+            "\nstudenNum : 학번\n" +
             "\nname : 이름\n")
     public GradeMngmnFindRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page , @RequestParam Long istudent
                         , @RequestParam (required = false) String studentNum, @RequestParam (required = false) String name) {
