@@ -59,7 +59,7 @@ public class ProfessorController {
     }
 
     @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값 "+" 쿼리스트링")
+    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값<br> "+" 쿼리스트링")
     public String patchPicProfessor(@RequestPart MultipartFile pic, @RequestParam Long iprofessor) {
         ProfessorPicDto dto = new ProfessorPicDto();
         dto.setIprofessor(iprofessor);
