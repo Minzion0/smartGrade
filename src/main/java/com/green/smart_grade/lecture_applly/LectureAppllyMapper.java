@@ -1,8 +1,6 @@
 package com.green.smart_grade.lecture_applly;
 
-import com.green.smart_grade.lecture_applly.model.LectureAppllyInsDto;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyListOneDto;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyListVo;
+import com.green.smart_grade.lecture_applly.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,6 +9,8 @@ import java.util.List;
 public interface LectureAppllyMapper {
     int InsApplly(LectureAppllyInsDto dto);
 
-    List<LectureAppllyListVo> selLectureApplly(LectureAppllyListOneDto dto);
+    List<LectureAppllySelOneRes> selLectureApplly(LectureApllyT t);
+
+    int selAplly();
 
 }

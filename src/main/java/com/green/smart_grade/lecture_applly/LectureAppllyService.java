@@ -2,6 +2,7 @@ package com.green.smart_grade.lecture_applly;
 
 import com.green.smart_grade.admin.lectureroom.model.LectureRoomRes;
 import com.green.smart_grade.lecture_applly.model.*;
+import com.green.smart_grade.utils.PagingUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -68,9 +70,18 @@ public class LectureAppllyService {
         return null;
     }
 
-    List<LectureAppllyListVo> selLectureApplly(LectureAppllyListOneDto dto) {
-        dto.setIprofessor(dto.getIprofessor());
-        return mapper.selLectureApplly(dto);
+    public LectureApllySelRes selLectureApplly(int page,Long ip) {
+        int maxPage = mapper.selAplly();
+        PagingUtils utils = new PagingUtils(page,maxPage);
+
+        LectureApllyT t = new LectureApllyT();
+        t.setRow(utils.getROW());
+        t.setStartIdx(utils.getStaIdx());
+        t.setIprofessor(ip);
+
+        List<LectureAppllySelOneRes> applly = mapper.selLectureApplly(t);
+
+        return LectureApllySelRes.builder().list(applly).page(utils).build();
     }
 
 

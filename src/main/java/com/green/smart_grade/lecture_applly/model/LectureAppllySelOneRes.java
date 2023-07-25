@@ -1,13 +1,11 @@
 package com.green.smart_grade.lecture_applly.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
 import java.time.LocalDate;
 
-@Getter
-@AllArgsConstructor
-public class LectureAppllyListVo {
+@Data
+public class LectureAppllySelOneRes {
     private Long ilecture;
     private Long ilectureName;
     private Long ilectureRoom;
@@ -18,8 +16,7 @@ public class LectureAppllyListVo {
     private String lectureStrTime;
     private String lectureEndTime;
     private int lectureMaxPeople;
-    private int garedLimit;
+    private int gradeLimit;
     private int delYn;
     private int opening_procedures;
-
 }
