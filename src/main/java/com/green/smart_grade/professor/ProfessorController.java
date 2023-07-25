@@ -66,4 +66,13 @@ public class ProfessorController {
 
         return service.upPicProfessor(pic, dto);
     }
+
+    @GetMapping("/{iprofessor}")
+    @Operation(summary = "본인이 강의하고 있는 강의 목록 전체")
+    public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor, @RequestParam (defaultValue = "1") int page) {
+        ProfessorSelLectureDto dto = new ProfessorSelLectureDto();
+        dto.setIprofessor(iprofessor);
+        dto.setPage(page);
+        return service.selProfessorLecture(dto);
+    }
 }

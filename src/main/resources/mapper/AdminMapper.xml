@@ -31,17 +31,24 @@
         inner join professor B
         on A.iprofessor=B.iprofessor
        <where>
-
                A.opening_procedures=#{procedures}
 
            <if test="nm!=null">
-               B.nm=#{nm}
+              and B.nm in (#{nm})
            </if>
 
        </where>
-
-
-
     </select>
+    <insert id="lectureModify">
+        insert into leture_condition
+        set ilecture=#{ilecture}
+        ,return_ctnt=#{ctnt}
+    </insert>
 
+
+    <update id="updLecture">
+        update lecture_applly
+        set opening_procedures = #{procedures}
+        where ilecture=#{ilecture}
+    </update>
 </mapper>
