@@ -13,9 +13,13 @@
         ,#{garedLimit},#{delYn})
     </insert>
 
-
-
-
+    <select id="selLectureApplly">
+        select ilecture,ilecture_name,ilecture_room,iprofessor,isemester
+        ,lecture_str_date,lecture_end_date,lecture_str_time,lecture_end_time
+        ,lecture_max_people,grade_limit,del_yn,opening_procedures
+        from lecture_applly
+        where iprofessor = #{iprofessor} and opening_procedures = 1;
+    </select>
 
 
 </mapper>
