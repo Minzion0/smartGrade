@@ -65,4 +65,23 @@
         </if>
     </select>
 
+    <select id="studentDt">
+        SELECT A.istudent,A.student_num studentNum,C.major_name majorName,A.grade,A.nm,GROUP_CONCAT(B.ilecture)ilecture,GROUP_CONCAT(D.lecture_name)lectureName,GROUP_CONCAT(B.attendance)attendance,GROUP_CONCAT(B.midterm_examination)midtermEx,GROUP_CONCAT(B.final_examination)finalEx,GROUP_CONCAT(B.total_score)totalScore
+        FROM student A
+        INNER JOIN (
+        SELECT x.ilecture,x.ilecture_name,x.ilecture_room,y.istudent,y.attendance,y.midterm_examination,y.final_examination,y.total_score
+        FROM lecture_applly x
+        INNER JOIN lecture_student y
+        ON x.ilecture=y.ilecture
+
+        )B
+        INNER JOIN major C
+        ON A.imajor=C.imajor
+        INNER JOIN lecture_name D
+        ON D.ilecture_name=B.ilecture_name
+        WHERE A.istudent=#{istudnet}
+        GROUP BY A.istudent
+
+    </select>
+
 </mapper>
