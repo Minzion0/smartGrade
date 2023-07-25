@@ -21,5 +21,6 @@ public interface ProfessorMapper {
 
     int upPicProfessor(ProfessorPicDto dto);
     List<ProfessorSelLectureVo> selProfessorLecture(ProfessorSelLectureDto dto);
+    List<ProfessorSelLectureVo> selProfessorLectureALl(ProfessorSelLectureDto dto);
     int selProfessorLectureCount();
 }
