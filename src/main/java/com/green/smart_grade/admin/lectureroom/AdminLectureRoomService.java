@@ -41,14 +41,12 @@ public class AdminLectureRoomService {
                 .build();
     }
 
-    public LectureRoomDetailVo selLectureRoomDetail(LectureRoomDetailDto dto) {
-        return MAPPER.selLectureRoomDetail(dto);
+    public List<LectureRoomDetailVo> selLectureRoomFind(LectureRoomDetailDto dto) {
+        return MAPPER.selLectureRoomFind(dto);
     }
 
     public LectureRoomRes delLectureRoom(LectureRoomDelParam p) {
         LectureRoomDelDto dto = new LectureRoomDelDto();
-        dto.setIlectureRoom(p.getIlectureRoom());
-        dto.setLectureRoomName(p.getLectureRoomName());
         dto.setBuildingName(p.getBuildingName());
         int result = MAPPER.delLectureRoom(dto);
         if (result == 1) {

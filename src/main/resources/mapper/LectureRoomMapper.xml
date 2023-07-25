@@ -17,7 +17,7 @@
         from lecture_room
         LIMIT #{staIdx}, 10
     </select>
-    <select id="selLectureRoomDetail">
+    <select id="selLectureRoomFind">
         SELECT ilecture_room ilectureRoom
         , lecture_room_name lectureRoomName
         , building_name buildingName
@@ -25,9 +25,7 @@
         , del_yn delYn
         from lecture_room
         WHERE del_yn = 0
-        AND ilecture_room = #{ilectureRoom}
         AND building_name = #{buildingName}
-        AND lecture_room_name = #{lectureRoomName}
     </select>
 
     <update id="delLectureRoom">
