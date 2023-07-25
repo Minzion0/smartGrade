@@ -29,25 +29,19 @@
 
     <select id="findStudents">
         SELECT A.istudent,A.student_num studentNum
-            ,A.grade,A.nm,c.major_name majoirName
-            ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
-            ,A.finished_yn finishedYn,ifnull(B.score,0) score
+        ,A.grade,A.nm,c.major_name majoirName
+        ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
+        ,A.finished_yn finishedYn,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score
         FROM student A
-        inner JOIN (
-            SELECT A.istudent,SUM(B.score) score
-            FROM lecture_student A
-            INNER JOIN (
-            SELECT x.ilecture,y.score
-            FROM lecture_applly x
-            inner JOIN lecture_name y
-            ON x.ilecture_name=y.ilecture_name
-         )B
-        ON A.ilecture=B.ilecture
-        WHERE A.finished_yn=2
-        )B
+        left JOIN lecture_student B
         ON A.istudent=B.istudent
         inner JOIN major C
         ON A.imajor=C.imajor
+        left JOIN lecture_applly D
+        ON D.ilecture=B.ilecture
+        left JOIN lecture_name G
+        ON G.ilecture_name=D.ilecture_name
+        GROUP BY A.istudent
         <if test="studentNum!=null">
             WHERE A.student_num=#{studentNum}
         </if>
