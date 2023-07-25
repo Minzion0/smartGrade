@@ -3,6 +3,7 @@ package com.green.smart_grade.professor;
 import com.green.smart_grade.professor.model.*;
 import com.green.smart_grade.utils.CommonUtils;
 import com.green.smart_grade.utils.FileUtils;
+import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -102,5 +103,15 @@ public class ProfessorService {
 
     }
 
+    public SelProfessorRes selProfessorLecture(ProfessorSelLectureDto dto) {
+        int maxPage = mapper.selProfessorLectureCount();
+        PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
+        List<ProfessorSelLectureVo> list = mapper.selProfessorLecture(dto);
+
+        return SelProfessorRes.builder()
+                .list(list)
+                .page(utils)
+                .build();
+    }
 
 }

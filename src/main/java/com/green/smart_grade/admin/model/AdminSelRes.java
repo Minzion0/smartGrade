@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+
 @Getter
 @Builder
 public class AdminSelRes {
     private PagingUtils page;
-    private List<AdminSelLectureRes> lectures;
+    private List<AdminSelLectureVo> lectures;
 }

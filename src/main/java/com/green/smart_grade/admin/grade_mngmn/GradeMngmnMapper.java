@@ -6,9 +6,13 @@ import com.green.smart_grade.admin.grade_mngmn.model.GradeMngmnSelDto;
 import com.green.smart_grade.admin.grade_mngmn.model.GradeMngmnVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface GradeMngmnMapper {
-    GradeMngmnVo selGradeFindStudent(GradeMngmnSelDto dto);
+    List<GradeMngmnVo> selGradeFindStudent(GradeMngmnSelDto dto, int staIdx);
+
     GradeMngmnDetailVo selGradeFindStudentDetail(GradeMngmnDetailSelDto dto);
 
+    int countGradeFindStudent();
 }
