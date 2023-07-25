@@ -102,12 +102,18 @@ public class ProfessorService {
         return savedFilePath;
 
     }
-
     public SelProfessorRes selProfessorLecture(ProfessorSelLectureDto dto) {
         int maxPage = mapper.selProfessorLectureCount();
         PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
-        List<ProfessorSelLectureVo> list = mapper.selProfessorLecture(dto);
 
+      if (dto.getOpeningProcedures() != null) {
+          List<ProfessorSelLectureVo> list = mapper.selProfessorLecture(dto);
+          return SelProfessorRes.builder()
+                  .list(list)
+                  .page(utils)
+                  .build();
+      }
+        List<ProfessorSelLectureVo> list = mapper.selProfessorLectureALl(dto);
         return SelProfessorRes.builder()
                 .list(list)
                 .page(utils)

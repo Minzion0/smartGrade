@@ -69,10 +69,13 @@ public class ProfessorController {
 
     @GetMapping("/{iprofessor}")
     @Operation(summary = "본인이 강의하고 있는 강의 목록 전체")
-    public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor, @RequestParam (defaultValue = "1") int page) {
+    public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor,
+                                                @RequestParam (defaultValue = "1") int page,
+                                                @RequestParam (required = false ) String openingProcedures) {
         ProfessorSelLectureDto dto = new ProfessorSelLectureDto();
         dto.setIprofessor(iprofessor);
         dto.setPage(page);
+        dto.setOpeningProcedures(openingProcedures);
         return service.selProfessorLecture(dto);
     }
 }
