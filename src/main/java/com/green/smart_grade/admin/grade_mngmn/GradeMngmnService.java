@@ -22,21 +22,21 @@ public class GradeMngmnService {
     public GradeMngmnFindRes selGradeFindStudent(GradeMngmnInsParam p, int page) {
         int maxPage = MAPPER.countGradeFindStudent();
         GradeMngmnSelDto dto = new GradeMngmnSelDto();
-        PagingUtils utils = new PagingUtils(page,maxPage);
+        PagingUtils utils = new PagingUtils(page, maxPage);
 
         if (p.getStudentNum() != null) {
             dto.setStudentNum(p.getStudentNum().replaceAll(" ", ""));
         }
         if (p.getName() != null) {
             dto.setName(p.getName().replaceAll(" ", ""));
+            dto.setStaIdx(utils.getStaIdx());
         }
-        dto.setStaIdx(utils.getStaIdx());
-
         List<GradeMngmnVo> gradeMngmn = MAPPER.selGradeFindStudent(dto);
         return GradeMngmnFindRes.builder()
                 .gradeMngmn(gradeMngmn)
                 .page(utils)
                 .build();
+
     }
 
     public GradeMngmnDetailVo selGradeFindStudentDetail(GradeMngmnDetailSelDto dto) {
