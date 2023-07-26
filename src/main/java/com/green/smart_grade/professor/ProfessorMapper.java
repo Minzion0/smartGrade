@@ -23,4 +23,6 @@ public interface ProfessorMapper {
     List<ProfessorSelLectureVo> selProfessorLecture(ProfessorSelLectureDto dto);
     List<ProfessorSelLectureVo> selProfessorLectureALl(ProfessorSelLectureDto dto);
     int selProfessorLectureCount();
+
+
 }

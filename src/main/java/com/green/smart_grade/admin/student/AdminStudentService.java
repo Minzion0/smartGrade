@@ -21,6 +21,7 @@ public class AdminStudentService {
         AdminInsStudentDto dto = new AdminInsStudentDto(param);
         //이메일 유효성검사도 해야할듯?
         dto.setStudentNum(format);
+
         String rePw = dto.getBirthdate().toString().replaceAll("-", "");
         String nPw = commonUtils.encodeSha256(rePw);
         dto.setStudentPassword(nPw);

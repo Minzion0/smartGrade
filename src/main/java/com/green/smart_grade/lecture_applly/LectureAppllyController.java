@@ -1,9 +1,6 @@
 package com.green.smart_grade.lecture_applly;
 
-import com.green.smart_grade.lecture_applly.model.LectureAppllyInsParam;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyListOneDto;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyListVo;
-import com.green.smart_grade.lecture_applly.model.LectureAppllyRes;
+import com.green.smart_grade.lecture_applly.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -36,7 +33,10 @@ public class LectureAppllyController {
 
     @GetMapping
     @Operation(summary = "신청중인 강의 리스트 뽑기")
-    List<LectureAppllyListVo> getLectureApplly(LectureAppllyListOneDto dto) {
-        return service.selLectureApplly(dto);
+  public LectureApllySelRes getLectureApplly
+            (@RequestParam(defaultValue = "1") int page,@RequestParam (required = false) Long iprofessor) {
+
+
+        return service.selLectureApplly(page,iprofessor);
     }
 }

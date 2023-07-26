@@ -14,11 +14,20 @@
     </insert>
 
     <select id="selLectureApplly">
-        select ilecture,ilecture_name,ilecture_room,iprofessor,isemester
-        ,lecture_str_date,lecture_end_date,lecture_str_time,lecture_end_time
-        ,lecture_max_people,grade_limit,del_yn,opening_procedures
+        select ilecture,ilecture_name ilectureName,ilecture_room ilectureRoom,iprofessor,isemester
+        ,lecture_str_date lectureStrDate,lecture_end_date lectureEndDate,lecture_str_time lectureStrTime
+        ,lecture_end_time lectureEndTime
+        ,lecture_max_people lectureMaxPeople,grade_limit gradeLimit,del_yn delYn,opening_procedures openingProcedures
         from lecture_applly
-        where iprofessor = #{iprofessor} and opening_procedures = 1;
+        where iprofessor = #{iprofessor}
+        order by iprofessor desc
+        LIMIT #{startIdx}, #{row}
+    </select>
+
+    <select id="selAplly">
+        select count(*)
+        from lecture_applly
+        where iprofessor = #{iprofessor}
     </select>
 
 

@@ -88,6 +88,7 @@
         INNER JOIN semester E
         ON A.isemester = E.isemester
         WHERE A.iprofessor = #{iprofessor}
+
     </select>
 
     <select id="selProfessorLectureCount">
@@ -95,4 +96,25 @@
         FROM lecture_applly
         WHERE iprofessor = #{iprofessor}
     </select>
+    
+    <select id="selProfessorMngnm">
+        SELECT A.istudent ,E.imajor , F.major_name ,B.iprofessor  , E.student_num,E.nm  ,C.lecture_name , E.gender
+        ,E.phone
+        ,E.created_at,E.finished_yn , D.rating
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture = B.ilecture
+        INNER JOIN lecture_name C
+        ON B.ilecture_name = C.ilecture_name
+        INNER JOIN student_semester_score D
+        ON D.istudent = A.istudent
+        INNER JOIN student E
+        ON E.istudent = A.istudent
+        INNER JOIN major F
+        ON F.imajor = E.imajor
+
+    </select>
+    
+    
+    
 </mapper>
