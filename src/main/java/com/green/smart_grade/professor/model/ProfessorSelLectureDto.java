@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class ProfessorSelLectureDto {
     private int iprofessor;
-    private int startIdx;
+    private int staIdx;
     private int page;
     private String openingProcedures;
 }
