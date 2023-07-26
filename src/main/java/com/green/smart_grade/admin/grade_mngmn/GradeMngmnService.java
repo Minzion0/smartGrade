@@ -24,10 +24,13 @@ public class GradeMngmnService {
         GradeMngmnSelDto dto = new GradeMngmnSelDto();
         PagingUtils utils = new PagingUtils(page,maxPage);
 
-        dto.setStudentNum(p.getStudentNum());
-        dto.setName(p.getName());
-        dto.setIstudent(p.getIstudent());
-        dto.setStrIdx(utils.getStaIdx());
+        if (p.getStudentNum() != null) {
+            dto.setStudentNum(p.getStudentNum().replaceAll(" ", ""));
+        }
+        if (p.getName() != null) {
+            dto.setName(p.getName().replaceAll(" ", ""));
+        }
+        dto.setStaIdx(utils.getStaIdx());
 
         List<GradeMngmnVo> gradeMngmn = MAPPER.selGradeFindStudent(dto);
         return GradeMngmnFindRes.builder()

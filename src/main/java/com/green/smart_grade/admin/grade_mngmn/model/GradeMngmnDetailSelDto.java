@@ -7,7 +7,7 @@ public class GradeMngmnDetailSelDto {
     private int totalScore;
     private int score;
     private int istudent;
-    private int studentNum;
+    private String studentNum;
     private String name;
     private String rating;
 }
