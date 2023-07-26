@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,10 +21,11 @@ import java.util.List;
 public class BoardController {
     private final BoardService SERVICE;
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "게시판 등록")
-    public BoardInsRes insBoard (@RequestBody BoardInsParam param) {
-        return SERVICE.insBoard(param);
+    public BoardInsRes insBoard (@RequestPart BoardInsParam param,
+                                 @RequestPart(required = false) List<MultipartFile> pics) {
+        return SERVICE.insBoard(param,pics);
     }
 
     @PutMapping

@@ -11,6 +11,15 @@
         (#{iadmin},#{title}, #{ctnt}, #{importance})
     </insert>
 
+    <insert id="insBoardPic">
+        INSERT INTO board_pics
+        (iboard, pic)
+        VALUES
+        <foreach collection="list" item="item" open="(" separator="), (" close=")">
+            #{item.iboard}, #{item.pic}
+        </foreach>
+    </insert>
+
     <update id="updBoard">
         UPDATE board
         SET ctnt = #{ctnt},

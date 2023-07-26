@@ -10,6 +10,7 @@ public interface BoardMapper {
 
     // 게시판 등록 및 수정
     int insBoard (BoardInsDto dto);
+    int insBoardPic (List<BoardPicEntity> entity);
     int updBoard (BoardUpdDto dto);
 
     // 게시판 리스트 뽑기

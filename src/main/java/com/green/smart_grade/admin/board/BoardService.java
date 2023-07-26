@@ -1,11 +1,16 @@
 package com.green.smart_grade.admin.board;
 
 import com.green.smart_grade.admin.board.model.*;
+import com.green.smart_grade.utils.FileUtils;
 import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +20,26 @@ import java.util.List;
 public class BoardService {
     private final BoardMapper MAPPER;
 
-    public BoardInsRes insBoard(BoardInsParam param) {
+    @Value("${file.dir}")
+    private String fileDir;
+
+    public BoardInsRes insBoard(BoardInsParam param, List<MultipartFile> pics) {
+        int result = 0;
+
         BoardInsDto dto = new BoardInsDto();
         dto.setImportance(param.getImportance());
         dto.setCtnt(param.getCtnt());
         dto.setIadmin(param.getIadmin());
         dto.setTitle(param.getTitle());
-        int result = MAPPER.insBoard(dto);
+
+        result = MAPPER.insBoard(dto);
+
         if (result == 1) {
            return new BoardInsRes(dto);
         }
-        return null;
+        if (param.getPics() != null) {
+
+        } return null;
     }
 
     public BoardUpdRes updBoard (BoardUpdParam param) {
