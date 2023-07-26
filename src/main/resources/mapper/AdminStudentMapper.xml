@@ -41,13 +41,20 @@
         ON D.ilecture=B.ilecture
         left JOIN lecture_name G
         ON G.ilecture_name=D.ilecture_name
+        <where>
+
+            <if test="studentNum!='' and studentNum!=null">
+               and  A.student_num=#{studentNum}
+            </if>
+            <if test="grade != 0 ">
+                and  A.grade = #{grade}
+            </if>
+            <if test="nm != '' and nm != null ">
+              and   A.nm=#{nm}
+            </if>
+        </where>
+
         GROUP BY A.istudent
-        <if test="studentNum!=null">
-            WHERE A.student_num=#{studentNum}
-        </if>
-        <if test="nm != null">
-            where A.nm=#{nm}
-        </if>
         limit #{staIdx},#{row}
 
 
@@ -57,12 +64,20 @@
     <select id="countStudents">
         select count(*)
         from student
-        <if test="studentNum!=null">
-            WHERE student_num=#{studentNum}
-        </if>
-        <if test="nm != null">
-            where nm=#{nm}
-        </if>
+        <where>
+            <if test="studentNum!='' and studentNum!=null ">
+              and  student_num=#{studentNum}
+            </if>
+            <if test="nm != '' and nm != null ">
+               and  nm=#{nm}
+            </if>
+            <if test="grade >=1  ">
+             and  grade=#{grade}
+            </if>
+
+
+        </where>
+
     </select>
 
     <select id="studentDt">

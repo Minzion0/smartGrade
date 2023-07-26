@@ -1,9 +1,6 @@
 package com.green.smart_grade.admin.student;
 
-import com.green.smart_grade.admin.student.model.AdminFindStudentDto;
-import com.green.smart_grade.admin.student.model.AdminFindStudentRes;
-import com.green.smart_grade.admin.student.model.AdminIInsStudentRes;
-import com.green.smart_grade.admin.student.model.AdminInsStudentDto;
+import com.green.smart_grade.admin.student.model.*;
 import com.green.smart_grade.utils.PagingUtils;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +12,5 @@ public interface AdminStudentMapper {
     AdminIInsStudentRes selStudent(String email);
     List<AdminFindStudentRes> findStudents(AdminFindStudentDto param);
     int countStudents(AdminFindStudentDto dto);
+    AdminStudentDetalRes studentDt(Long istudent);
 }

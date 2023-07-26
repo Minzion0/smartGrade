@@ -8,4 +8,5 @@ public class AdminFindStudentDto {
     private String nm;
     private int staIdx;
     private int row;
+    private int grade;
 }
