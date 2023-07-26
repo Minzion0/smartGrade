@@ -16,6 +16,6 @@ public class ProfessorSelLectureVo {
     private int score;
     private String lectureRoomName;
     private int maxCapacity;
-    private int dayWeek;
+    private String dayWeek;
     private int semester;
 }

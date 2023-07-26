@@ -29,31 +29,32 @@
 
     <select id="findStudents">
         SELECT A.istudent,A.student_num studentNum
-            ,A.grade,A.nm,c.major_name majoirName
-            ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
-            ,A.finished_yn finishedYn,ifnull(B.score,0) score
+        ,A.grade,A.nm,c.major_name majoirName
+        ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
+        ,A.finished_yn finishedYn,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score
         FROM student A
-        inner JOIN (
-            SELECT A.istudent,SUM(B.score) score
-            FROM lecture_student A
-            INNER JOIN (
-            SELECT x.ilecture,y.score
-            FROM lecture_applly x
-            inner JOIN lecture_name y
-            ON x.ilecture_name=y.ilecture_name
-         )B
-        ON A.ilecture=B.ilecture
-        WHERE A.finished_yn=2
-        )B
+        left JOIN lecture_student B
         ON A.istudent=B.istudent
         inner JOIN major C
         ON A.imajor=C.imajor
-        <if test="studentNum!=null">
-            WHERE A.student_num=#{studentNum}
-        </if>
-        <if test="nm != null">
-            where A.nm=#{nm}
-        </if>
+        left JOIN lecture_applly D
+        ON D.ilecture=B.ilecture
+        left JOIN lecture_name G
+        ON G.ilecture_name=D.ilecture_name
+        <where>
+
+            <if test="studentNum!='' and studentNum!=null">
+               and  A.student_num=#{studentNum}
+            </if>
+            <if test="grade != 0 ">
+                and  A.grade = #{grade}
+            </if>
+            <if test="nm != '' and nm != null ">
+              and   A.nm=#{nm}
+            </if>
+        </where>
+
+        GROUP BY A.istudent
         limit #{staIdx},#{row}
 
 
@@ -63,12 +64,39 @@
     <select id="countStudents">
         select count(*)
         from student
-        <if test="studentNum!=null">
-            WHERE student_num=#{studentNum}
-        </if>
-        <if test="nm != null">
-            where nm=#{nm}
-        </if>
+        <where>
+            <if test="studentNum!='' and studentNum!=null ">
+              and  student_num=#{studentNum}
+            </if>
+            <if test="nm != '' and nm != null ">
+               and  nm=#{nm}
+            </if>
+            <if test="grade >=1  ">
+             and  grade=#{grade}
+            </if>
+
+
+        </where>
+
+    </select>
+
+    <select id="studentDt">
+        SELECT A.istudent,A.student_num studentNum,C.major_name majorName,A.grade,A.nm,GROUP_CONCAT(B.ilecture)ilecture,GROUP_CONCAT(D.lecture_name)lectureName,GROUP_CONCAT(B.attendance)attendance,GROUP_CONCAT(B.midterm_examination)midtermEx,GROUP_CONCAT(B.final_examination)finalEx,GROUP_CONCAT(B.total_score)totalScore
+        FROM student A
+        INNER JOIN (
+        SELECT x.ilecture,x.ilecture_name,x.ilecture_room,y.istudent,y.attendance,y.midterm_examination,y.final_examination,y.total_score
+        FROM lecture_applly x
+        INNER JOIN lecture_student y
+        ON x.ilecture=y.ilecture
+
+        )B
+        INNER JOIN major C
+        ON A.imajor=C.imajor
+        INNER JOIN lecture_name D
+        ON D.ilecture_name=B.ilecture_name
+        WHERE A.istudent=#{istudnet}
+        GROUP BY A.istudent
+
     </select>
 
 </mapper>
