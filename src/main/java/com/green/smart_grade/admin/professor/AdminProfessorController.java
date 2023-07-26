@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/professoor")
+@RequestMapping("/api/admin")
 @Tag(name = "관리자 교수 관리")
 public class AdminProfessorController {
 
@@ -23,7 +23,7 @@ public class AdminProfessorController {
 
     }
 
-    @GetMapping("/find/pro")
+    @GetMapping("/professor")
     @Operation(summary = "교수 검색" )
     public AdminProfessorRes findP(@RequestParam (defaultValue = "1") int page, @RequestParam (required = false) String name){
         return SERVICE.findProfessors(page,name);

@@ -17,13 +17,13 @@ public class AdminStudentController {
 
     private final AdminStudentService SERVICE;
 
-    @PostMapping("/student")
+    @PostMapping("/students")
     @Operation(summary = "학생등록")
     public AdminIInsStudentRes studentEnrollment(@RequestBody AdminInsStudentParam param){
         return SERVICE.insStudent(param);
     }
 
-    @GetMapping("/student")
+    @GetMapping("/students")
     @Operation(summary = "학생 검색", description = "학번이나 이름 둘중 하나로 찾기가능")
     public AdminStudentRes searchStudent(@RequestParam(required = false) String studentNum, @RequestParam(required = false)String nm, @RequestParam (defaultValue = "1") int page,@RequestParam (defaultValue = "0") int grade){
 
@@ -34,7 +34,7 @@ public class AdminStudentController {
         return SERVICE.findStudents(dto,page);
     }
 
-    @GetMapping("/student/{istudent}")
+    @GetMapping("/students/{istudent}")
     public AdminStudentLectureRes studentDet(@PathVariable Long istudent){
         return SERVICE.studentDet(istudent);
     }
