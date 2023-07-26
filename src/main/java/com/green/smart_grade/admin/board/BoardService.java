@@ -35,11 +35,38 @@ public class BoardService {
         result = MAPPER.insBoard(dto);
 
         if (result == 1) {
-           return new BoardInsRes(dto);
-        }
-        if (param.getPics() != null) {
+            if (pics != null) {
 
-        } return null;
+                String centerPath = String.format("boardPic/%d", dto.getIboard());
+                String targetPath = String.format("%s/%s", FileUtils.getAbsoluteDownloadPath(fileDir), centerPath);
+
+                File file = new File(targetPath);
+                if (!file.exists()) {
+                    file.mkdirs();
+                }
+                List<BoardPicEntity> list = new ArrayList<>();
+
+                for (int i = 0; i < pics.size(); i++) {
+                    String originFile = pics.get(i).getOriginalFilename();
+                    String saveName = FileUtils.makeRandomFileNm(originFile);
+
+                    File fileTarget = new File(targetPath + "/" + saveName);
+
+                    try {
+                        pics.get(i).transferTo(fileTarget);
+                    } catch (IOException e) {
+                        throw new RuntimeException("파일저장을 실패했습니다.");
+                    }
+                    BoardPicEntity picEntity = new BoardPicEntity();
+                    picEntity.setIboard(dto.getIboard());
+                    picEntity.setPic(saveName);
+                    list.add(picEntity);
+                }
+                MAPPER.insBoardPic(list);
+                return  new BoardInsRes(dto);
+            }
+        }
+        return null;
     }
 
     public BoardUpdRes updBoard (BoardUpdParam param) {

@@ -58,17 +58,30 @@
         A.opening_procedures openingProcedures, A.grade_limit gradeLimit,
         B.lecture_name lectureName, B.score,
         C.lecture_room_name lectureRoomName, C.max_capacity maxCapacity,
-        D.day_week dayWeek, E.semester
+        GROUP_CONCAT(D.day_week) dayWeek, E.semester, E.isemester
         FROM lecture_applly A
         INNER JOIN lecture_name B
         ON A.ilecture_name = B.ilecture_name
         INNER JOIN lecture_room C
         ON A.ilecture_room = C.ilecture_room
-        INNER JOIN lecture_day_week D
+        left JOIN lecture_day_week D
         ON A.ilecture = D.ilecture
         INNER JOIN semester E
         ON A.isemester = E.isemester
-        WHERE A.iprofessor = #{iprofessor} AND A.opening_procedures = #{openingProcedures}
+        <where>
+
+            <if test="iprofessor != null">
+                A.iprofessor = #{iprofessor}
+            </if>
+
+            <if test="openingProcedures != null ">
+                AND A.opening_procedures = #{openingProcedures}
+            </if>
+
+        </where>
+
+        GROUP BY A.ilecture
+        LIMIT #{staIdx}, 10
     </select>
 
     <select id="selProfessorLectureALl">
@@ -87,14 +100,23 @@
         ON A.ilecture = D.ilecture
         INNER JOIN semester E
         ON A.isemester = E.isemester
-        WHERE A.iprofessor = #{iprofessor}
-
+        WHERE A.iprofessor = #{iprofessor} and A.opening_procedures = #{openingProcedures}
     </select>
 
     <select id="selProfessorLectureCount">
         SELECT COUNT(*)
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        <where>
+
+            <if test="iprofessor != null">
+                iprofessor = #{iprofessor}
+            </if>
+
+            <if test="openingProcedures != null ">
+                AND opening_procedures = #{openingProcedures}
+            </if>
+
+        </where>
     </select>
     
     <select id="selProfessorMngnm">
