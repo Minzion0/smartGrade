@@ -25,10 +25,9 @@ public class GradeMngmnController {
             "\nistudent : 학생pk\n" +
             "\nstudenNum : 학번\n" +
             "\nname : 이름\n")
-    public GradeMngmnFindRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page , @RequestParam Long istudent
+    public GradeMngmnFindRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
                         , @RequestParam (required = false) String studentNum, @RequestParam (required = false) String name) {
         GradeMngmnInsParam p = new GradeMngmnInsParam();
-        p.setIstudent(istudent);
         p.setName(name);
         p.setStudentNum(studentNum);
         return SERVICE.selGradeFindStudent(p,page);
@@ -48,12 +47,12 @@ public class GradeMngmnController {
             "평점 rating\n" +
             "\nnum : 학번\n" +
             "\nname : 이름")
-    public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int istudent ,@RequestParam int num
+    public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int istudent ,@RequestParam String num
             , @RequestParam String name) {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
         dto.setIstudent(istudent);
-        dto.setStudentNum(num);
-        dto.setName(name);
+        dto.setStudentNum(num.replaceAll(" ","").trim());
+        dto.setName(name.replaceAll(" ","").trim());
         return SERVICE.selGradeFindStudentDetail(dto);
     }
 }

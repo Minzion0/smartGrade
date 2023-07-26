@@ -5,8 +5,7 @@ import lombok.Data;
 
 @Data
 public class GradeMngmnSelDto {
-    private Long istudent;
     private String studentNum;
     private String name;
-    private int strIdx;
+    private int staIdx;
 }

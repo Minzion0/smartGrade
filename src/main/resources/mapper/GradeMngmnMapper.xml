@@ -13,14 +13,15 @@
         ON A.istudent = B.istudent
         INNER JOIN student_semester_score C
         ON B.istudent = C.istudent
-        WHERE A.istudent = #{istudent}
-        <if test="studentNum != null">
-            AND A.student_num = #{studentNum}
+        <where>
+        <if test="studentNum != null and studentNum != ''">
+            and A.student_num = #{studentNum}
         </if>
-        <if test="name != null">
-            AND A.nm = #{name}
+        <if test="name != null and name != ''">
+            and A.nm = #{name}
         </if>
-        LIMIT #{strIdx}, 7
+        </where>
+        LIMIT #{staIdx}, 7
     </select>
 
     <select id="selGradeFindStudentDetail">

@@ -25,7 +25,7 @@ public class AdminLectureRoomService {
         dto.setMaxCapacity(p.getMaxCapacity());
         int result = MAPPER.insLectureRoom(dto);
         if (result == 1) {
-            new LectureRoomRes(dto);
+           return new LectureRoomRes(dto);
         }
         return null;
     }

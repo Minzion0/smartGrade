@@ -29,3 +29,17 @@ springdoc:
 
 file:
   dir: \home\smart_grade
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:mariadb://localhost:3306/smart_grade_test
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:init/schema.sql
+      data-locations: classpath:init/data.sql

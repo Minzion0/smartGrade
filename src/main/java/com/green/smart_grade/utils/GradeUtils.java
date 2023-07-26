@@ -6,31 +6,36 @@ public class GradeUtils {
     private final String symbol = "+";
     private String result = "";
 
+    public GradeUtils(int totalScore, double rating, String result) {
+        this.totalScore = totalScore;
+        this.rating = rating;
+        this.result = result;
+    }
+
     public GradeUtils(int totalScore) {
         this.totalScore = totalScore;
     }
     public String totalRating(double rating) {
-        String symbol = "";
         if (rating == 4.5) {
-            symbol = "A+";
+            this.result = "A+";
         } else if (rating == 4.0) {
-            symbol = "A";
+            this.result = "A";
         } else if (rating == 3.5) {
-            symbol = "B+";
+            this.result = "B+";
         } else if (rating == 3.0) {
-            symbol = "B";
+            this.result = "B";
         } else if (rating == 2.5) {
-            symbol = "C+";
+            this.result = "C+";
         } else if (rating == 2.0) {
-            symbol = "C";
+            this.result = "C";
         } else if (rating == 1.5) {
-            symbol = "D+";
+            this.result = "D+";
         } else if (rating == 1.0) {
-            symbol = "D";
+            this.result = "D";
         } else {
-            symbol = "F";
+            this.result = "F";
         }
-        return symbol;
+        return this.result;
     }
 
     public double totalScore() {
