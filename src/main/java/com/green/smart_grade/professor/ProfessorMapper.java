@@ -10,6 +10,7 @@ public interface ProfessorMapper {
     int insProfessor(ProfessorInsDto dto); // 교수 프로필
 
     List<ProfessorVo> selProfessor(ProfessorSelDto dto); //  페이지 로우 교수 리스트
+    int ProfessorCount();
 
     int upProfessorPw(ProfessorUpPW dto);
 
@@ -17,12 +18,16 @@ public interface ProfessorMapper {
 
     int upProfessor(ProfessorUpDto dto);
 
-    List<ProfessorVo> selAllProfessor(); // 교수 리스트 전체 뽑기
+    List<ProfessorVo> selAllProfessor(int staIdx); // 교수 리스트 전체 뽑기
 
     int upPicProfessor(ProfessorPicDto dto);
     List<ProfessorSelLectureVo> selProfessorLecture(ProfessorSelLectureDto dto);
     List<ProfessorSelLectureVo> selProfessorLectureALl(ProfessorSelLectureDto dto);
     int selProfessorLectureCount();
+
+
+
+
 
 
 }

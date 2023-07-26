@@ -11,10 +11,17 @@
 
 
     <select id="selProfessor">
-    select iprofessor,imajor,nm name,gender,birthdate,phone,email,address
+    select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
         from professor
+        WHERE iprofessor = #{iprofessor}
         ORDER BY iprofessor DESC
         LIMIT #{startIdx}, #{row}
+    </select>
+
+    <select id="ProfessorCount">
+        SELECT COUNT(*)
+        FROM professor
+        WHERE iprofessor = #{iprofessor}
     </select>
 
     <select id="selProfessorByUid" resultType="ProfessorLoginVo">
@@ -42,7 +49,7 @@
 
 
     <select id="selAllProfessor">
-        select iprofessor,imajor,nm name,gender,birthdate,phone,email,address
+        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
         from professor
     </select>
 

@@ -22,12 +22,10 @@ public class ProfessorController {
 
     @GetMapping("/detail")
     @Operation(summary = "교수 리스트 보기",description = "Page : 페이지,기본적으로 1부터 시작"+"row : 리스트갯수 : 기본 10개 시작")
-    public List<ProfessorVo> getProfessor(@RequestParam(defaultValue = "1") int page
-            , @RequestParam(defaultValue = "10") int row) {
-            ProfessorSelDto dto = new ProfessorSelDto();
-            dto.setPage(page);
-            dto.setRow(row);
-        return service.selProfessor(dto);
+    public professorSelRes getProfessor(@RequestParam(defaultValue = "1") int page
+            , @RequestParam(required = false) Long iprofessor) {
+
+        return service.selProfessor(page,iprofessor);
     }
 
 
@@ -54,8 +52,8 @@ public class ProfessorController {
     }
     @GetMapping
     @Operation(summary = "교수 프로필 전체 보기")
-    public List<ProfessorVo> gstAllProfessor() {
-        return service.selAllProfessor();
+    public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page) {
+        return service.selAllProfessor(page);
     }
 
     @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
