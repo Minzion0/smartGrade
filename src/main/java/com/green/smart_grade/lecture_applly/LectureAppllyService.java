@@ -60,6 +60,26 @@ public class LectureAppllyService {
         }
         dto.setOpeningProcedures(openingProcedures);
 
+        int aTT = param.getAttendance();
+        int midEX  = param.getMidtermExamination();
+        int fnEx = param.getFinalExamination();
+        int total = aTT + midEX + fnEx;
+
+        if (total != 100) {
+            double scale = 100.0 / total;
+            aTT = (int) (aTT * scale);
+            midEX = (int) (midEX * scale);
+            fnEx = (int) (fnEx * scale);
+
+            // 총 합이 100이 되지 않는 경우 부족한 값을 마지막 점수에 더함.
+            int diff = 100 - (aTT + midEX + fnEx);
+            fnEx += diff;
+        }
+
+        dto.setAttendance(aTT);
+        dto.setMidtermExamination(midEX);
+        dto.setFinalExamination(fnEx);
+
 
 
 

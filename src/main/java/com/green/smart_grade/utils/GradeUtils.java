@@ -7,9 +7,6 @@ public class GradeUtils {
     private String result = "";
 
 
-
-
-
     public GradeUtils(int totalScore) {
         this.totalScore = totalScore;
     }
