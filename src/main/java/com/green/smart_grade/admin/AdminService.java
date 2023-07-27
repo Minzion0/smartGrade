@@ -33,19 +33,10 @@ public class AdminService {
         dto.setRow(utils.getROW());
         dto.setStrIdx(utils.getStaIdx());
         List<AdminSelLectureRes> res = MAPPER.selLecture(dto);
-        List<AdminSelLectureVo> list = new ArrayList<>();
-        for (AdminSelLectureRes re : res) {
-            AdminSelLectureVo vo = new AdminSelLectureVo(re);
-            String date = String.format("%s ~ %s", re.getStrDate(), re.getEndDate());
-            LocalTime strTime = LocalTime.parse(re.getStrTime());
-            LocalTime endTime = LocalTime.parse(re.getEndTime());
-            String  time = endTime.minusHours(strTime.getHour()).toString();
-            vo.setDate(date);
-            vo.setTime(time);
-            list.add(vo);
-        }
 
-       return AdminSelRes.builder().lectures(list).page(utils).build();
+
+
+       return AdminSelRes.builder().lectures(res).page(utils).build();
 
     }
     @Transactional(rollbackFor = Exception.class)

@@ -34,7 +34,7 @@
         FROM board
         WHERE importance = 0 AND del_yn = 0
         ORDER BY createdAt DESC
-        LIMIT #{startIdx}, #{row}
+        LIMIT #{staIdx}, #{row}
     </select>
 
     <select id="selBoardImportance">
