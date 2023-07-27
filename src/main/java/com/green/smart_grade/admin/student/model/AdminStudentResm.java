@@ -3,10 +3,9 @@ package com.green.smart_grade.admin.student.model;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
-public class AdminStudentDetalRes {
+public class AdminStudentResm {
     private Long istudent;
     private String StudentNum;
     private String majorNm;
@@ -19,8 +18,10 @@ public class AdminStudentDetalRes {
     private String email;
     private String address;
     private int finishedYn;
-
-    private List<AdminStudentLectureDataRes>lectureList;
-
-
+    private String  ilecture;
+    private String lectureNm;
+    private String lectureStrDate;
+    private String lectureEndDate;
+    private String lectureStrTime;
+    private String lectureEndTime;
 }

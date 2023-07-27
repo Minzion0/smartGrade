@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class AdminStudentLectureRes {
-    private int istudent;
+    private Long istudent;
     private String studentNum;
     private String majorName;
     private int grade;
@@ -18,7 +18,7 @@ public class AdminStudentLectureRes {
     public AdminStudentLectureRes(AdminStudentDetalRes res) {
         this.istudent = res.getIstudent();
         this.studentNum = res.getStudentNum();
-        this.majorName = res.getMajorName();
+        this.majorName = res.getMajorNm();
         this.grade = res.getGrade();
         this.nm = res.getNm();
     }
