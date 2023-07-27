@@ -27,7 +27,7 @@
     <select id="selGradeFindStudentDetail">
         SELECT A.pic pic, A.nm name, A.gender
         , A.birthdate, A.phone
-        , A.student_num, B.major_name majorName
+        , A.student_num studentNum, B.major_name majorName
         , A.created_at createdAt, A.email, C.score scoreStudent, rating
         FROM student A
         INNER JOIN major B
@@ -35,8 +35,6 @@
         INNER JOIN student_semester_score C
         ON A.istudent = C.istudent
         WHERE A.istudent = #{istudent}
-        AND A.student_num = #{studentNum}
-        AND A.nm = #{name}
     </select>
 
     <select id="countGradeFindStudent">
