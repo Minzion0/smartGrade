@@ -23,6 +23,22 @@
         ORDER BY A.imajor
         LIMIT #{staIdx},10
     </select>
+    <select id="findProfessorDetail">
+        SELECT A.lecture_str_date, A.lecture_end_date
+        , A.lecture_str_time,
+        A.lecture_end_time, B.lecture_name
+        , C.nm, C.gender, C.birthdate,
+        C.phone, C.address, C.email
+        , D.major_name , C.created_at
+        FROM lecture_applly A
+        INNER JOIN lecture_name B
+        ON A.ilecture_name = B.ilecture_name
+        INNER JOIN professor C
+        ON A.iprofessor = C.iprofessor
+        INNER JOIN major D
+        ON C.imajor = D.imajor
+        WHERE C.iprofessor = {iprofessor}
+    </select>
 
     <select id="countProfessor" >
         select count(*)

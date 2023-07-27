@@ -1,15 +1,9 @@
 package com.green.smart_grade.professor.professorgradeMngmn.model;
 
-import com.green.smart_grade.utils.PagingUtils;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
-public class professorGradeMngmnUpRes {
+public class ProfessorGradeMngmnUpRes {
 
     private int attendance;
     private int midtermExamination;
@@ -20,7 +14,7 @@ public class professorGradeMngmnUpRes {
     private Long ilectureStudent;
     private Long ipofessor;
 
-    public professorGradeMngmnUpRes(professorgradeMngmnUpDto dto) {
+    public ProfessorGradeMngmnUpRes(ProfessorGradeMngmnUpDto dto) {
 
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();

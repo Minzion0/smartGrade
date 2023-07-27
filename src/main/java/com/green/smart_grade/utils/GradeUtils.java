@@ -6,11 +6,6 @@ public class GradeUtils {
     private final String symbol = "+";
     private String result = "";
 
-    public GradeUtils(int totalScore, double rating, String result) {
-        this.totalScore = totalScore;
-        this.rating = rating;
-        this.result = result;
-    }
 
     public GradeUtils(int totalScore) {
         this.totalScore = totalScore;
