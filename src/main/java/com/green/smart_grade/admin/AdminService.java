@@ -4,6 +4,7 @@ package com.green.smart_grade.admin;
 import com.green.smart_grade.admin.model.*;
 import com.green.smart_grade.utils.CommonUtils;
 
+import com.green.smart_grade.utils.GradeUtils;
 import com.green.smart_grade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -56,8 +58,82 @@ public class AdminService {
         return null;
     }
 
+    public List<AdminLectureInStudentRes> findlectureStudent(Long ilecture){
+        GradeUtils2 utils2 = new GradeUtils2();
+        List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(ilecture);
+        long str = System.currentTimeMillis();
+        log.info("시작시간 : {}",str);
+        for (AdminLectureInStudentRes res : adminLectureInStudentRes) {
+
+            GradeUtils utils = new GradeUtils(res.getTotalScore());
+            double v = utils.totalScore();
+            String s = utils.totalRating(v);
+            res.setGread(s);
+            res.setAvg(v);
+//            int score = res.getTotalScore();
+//            utils2.getGread(score);
+//            String grade = utils2.getGrade();
+//            double pp = utils2.getPp();
+//            res.setAvg(pp);
+//            res.setGread(grade);
+
+        }
+
+        long end = System.currentTimeMillis();
+        log.info("종료시간 : {}",end);
+        log.info("시간은? : {}",end-str);
+        return adminLectureInStudentRes;
+    }
+
+
 
 
 
 
 }
+
+class GradeUtils2{
+    private  double pp;
+    private  String grade;
+
+    public double getPp() {
+        return pp;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+
+    public void getGread(int totalScore){
+        int temp= totalScore/10;
+        int temp2=totalScore%10;
+        double result=0;
+        String gread="F";
+        if (temp>=9){
+            result=4.0;
+            gread="A";
+        }else if (temp>=8){
+            result= 3.0;
+            gread="B";
+        }else if (temp>=7){
+            result=2.0;
+            gread="C";
+        } else if (temp >= 6) {
+            result=1.0;
+            gread="D";
+
+        }
+
+        if (temp2>4 || totalScore== 100){
+            result+=0.5;
+            gread+="+";
+        }
+        this.pp=result;
+        this.grade=gread;
+    }
+
+
+}
+
+

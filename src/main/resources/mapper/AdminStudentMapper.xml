@@ -29,7 +29,7 @@
 
     <select id="findStudents">
         SELECT A.istudent,A.student_num studentNum
-        ,A.grade,A.nm,c.major_name majoirName
+        ,A.grade,A.nm,c.major_name majorName
         ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
         ,A.finished_yn finishedYn,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score
         FROM student A

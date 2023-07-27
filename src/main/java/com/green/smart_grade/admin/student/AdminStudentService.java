@@ -51,7 +51,6 @@ public class AdminStudentService {
 
     }
     public AdminStudentDetalRes studentDet(Long istudent){
-
             try {
                 AdminStudentDetalRes res = MAPPER.studentDt(istudent);
                 List<AdminStudentLectureDataRes> dataRes = MAPPER.studentLectures(istudent);
