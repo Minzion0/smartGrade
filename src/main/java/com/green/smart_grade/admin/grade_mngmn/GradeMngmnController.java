@@ -5,10 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/grademngmn")
@@ -32,7 +29,7 @@ public class GradeMngmnController {
         p.setStudentNum(studentNum);
         return SERVICE.selGradeFindStudent(p,page);
     }
-    @GetMapping("/detail")
+    @GetMapping("/{istudent}")
     @Operation(summary = "상세보기", description = "" +
             "사진 pic \n" +
             "이름 name \n" +
@@ -47,12 +44,9 @@ public class GradeMngmnController {
             "평점 rating\n" +
             "\nnum : 학번\n" +
             "\nname : 이름")
-    public GradeMngmnDetailVo getGradeFindStudentDetail(@RequestParam int istudent ,@RequestParam String num
-            , @RequestParam String name) {
+    public GradeMngmnDetailVo getGradeFindStudentDetail(@PathVariable int istudent) {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
         dto.setIstudent(istudent);
-        dto.setStudentNum(num.replaceAll(" ","").trim());
-        dto.setName(name.replaceAll(" ","").trim());
         return SERVICE.selGradeFindStudentDetail(dto);
     }
 }
