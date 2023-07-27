@@ -54,7 +54,7 @@ public class BoardController {
         return SERVICE.selBoardDetail(dto);
     }
 
-    @PutMapping ("/{iboard}")
+    @DeleteMapping ("/{iboard}")
     @Operation(summary = "게시판 삭제")
     public int updDelYnBoard (@PathVariable Long iboard) {
         BoardUpdYnDto dto = new BoardUpdYnDto();
