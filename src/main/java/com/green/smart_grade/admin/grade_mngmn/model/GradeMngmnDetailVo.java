@@ -1,6 +1,7 @@
 package com.green.smart_grade.admin.grade_mngmn.model;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 

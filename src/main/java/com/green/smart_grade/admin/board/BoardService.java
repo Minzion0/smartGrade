@@ -84,24 +84,23 @@ public class BoardService {
 
     public BoardRes selBoard (int page) {
         int maxPage = MAPPER.countBoard();
-        final int MAX_ROW = 3;
         int row = 10;
+        final int MAX_ROW = 3;
 
         List<BoardSelVo> list = new ArrayList<>();
         PagingUtils utils = new PagingUtils();
 
         if (selBoardImportance().size() < MAX_ROW ) {
+            utils = new PagingUtils(page, maxPage, row);
             list = MAPPER.selBoard(utils.getStaIdx(), row - selBoardImportance().size());
-            utils = new PagingUtils(page, maxPage, row);
         } else {
-            list = MAPPER.selBoard(utils.getStaIdx(), utils.getROW() - MAX_ROW);
             utils = new PagingUtils(page, maxPage, row);
+            list = MAPPER.selBoard(utils.getStaIdx(), utils.getROW() - MAX_ROW);
         }
         return BoardRes.builder()
                 .page(utils)
                 .list(list)
                 .build();
-
     }
     public List <BoardSelImportanceVo> selBoardImportance () {
        return MAPPER.selBoardImportance();

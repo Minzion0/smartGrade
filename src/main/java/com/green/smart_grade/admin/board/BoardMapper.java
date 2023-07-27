@@ -14,7 +14,7 @@ public interface BoardMapper {
     int updBoard (BoardUpdDto dto);
 
     // 게시판 리스트 뽑기
-    List<BoardSelVo> selBoard (int startIdx, int row);
+    List<BoardSelVo> selBoard (int staIdx, int row);
     List <BoardSelImportanceVo> selBoardImportance ();
     int countBoard();
     BoardSelDetailVo selByIdBoard(BoardSelDetailDto dto);
