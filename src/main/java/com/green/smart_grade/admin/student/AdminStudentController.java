@@ -35,7 +35,8 @@ public class AdminStudentController {
     }
 
     @GetMapping("/students/{istudent}")
-    public AdminStudentLectureRes studentDet(@PathVariable Long istudent){
+    @Operation(summary = "학생 디테일")
+    public AdminStudentDetalRes studentDet(@PathVariable Long istudent){
         return SERVICE.studentDet(istudent);
     }
 }

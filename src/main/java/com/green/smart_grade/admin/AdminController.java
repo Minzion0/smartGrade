@@ -25,7 +25,7 @@ public class AdminController {
 
 
 
-    @GetMapping("//lecture")
+    @GetMapping("/lecture")
     @Operation(summary = "강의 리스트")
     public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam int procedures,@RequestParam (required = false) String nm){
         AdminSelLectureParam param = new AdminSelLectureParam();
