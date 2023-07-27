@@ -80,23 +80,56 @@
 
     </select>
 
-    <select id="studentDt">
-        SELECT A.istudent,A.student_num studentNum,C.major_name majorName,A.grade,A.nm,GROUP_CONCAT(B.ilecture)ilecture,GROUP_CONCAT(D.lecture_name)lectureName,GROUP_CONCAT(B.attendance)attendance,GROUP_CONCAT(B.midterm_examination)midtermEx,GROUP_CONCAT(B.final_examination)finalEx,GROUP_CONCAT(B.total_score)totalScore
+<!--    <resultMap id="studentLectures" type="AdminStudentDetalRes">-->
+<!--        <id property="istudent" column="istudent"/>-->
+<!--        <collection property="lectureList" javaType="List" select="studentLectures" column="istudent" ofType="AdminStudentLectureDataRes"/>-->
+<!--    </resultMap>-->
+
+    <select id="studentDt" >
+        SELECT A.istudent,A.student_num studentNum,B.major_name majorNm,A.grade,A.nm,A.gender,A.pic,A.birthdate,A.phone,A.email,A.address,A.finished_yn finishedYn
         FROM student A
-        INNER JOIN (
-        SELECT x.ilecture,x.ilecture_name,x.ilecture_room,y.istudent,y.attendance,y.midterm_examination,y.final_examination,y.total_score
-        FROM lecture_applly x
-        INNER JOIN lecture_student y
-        ON x.ilecture=y.ilecture
-
-        )B
-        INNER JOIN major C
-        ON A.imajor=C.imajor
-        INNER JOIN lecture_name D
-        ON D.ilecture_name=B.ilecture_name
-        WHERE A.istudent=#{istudnet}
-        GROUP BY A.istudent
-
+        INNER JOIN major B
+        ON A.imajor=B.imajor
+        WHERE A.istudent =#{istudent}
     </select>
+
+    <select id="studentLectures" >
+        SELECT A.ilecture,B.lecture_str_date lectureStrDate,B.lecture_end_date lectureEndDate,B.lecture_str_time lectureStrTime,B.lecture_end_time lectureEndTime,C.lecture_name lectureNm
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture=B.ilecture
+        INNER JOIN lecture_name C
+        ON C.ilecture_name=B.ilecture_name
+        INNER JOIN semester D
+        ON D.isemester=B.isemester
+        WHERE A.istudent = #{istudent} AND B.isemester=(SELECT isemester FROM semester ORDER BY isemester DESC LIMIT 1)
+    </select>
+
+<!--    <select id="studentDt">-->
+<!--        SELECT A.istudent,A.student_num studentNum-->
+<!--                ,B.major_name majorNm,A.grade,A.nm,A.gender-->
+<!--                ,A.pic,A.birthdate,A.phone,A.email,A.address-->
+<!--                ,A.finished_yn finishedYn,Group_concat(D.ilecture) ilecture-->
+<!--                ,Group_concat(E.lecture_name)lectureNm-->
+<!--                ,Group_concat(D.lecture_str_time) lectureStrTime,Group_concat(D.lecture_end_time) lectureEndTime-->
+<!--                ,GROUP_CONCAT(D.lecture_str_date)lectureStrDate,GROUP_CONCAT(D.lecture_end_date)lectureEndDate-->
+<!--        FROM student A-->
+<!--        INNER JOIN major B-->
+<!--        ON A.imajor=B.imajor-->
+<!--        INNER JOIN lecture_student C-->
+<!--        ON C.istudent=A.istudent-->
+<!--        INNER JOIN lecture_applly D-->
+<!--        ON D.ilecture=C.ilecture-->
+<!--        INNER JOIN lecture_name E-->
+<!--        ON E.ilecture_name=D.ilecture_name-->
+<!--        INNER JOIN semester F-->
+<!--        ON F.isemester=D.isemester-->
+<!--        WHERE A.istudent=#{istudent}-->
+<!--        AND D.isemester= (-->
+<!--        SELECT isemester FROM semester ORDER BY isemester DESC LIMIT 0,1-->
+<!--        )-->
+<!--        GROUP BY A.istudent-->
+
+<!--    </select>-->
 
 </mapper>
