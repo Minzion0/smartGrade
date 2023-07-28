@@ -3,6 +3,7 @@ package com.green.smart_grade.security.config.security;
 import com.green.smart_grade.security.config.security.model.MyUserDetails;
 import com.green.smart_grade.security.config.security.model.UserEntity;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
