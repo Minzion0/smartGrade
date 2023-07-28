@@ -1,8 +1,6 @@
 package com.green.smart_grade.professor.professorgradeMngmn;
 
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnSelDto;
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnSelVo;
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnUpDto;
+import com.green.smart_grade.professor.professorgradeMngmn.model.*;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +16,5 @@ public interface ProfessorGradeMngmnMapper {
     int getMaxAttendance(Long iprofessor);
     int getMaxMidtermExamination(Long iprofessor);
     int getMaxFinalExamination(Long iprofessor);
+
 }
