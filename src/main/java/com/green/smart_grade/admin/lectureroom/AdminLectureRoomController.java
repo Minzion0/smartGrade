@@ -34,7 +34,12 @@ public class AdminLectureRoomController {
             "\n buildingname : 건물 이름\n" +
             "\n maxCapacity : 최대 수용인원\n" +
             "\n del_yn : 삭제여부 ")
-    public LectureRoomFindRes getLectureRoom(@RequestParam (defaultValue = ("1")) int page) {
+    public LectureRoomFindRes getLectureRoom(@RequestParam (defaultValue = ("1")) int page,
+                                             @RequestParam (required = false) String buildingName,
+                                             @RequestParam (required = false) String lectureRoomName) {
+        LectureRoomDetailDto dto = new LectureRoomDetailDto();
+        dto.setLectureRoomName(lectureRoomName);
+        dto.setBuildingName(buildingName);
         return SERVICE.selLectureRoom(page);
     }
 
