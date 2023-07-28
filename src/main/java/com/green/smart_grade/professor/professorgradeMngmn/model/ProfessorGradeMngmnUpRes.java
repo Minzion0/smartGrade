@@ -14,6 +14,7 @@ public class ProfessorGradeMngmnUpRes {
     private Long ipofessor;
     private double point;
     private String rating;
+    private Long ilecture;
     private String msg;
 
     public ProfessorGradeMngmnUpRes() {
@@ -21,7 +22,7 @@ public class ProfessorGradeMngmnUpRes {
 
 
     public ProfessorGradeMngmnUpRes(ProfessorGradeMngmnUpDto dto) {
-
+        this.ilecture = dto.getIlecture();
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();
         this.finalExamination = dto.getFinalExamination();
@@ -29,6 +30,7 @@ public class ProfessorGradeMngmnUpRes {
         this.finishedYn = dto.getFinishedYn();
         this.point = dto.getPoint();
         this.rating = dto.getRating();
+        this.ilectureStudent = dto.getIlectureStudent();
     }
 
     public void setUpDto(ProfessorGradeMngmnUpDto dto) {
@@ -39,5 +41,7 @@ public class ProfessorGradeMngmnUpRes {
         this.finishedYn = dto.getFinishedYn();
         this.point = dto.getPoint();
         this.rating = dto.getRating();
+        this.ilecture = dto.getIlecture();
+        this.ilectureStudent = dto.getIlectureStudent();
     }
 }
