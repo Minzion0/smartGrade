@@ -8,10 +8,9 @@ import java.time.LocalDate;
 public class ProfessorUpDto {
     private Long iprofessor;
     private Long imajor;
-    private String password;
-    private String name;
     private String phone;
     private String email;
     private String address;
 
 }
+

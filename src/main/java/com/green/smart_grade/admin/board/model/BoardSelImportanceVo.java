@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class BoardSelImportanceVo {
+    private Long iboard;
     private Long iadmin;
     private String title;
     private int importance;
     private LocalDateTime createdAt;
+    private int delYn;
 }

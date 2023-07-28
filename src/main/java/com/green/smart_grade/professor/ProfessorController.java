@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,39 +20,54 @@ public class ProfessorController {
     private final ProfessorService service;
 
 
-    @GetMapping
+    @GetMapping("/list")
     @Operation(summary = "교수 리스트 보기",description = "Page : 페이지,기본적으로 1부터 시작"+"row : 리스트갯수 : 기본 10개 시작")
-    public List<ProfessorVo> getProfessor(@RequestParam(defaultValue = "1") int page
-            , @RequestParam(defaultValue = "10") int row) {
-            ProfessorSelDto dto = new ProfessorSelDto();
-            dto.setPage(page);
-            dto.setRow(row);
-        return service.selProfessor(dto);
+    public professorSelRes getProfessor(@RequestParam(defaultValue = "1") int page
+            , @RequestParam(required = false) Long iprofessor) {
+
+        return service.selProfessor(page,iprofessor);
     }
 
 
-    @PatchMapping
+    @PatchMapping("/password")
     @Operation(summary = "교수 비밀번호 번경")
     public int patchProfessor(@RequestBody ProfessorUpPW dto) {
         return service.upProfessorPw(dto);
     }
 
-    @PostMapping("/login")
-    @Operation(summary = "로그인", description = "" +
-            "리턴값 : " + "(1)로그인 성공" + "(2)아이디 없음" + "(3)비밀번호 다름")
-    public int posLoginProfessor(@RequestBody ProfessorLoginDto dto) {
-        return service.selProfessorById(dto);
-    }
 
 
     @PutMapping("/{iprofessor}")
     @Operation(summary = "교수 프로필 수정")
-    public ProfessorInsRes putProfessor(@PathVariable Long iprofessor,@RequestBody ProfessorParam param) {
-        ProfessorEntity entity = new ProfessorEntity();
-        entity.setIprofessor(iprofessor);
-        return service.upProfessor(param);
+    public ProfessorUpRes putProfessor(@PathVariable Long iprofessor, @RequestBody ProfessorParam param) {
+        ProfessorParam param1 = new ProfessorParam();
+        param1.setIprofessor(iprofessor);
+        return service.upProfessor(param,iprofessor);
+    }
+    @GetMapping
+    @Operation(summary = "교수 프로필 전체 보기")
+    public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page) {
+        return service.selAllProfessor(page);
     }
 
+    @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값<br> "+" 쿼리스트링")
+    public String patchPicProfessor(@RequestPart MultipartFile pic, @RequestParam Long iprofessor) {
+        ProfessorPicDto dto = new ProfessorPicDto();
+        dto.setIprofessor(iprofessor);
 
+        return service.upPicProfessor(pic, dto);
+    }
 
+    @GetMapping("/{iprofessor}")
+    @Operation(summary = "본인이 강의하고 있는 강의 목록 전체")
+    public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor,
+                                                @RequestParam (defaultValue = "1") int page,
+                                                @RequestParam (required = false ) String openingProcedures) {
+        ProfessorSelLectureDto dto = new ProfessorSelLectureDto();
+        dto.setIprofessor(iprofessor);
+        dto.setPage(page);
+        dto.setOpeningProcedures(openingProcedures);
+        return service.selProfessorLecture(dto);
+    }
 }

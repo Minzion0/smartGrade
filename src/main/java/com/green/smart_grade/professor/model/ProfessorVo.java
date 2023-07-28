@@ -13,11 +13,10 @@ public class ProfessorVo {
     private Long imajor;
     private String name;
     private  char gender;
+    private String pic;
     private LocalDate birthdate;
     private String phone;
     private String email;
     private String address;
-
-
 
 }

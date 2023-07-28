@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.smart_grade.lectureroom.LectureRoomMapper">
+<mapper namespace="com.green.smart_grade.admin.lectureroom.AdminLectureRoomMapper">
     <insert id="insLectureRoom" useGeneratedKeys="true" keyProperty="ilectureRoom">
         INSERT INTO lecture_room
         SET lecture_room_name = #{lectureRoomName}
@@ -13,10 +13,11 @@
     <select id="selLectureRoom">
         SELECT ilecture_room ilectureRoom
         , lecture_room_name lectureRoomName
-        , building_name buildingName
+        , building_name buildingName ,del_yn delYn
         from lecture_room
+        LIMIT #{staIdx}, 10
     </select>
-    <select id="selLectureRoomDetail">
+    <select id="selLectureRoomFind">
         SELECT ilecture_room ilectureRoom
         , lecture_room_name lectureRoomName
         , building_name buildingName
@@ -24,9 +25,7 @@
         , del_yn delYn
         from lecture_room
         WHERE del_yn = 0
-        AND ilecture_room = #{ilectureRoom}
         AND building_name = #{buildingName}
-        AND lecture_room_name = #{lectureRoomName}
     </select>
 
     <update id="delLectureRoom">
@@ -36,4 +35,9 @@
         AND lecture_room_name = #{lectureRoomName}
         AND building_name = #{buildingName}
     </update>
+
+    <select id="countLectureRoom">
+        SELECT count(*)
+        from lecture_room
+    </select>
 </mapper>

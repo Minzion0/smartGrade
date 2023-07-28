@@ -11,40 +11,62 @@
         (#{iadmin},#{title}, #{ctnt}, #{importance})
     </insert>
 
+    <insert id="insBoardPic">
+        INSERT INTO board_pics
+        (iboard, pic)
+        VALUES
+        <foreach collection="list" item="item" open="(" separator="), (" close=")">
+            #{item.iboard}, #{item.pic}
+        </foreach>
+    </insert>
+
     <update id="updBoard">
         UPDATE board
         SET ctnt = #{ctnt},
         title = #{title},
-        importance = #{importance}
+        importance = #{importance},
+        updated_at = current_timestamp
         WHERE iboard = #{iboard}
     </update>
 
     <select id="selBoard">
-        SELECT iadmin, title,importance, created_at createdAt
+        SELECT iboard, iadmin, title,importance, created_at createdAt, del_yn delYn, board_view boardView
         FROM board
-        WHERE importance = 0
+        WHERE importance = 0 AND del_yn = 0
         ORDER BY createdAt DESC
+        LIMIT #{staIdx}, #{row}
     </select>
 
     <select id="selBoardImportance">
-        SELECT iadmin, title, importance, created_at createdAt
+        SELECT iboard, iadmin, title, importance, created_at createdAt, del_yn delYn, board_view boardView
         FROM board
-        WHERE importance = 1
+        WHERE importance = 1 AND del_yn = 0
         ORDER BY createdAt DESC
+        LIMIT 3
     </select>
 
 
-    <!--    <select id="selByIdBoard">-->
-    <!--        SELECT-->
-    <!--        FROM board-->
-    <!--        WHERE iboard = #{iboard}-->
-    <!--    </select>-->
+    <select id="selByIdBoard">
+        SELECT iboard, iadmin, title, ctnt, importance, created_at createdAt, del_yn delYn
+        FROM board
+        WHERE iboard = #{iboard} AND del_yn = 0
+    </select>
 
+    <select id="countBoard">
+        SELECT COUNT(*)
+        FROM board
+    </select>
 
-<!--    <update id="updDelYnBoard">-->
-<!--        UPDATE board-->
-<!--        SET-->
-<!--        WHERE-->
-<!--    </update>-->
+    <update id="updDelYnBoard">
+        UPDATE board
+        SET del_yn = 1
+        WHERE iboard = #{iboard}
+    </update>
+
+    <update id="updViewBoard">
+        UPDATE board
+        SET board_view = board_view + 1
+        WHERE iboard = #{iboard}
+    </update>
 
 </mapper>

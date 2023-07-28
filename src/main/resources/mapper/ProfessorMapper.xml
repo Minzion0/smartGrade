@@ -11,17 +11,20 @@
 
 
     <select id="selProfessor">
-    select iprofessor,imajor,nm name,gender,birthdate,phone,email,address
+    select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
         from professor
+        WHERE iprofessor = #{iprofessor}
         ORDER BY iprofessor DESC
         LIMIT #{startIdx}, #{row}
     </select>
 
-    <select id="selProfessorByUid" resultType="ProfessorLoginVo">
-        SELECT iprofessor,imajor,professor_password password, nm name, gender,birthdate,phone,email,address
+    <select id="ProfessorCount">
+        SELECT COUNT(*)
         FROM professor
         WHERE iprofessor = #{iprofessor}
     </select>
+
+
 
 
     <update id="upProfessorPw">
@@ -33,7 +36,7 @@
 
     <update id="upProfessor">
         update professor
-        set professor_password = #{password}
+        set imajor = #{imajor}
         ,phone = #{phone}
         ,email = #{email}
         ,address = #{address}
@@ -41,12 +44,102 @@
     </update>
 
 
+    <select id="selAllProfessor">
+        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
+        from professor
+    </select>
 
+    <update id="upPicProfessor">
+        update professor
+        set pic = #{pic}
+        where iprofessor = #{iprofessor}
+    </update>
 
+    <select id="selProfessorLecture">
+        SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate,
+        A.lecture_str_time lectureStrTime, A.lecture_end_time lectureEndTime,
+        A.opening_procedures openingProcedures, A.grade_limit gradeLimit,
+        B.lecture_name lectureName, B.score,
+        C.lecture_room_name lectureRoomName, C.max_capacity maxCapacity,
+        GROUP_CONCAT(D.day_week) dayWeek, E.semester, E.isemester
+        FROM lecture_applly A
+        INNER JOIN lecture_name B
+        ON A.ilecture_name = B.ilecture_name
+        INNER JOIN lecture_room C
+        ON A.ilecture_room = C.ilecture_room
+        left JOIN lecture_day_week D
+        ON A.ilecture = D.ilecture
+        INNER JOIN semester E
+        ON A.isemester = E.isemester
+        <where>
 
+            <if test="iprofessor != null">
+                A.iprofessor = #{iprofessor}
+            </if>
 
+            <if test="openingProcedures != null ">
+                AND A.opening_procedures = #{openingProcedures}
+            </if>
 
+        </where>
 
+        GROUP BY A.ilecture
+        LIMIT #{staIdx}, 10
+    </select>
 
+    <select id="selProfessorLectureALl">
+        SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate,
+        A.lecture_str_time lectureStrTime, A.lecture_end_time lectureEndTime,
+        A.opening_procedures openingProcedures, A.grade_limit gradeLimit,
+        B.lecture_name lectureName, B.score,
+        C.lecture_room_name lectureRoomName, C.max_capacity maxCapacity,
+        D.day_week dayWeek, E.semester
+        FROM lecture_applly A
+        INNER JOIN lecture_name B
+        ON A.ilecture_name = B.ilecture_name
+        INNER JOIN lecture_room C
+        ON A.ilecture_room = C.ilecture_room
+        INNER JOIN lecture_day_week D
+        ON A.ilecture = D.ilecture
+        INNER JOIN semester E
+        ON A.isemester = E.isemester
+        WHERE A.iprofessor = #{iprofessor} and A.opening_procedures = #{openingProcedures}
+    </select>
 
+    <select id="selProfessorLectureCount">
+        SELECT COUNT(*)
+        FROM lecture_applly
+        <where>
+
+            <if test="iprofessor != null">
+                iprofessor = #{iprofessor}
+            </if>
+
+            <if test="openingProcedures != null ">
+                AND opening_procedures = #{openingProcedures}
+            </if>
+
+        </where>
+    </select>
+    
+    <select id="selProfessorMngnm">
+        SELECT A.istudent ,E.imajor , F.major_name ,B.iprofessor  , E.student_num,E.nm  ,C.lecture_name , E.gender
+        ,E.phone
+        ,E.created_at,E.finished_yn , D.rating
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture = B.ilecture
+        INNER JOIN lecture_name C
+        ON B.ilecture_name = C.ilecture_name
+        INNER JOIN student_semester_score D
+        ON D.istudent = A.istudent
+        INNER JOIN student E
+        ON E.istudent = A.istudent
+        INNER JOIN major F
+        ON F.imajor = E.imajor
+
+    </select>
+    
+    
+    
 </mapper>

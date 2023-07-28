@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smart_grade.admin.student.AdminStudentMapper">
+    <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
+        insert into student
+        (   student_num, student_password, imajor, nm, gender
+        , birthdate, phone, email, address
+        )
+        VALUES
+        ( concat(#{studentNum}, LPAD(#{majorCnt}, 4, 0)), #{studentPassword}, #{imajor}, #{nm}, #{gender}
+        ,#{birthdate},#{phone},#{email},#{address}
+        )
+        <selectKey order="BEFORE" resultType="Long" keyProperty="majorCnt">
+            select IFNULL(count(imajor),0) + 1 AS majorCnt
+            from student
+            where imajor = #{imajor}
+        </selectKey>
+    </insert>
+
+    <select id="selStudent">
+        select istudent,student_num studentNum,student_password studentPassword
+        ,imajor,grade,nm,gender,pic,birthdate
+        ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
+        from student
+        where email=#{email}
+    </select>
+
+    <select id="findStudents">
+        SELECT A.istudent,A.student_num studentNum
+        ,A.grade,A.nm,c.major_name majorName
+        ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
+        ,A.finished_yn finishedYn,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score
+        FROM student A
+        left JOIN lecture_student B
+        ON A.istudent=B.istudent
+        inner JOIN major C
+        ON A.imajor=C.imajor
+        left JOIN lecture_applly D
+        ON D.ilecture=B.ilecture
+        left JOIN lecture_name G
+        ON G.ilecture_name=D.ilecture_name
+        <where>
+
+            <if test="studentNum!='' and studentNum!=null">
+               and  A.student_num=#{studentNum}
+            </if>
+            <if test="grade != 0 ">
+                and  A.grade = #{grade}
+            </if>
+            <if test="nm != '' and nm != null ">
+              and   A.nm=#{nm}
+            </if>
+            <if test="finishedYn>0">
+                and A.finished_yn=#{finishedYn}
+            </if>
+        </where>
+
+        GROUP BY A.istudent
+        limit #{staIdx},#{row}
+
+
+
+    </select>
+
+    <select id="countStudents">
+        select count(*)
+        from student
+        <where>
+            <if test="studentNum!='' and studentNum!=null ">
+              and  student_num=#{studentNum}
+            </if>
+            <if test="nm != '' and nm != null ">
+               and  nm=#{nm}
+            </if>
+            <if test="grade >=1  ">
+             and  grade=#{grade}
+            </if>
+
+
+        </where>
+
+    </select>
+
+<!--    <resultMap id="studentLectures" type="AdminStudentDetalRes">-->
+<!--        <id property="istudent" column="istudent"/>-->
+<!--        <collection property="lectureList" javaType="List" select="studentLectures" column="istudent" ofType="AdminStudentLectureDataRes"/>-->
+<!--    </resultMap>-->
+
+    <select id="studentDt" >
+        SELECT A.istudent,A.student_num studentNum,B.major_name majorNm,A.grade,A.nm,A.gender,A.pic,A.birthdate,A.phone,A.email,A.address,A.finished_yn finishedYn
+        FROM student A
+        INNER JOIN major B
+        ON A.imajor=B.imajor
+        WHERE A.istudent =#{istudent}
+    </select>
+
+    <select id="studentLectures" >
+        SELECT A.ilecture,B.lecture_str_date lectureStrDate,B.lecture_end_date lectureEndDate,B.lecture_str_time lectureStrTime,B.lecture_end_time lectureEndTime,C.lecture_name lectureNm
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture=B.ilecture
+        INNER JOIN lecture_name C
+        ON C.ilecture_name=B.ilecture_name
+        INNER JOIN semester D
+        ON D.isemester=B.isemester
+        WHERE A.istudent = #{istudent} AND B.isemester=(SELECT isemester FROM semester ORDER BY isemester DESC LIMIT 1)
+    </select>
+
+<!--    <select id="studentDt">-->
+<!--        SELECT A.istudent,A.student_num studentNum-->
+<!--                ,B.major_name majorNm,A.grade,A.nm,A.gender-->
+<!--                ,A.pic,A.birthdate,A.phone,A.email,A.address-->
+<!--                ,A.finished_yn finishedYn,Group_concat(D.ilecture) ilecture-->
+<!--                ,Group_concat(E.lecture_name)lectureNm-->
+<!--                ,Group_concat(D.lecture_str_time) lectureStrTime,Group_concat(D.lecture_end_time) lectureEndTime-->
+<!--                ,GROUP_CONCAT(D.lecture_str_date)lectureStrDate,GROUP_CONCAT(D.lecture_end_date)lectureEndDate-->
+<!--        FROM student A-->
+<!--        INNER JOIN major B-->
+<!--        ON A.imajor=B.imajor-->
+<!--        INNER JOIN lecture_student C-->
+<!--        ON C.istudent=A.istudent-->
+<!--        INNER JOIN lecture_applly D-->
+<!--        ON D.ilecture=C.ilecture-->
+<!--        INNER JOIN lecture_name E-->
+<!--        ON E.ilecture_name=D.ilecture_name-->
+<!--        INNER JOIN semester F-->
+<!--        ON F.isemester=D.isemester-->
+<!--        WHERE A.istudent=#{istudent}-->
+<!--        AND D.isemester= (-->
+<!--        SELECT isemester FROM semester ORDER BY isemester DESC LIMIT 0,1-->
+<!--        )-->
+<!--        GROUP BY A.istudent-->
+
+<!--    </select>-->
+
+</mapper>

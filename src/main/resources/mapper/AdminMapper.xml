@@ -3,82 +3,82 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.AdminMapper">
-    <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
-        insert into student
-        (   student_num, student_password, imajor, nm, gender
-          , birthdate, phone, email, address
-        )
-        VALUES
-        ( concat(#{studentNum}, LPAD(#{majorCnt}, 4, 0)), #{studentPassword}, #{imajor}, #{nm}, #{gender}
-            ,#{birthdate},#{phone},#{email},#{address}
-        )
-        <selectKey order="BEFORE" resultType="Long" keyProperty="majorCnt">
-            select IFNULL(count(imajor),0) + 1 AS majorCnt
-            from student
-            where imajor = #{imajor}
-        </selectKey>
-    </insert>
-    
-    <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
-        insert into professor
-        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
-        values
-        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
-    </insert>
+    <select id="selLecture">
+        SELECT A.ilecture,D.lecture_name lectureNm,isemester,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,lecture_str_date strDate,lecture_end_date endDate,lecture_str_time strTime,lecture_end_time endTime
+        ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn,COUNT(E.ilecture) currentPeople
+        from lecture_applly A
+        INNER JOIN lecture_room B
+        ON A.ilecture_room=B.ilecture_room
+        INNER JOIN professor C
+        ON A.iprofessor=C.iprofessor
+        INNER JOIN lecture_name D
+        ON A.ilecture_name=D.ilecture_name
+        INNER JOIN lecture_student E
+        ON E.ilecture=A.ilecture
 
-    <select id="selStudent">
-        select istudent,student_num studentNum,student_password studentPassword
-                ,imajor,grade,nm,gender,pic,birthdate
-                ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
-        from student
-        where email=#{email}
-    </select>
-    
-    <select id="findStudents">
-        SELECT A.istudent,A.student_num studentNum
-                ,A.grade,A.nm,c.major_name majoirName
-                ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
-                ,A.finished_yn finishedYn,ifnull(B.score,0) score
-        FROM student A
-            left JOIN (
-                SELECT A.istudent,SUM(B.score) score
-                FROM lecture_student A
-                INNER JOIN (
-                SELECT x.ilecture,y.score
-                FROM lecture_applly x
-                inner JOIN lecture_name y
-                ON x.ilecture_name=y.ilecture_name
-                )B
-                ON A.ilecture=B.ilecture
-                WHERE A.finished_yn=2
-            )B
-        ON A.istudent=B.istudent
-        inner JOIN major C
-        ON A.imajor=C.imajor
-        <if test="studentNum!=null">
-            WHERE A.student_num=#{studentNum} 
-        </if>
-        <if test="nm != null">
-            where A.nm=#{nm}
-        </if>
-        
-        
+        <where>
+            <if test="procedures>=0">
+                and  A.opening_procedures=#{procedures}
+            </if>
+
+            <if test="nm!=null">
+               and C.nm in (#{nm})
+            </if>
+
+
+        </where>
+        GROUP BY A.ilecture
+        limit #{strIdx},#{row}
+
+
     </select>
 
-    <select id="findProfessors">
-        SELECT iprofessor,major_name majorName,nm,gender,birthdate,phone,email,address,A.del_yn delYn
-        FROM professor A
-        INNER JOIN major B
-        ON A.imajor=B.imajor
-        ORDER BY A.imajor
-        LIMIT #{staIdx},10
+    <select id="lectureInStudent">
+        SELECT C.istudent,C.nm,D.major_name majorNm,A.attendance,A.midterm_examination minEx,A.final_examination finEx,A.total_score totalScore
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON B.ilecture=A.ilecture
+        INNER JOIN student C
+        ON C.istudent=A.istudent
+        INNER JOIN major D
+        ON D.imajor= C.imajor
+        WHERE A.ilecture=#{ilecture}
+        limit #{strIdx},#{row}
     </select>
 
-    <select id="countProfessor" >
+    <select id="lectureCountStudent">
+        SELECT COUNT(ilecture)
+        FROM lecture_student
+        WHERE ilecture=#{ilecture}
+    </select>
+
+    <select id="countLceture">
         select count(*)
-        from professor
+        from lecture_applly A
+        inner join professor B
+        on A.iprofessor=B.iprofessor
+       <where>
+           <if test="procedures>=0">
+              and A.opening_procedures=#{procedures}
+           </if>
+
+
+           <if test="nm!=null">
+              and B.nm in (#{nm})
+           </if>
+
+       </where>
     </select>
+    <insert id="lectureModify">
+        insert into leture_condition
+        set ilecture=#{ilecture}
+        ,return_ctnt=#{ctnt}
+    </insert>
 
 
-
+    <update id="updLecture">
+        update lecture_applly
+        set opening_procedures = #{procedures}
+        where ilecture=#{ilecture}
+    </update>
 </mapper>

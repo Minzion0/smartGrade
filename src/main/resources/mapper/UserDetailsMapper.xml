@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.smart_grade.security.config.security.UserDetailsMapper">
+
+    <select id="getByUid">
+        <if test="role == ROLE_ADMIN">
+            SELECT admin_Id uid, admin_password upw
+            FROM admin
+            WHERE admin_Id = #{uid}
+        </if>
+
+        <if test="role == ROLE_PROFESSOR">
+            SELECT iprofessor uid, professor_password upw
+            FROM professor
+            WHERE iprofessor = #{uid}
+        </if>
+
+        <if test="role == ROLE_USER">
+            SELECT student_num uid, student_password upw
+            FROM student
+            WHERE student_num = #{uid}
+        </if>
+    </select>
+
+    <!-- ///////////////////////////////////////// user_token /////////-->
+    <insert id="updUserToken">
+        INSERT INTO user_token
+        (iuser, ip, access_token, refresh_token)
+        VALUES
+        (#{iuser}, #{ip}, #{accessToken}, #{refreshToken})
+
+        ON DUPLICATE KEY UPDATE
+          access_token = #{accessToken}
+        , refresh_token = #{refreshToken}
+    </insert>
+
+    <select id="selUserToken">
+        SELECT iuser, ip, access_token accessToken,
+        refresh_token refreshToken, created_at createdAt,
+        updated_at updatedAt
+        FROM user_token
+        WHERE iuser = #{iuser} AND ip = #{ip}
+    </select>
+
+</mapper>

@@ -1,6 +1,7 @@
 package com.green.smart_grade.utils;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -36,5 +37,10 @@ public class FileUtils {
     public static String getAbsoluteDownloadPath(String path) {
         File file = new File(path);
         return file.getAbsolutePath();
+    }
+
+    //절대경로 리턴  이프로젝트를 실행하는 드라이브 리턴
+    public static String getAbsolutePath(String src){
+        return Paths.get(src).toFile().getAbsolutePath();
     }
 }
