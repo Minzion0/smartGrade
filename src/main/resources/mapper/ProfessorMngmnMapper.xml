@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.professor.professorgradeMngmn.ProfessorGradeMngmnMapper">
     <update id="upMngnm">
+        <![CDATA[
+
         UPDATE lecture_student A
         INNER JOIN lecture_applly B
         ON A.ilecture = B.ilecture
-        SET A.attendance =
+        SET A.finished_yn = 1,
+        A.attendance =
         CASE WHEN #{attendance} > B.attendance THEN B.attendance ELSE #{attendance} END,
         A.midterm_examination =
         CASE WHEN #{midtermExamination} > B.midterm_examination THEN B.midterm_examination ELSE #{midtermExamination} END,
@@ -21,28 +24,29 @@
         CASE
         WHEN #{finalExamination} > B.final_examination THEN B.final_examination ELSE #{finalExamination}
         END,
-        A.finished_yn = 1,
+
         A.update_at = NOW()
-        WHERE A.ilecture_student = #{ilectureStudent} AND B.iprofessor = #{ipofessor}
+        WHERE A.ilecture_student = #{ilectureStudent} AND B.iprofessor = #{ipofessor} And B.ilecture = #{ilecture}
+        ]]>
     </update>
 
 
     <select id="getMaxAttendance">
         SELECT MAX(attendance) AS maxAttendance
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        WHERE ilecture = #{ilecture};
     </select>
 
     <select id="getMaxMidtermExamination">
-        SELECT MAX(midterm_examination) AS maxMidtermExamination
+        SELECT midterm_examination AS maxMidtermExamination
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        WHERE ilecture = #{ilecture};
     </select>
 
     <select id="getMaxFinalExamination">
         SELECT MAX(final_examination) AS maxFinalExamination
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        WHERE ilecture = #{ilecture};
     </select>
 
 
@@ -82,4 +86,5 @@
         INNER JOIN lecture_applly D
         ON A.ilecture = D.ilecture;
     </select>
+    
 </mapper>

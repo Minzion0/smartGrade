@@ -1,14 +1,13 @@
 package com.green.smart_grade.professor.professorgradeMngmn;
 
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnSelDto;
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnSelRES;
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnUpParam;
-import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnUpRes;
+import com.green.smart_grade.professor.professorgradeMngmn.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/professorstudent")
@@ -21,11 +20,12 @@ public class ProfessorGradeMngmnContoller {
     @PutMapping("/{iprofessor}")
     @Operation(summary = "성적 입력")
     public ProfessorGradeMngmnUpRes putProfessorGradeMngnm(@PathVariable Long iprofessor
+                                                         , @RequestParam Long ilecture
                                                          , @RequestParam Long ilectureStudent
                                                          , @RequestBody ProfessorGradeMngmnUpParam param) {
 
 
-        return service.upMngnm(param, iprofessor, ilectureStudent);
+        return service.upMngnm(param, iprofessor, ilecture,ilectureStudent);
     }
 
     @GetMapping("/{iprofessor}")
@@ -41,4 +41,6 @@ public class ProfessorGradeMngmnContoller {
         dto.setStudentNum(studentNum);
         return service.selStudentScore(dto);
     }
+
+
 }

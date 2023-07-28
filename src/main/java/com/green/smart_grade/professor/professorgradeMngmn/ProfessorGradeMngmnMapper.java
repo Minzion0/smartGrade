@@ -15,7 +15,7 @@ public interface ProfessorGradeMngmnMapper {
     List<ProfessorGradeMngmnSelVo> selStudentScore (ProfessorGradeMngmnSelDto dto);
     int selStudentScoreCount(ProfessorGradeMngmnSelDto dto);
 
-    int getMaxAttendance(Long iprofessor);
-    int getMaxMidtermExamination(Long iprofessor);
-    int getMaxFinalExamination(Long iprofessor);
+    int getMaxAttendance(Long ilecture);
+    int getMaxMidtermExamination(Long ilecture);
+    int getMaxFinalExamination(Long ilecture);
 }
