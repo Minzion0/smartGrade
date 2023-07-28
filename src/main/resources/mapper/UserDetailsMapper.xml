@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.smart_grade.security.config.security.UserDetailsMapper">
+
+    <select id="getByUid">
+        SELECT iuser, uid, upw, name, role
+        FROM t_user
+        WHERE uid = #{uid}
+    </select>
+
+    <!-- ///////////////////////////////////////// user_token /////////-->
+    <insert id="updUserToken">
+        INSERT INTO t_user_token
+        (iuser, ip, access_token, refresh_token)
+        VALUES
+        (#{iuser}, #{ip}, #{accessToken}, #{refreshToken})
+
+        ON DUPLICATE KEY UPDATE
+          access_token = #{accessToken}
+        , refresh_token = #{refreshToken}
+    </insert>
+
+    <select id="selUserToken">
+        SELECT iuser, ip, access_token accessToken,
+        refresh_token refreshToken, created_at createdAt,
+        updated_at updatedAt
+        FROM t_user_token
+        WHERE iuser = #{iuser} AND ip = #{ip}
+    </select>
+
+</mapper>
