@@ -16,23 +16,24 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Tag(name = "학생 성적관리")
 public class ProfessorGradeMngmnContoller {
-    private  final ProfessorGradeMngmnService service;
+    private final ProfessorGradeMngmnService service;
 
     @PutMapping("/{iprofessor}")
     @Operation(summary = "성적 입력")
-    public ProfessorGradeMngmnUpRes putProfessorGradeMngnm(@PathVariable Long iprofessor, @RequestParam Long ilectureStudent, @RequestBody ProfessorGradeMngmnUpParam param) {
+    public ProfessorGradeMngmnUpRes putProfessorGradeMngnm(@PathVariable Long iprofessor
+                                                         , @RequestParam Long ilectureStudent
+                                                         , @RequestBody ProfessorGradeMngmnUpParam param) {
 
 
-
-        return service.upMngnm(param,iprofessor,ilectureStudent);
+        return service.upMngnm(param, iprofessor, ilectureStudent);
     }
 
     @GetMapping("/{iprofessor}")
     @Operation(summary = "내 강의를 듣고 있는 학생 목록")
-    public ProfessorGradeMngmnSelRES selStudentScore (@PathVariable int iprofessor,
-                                                      @RequestParam (defaultValue = "1") int page,
-                                                      @RequestParam (defaultValue = "0") int ilecture,
-                                                      @RequestParam (defaultValue = "0") int studentNum) {
+    public ProfessorGradeMngmnSelRES selStudentScore(@PathVariable int iprofessor,
+                                                     @RequestParam(defaultValue = "1") int page,
+                                                     @RequestParam(defaultValue = "0") int ilecture,
+                                                     @RequestParam(defaultValue = "0") int studentNum) {
         ProfessorGradeMngmnSelDto dto = new ProfessorGradeMngmnSelDto();
         dto.setIprofessor(iprofessor);
         dto.setPage(page);

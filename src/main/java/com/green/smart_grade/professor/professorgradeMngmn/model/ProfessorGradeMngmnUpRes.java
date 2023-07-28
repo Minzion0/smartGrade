@@ -10,9 +10,12 @@ public class ProfessorGradeMngmnUpRes {
     private int finalExamination;
     private int totalScore;
     private int finishedYn;
-
     private Long ilectureStudent;
     private Long ipofessor;
+    private double point;
+    private String rating;
+
+
 
     public ProfessorGradeMngmnUpRes(ProfessorGradeMngmnUpDto dto) {
 
@@ -21,6 +24,7 @@ public class ProfessorGradeMngmnUpRes {
         this.finalExamination = dto.getFinalExamination();
         this.totalScore = dto.getTotalScore();
         this.finishedYn = dto.getFinishedYn();
-
+        this.point = dto.getPoint();
+        this.rating = dto.getRating();
     }
 }

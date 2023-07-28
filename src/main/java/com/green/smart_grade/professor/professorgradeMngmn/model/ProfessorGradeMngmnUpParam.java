@@ -10,5 +10,6 @@ public class ProfessorGradeMngmnUpParam {
     private int finalExamination;
     private int totalScore;
     private int finishedYn;
-
+    private double point;
+    private String rating;
 }

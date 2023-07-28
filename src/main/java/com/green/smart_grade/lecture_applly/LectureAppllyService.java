@@ -24,6 +24,7 @@ public class LectureAppllyService {
 
     public LectureAppllyRes InsApplly(LectureAppllyInsParam param) {
         LectureAppllyInsDto dto = new LectureAppllyInsDto();
+
         dto.setIlectureName(param.getIlectureName());
         dto.setIlectureRoom(param.getIlectureRoom());
         dto.setIprofessor(param.getIprofessor());
@@ -33,12 +34,27 @@ public class LectureAppllyService {
         dto.setLectureEndDate(param.getLectureEndDate());
         dto.setLectureStrTime(param.getLectureStrTime());
         dto.setLectureEndTime(param.getLectureEndTime());
-        dto.setAttendance(param.getAttendance());
-        dto.setMidtermExamination(param.getMidtermExamination());
-        dto.setFinalExamination(param.getFinalExamination());
-        dto.setLectureMaxPeople(param.getLectureMaxPeople());
-        dto.setGaredLimit(param.getGaredLimit());
-        dto.setDelYn(param.getDelYn());
+
+        // 입력 값들을 가져온다
+        int attendance = param.getAttendance();
+        int midtermExamination = param.getMidtermExamination();
+        int finalExamination = param.getFinalExamination();
+
+
+        // 출석, 중간고사, 기말고사 점수의 합을 계산
+        int totalScore = attendance + midtermExamination + finalExamination;
+
+        // 합이 100을 넘는 경우 예외 처리.
+        if (totalScore > 100) {
+            throw new IllegalArgumentException("출석, 중간고사, 기말고사 점수의 합은 100을 넘을 수 없습니다.");
+        } else if (totalScore < 100) {
+            throw new IllegalArgumentException("출석, 중간고사, 기말고사 점수의 합은 100미만 일수 없습니다.");
+        }
+
+        dto.setAttendance(attendance);
+        dto.setMidtermExamination(midtermExamination);
+        dto.setFinalExamination(finalExamination);
+
 
         int garedLimit = param.getGaredLimit();
         if (garedLimit < 1 || garedLimit > 5) {
@@ -50,7 +66,7 @@ public class LectureAppllyService {
         int lectureMaxPeople = param.getLectureMaxPeople();
         // lectureMaxPeople 값이 1부터 30 사이에 없는 경우, 기본값으로 1을 설정
         if (lectureMaxPeople < 1 || lectureMaxPeople >= 30) {
-            lectureMaxPeople = 1;
+            lectureMaxPeople = 10;
         }
         dto.setLectureMaxPeople(lectureMaxPeople);
 
@@ -60,35 +76,19 @@ public class LectureAppllyService {
         }
         dto.setOpeningProcedures(openingProcedures);
 
-        int aTT = param.getAttendance();
-        int midEX  = param.getMidtermExamination();
-        int fnEx = param.getFinalExamination();
-        int total = aTT + midEX + fnEx;
-
-        if (total != 100) {
-            double scale = 100.0 / total;
-            aTT = (int) (aTT * scale);
-            midEX = (int) (midEX * scale);
-            fnEx = (int) (fnEx * scale);
-
-            // 총 합이 100이 되지 않는 경우 부족한 값을 마지막 점수에 더함.
-            int diff = 100 - (aTT + midEX + fnEx);
-            fnEx += diff;
+        try {
+            int result = mapper.InsApplly(dto);
+            if (result == 1) {
+                new LectureAppllyRes(dto);
+            }
+        } catch (IllegalArgumentException ex) {
+           ex.fillInStackTrace();
         }
 
-        dto.setAttendance(aTT);
-        dto.setMidtermExamination(midEX);
-        dto.setFinalExamination(fnEx);
-
-
-
-
-        int result = mapper.InsApplly(dto);
-        if (result == 1) {
-            new LectureAppllyRes(dto);
-        }
         return null;
+
     }
+
 
     public LectureApllySelRes selLectureApplly(int page,Long ip) {
         int maxPage = mapper.selAplly();

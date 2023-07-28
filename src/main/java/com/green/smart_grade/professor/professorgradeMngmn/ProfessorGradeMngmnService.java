@@ -20,18 +20,44 @@ public class ProfessorGradeMngmnService {
 
     public ProfessorGradeMngmnUpRes upMngnm(ProfessorGradeMngmnUpParam param, Long iprofessor, Long ilectureStudent ) {
 
-
-
         ProfessorGradeMngmnUpDto dto = new ProfessorGradeMngmnUpDto();
         dto.setIlectureStudent(ilectureStudent);
         dto.setIpofessor(iprofessor);
-        dto.setAttendance(param.getAttendance());
         dto.setFinishedYn(param.getFinishedYn());
-        dto.setMidtermExamination(param.getMidtermExamination());
-        dto.setFinalExamination(param.getFinalExamination());
-        dto.setTotalScore(param.getTotalScore());
 
 
+        int attendance = param.getAttendance();
+        int midtermExamination = param.getMidtermExamination();
+        int finalExamination = param.getFinalExamination();
+
+        // 각 점수들의 최대 값을 가져오기
+        int maxAttendance = mapper.getMaxAttendance(iprofessor);
+        int maxMidtermExamination = mapper.getMaxMidtermExamination(iprofessor);
+        int maxFinalExamination = mapper.getMaxFinalExamination(iprofessor);
+
+        try {
+            // 점수가 최대 값을 넘지 않도록 예외처리
+            if (attendance > maxAttendance) {
+                throw new IllegalArgumentException("출석 점수가 최대값을 넘을 수 없습니다.");
+            }
+            if (midtermExamination > maxMidtermExamination) {
+                throw new IllegalArgumentException("중간고사 점수가 최대값을 넘을 수 없습니다.");
+            }
+            if (finalExamination > maxFinalExamination) {
+                throw new IllegalArgumentException("기말고사 점수가 최대값을 넘을 수 없습니다.");
+            }
+
+            dto.setAttendance(attendance);
+            dto.setMidtermExamination(midtermExamination);
+            dto.setFinalExamination(finalExamination);
+
+       int point = dto.getAttendance()+dto.getMidtermExamination()+dto.getFinalExamination();
+        GradeUtils gradeUtils = new GradeUtils(point);
+        double score =  gradeUtils.totalScore();
+        String rating = gradeUtils.totalRating(score);
+        dto.setTotalScore(point);
+        dto.setPoint(point);
+        dto.setRating(rating);
 
         int result = mapper.upMngnm(dto);
         if (result == 1) {
@@ -40,9 +66,14 @@ public class ProfessorGradeMngmnService {
             res.setIlectureStudent(ilectureStudent);
             return res;
         }
-        return null;
-
+        } catch (IllegalArgumentException ex) {
+           ex.printStackTrace();
+        }
+        return  null;
     }
+
+
+
     public  ProfessorGradeMngmnSelRES selStudentScore (ProfessorGradeMngmnSelDto dto) {
         int maxPage = mapper.selStudentScoreCount(dto);
         PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
