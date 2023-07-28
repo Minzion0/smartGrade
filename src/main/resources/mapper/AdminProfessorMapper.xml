@@ -24,12 +24,12 @@
         LIMIT #{staIdx},10
     </select>
     <select id="findProfessorDetail">
-        SELECT A.lecture_str_date, A.lecture_end_date
-        , A.lecture_str_time,
-        A.lecture_end_time, B.lecture_name
-        , C.nm, C.gender, C.birthdate,
-        C.phone, C.address, C.email
-        , D.major_name , C.created_at
+        SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate
+        , A.lecture_str_time lectureStrTime,
+        A.lecture_end_time lectureEndTime, B.lecture_name lectureName
+        , C.nm name, C.gender gender, C.birthdate birthDate,
+        C.phone phone , C.address address, C.email email
+        , D.major_name majorName, C.created_at createdAt
         FROM lecture_applly A
         INNER JOIN lecture_name B
         ON A.ilecture_name = B.ilecture_name
@@ -37,7 +37,9 @@
         ON A.iprofessor = C.iprofessor
         INNER JOIN major D
         ON C.imajor = D.imajor
-        WHERE C.iprofessor = {iprofessor}
+        WHERE C.iprofessor = #{iprofessor}
+        AND A.isemester = (SELECT isemester from semester order by isemester DESC LIMIT 1)
+
     </select>
 
     <select id="countProfessor" >
@@ -45,6 +47,25 @@
         from professor
     </select>
 
+    <select id="professorProfile">
+        SELECT A.nm name, A.gender gender, A.birthdate birthDate
+        , A.phone phone, A.address address, A.email email
+        , B.major_name majorName, A.created_at createdAt
+        from professor A
+        INNER JOIN major B
+        ON A.imajor = B.imajor
+        WHERE A.iprofessor = #{iprofessor}
+
+    </select>
+    <select id="professorMajor">
+        SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate
+        , A.lecture_str_time lectureStrTime,
+        A.lecture_end_time lectureEndTime, B.lecture_name lectureName
+        from lecture_applly A
+        INNER JOIN lecture_name B
+        ON A.ilecture_name = B.ilecture_name
+        WHERE A.iprofessor = #{iprofessor}
+    </select>
 
 
 </mapper>

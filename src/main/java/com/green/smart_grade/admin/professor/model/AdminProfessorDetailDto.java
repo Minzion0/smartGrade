@@ -3,5 +3,7 @@ package com.green.smart_grade.admin.professor.model;
 import lombok.Data;
 
 @Data
-public class AdminSelProfessorDetailDto {
+public class AdminProfessorDetailDto {
+    private Long iprofessor;
+
 }

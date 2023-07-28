@@ -44,4 +44,15 @@ public class AdminProfessorService {
                 .page(pagingUtils).build();
 
     }
+
+    public AdminProfessorDetailVo findProfessorDetail(AdminProfessorDetailDto dto) {
+        List<AdminProfessorMajor> major = MAPPER.professorMajor(dto);
+        AdminProfessorDetailProfile profile = MAPPER.professorProfile(dto);
+
+        return AdminProfessorDetailVo.builder()
+                .profile(profile)
+                .majorList(major)
+                .build();
+    }
+
 }
