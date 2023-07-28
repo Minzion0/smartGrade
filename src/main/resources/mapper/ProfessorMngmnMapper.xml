@@ -3,7 +3,8 @@
 <mapper namespace="com.green.smart_grade.professor.professorgradeMngmn.ProfessorGradeMngmnMapper">
     <update id="upMngnm">
         UPDATE lecture_student A
-        INNER JOIN lecture_applly B ON A.ilecture = B.ilecture
+        INNER JOIN lecture_applly B
+        ON A.ilecture = B.ilecture
         SET A.attendance =
         CASE WHEN #{attendance} > B.attendance THEN B.attendance ELSE #{attendance} END,
         A.midterm_examination =
@@ -20,10 +21,31 @@
         CASE
         WHEN #{finalExamination} > B.final_examination THEN B.final_examination ELSE #{finalExamination}
         END,
+        correction_at = date_add(update_at, INTERVAL 14 DAY),
         A.finished_yn = 1,
         A.update_at = NOW()
         WHERE A.ilecture_student = #{ilectureStudent} AND B.iprofessor = #{ipofessor}
     </update>
+
+
+    <select id="getMaxAttendance" parameterType="long" resultType="int">
+        SELECT MAX(attendance) AS maxAttendance
+        FROM lecture_applly
+        WHERE iprofessor = #{iprofessor}
+    </select>
+
+    <select id="getMaxMidtermExamination" parameterType="long" resultType="int">
+        SELECT MAX(midterm_examination) AS maxMidtermExamination
+        FROM lecture_applly
+        WHERE iprofessor = #{iprofessor}
+    </select>
+
+    <select id="getMaxFinalExamination" parameterType="long" resultType="int">
+        SELECT MAX(final_examination) AS maxFinalExamination
+        FROM lecture_applly
+        WHERE iprofessor = #{iprofessor}
+    </select>
+
 
     <select id="selStudentScore">
         SELECT B.student_num studentNum, B.nm,
