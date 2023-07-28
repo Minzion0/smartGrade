@@ -23,9 +23,22 @@ public class GradeMngmnController {
             "\nstudenNum : 학번\n" +
             "\nname : 이름\n")
     public GradeMngmnDetailAvgVo getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
-                        , @RequestParam (required = false) String studentNum, @RequestParam (required = false) String name) {
+                        ,@RequestParam (required = false) String semester,@RequestParam (required = false) String grade, @RequestParam (required = false) String studentNum) {
         GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
-        dto.setName(name);
+        if (grade == null) {
+            int temp = 0;
+            dto.setGrade(temp);
+        } else {
+            int temp2 = Integer.parseInt(grade);
+            dto.setGrade(temp2);
+        }
+        if (semester == null) {
+            int temp = 0;
+            dto.setSemester(temp);
+        } else {
+            int temp2 = Integer.parseInt(semester);
+            dto.setSemester(temp2);
+        }
         dto.setStudentNum(studentNum);
         return SERVICE.selGradeFindStudentVo(dto,page);
     }

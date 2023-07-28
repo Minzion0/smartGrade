@@ -7,5 +7,7 @@ public class GradeMngmnAvgDto {
     private String studentNum;
     private String name;
     private int staIdx;
+    private int semester;
+    private int grade;
 
 }

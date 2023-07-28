@@ -26,10 +26,6 @@ public class GradeMngmnService {
         if (dto.getStudentNum() != null) {
             dto.setStudentNum(dto.getStudentNum().replaceAll(" ", ""));
         }
-        if (dto.getName() != null) {
-            dto.setName(dto.getName().replaceAll(" ", ""));
-            dto.setStaIdx(utils.getStaIdx());
-        }
 
         GradeMngmnAvgVo avgVo = MAPPER.GradeMngmnAvg(dto);
         List<GradeMngmnVo> student = MAPPER.selGradeFindStudent(dto);
