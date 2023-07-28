@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/grademngmn")
+@RequestMapping("/api/admin/grade")
 @RequiredArgsConstructor
 @Tag(name = "통합 성적관리")
 public class GradeMngmnController {
@@ -17,17 +17,30 @@ public class GradeMngmnController {
     private final GradeMngmnService SERVICE;
 
     @GetMapping
-    @Operation(summary = "이름 학번으로 검색 (수정 필요 현재 안됨)", description = "" +
+    @Operation(summary = "이름 학번으로 검색 ", description = "" +
             "page: 페이지번호\n" +
             "\nistudent : 학생pk\n" +
             "\nstudenNum : 학번\n" +
             "\nname : 이름\n")
-    public GradeMngmnFindRes getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
-                        , @RequestParam (required = false) String studentNum, @RequestParam (required = false) String name) {
-        GradeMngmnInsParam p = new GradeMngmnInsParam();
-        p.setName(name);
-        p.setStudentNum(studentNum);
-        return SERVICE.selGradeFindStudent(p,page);
+    public GradeMngmnDetailAvgVo getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
+                        ,@RequestParam (required = false) String semester,@RequestParam (required = false) String grade, @RequestParam (required = false) String studentNum) {
+        GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
+        if (grade == null) {
+            int temp = 0;
+            dto.setGrade(temp);
+        } else {
+            int temp2 = Integer.parseInt(grade);
+            dto.setGrade(temp2);
+        }
+        if (semester == null) {
+            int temp = 0;
+            dto.setSemester(temp);
+        } else {
+            int temp2 = Integer.parseInt(semester);
+            dto.setSemester(temp2);
+        }
+        dto.setStudentNum(studentNum);
+        return SERVICE.selGradeFindStudentVo(dto,page);
     }
     @GetMapping("/{istudent}")
     @Operation(summary = "상세보기", description = "" +
