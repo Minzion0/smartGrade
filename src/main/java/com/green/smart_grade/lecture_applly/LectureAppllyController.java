@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/lectureapplly")
+@RequestMapping("/api/professorlecture")
 @AllArgsConstructor
 @Slf4j
-@Tag(name = "강의 신청")
+@Tag(name = "교수 강의 신청")
 public class LectureAppllyController {
     private final LectureAppllyService service;
 

@@ -24,11 +24,7 @@
         WHERE iprofessor = #{iprofessor}
     </select>
 
-    <select id="selProfessorByUid" resultType="ProfessorLoginVo">
-        SELECT iprofessor,imajor,professor_password password, nm name, gender,birthdate,phone,email,address
-        FROM professor
-        WHERE iprofessor = #{iprofessor}
-    </select>
+
 
 
     <update id="upProfessorPw">

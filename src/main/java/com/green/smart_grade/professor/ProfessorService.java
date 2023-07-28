@@ -43,17 +43,6 @@ public class ProfessorService {
         return mapper.upProfessorPw(dto);
     }
 
-    public int selProfessorById(ProfessorLoginDto dto) {
-        ProfessorLoginVo vo = mapper.selProfessorByUid(dto);
-        if (vo == null) {
-            return 2;
-        }
-        String hashedPw = commonUtils.encodeSha256(dto.getPassword());
-        if (vo.getPassword().equals(hashedPw)) {
-            return 1;
-        }
-        return 3;
-    }
 
 
         public ProfessorUpRes upProfessor(ProfessorParam param,Long ip) {
