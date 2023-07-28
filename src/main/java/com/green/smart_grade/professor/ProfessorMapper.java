@@ -14,8 +14,6 @@ public interface ProfessorMapper {
 
     int upProfessorPw(ProfessorUpPW dto);
 
-    ProfessorLoginVo selProfessorByUid(ProfessorLoginDto dto);
-
     int upProfessor(ProfessorUpDto dto);
 
     List<ProfessorVo> selAllProfessor(int staIdx); // 교수 리스트 전체 뽑기

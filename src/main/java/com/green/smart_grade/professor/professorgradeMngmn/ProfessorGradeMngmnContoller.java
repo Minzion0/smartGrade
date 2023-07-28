@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/professorstudent")
+@RequestMapping("/api/professor/grade")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "학생 성적관리")
+@Tag(name = "교수 학생 성적관리")
 public class ProfessorGradeMngmnContoller {
     private final ProfessorGradeMngmnService service;
 
