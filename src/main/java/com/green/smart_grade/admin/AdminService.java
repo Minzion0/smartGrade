@@ -58,9 +58,17 @@ public class AdminService {
         return null;
     }
 
-    public List<AdminLectureInStudentRes> findlectureStudent(Long ilecture){
-        GradeUtils2 utils2 = new GradeUtils2();
-        List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(ilecture);
+    public AdminLectureStudentResm findlectureStudent(Long ilecture,int page ){
+        AdminLectureInStudentDto dto = new AdminLectureInStudentDto();
+
+        int currentPeople = MAPPER.lectureCountStudent(ilecture);
+        PagingUtils pagingUtils = new PagingUtils(page,currentPeople);
+        dto.setIlecture(ilecture);
+        dto.setRow(pagingUtils.getROW());
+        dto.setStrIdx(pagingUtils.getStaIdx());
+
+
+        List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(dto);
         long str = System.currentTimeMillis();
         log.info("시작시간 : {}",str);
         for (AdminLectureInStudentRes res : adminLectureInStudentRes) {
@@ -82,7 +90,10 @@ public class AdminService {
         long end = System.currentTimeMillis();
         log.info("종료시간 : {}",end);
         log.info("시간은? : {}",end-str);
-        return adminLectureInStudentRes;
+        AdminLectureStudentResm resm = new AdminLectureStudentResm();
+        resm.setList(adminLectureInStudentRes);
+        resm.setPage(pagingUtils);
+        return resm;
     }
 
 

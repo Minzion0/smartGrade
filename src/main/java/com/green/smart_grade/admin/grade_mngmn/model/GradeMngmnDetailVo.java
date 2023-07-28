@@ -17,5 +17,5 @@ public class GradeMngmnDetailVo {
     private LocalDate createdAt;
     private String email;
     private int scoreStudent;
-    private String rating;
+    private int graduationScore;
 }

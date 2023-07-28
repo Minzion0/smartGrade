@@ -6,12 +6,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
@@ -23,18 +24,24 @@ public class AdminController {
 
 
     @GetMapping("/lecture/{ilecture}")
-    @Operation(summary = "수강학생 리스트")
-    public List<AdminLectureInStudentRes>findProfessors(@PathVariable Long ilecture){
-        return SERVICE.findlectureStudent(ilecture);
+    @Operation(summary = "해당 강의 수강학생 리스트")
+    public AdminLectureStudentResm findProfessors(@PathVariable Long ilecture,@RequestParam(defaultValue = "1") int page){
+
+        return SERVICE.findlectureStudent(ilecture,page);
     }
 
     @GetMapping("/lecture")
     @Operation(summary = "강의 리스트")
-    public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam int procedures,@RequestParam (required = false) String nm){
+    public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam (required = false)String  procedures,@RequestParam (required = false) String nm){
         AdminSelLectureParam param = new AdminSelLectureParam();
         param.setNm(nm);
         param.setPage(page);
-        param.setProcedures(procedures);
+        if (procedures==null){
+            int i = -1;
+            param.setProcedures(i);
+        }else {
+            param.setProcedures(Integer.parseInt(procedures));
+        }
         return SERVICE.selLecture(param);
     }
 

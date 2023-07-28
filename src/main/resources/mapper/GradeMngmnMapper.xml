@@ -13,13 +13,18 @@
         ON A.istudent = B.istudent
         INNER JOIN student_semester_score C
         ON B.istudent = C.istudent
+        INNER JOIN semester D
+        ON C.isemester = D.isemester
         <where>
+            <if test="semester > 0">
+                and D.semester = #{semester}
+            </if>
         <if test="studentNum != null and studentNum != ''">
             and A.student_num = #{studentNum}
         </if>
-        <if test="name != null and name != ''">
-            and A.nm = #{name}
-        </if>
+            <if test="grade > 0">
+                and A.grade = #{grade}
+            </if>
         </where>
         LIMIT #{staIdx}, 7
     </select>
@@ -28,17 +33,72 @@
         SELECT A.pic pic, A.nm name, A.gender
         , A.birthdate, A.phone
         , A.student_num studentNum, B.major_name majorName
-        , A.created_at createdAt, A.email, C.score scoreStudent, rating
+        , A.created_at createdAt, A.email,
+        sum(C.score) scoreStudent, B.graduation_score graduationScore
+        , A.grade grade, C.isemester isemester, B.ilecture ilecture
+        , A.student_num studentNum, C.avg_score avgScore, avg(C.rating) rating
         FROM student A
         INNER JOIN major B
         ON A.imajor = B.imajor
         INNER JOIN student_semester_score C
         ON A.istudent = C.istudent
-        WHERE A.istudent = #{istudent}
+        WHERE A.istudent = #{istudent};
     </select>
 
     <select id="countGradeFindStudent">
         SELECT count(*)
         from student
+    </select>
+
+    <select id="GradeMngmnAvg">
+        SELECT A.grade grade ,C.isemester isemester
+        , B.ilecture ilecture, A.student_num studentNum
+        , C.avg_score avgScore, avg(C.rating) rating
+        FROM student A
+        INNER JOIN lecture_student B
+        ON A.istudent = B.istudent
+        INNER JOIN student_semester_score C
+        ON B.istudent = C.istudent
+        INNER JOIN semester D
+        ON C.isemester = D.isemester
+        <where>
+            <if test="semester != null and semester != ''">
+                and D.semester = #{semester}
+            </if>
+            <if test="studentNum != null and studentNum != ''">
+                and A.student_num = #{studentNum}
+            </if>
+            <if test="grade != null and grade != ''">
+                and A.grade = #{grade}
+            </if>
+        </where>
+    </select>
+
+    <select id="selGradeFindStudentVo">
+        SELECT B.istudent istudent, B.ilecture ilecture
+        , A.imajor imajor, A.student_num studentNum,
+        A.nm name, A.gender gender, A.birthdate birthDate
+        , C.score score, C.rating, A.grade grade ,C.isemester isemester
+        , B.ilecture ilecture, A.student_num studentNum
+        , avg(C.avg_score) avgScore, avg(C.rating) rating
+        FROM student A
+        INNER JOIN lecture_student B
+        ON A.istudent = B.istudent
+        INNER JOIN student_semester_score C
+        ON B.istudent = C.istudent
+        INNER JOIN semester D
+        ON C.isemester = D.isemester
+        <where>
+            <if test="semester != null and semester != ''">
+                and D.semester = #{semester}
+            </if>
+            <if test="studentNum != null and studentNum != ''">
+                and A.student_num = #{studentNum}
+            </if>
+            <if test="grade != null and grade != ''">
+                and A.grade = #{grade}
+            </if>
+        </where>
+        LIMIT #{staIdx}, 7
     </select>
 </mapper>

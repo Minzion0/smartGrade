@@ -38,6 +38,8 @@ spring:
       on-profile: test
   datasource:
     url: jdbc:mariadb://localhost:3306/smart_grade_test
+    username: root
+    password: green502
   sql:
     init:
       mode: always
