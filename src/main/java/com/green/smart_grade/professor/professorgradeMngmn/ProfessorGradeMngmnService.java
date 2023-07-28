@@ -18,7 +18,7 @@ public class ProfessorGradeMngmnService {
     private final ProfessorGradeMngmnMapper mapper;
 
 
-    public ProfessorGradeMngmnUpRes upMngnm(ProfessorGradeMngmnUpParam param, Long iprofessor, Long ilectureStudent ) {
+    public ProfessorGradeMngmnUpRes upMngnm(ProfessorGradeMngmnUpParam param, Long iprofessor, Long ilecture ) {
 
         ProfessorGradeMngmnUpDto dto = new ProfessorGradeMngmnUpDto();
         String msg="";
@@ -26,7 +26,7 @@ public class ProfessorGradeMngmnService {
 
 
 
-        dto.setIlectureStudent(ilectureStudent);
+        dto.setIlecture(ilecture);
         dto.setIpofessor(iprofessor);
         dto.setFinishedYn(param.getFinishedYn());
 
@@ -37,9 +37,9 @@ public class ProfessorGradeMngmnService {
 
 
         // 각 점수들의 최대 값을 가져오기
-        int maxAttendance = mapper.getMaxAttendance(iprofessor);
-        int maxMidtermExamination = mapper.getMaxMidtermExamination(iprofessor);
-        int maxFinalExamination = mapper.getMaxFinalExamination(iprofessor);
+        int maxAttendance = mapper.getMaxAttendance(ilecture);
+        int maxMidtermExamination = mapper.getMaxMidtermExamination(ilecture);
+        int maxFinalExamination = mapper.getMaxFinalExamination(ilecture);
 
 
             // 점수가 최대 값을 넘지 않도록 예외처리
@@ -76,7 +76,7 @@ public class ProfessorGradeMngmnService {
         if (result == 1) {
             res = new ProfessorGradeMngmnUpRes(dto);
             res.setIpofessor(iprofessor);
-            res.setIlectureStudent(ilectureStudent);
+            res.setIlecture(ilecture);
             return res;
         }
         } catch (IllegalArgumentException ex) {

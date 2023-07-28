@@ -13,4 +13,5 @@ public class ProfessorGradeMngmnUpDto {
     private Long ipofessor;
     private double point;
     private String rating;
+    private Long ilecture;
 }

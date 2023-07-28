@@ -30,19 +30,19 @@
     <select id="getMaxAttendance">
         SELECT MAX(attendance) AS maxAttendance
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        WHERE ilecture = #{ilecture};
     </select>
 
     <select id="getMaxMidtermExamination">
-        SELECT MAX(midterm_examination) AS maxMidtermExamination
+        SELECT midterm_examination AS maxMidtermExamination
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        WHERE ilecture = #{ilecture};
     </select>
 
     <select id="getMaxFinalExamination">
         SELECT MAX(final_examination) AS maxFinalExamination
         FROM lecture_applly
-        WHERE iprofessor = #{iprofessor}
+        WHERE ilecture = #{ilecture};
     </select>
 
 

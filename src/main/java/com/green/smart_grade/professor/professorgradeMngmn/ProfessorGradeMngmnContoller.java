@@ -21,11 +21,11 @@ public class ProfessorGradeMngmnContoller {
     @PutMapping("/{iprofessor}")
     @Operation(summary = "성적 입력")
     public ProfessorGradeMngmnUpRes putProfessorGradeMngnm(@PathVariable Long iprofessor
-                                                         , @RequestParam Long ilectureStudent
+                                                         , @RequestParam Long ilecture
                                                          , @RequestBody ProfessorGradeMngmnUpParam param) {
 
 
-        return service.upMngnm(param, iprofessor, ilectureStudent);
+        return service.upMngnm(param, iprofessor, ilecture);
     }
 
     @GetMapping("/{iprofessor}")
