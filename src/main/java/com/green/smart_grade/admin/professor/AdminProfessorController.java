@@ -29,7 +29,7 @@ public class AdminProfessorController {
         return SERVICE.findProfessors(page, name);
     }
 
-    @GetMapping("/{iprofessor}")
+    @GetMapping("/professor/{iprofessor}")
     @Operation(summary = "교수 상세보기")
     public AdminProfessorDetailVo findProfessorDetail(@PathVariable Long iprofessor) {
         AdminProfessorDetailDto dto = new AdminProfessorDetailDto();

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin/grade")
 @RequiredArgsConstructor
-@Tag(name = "통합 성적관리")
+@Tag(name = "관리자 통합 성적관리")
 public class GradeMngmnController {
 
     @Autowired

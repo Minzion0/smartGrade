@@ -39,10 +39,6 @@ public class AdminMajorService {
                 .build();
     }
 
-    public MajorVo selMajorDetail(MajorDetailDto dto) {
-        return MAPPER.selMajorDetail(dto);
-    }
-
     public int delMajor(MajorDelDto dto) {
         return MAPPER.delMajor(dto);
     }

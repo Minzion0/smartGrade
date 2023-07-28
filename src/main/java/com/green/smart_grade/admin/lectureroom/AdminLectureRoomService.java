@@ -41,9 +41,7 @@ public class AdminLectureRoomService {
                 .build();
     }
 
-    public List<LectureRoomDetailVo> selLectureRoomFind(LectureRoomDetailDto dto) {
-        return MAPPER.selLectureRoomFind(dto);
-    }
+
 
     public LectureRoomRes delLectureRoom(LectureRoomDelParam p) {
         LectureRoomDelDto dto = new LectureRoomDelDto();

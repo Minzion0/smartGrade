@@ -12,8 +12,6 @@ public interface AdminLectureRoomMapper {
 
     List<LectureRoomVo> selLectureRoom(int staIdx);
 
-    List<LectureRoomDetailVo> selLectureRoomFind(LectureRoomDetailDto dto);
-
     int delLectureRoom(LectureRoomDelDto dto);
 
     int countLectureRoom();

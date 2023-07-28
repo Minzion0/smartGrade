@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/lectureroom")
 @RequiredArgsConstructor
-@Tag(name = "강의실 관리")
+@Tag(name = "관리자 강의실 관리")
 public class AdminLectureRoomController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class AdminLectureRoomController {
     }
 
     @GetMapping
-    @Operation(summary = "강의실 리스트 전체 보기", description = "" +
+    @Operation(summary = "강의실 리스트 전체 보기 (검색기능 추가 필요)", description = "" +
             "ilectureRoom : 강의실 pk\n" +
             "\n lectureRoomName : 강의실 이름\n" +
             "\n buildingname : 건물 이름\n" +
@@ -38,14 +38,6 @@ public class AdminLectureRoomController {
         return SERVICE.selLectureRoom(page);
     }
 
-    @GetMapping("/detail")
-    @Operation(summary = "강의실 건물별로 보기 (삭제 안된것만 가능)",description = "" +
-            "\n buildingname : 건물 이름")
-    public List<LectureRoomDetailVo> getLectureRoomDetail(@RequestParam String buildingName) {
-        LectureRoomDetailDto dto = new LectureRoomDetailDto();
-        dto.setBuildingName(buildingName);
-        return SERVICE.selLectureRoomFind(dto);
-    }
 
     @DeleteMapping
     @Operation(summary = "강의실 삭제 ( 삭제여부 0 1 변경 )", description = "" +

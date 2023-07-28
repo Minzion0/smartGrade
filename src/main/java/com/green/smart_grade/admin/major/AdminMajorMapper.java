@@ -11,8 +11,6 @@ public interface AdminMajorMapper {
 
     List<MajorVo> selMajor(int staIdx);
 
-    MajorVo selMajorDetail(MajorDetailDto dto);
-
     int delMajor(MajorDelDto dto);
 
     int countMajor();
