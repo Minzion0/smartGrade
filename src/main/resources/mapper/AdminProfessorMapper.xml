@@ -38,7 +38,7 @@
         INNER JOIN major D
         ON C.imajor = D.imajor
         WHERE C.iprofessor = #{iprofessor}
-        AND A.isemester = (SELECT isemester from semester order by isemester DESC LIMIT 1)
+        AND A.isemester = (SELECT MaX(isemester) from semester )
 
     </select>
 

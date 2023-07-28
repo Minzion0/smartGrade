@@ -4,22 +4,30 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.AdminMapper">
     <select id="selLecture">
-        SELECT ilecture,D.lecture_name lectureNm,isemester,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,lecture_str_date strDate,lecture_end_date endDate,lecture_str_time strTime,lecture_end_time endTime
-        ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn
-            from lecture_applly A
-            INNER JOIN lecture_room B
-            ON A.ilecture_room=B.ilecture_room
-            INNER JOIN professor C
-            ON A.iprofessor=C.iprofessor
-            INNER JOIN lecture_name D
-            ON A.ilecture_name=D.ilecture_name
+        SELECT A.ilecture,D.lecture_name lectureNm,isemester,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,lecture_str_date strDate,lecture_end_date endDate,lecture_str_time strTime,lecture_end_time endTime
+        ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn,COUNT(E.ilecture) currentPeople
+        from lecture_applly A
+        INNER JOIN lecture_room B
+        ON A.ilecture_room=B.ilecture_room
+        INNER JOIN professor C
+        ON A.iprofessor=C.iprofessor
+        INNER JOIN lecture_name D
+        ON A.ilecture_name=D.ilecture_name
+        INNER JOIN lecture_student E
+        ON E.ilecture=A.ilecture
+
         <where>
-                A.opening_procedures=#{procedures}
+            <if test="procedures>=0">
+                and  A.opening_procedures=#{procedures}
+            </if>
+
             <if test="nm!=null">
                and C.nm in (#{nm})
             </if>
 
+
         </where>
+        GROUP BY A.ilecture
         limit #{strIdx},#{row}
 
 
@@ -35,6 +43,13 @@
         INNER JOIN major D
         ON D.imajor= C.imajor
         WHERE A.ilecture=#{ilecture}
+        limit #{strIdx},#{row}
+    </select>
+
+    <select id="lectureCountStudent">
+        SELECT COUNT(ilecture)
+        FROM lecture_student
+        WHERE ilecture=#{ilecture}
     </select>
 
     <select id="countLceture">
@@ -43,7 +58,10 @@
         inner join professor B
         on A.iprofessor=B.iprofessor
        <where>
-               A.opening_procedures=#{procedures}
+           <if test="procedures>=0">
+              and A.opening_procedures=#{procedures}
+           </if>
+
 
            <if test="nm!=null">
               and B.nm in (#{nm})

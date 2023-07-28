@@ -17,6 +17,7 @@ public class ProfessorGradeMngmnUpRes {
 
 
 
+
     public ProfessorGradeMngmnUpRes(ProfessorGradeMngmnUpDto dto) {
 
         this.attendance = dto.getAttendance();

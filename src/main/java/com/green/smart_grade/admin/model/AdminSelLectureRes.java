@@ -19,6 +19,7 @@ public class AdminSelLectureRes {
     private String  strTime;
     private String  endTime;
     private int maxPeople;
+    private int currentPeople;
     private int procedures;
     private int delYn;
 }
