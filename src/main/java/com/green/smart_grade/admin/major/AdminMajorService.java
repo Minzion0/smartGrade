@@ -44,6 +44,8 @@ public class AdminMajorService {
     }
 
     public int delMajor(MajorDelDto dto) {
+
         return MAPPER.delMajor(dto);
     }
+
 }

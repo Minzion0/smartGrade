@@ -6,6 +6,7 @@ import lombok.Data;
 public class AdminFindStudentDto {
     private String studentNum;
     private String nm;
+    private int finishedYn;
     private int staIdx;
     private int row;
     private int grade;

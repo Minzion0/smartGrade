@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@Tag(name = "관리자",description = "")
+@Tag(name = "관리자 강의 관리",description = "")
 public class AdminController {
 
     @Autowired

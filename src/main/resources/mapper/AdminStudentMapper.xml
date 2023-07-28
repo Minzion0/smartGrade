@@ -52,6 +52,9 @@
             <if test="nm != '' and nm != null ">
               and   A.nm=#{nm}
             </if>
+            <if test="finishedYn>0">
+                and A.finished_yn=#{finishedYn}
+            </if>
         </where>
 
         GROUP BY A.istudent

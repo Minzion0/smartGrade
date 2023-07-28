@@ -7,9 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +45,7 @@ public class AdminStudentService {
         dto.setRow(utils.getROW());
         dto.setStaIdx(utils.getStaIdx());
         List<AdminFindStudentRes> students = MAPPER.findStudents(dto);
-        return AdminStudentRes.builder().studnets(students).page(utils).build();
+        return AdminStudentRes.builder().students(students).page(utils).build();
 
     }
     public AdminStudentDetalRes studentDet(Long istudent){

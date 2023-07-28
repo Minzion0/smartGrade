@@ -56,4 +56,6 @@ public class AdminMajorController {
         dto.setMajorName(majorName);
         return SERVICE.delMajor(dto);
     }
+
+
 }
