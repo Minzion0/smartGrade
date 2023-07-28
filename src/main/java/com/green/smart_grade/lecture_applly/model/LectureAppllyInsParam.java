@@ -23,4 +23,5 @@ public class LectureAppllyInsParam {
     private int garedLimit;
     private int delYn;
 
+
 }

@@ -21,6 +21,11 @@ public class ProfessorGradeMngmnService {
     public ProfessorGradeMngmnUpRes upMngnm(ProfessorGradeMngmnUpParam param, Long iprofessor, Long ilectureStudent ) {
 
         ProfessorGradeMngmnUpDto dto = new ProfessorGradeMngmnUpDto();
+        String msg="";
+        ProfessorGradeMngmnUpRes res = new ProfessorGradeMngmnUpRes();
+
+
+
         dto.setIlectureStudent(ilectureStudent);
         dto.setIpofessor(iprofessor);
         dto.setFinishedYn(param.getFinishedYn());
@@ -30,38 +35,46 @@ public class ProfessorGradeMngmnService {
         int midtermExamination = param.getMidtermExamination();
         int finalExamination = param.getFinalExamination();
 
+
         // 각 점수들의 최대 값을 가져오기
         int maxAttendance = mapper.getMaxAttendance(iprofessor);
         int maxMidtermExamination = mapper.getMaxMidtermExamination(iprofessor);
         int maxFinalExamination = mapper.getMaxFinalExamination(iprofessor);
 
-        try {
+
             // 점수가 최대 값을 넘지 않도록 예외처리
             if (attendance > maxAttendance) {
-                throw new IllegalArgumentException("출석 점수가 최대값을 넘을 수 없습니다.");
+                msg += "출석 점수가 최대값을 넘을 수 없습니다.";
+                res.setMsg(msg);
+                return res;
             }
             if (midtermExamination > maxMidtermExamination) {
-                throw new IllegalArgumentException("중간고사 점수가 최대값을 넘을 수 없습니다.");
+                msg +="중간고사 점수가 최대값을 넘을 수 없습니다.";
+                res.setMsg(msg);
+                return res;
             }
             if (finalExamination > maxFinalExamination) {
-                throw new IllegalArgumentException("기말고사 점수가 최대값을 넘을 수 없습니다.");
+                msg += "기말고사 점수가 최대값을 넘을 수 없습니다.";
+                res.setMsg(msg);
+                return res;
             }
 
             dto.setAttendance(attendance);
             dto.setMidtermExamination(midtermExamination);
             dto.setFinalExamination(finalExamination);
 
-       int point = dto.getAttendance()+dto.getMidtermExamination()+dto.getFinalExamination();
+        int point = dto.getAttendance() + dto.getMidtermExamination() + dto.getFinalExamination();
         GradeUtils gradeUtils = new GradeUtils(point);
-        double score =  gradeUtils.totalScore();
+        double score = gradeUtils.totalScore();
         String rating = gradeUtils.totalRating(score);
         dto.setTotalScore(point);
         dto.setPoint(point);
         dto.setRating(rating);
 
+        try {
         int result = mapper.upMngnm(dto);
         if (result == 1) {
-            ProfessorGradeMngmnUpRes res = new ProfessorGradeMngmnUpRes(dto);
+            res = new ProfessorGradeMngmnUpRes(dto);
             res.setIpofessor(iprofessor);
             res.setIlectureStudent(ilectureStudent);
             return res;
