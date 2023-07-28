@@ -86,4 +86,5 @@
         INNER JOIN lecture_applly D
         ON A.ilecture = D.ilecture;
     </select>
+    
 </mapper>
