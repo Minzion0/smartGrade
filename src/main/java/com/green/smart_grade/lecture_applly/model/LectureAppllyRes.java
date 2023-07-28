@@ -23,6 +23,10 @@ public class LectureAppllyRes {
     private int lectureMaxPeople;
     private int garedLimit;
     private int delYn;
+    private String msg;
+
+    public LectureAppllyRes() {
+    }
 
     public LectureAppllyRes(LectureAppllyInsDto dto) {
         this.ilecture = dto.getIlecture();
@@ -43,5 +47,23 @@ public class LectureAppllyRes {
         this.delYn = dto.getDelYn();
     }
 
+    public void setDto(LectureAppllyInsDto dto) {
+        this.ilecture = dto.getIlecture();
+        this.ilectureName = dto.getIlectureName();
+        this.ilectureRoom = dto.getIlectureRoom();
+        this.iprofessor = dto.getIprofessor();
+        this.isemester = dto.getIsemester();
+        this.openingProcedures = dto.getOpeningProcedures();
+        this.lectureStrDate = dto.getLectureStrDate();
+        this.lectureEndDate = dto.getLectureEndDate();
+        this.lectureStrTime = dto.getLectureStrTime();
+        this.lectureEndTime = dto.getLectureEndTime();
+        this.attendance = dto.getAttendance();
+        this.midtermExamination = dto.getMidtermExamination();
+        this.finalExamination = dto.getFinalExamination();
+        this.lectureMaxPeople = dto.getLectureMaxPeople();
+        this.garedLimit = dto.getGaredLimit();
+        this.delYn = dto.getDelYn();
+    }
 
 }
