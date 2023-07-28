@@ -24,6 +24,12 @@ public class SecurityConfiguration {
         httpSecurity.authorizeHttpRequests(authz ->
                             authz.requestMatchers(
                                     "/sign-api/sign-in"
+                                    ,"/swagger.html"
+                                    , "/swagger-ui/**"
+                                    , "/v3/api-docs/**"
+                                    , "/"
+                                    , "/index.html"
+                                    ,"/static/**"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.
                             .requestMatchers(HttpMethod.GET, "/sign-api/refresh-token").permitAll()
                             .requestMatchers(HttpMethod.GET, "/product/**").permitAll()

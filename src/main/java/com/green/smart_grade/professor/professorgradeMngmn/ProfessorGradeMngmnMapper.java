@@ -4,6 +4,7 @@ import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeM
 import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnSelVo;
 import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeMngmnUpDto;
 
+import com.green.smart_grade.professor.professorgradeMngmn.model.ProfessorGradeUpdDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public interface ProfessorGradeMngmnMapper {
     int upMngnm(ProfessorGradeMngmnUpDto dto);
     List<ProfessorGradeMngmnSelVo> selStudentScore (ProfessorGradeMngmnSelDto dto);
     int selStudentScoreCount(ProfessorGradeMngmnSelDto dto);
+    int updAvgScore(ProfessorGradeUpdDto dto);
 
     int getMaxAttendance(Long ilecture);
     int getMaxMidtermExamination(Long ilecture);

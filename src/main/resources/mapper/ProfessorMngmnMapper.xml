@@ -29,6 +29,19 @@
         WHERE A.ilecture_student = #{ilectureStudent} AND B.iprofessor = #{ipofessor} And B.ilecture = #{ilecture}
         ]]>
     </update>
+    <update id="updAvgScore">
+        UPDATE student_semester_score
+        SET avg_score = (SELECT AVG(total_score)
+                        FROM lecture_student A
+                        INNER JOIN student_semester_score B
+                        on A.istudent = B.istudent
+                        INNER JOIN semester C
+                        ON B.isemester = C.isemester
+                        WHERE A.istudent = #{istudent}
+                        AND C.semester = #{semester})
+        SET rating = #{rating}
+        WHERE istudent = #{istudent};
+    </update>
 
 
     <select id="getMaxAttendance">

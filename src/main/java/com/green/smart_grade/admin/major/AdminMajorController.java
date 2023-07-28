@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/major")
 @RequiredArgsConstructor
-@Tag(name = "전공 관리",description = "")
+@Tag(name = "관리자 전공 관리",description = "")
 public class AdminMajorController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class AdminMajorController {
     }
 
     @GetMapping
-    @Operation(summary = "전공리스트 전체 보기", description = "" +
+    @Operation(summary = "전공리스트 전체 보기 (검색기능 추가 필요)", description = "" +
             "imajor : 전공 pk\n" +
             "\nmajorName : 전공 이름\n" +
             "\ngraduationScore : 졸업 시 필요한 학점")
@@ -39,12 +39,6 @@ public class AdminMajorController {
         return SERVICE.selMajor(page);
     }
 
-    @PostMapping("/detail")
-    @Operation(summary = "전공 이름으로 검색", description = "" +
-            "majorName : 전공 이름")
-    public MajorVo getMajorDetail(@RequestBody MajorDetailDto dto) {
-        return SERVICE.selMajorDetail(dto);
-    }
 
     @DeleteMapping
     @Operation(summary = "전공 삭제 ( 삭제여부 0 1 변경)" , description = "" +
