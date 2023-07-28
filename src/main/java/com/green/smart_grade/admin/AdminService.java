@@ -68,6 +68,7 @@ public class AdminService {
     }
 
     public AdminProfessorRes findProFessors(int page){
+
         int result = MAPPER.countProfessor();
         int startIdx = PagingUtils.startIdx(page);
         int maxPage = PagingUtils.maxPage(result);
