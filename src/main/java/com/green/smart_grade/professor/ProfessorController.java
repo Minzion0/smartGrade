@@ -20,7 +20,7 @@ public class ProfessorController {
     private final ProfessorService service;
 
 
-    @GetMapping("/detail")
+    @GetMapping("/list")
     @Operation(summary = "교수 리스트 보기",description = "Page : 페이지,기본적으로 1부터 시작"+"row : 리스트갯수 : 기본 10개 시작")
     public professorSelRes getProfessor(@RequestParam(defaultValue = "1") int page
             , @RequestParam(required = false) Long iprofessor) {
@@ -35,12 +35,6 @@ public class ProfessorController {
         return service.upProfessorPw(dto);
     }
 
-    @PostMapping("/login")
-    @Operation(summary = "로그인", description = "" +
-            "리턴값 : " + "(1)로그인 성공" + "(2)아이디 없음" + "(3)비밀번호 다름")
-    public int posLoginProfessor(@RequestBody ProfessorLoginDto dto) {
-        return service.selProfessorById(dto);
-    }
 
 
     @PutMapping("/{iprofessor}")

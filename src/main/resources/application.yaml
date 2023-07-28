@@ -1,4 +1,11 @@
-
+# 토큰의 암호화 복호화를 위한 secret key로서 이후 HS256 알고리즘을 사용하기 위해, 256비트보다 커야한다.
+# 알파벳은 한단어 당 8bit 이므로 32글자 이상이면 된다.
+springboot:
+  jwt:
+    access-secret: DeaguGreenArtAcademyClass502ForJavaSpringBootaaaasdf
+    refresh-secret: HelloWorldRefreshTokenCreateBySecretHaHaaasdfasdf
+    header-scheme-name: Authorization
+    token-type: Bearer
 #DB
 spring:
   servlet:
@@ -21,7 +28,6 @@ mybatis:
 
 #SWAGGER
 springdoc:
-
   swagger-ui:
     path: /swagger.html
     operations-sorter : method
