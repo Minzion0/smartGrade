@@ -27,6 +27,27 @@ public class SignService {
     private final JwtTokenProvider JWT_PROVIDER;
     private final PasswordEncoder PW_ENCODER;
 
+//    public SignUpResultDto signUp(String id, String pw, String nm, String role) {
+//        log.info("[getSignUpResult] signDataHandler로 회원 정보 요청");
+//        UserEntity user = UserEntity.builder()
+//                .uid(id)
+//                .upw(PW_ENCODER.encode(pw))
+//                .name(nm)
+//                .role(String.format("ROLE_%s", role))
+//                .build();
+//        int result = MAPPER.save(user);
+//        SignUpResultDto dto = new SignUpResultDto();
+//
+//        if(result == 1) {
+//            log.info("[getSignUpResult] 정상 처리 완료");
+//            setSuccessResult(dto);
+//        } else {
+//            log.info("[getSignUpResult] 실패 처리 완료");
+//            setFileResult(dto);
+//        }
+//        return dto;
+//    }
+
     public SignInResultDto signIn(String id, String password, String ip) throws RuntimeException {
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
         UserEntity user = MAPPER.getByUid(id); // null 처리를 지금은 안 한상태

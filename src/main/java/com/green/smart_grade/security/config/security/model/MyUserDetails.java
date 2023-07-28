@@ -17,7 +17,6 @@ public class MyUserDetails implements UserDetails {
     private Long iuser;
     private String uid;
     private String upw;
-    private String name;
 
     @Builder.Default // 권한을 담아준다.
     private List<String> roles = new ArrayList<>();

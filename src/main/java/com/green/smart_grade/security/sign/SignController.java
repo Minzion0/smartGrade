@@ -35,16 +35,16 @@ public class SignController {
         return dto;
     }
 
-    @PostMapping("/sign-up")
-    public SignUpResultDto signUp(@RequestParam String id
-                                , @RequestParam String pw
-                                , @RequestParam String nm
-                                , @RequestParam String role) {
-        log.info("[signUp] 회원가입을 수행합니다. id: {}, pw: {}, nm: {}, role: {}", id, pw, nm, role);
-        SignUpResultDto dto = SERVICE.signUp(id, pw, nm, role);
-        log.info("[signUp] 회원가입 완료 id: {}", id);
-        return dto;
-    }
+//    @PostMapping("/sign-up")
+//    public SignUpResultDto signUp(@RequestParam String id
+//                                , @RequestParam String pw
+//                                , @RequestParam String nm
+//                                , @RequestParam String role) {
+//        log.info("[signUp] 회원가입을 수행합니다. id: {}, pw: {}, nm: {}, role: {}", id, pw, nm, role);
+//        SignUpResultDto dto = SERVICE.signUp(id, pw, nm, role);
+//        log.info("[signUp] 회원가입 완료 id: {}", id);
+//        return dto;
+//    }
 
     @GetMapping("/refresh-token")
     public ResponseEntity<SignUpResultDto> refreshToken(HttpServletRequest req,

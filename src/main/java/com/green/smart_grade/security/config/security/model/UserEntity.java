@@ -9,6 +9,5 @@ public class UserEntity {
     private Long iuser;
     private String uid;
     private String upw;
-    private String name;
     private String role;
 }

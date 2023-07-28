@@ -4,14 +4,28 @@
 <mapper namespace="com.green.smart_grade.security.config.security.UserDetailsMapper">
 
     <select id="getByUid">
-        SELECT iuser, uid, upw, name, role
-        FROM t_user
-        WHERE uid = #{uid}
+        <if test="role == ROLE_ADMIN">
+            SELECT admin_Id uid, admin_password upw
+            FROM admin
+            WHERE admin_Id = #{uid}
+        </if>
+
+        <if test="role == ROLE_PROFESSOR">
+            SELECT iprofessor uid, professor_password upw
+            FROM professor
+            WHERE iprofessor = #{uid}
+        </if>
+
+        <if test="role == ROLE_USER">
+            SELECT student_num uid, student_password upw
+            FROM student
+            WHERE student_num = #{uid}
+        </if>
     </select>
 
     <!-- ///////////////////////////////////////// user_token /////////-->
     <insert id="updUserToken">
-        INSERT INTO t_user_token
+        INSERT INTO user_token
         (iuser, ip, access_token, refresh_token)
         VALUES
         (#{iuser}, #{ip}, #{accessToken}, #{refreshToken})
@@ -25,7 +39,7 @@
         SELECT iuser, ip, access_token accessToken,
         refresh_token refreshToken, created_at createdAt,
         updated_at updatedAt
-        FROM t_user_token
+        FROM user_token
         WHERE iuser = #{iuser} AND ip = #{ip}
     </select>
 

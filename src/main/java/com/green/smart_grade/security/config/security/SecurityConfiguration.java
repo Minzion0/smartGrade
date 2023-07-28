@@ -24,22 +24,11 @@ public class SecurityConfiguration {
         httpSecurity.authorizeHttpRequests(authz ->
                             authz.requestMatchers(
                                     "/sign-api/sign-in"
-                                    , "/sign-api/sign-up"
-                                    , "/sign-api/exception"
-
-                                    , "/swagger.html"
-                                    , "/swagger-ui/**"
-                                    , "/v3/api-docs/**"
-                                    , "/static/imgs/**"
-                                    , "/static/js/**"
-                                    , "/static/css/**"
-                                    , "/index.html"
-                                    , "/"
-                                    , "/view/**"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.
                             .requestMatchers(HttpMethod.GET, "/sign-api/refresh-token").permitAll()
                             .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
                             .requestMatchers("**exception**").permitAll()
+                            .requestMatchers("/todo-api").hasAnyRole("USER", "ADMIN") // 권한있는 사람만 필터링 한거다
                             .requestMatchers("/todo-api").hasAnyRole("USER", "ADMIN") // 권한있는 사람만 필터링 한거다
                             .anyRequest().hasRole("ADMIN") // anyRequest 는 거의 마지막에 작성 되어야함
                 ) //사용 권한 체크
