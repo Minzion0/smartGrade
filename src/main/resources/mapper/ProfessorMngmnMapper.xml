@@ -21,26 +21,25 @@
         CASE
         WHEN #{finalExamination} > B.final_examination THEN B.final_examination ELSE #{finalExamination}
         END,
-        correction_at = date_add(update_at, INTERVAL 14 DAY),
         A.finished_yn = 1,
         A.update_at = NOW()
         WHERE A.ilecture_student = #{ilectureStudent} AND B.iprofessor = #{ipofessor}
     </update>
 
 
-    <select id="getMaxAttendance" parameterType="long" resultType="int">
+    <select id="getMaxAttendance">
         SELECT MAX(attendance) AS maxAttendance
         FROM lecture_applly
         WHERE iprofessor = #{iprofessor}
     </select>
 
-    <select id="getMaxMidtermExamination" parameterType="long" resultType="int">
+    <select id="getMaxMidtermExamination">
         SELECT MAX(midterm_examination) AS maxMidtermExamination
         FROM lecture_applly
         WHERE iprofessor = #{iprofessor}
     </select>
 
-    <select id="getMaxFinalExamination" parameterType="long" resultType="int">
+    <select id="getMaxFinalExamination">
         SELECT MAX(final_examination) AS maxFinalExamination
         FROM lecture_applly
         WHERE iprofessor = #{iprofessor}

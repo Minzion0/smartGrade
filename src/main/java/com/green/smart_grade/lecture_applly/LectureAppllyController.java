@@ -26,15 +26,19 @@ public class LectureAppllyController {
     +"attendace : 출결 배점<br>"+"midtermExamination : 중간고사 배점<br>"+"finalExamination : 기말고사 배점<br>"
     +"lectureMaxPeople : 강의최대 인원<br>"+"gradeLimit : 학년범위<br>"+"delYn : 삭제 여부<br>"
            +"<br>" +"기본 배점 출결(20),중간고사(40),기말고사(40)<br>")
-    public LectureAppllyRes postApply(@RequestBody LectureAppllyInsParam param) {
-        return service.InsApplly(param);
+    public LectureAppllyRes postApply(@RequestBody LectureAppllyInsParam param){
+
+            return service.InsApplly(param);
+
+
     }
 
 
     @GetMapping
     @Operation(summary = "신청중인 강의 리스트 뽑기")
   public LectureApllySelRes getLectureApplly
-            (@RequestParam(defaultValue = "1") int page,@RequestParam (required = false) Long iprofessor) {
+            (@RequestParam(defaultValue = "1") int page,@RequestParam (required = false) Long iprofessor){
+
 
 
         return service.selLectureApplly(page,iprofessor);

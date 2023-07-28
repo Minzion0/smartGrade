@@ -22,8 +22,10 @@ public class LectureAppllyService {
     private final LectureAppllyMapper mapper;
 
 
-    public LectureAppllyRes InsApplly(LectureAppllyInsParam param) {
+    public LectureAppllyRes InsApplly(LectureAppllyInsParam param){
         LectureAppllyInsDto dto = new LectureAppllyInsDto();
+        String msg="";
+        LectureAppllyRes res= new LectureAppllyRes();
 
         dto.setIlectureName(param.getIlectureName());
         dto.setIlectureRoom(param.getIlectureRoom());
@@ -46,9 +48,14 @@ public class LectureAppllyService {
 
         // 합이 100을 넘는 경우 예외 처리.
         if (totalScore > 100) {
-            throw new IllegalArgumentException("출석, 중간고사, 기말고사 점수의 합은 100을 넘을 수 없습니다.");
+           msg+= "출석, 중간고사, 기말고사 점수의 합은 100을 넘을 수 없습니다.";
+           res.setMsg(msg);
+           return res;
         } else if (totalScore < 100) {
-            throw new IllegalArgumentException("출석, 중간고사, 기말고사 점수의 합은 100미만 일수 없습니다.");
+            msg+="출석, 중간고사, 기말고사 점수의 합은 100미만 일수 없습니다.";
+            res.setMsg(msg);
+            return res;
+
         }
 
         dto.setAttendance(attendance);
@@ -79,7 +86,9 @@ public class LectureAppllyService {
         try {
             int result = mapper.InsApplly(dto);
             if (result == 1) {
-                new LectureAppllyRes(dto);
+                res.setDto(dto);
+
+                return res;
             }
         } catch (IllegalArgumentException ex) {
            ex.fillInStackTrace();

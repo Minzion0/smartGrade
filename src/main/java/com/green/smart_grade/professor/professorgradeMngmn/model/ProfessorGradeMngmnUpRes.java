@@ -14,11 +14,23 @@ public class ProfessorGradeMngmnUpRes {
     private Long ipofessor;
     private double point;
     private String rating;
+    private String msg;
 
-
+    public ProfessorGradeMngmnUpRes() {
+    }
 
     public ProfessorGradeMngmnUpRes(ProfessorGradeMngmnUpDto dto) {
 
+        this.attendance = dto.getAttendance();
+        this.midtermExamination = dto.getMidtermExamination();
+        this.finalExamination = dto.getFinalExamination();
+        this.totalScore = dto.getTotalScore();
+        this.finishedYn = dto.getFinishedYn();
+        this.point = dto.getPoint();
+        this.rating = dto.getRating();
+    }
+
+    public void setUpDto(ProfessorGradeMngmnUpDto dto) {
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();
         this.finalExamination = dto.getFinalExamination();
