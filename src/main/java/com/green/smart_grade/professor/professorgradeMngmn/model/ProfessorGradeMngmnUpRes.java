@@ -30,6 +30,7 @@ public class ProfessorGradeMngmnUpRes {
         this.finishedYn = dto.getFinishedYn();
         this.point = dto.getPoint();
         this.rating = dto.getRating();
+        this.ilectureStudent = dto.getIlectureStudent();
     }
 
     public void setUpDto(ProfessorGradeMngmnUpDto dto) {
@@ -41,5 +42,6 @@ public class ProfessorGradeMngmnUpRes {
         this.point = dto.getPoint();
         this.rating = dto.getRating();
         this.ilecture = dto.getIlecture();
+        this.ilectureStudent = dto.getIlectureStudent();
     }
 }

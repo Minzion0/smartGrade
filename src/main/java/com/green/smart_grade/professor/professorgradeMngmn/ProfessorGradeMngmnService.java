@@ -18,17 +18,18 @@ public class ProfessorGradeMngmnService {
     private final ProfessorGradeMngmnMapper mapper;
 
 
-    public ProfessorGradeMngmnUpRes upMngnm(ProfessorGradeMngmnUpParam param, Long iprofessor, Long ilecture ) {
+    public ProfessorGradeMngmnUpRes upMngnm(ProfessorGradeMngmnUpParam param, Long iprofessor, Long ilecture,Long ilectureStudent ) {
 
         ProfessorGradeMngmnUpDto dto = new ProfessorGradeMngmnUpDto();
         String msg="";
         ProfessorGradeMngmnUpRes res = new ProfessorGradeMngmnUpRes();
 
 
-
+        dto.setIlectureStudent(ilectureStudent);
         dto.setIlecture(ilecture);
         dto.setIpofessor(iprofessor);
-        dto.setFinishedYn(param.getFinishedYn());
+        dto.setFinishedYn(1);
+
 
 
         int attendance = param.getAttendance();
