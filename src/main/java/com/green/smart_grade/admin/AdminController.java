@@ -1,10 +1,7 @@
 package com.green.smart_grade.admin;
 
 
-import com.green.smart_grade.admin.model.AdminSelLectureParam;
-import com.green.smart_grade.admin.model.AdminSelRes;
-import com.green.smart_grade.admin.model.AdminUpdLectureDto;
-import com.green.smart_grade.admin.model.AdminUpdLectureRes;
+import com.green.smart_grade.admin.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
@@ -12,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -24,6 +22,11 @@ public class AdminController {
     private final AdminService SERVICE;
 
 
+    @GetMapping("/lecture/{ilecture}")
+    @Operation(summary = "수강학생 리스트")
+    public List<AdminLectureInStudentRes>findProfessors(@PathVariable Long ilecture){
+        return SERVICE.findlectureStudent(ilecture);
+    }
 
     @GetMapping("/lecture")
     @Operation(summary = "강의 리스트")
@@ -42,6 +45,7 @@ public class AdminController {
     public AdminUpdLectureRes updLecture(@RequestBody AdminUpdLectureDto dto){
         return SERVICE.lectureModify(dto);
     }
+
 
 
 

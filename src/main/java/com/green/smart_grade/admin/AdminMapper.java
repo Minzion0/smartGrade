@@ -1,5 +1,6 @@
 package com.green.smart_grade.admin;
 
+import com.green.smart_grade.admin.model.AdminLectureInStudentRes;
 import com.green.smart_grade.admin.model.AdminSelLectureDto;
 import com.green.smart_grade.admin.model.AdminSelLectureRes;
 import com.green.smart_grade.admin.model.AdminUpdLectureDto;
@@ -16,4 +17,5 @@ public interface AdminMapper {
 
     int lectureModify(AdminUpdLectureDto dto);
     int updLecture(AdminUpdLectureDto dto);
+    List<AdminLectureInStudentRes> lectureInStudent(Long ilecture);
 }

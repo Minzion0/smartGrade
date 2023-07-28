@@ -25,6 +25,18 @@
 
     </select>
 
+    <select id="lectureInStudent">
+        SELECT C.istudent,C.nm,D.major_name majorNm,A.attendance,A.midterm_examination minEx,A.final_examination finEx,A.total_score totalScore
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON B.ilecture=A.ilecture
+        INNER JOIN student C
+        ON C.istudent=A.istudent
+        INNER JOIN major D
+        ON D.imajor= C.imajor
+        WHERE A.ilecture=#{ilecture}
+    </select>
+
     <select id="countLceture">
         select count(*)
         from lecture_applly A
