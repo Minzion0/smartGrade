@@ -35,7 +35,10 @@ public class AdminMajorController {
             "imajor : 전공 pk\n" +
             "\nmajorName : 전공 이름\n" +
             "\ngraduationScore : 졸업 시 필요한 학점")
-    public MajorfindRes getMajor(@RequestParam (defaultValue = "1") int page) {
+    public MajorfindRes getMajor(@RequestParam (defaultValue = "1") int page,
+                                 @RequestParam (required = false) String majorName) {
+        MajorDetailDto dto = new MajorDetailDto();
+        dto.setMajorName(majorName);
         return SERVICE.selMajor(page);
     }
 

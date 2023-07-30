@@ -14,6 +14,11 @@
         SELECT imajor, major_name majorName
         , graduation_score graduationScore
         from major
+        <where>
+            <if test="majorName != null and majorName != ''">
+                and major_name = #{majorName}
+            </if>
+        </where>
         LIMIT #{staIdx},10
     </select>
 

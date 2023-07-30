@@ -15,6 +15,14 @@
         , lecture_room_name lectureRoomName
         , building_name buildingName ,del_yn delYn
         from lecture_room
+        <where>
+            <if test="lectureRoomName != null and lectureRoomName != ''">
+                lecture_room_name = #{lectureRoomName}
+            </if>
+            <if test="buildingName != null and buildingName != ''">
+                building_name = #{buildingName}
+            </if>
+        </where>
         LIMIT #{staIdx}, 10
     </select>
     <select id="selLectureRoomFind">
