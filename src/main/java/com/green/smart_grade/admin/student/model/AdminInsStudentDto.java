@@ -11,7 +11,7 @@ public class AdminInsStudentDto {
     private String studentPassword;
     private Long imajor;
     private String nm;
-    private char gender;
+    private String  gender;
     private LocalDate birthdate;
     private String phone;
     private String email;

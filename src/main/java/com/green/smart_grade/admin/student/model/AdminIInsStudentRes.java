@@ -12,7 +12,7 @@ public class AdminIInsStudentRes {
     private String studentPassword;
     private Long imajor;
     private String nm;
-    private char gender;
+    private String  gender;
     private LocalDate birthdate;
     private String phone;
     private String email;
@@ -21,6 +21,7 @@ public class AdminIInsStudentRes {
     private LocalDateTime createdAt;
     private int grade;
     private int delYn;
+    private String msg;
 
     public AdminIInsStudentRes() {
     }

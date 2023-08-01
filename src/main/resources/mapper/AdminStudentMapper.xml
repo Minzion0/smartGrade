@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.student.AdminStudentMapper">
     <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
-        insert into student
+        insert ignore student
         (   student_num, student_password, imajor, nm, gender
         , birthdate, phone, email, address
         )

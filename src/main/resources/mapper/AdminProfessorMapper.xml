@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smart_grade.admin.professor.AdminProfessorMapper">
     <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
-        insert into professor
+        insert ignore professor
         (imajor,professor_password,nm,gender,birthdate,phone,email,address)
         values
         (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
