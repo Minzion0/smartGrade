@@ -49,7 +49,7 @@ public class AdminService {
            if (dto.getProcedures()==0){
                MAPPER.lectureModify(dto);
            }
-           if ( upded==1){
+           if (upded==1){
                return new AdminUpdLectureRes(dto);
            }
        }catch (Exception e){

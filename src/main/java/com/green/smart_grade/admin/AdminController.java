@@ -50,6 +50,7 @@ public class AdminController {
             "1이 기본 강의 신청 2 신청 통과 학생들이 신청을 넣을수있는 상태 3 최종 강의 오픈<br><br>" +
             "ilecture 강의 pk")
     public AdminUpdLectureRes updLecture(@RequestBody AdminUpdLectureDto dto){
+
         return SERVICE.lectureModify(dto);
     }
 
