@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.green</groupId>
-	<artifactId>smart_Grade</artifactId>
+	<artifactId>smartGrade</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>smart_Grade</name>
 	<description>smart_Grade</description>
