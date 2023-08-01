@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.smart_grade.admin.AdminMapper">
+<mapper namespace="com.green.smartGrade.admin.AdminMapper">
     <select id="selLecture">
         SELECT A.ilecture,D.lecture_name lectureNm,isemester,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,lecture_str_date strDate,lecture_end_date endDate,lecture_str_time strTime,lecture_end_time endTime
         ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn,COUNT(E.ilecture) currentPeople
