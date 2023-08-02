@@ -6,6 +6,7 @@ import com.green.smartGrade.utils.CommonUtils;
 import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +17,14 @@ import java.util.List;
 public class AdminProfessorService {
 
     private final AdminProfessorMapper MAPPER;
-    private final CommonUtils commonUtils;
+    private final PasswordEncoder PW_ENCODER;
 
     public AdminInsProfessorRes insProfessor(AdminInsProfessorParam param) {
         AdminInsProfessorDto dto = new AdminInsProfessorDto(param);
         AdminInsProfessorRes res = new AdminInsProfessorRes();
 
         String rBd = param.getBirthdate().toString().replaceAll("-", "");
-        String nPw = commonUtils.encodeSha256(rBd);
+        String nPw = PW_ENCODER.encode(rBd);
         dto.setProfessorPassword(nPw);
         log.info("{}", dto.getPhone());
 
