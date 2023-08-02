@@ -35,34 +35,6 @@ CREATE TABLE IF NOT EXISTS `board_pics` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 테이블 team_b.lecture_applly 구조 내보내기
-CREATE TABLE IF NOT EXISTS `lecture_applly` (
-  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의신청pk',
-  `ilecture_name` bigint(20) unsigned NOT NULL COMMENT '강의pk',
-  `ilecture_room` bigint(20) unsigned NOT NULL COMMENT '강의실pk',
-  `iprofessor` bigint(20) unsigned NOT NULL COMMENT '교수pk',
-  `isemester` bigint(20) unsigned NOT NULL COMMENT '학기pk',
-  `opening_procedures` tinyint(4) DEFAULT 1 COMMENT '개강절차(0,1,2,3)',
-  `lecture_str_date` date DEFAULT NULL COMMENT '강의시작일',
-  `lecture_end_date` date DEFAULT NULL COMMENT '강의종료일',
-  `lecture_str_time` time DEFAULT NULL COMMENT '강의시작시간',
-  `lecture_end_time` time DEFAULT NULL COMMENT '강의종료시간',
-  `attendance` int(10) unsigned DEFAULT 20 COMMENT '출결',
-  `midterm_examination` int(10) unsigned DEFAULT 40 COMMENT '중간고사',
-  `final_examination` int(10) unsigned DEFAULT 40 COMMENT '기말고사',
-  `lecture_max_people` int(10) unsigned NOT NULL COMMENT '강의최대인원',
-  `grade_limit` int(10) unsigned NOT NULL COMMENT '학년범위',
-  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
-  `created_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`ilecture`),
-  KEY `ilecture_name` (`ilecture_name`),
-  KEY `ilecture_room` (`ilecture_room`),
-  KEY `iprofessor` (`iprofessor`),
-  KEY `isemester` (`isemester`),
-  CONSTRAINT `lecture_applly_ibfk_1` FOREIGN KEY (`ilecture_name`) REFERENCES `lecture_name` (`ilecture_name`),
-  CONSTRAINT `lecture_applly_ibfk_2` FOREIGN KEY (`ilecture_room`) REFERENCES `lecture_room` (`ilecture_room`),
-  CONSTRAINT `lecture_applly_ibfk_3` FOREIGN KEY (`iprofessor`) REFERENCES `professor` (`iprofessor`),
-  CONSTRAINT `lecture_applly_ibfk_4` FOREIGN KEY (`isemester`) REFERENCES `semester` (`isemester`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 신청';
 
 -- 테이블 team_b.lecture_day_week 구조 내보내기
 CREATE TABLE IF NOT EXISTS `lecture_day_week` (
@@ -220,3 +192,31 @@ CREATE TABLE IF NOT EXISTS `user_token` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`iuser`,`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `lecture_applly` (
+  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의신청pk',
+  `ilecture_name` bigint(20) unsigned NOT NULL COMMENT '강의pk',
+  `ilecture_room` bigint(20) unsigned NOT NULL COMMENT '강의실pk',
+  `iprofessor` bigint(20) unsigned NOT NULL COMMENT '교수pk',
+  `isemester` bigint(20) unsigned NOT NULL COMMENT '학기pk',
+  `opening_procedures` tinyint(4) DEFAULT 1 COMMENT '개강절차(0,1,2,3)',
+  `lecture_str_date` date DEFAULT NULL COMMENT '강의시작일',
+  `lecture_end_date` date DEFAULT NULL COMMENT '강의종료일',
+  `lecture_str_time` time DEFAULT NULL COMMENT '강의시작시간',
+  `lecture_end_time` time DEFAULT NULL COMMENT '강의종료시간',
+  `attendance` int(10) unsigned DEFAULT 20 COMMENT '출결',
+  `midterm_examination` int(10) unsigned DEFAULT 40 COMMENT '중간고사',
+  `final_examination` int(10) unsigned DEFAULT 40 COMMENT '기말고사',
+  `lecture_max_people` int(10) unsigned NOT NULL COMMENT '강의최대인원',
+  `grade_limit` int(10) unsigned NOT NULL COMMENT '학년범위',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`ilecture`),
+  KEY `ilecture_name` (`ilecture_name`),
+  KEY `ilecture_room` (`ilecture_room`),
+  KEY `iprofessor` (`iprofessor`),
+  KEY `isemester` (`isemester`),
+  CONSTRAINT `lecture_applly_ibfk_1` FOREIGN KEY (`ilecture_name`) REFERENCES `lecture_name` (`ilecture_name`),
+  CONSTRAINT `lecture_applly_ibfk_2` FOREIGN KEY (`ilecture_room`) REFERENCES `lecture_room` (`ilecture_room`),
+  CONSTRAINT `lecture_applly_ibfk_3` FOREIGN KEY (`iprofessor`) REFERENCES `professor` (`iprofessor`),
+  CONSTRAINT `lecture_applly_ibfk_4` FOREIGN KEY (`isemester`) REFERENCES `semester` (`isemester`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 신청';
