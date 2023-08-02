@@ -31,8 +31,8 @@ public class AdminProfessorService {
         CheckUtils utils = CheckUtils.builder().phoneNum(dto.getPhone()).gender(dto.getGender()).email(dto.getEmail()).build();
         String msg = utils.getMsg();
         if (msg != null) {
-            String substring = msg.substring(4);
-            String format = String.format("%s 오류가 있습니다", substring);
+
+            String format = String.format("%s 오류가 있습니다", msg);
             res.setMsg(format);
             return res;
         }
