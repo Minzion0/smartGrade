@@ -19,10 +19,10 @@ public class LectureAppllyController {
     @PostMapping
     @Operation(summary = "강의 등록", description = "ilecture : 강의신청 pk<br>"+
     "ilecture_name : 강의pk<br>"+"ilecture_room : 강의실pk<br>"+"iprofessor : 교수pk<br>"
-    +"isemester : 학기pk<br>"+"openingProcedures : 개강절차<br>"+"lectureStrDate : 개강시작 일자<br>"
+    +"isemester : 학기pk<br>"+"openingProcedures : 개강절차 0~5<br>"+"lectureStrDate : 개강시작 일자<br>"
     +"lectureEndDate : 개강종료 일자<br>"+"lectureStrTime : 수업시작시간<br>"+"lectureEndTime : 수업종료시간<br>"
     +"attendace : 출결 배점<br>"+"midtermExamination : 중간고사 배점<br>"+"finalExamination : 기말고사 배점<br>"
-    +"lectureMaxPeople : 강의최대 인원<br>"+"gradeLimit : 학년범위<br>"+"delYn : 삭제 여부<br>"
+    +"lectureMaxPeople : 강의최대 인원 1~30<br>"+"gradeLimit : 학년범위 1~4<br>"+"delYn : 삭제 여부<br>"
            +"<br>" +"기본 배점 출결(20),중간고사(40),기말고사(40)<br>")
     public LectureAppllyRes postApply(@RequestBody LectureAppllyInsParam param){
 
