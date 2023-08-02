@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ProfessorMapper {
-    int insProfessor(ProfessorInsDto dto); // 교수 프로필
+
 
     List<ProfessorVo> selProfessor(ProfessorSelDto dto); //  페이지 로우 교수 리스트
     int ProfessorCount();
@@ -22,9 +22,6 @@ public interface ProfessorMapper {
     List<ProfessorSelLectureVo> selProfessorLecture(ProfessorSelLectureDto dto);
     List<ProfessorSelLectureVo> selProfessorLectureALl(ProfessorSelLectureDto dto);
     int selProfessorLectureCount(ProfessorSelLectureDto dto);
-
-
-
 
 
 
