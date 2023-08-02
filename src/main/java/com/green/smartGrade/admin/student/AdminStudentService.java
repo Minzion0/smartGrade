@@ -7,6 +7,7 @@ import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminStudentService {
     private final AdminStudentMapper MAPPER;
-    private final CommonUtils commonUtils;
+    private final PasswordEncoder PW_ENCODER;
 
     public AdminIInsStudentRes insStudent(AdminInsStudentParam param) {
         String year = String.valueOf(LocalDate.now().getYear()).substring(2);
@@ -28,8 +29,8 @@ public class AdminStudentService {
         dto.setStudentNum(format);
 
         String rePw = dto.getBirthdate().toString().replaceAll("-", "");
-        String nPw = commonUtils.encodeSha256(rePw);
-        dto.setStudentPassword(nPw);
+        String encode = PW_ENCODER.encode(rePw);
+        dto.setStudentPassword(encode);
 
         CheckUtils utils = CheckUtils.builder().email(dto.getEmail()).phoneNum(dto.getPhone()).gender(dto.getGender()).build();
         String msg = utils.getMsg();
