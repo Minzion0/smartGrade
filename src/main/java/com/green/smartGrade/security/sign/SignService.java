@@ -49,8 +49,8 @@ public class SignService {
 
     public SignInResultDto signIn(String id, String password, String ip, String role) throws RuntimeException {
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
-        UserEntity user = MAPPER.getByUid(id); // null 처리를 지금은 안 한상태
-        log.info("user : {}", user);
+        UserEntity user = MAPPER.getByUid(id, role); // null 처리를 지금은 안 한상태
+
         log.info("[getSignInResult] id: {}", id);
 
         log.info("[getSignInResult] 패스워드 비교");
