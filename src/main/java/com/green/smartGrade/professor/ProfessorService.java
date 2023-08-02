@@ -22,9 +22,9 @@ public class ProfessorService {
     private String fileDir;
 
 
-    public professorSelRes selProfessor(int page,Long ip) {
+    public professorSelRes selProfessor(Long ip) {
         int maxPage = mapper.ProfessorCount();
-        PagingUtils utils = new PagingUtils(page,maxPage);
+        PagingUtils utils = new PagingUtils();
         ProfessorSelDto dto = new ProfessorSelDto();
         dto.setRow(utils.getROW());
         dto.setStartIdx(utils.getStaIdx());
@@ -63,11 +63,15 @@ public class ProfessorService {
         return null;
     }
 
-    public professorSelRes selAllProfessor(int page) {
+    public professorSelRes selAllProfessor(ProfessorSelDto dto,int page) {
         int maxPage = mapper.ProfessorCount();
         PagingUtils utils = new PagingUtils(page,maxPage);
 
-        List<ProfessorVo> professorVos = mapper.selAllProfessor(utils.getStaIdx());
+
+        dto.setRow(utils.getROW());
+        dto.setStartIdx(utils.getStaIdx());
+
+        List<ProfessorVo> professorVos = mapper.selAllProfessor(dto);
 
         return professorSelRes.builder().list(professorVos).page(utils).build();
     }
