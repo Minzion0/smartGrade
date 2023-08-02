@@ -4,31 +4,33 @@
 <mapper namespace="com.green.smartGrade.security.config.security.UserDetailsMapper">
 
     <select id="getByUid">
-        <if test="role == ROLE_ADMIN">
-            SELECT admin_Id uid, admin_password upw
-            FROM admin
-            WHERE admin_Id = #{uid}
-        </if>
 
-        <if test="role == ROLE_PROFESSOR">
-            SELECT iprofessor uid, professor_password upw
-            FROM professor
-            WHERE iprofessor = #{uid}
-        </if>
+<!--        <if test='role.equalsIgnoreCase("ROLE_ADMIN")'>-->
+<!--            SELECT iadmin, admin_Id uid, admin_password upw, role-->
+<!--            FROM admin-->
+<!--            WHERE admin_Id = #{uid} AND role = "ROLE_ADMIN"-->
+<!--        </if>-->
 
-        <if test="role == ROLE_USER">
-            SELECT student_num uid, student_password upw
+<!--        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>-->
+<!--            SELECT iprofessor, iprofessor uid, professor_password upw, role-->
+<!--            FROM professor-->
+<!--            WHERE iprofessor = #{uid}-->
+<!--        </if>-->
+
+<!--        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>-->
+            SELECT student_num uid, student_password upw, role
             FROM student
             WHERE student_num = #{uid}
-        </if>
+<!--        </if>-->
+
     </select>
 
     <!-- ///////////////////////////////////////// user_token /////////-->
     <insert id="updUserToken">
         INSERT INTO user_token
-        (iuser, ip, access_token, refresh_token)
+        (role, iuser, ip, access_token, refresh_token)
         VALUES
-        (#{iuser}, #{ip}, #{accessToken}, #{refreshToken})
+        (#{role}, #{iuser}, #{ip}, #{accessToken}, #{refreshToken})
 
         ON DUPLICATE KEY UPDATE
           access_token = #{accessToken}
@@ -36,11 +38,11 @@
     </insert>
 
     <select id="selUserToken">
-        SELECT iuser, ip, access_token accessToken,
+        SELECT iuser, role, ip, access_token accessToken,
         refresh_token refreshToken, created_at createdAt,
         updated_at updatedAt
         FROM user_token
-        WHERE iuser = #{iuser} AND ip = #{ip}
+        WHERE iuser = #{iuser} AND role = #{role}
     </select>
 
 </mapper>

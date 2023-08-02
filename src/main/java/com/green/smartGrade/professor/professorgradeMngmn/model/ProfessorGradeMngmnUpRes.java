@@ -8,7 +8,6 @@ public class ProfessorGradeMngmnUpRes {
     private int attendance;
     private int midtermExamination;
     private int finalExamination;
-    private int totalScore;
     private int finishedYn;
     private Long ilectureStudent;
     private Long ipofessor;
@@ -26,7 +25,7 @@ public class ProfessorGradeMngmnUpRes {
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();
         this.finalExamination = dto.getFinalExamination();
-        this.totalScore = dto.getTotalScore();
+
         this.finishedYn = dto.getFinishedYn();
         this.point = dto.getPoint();
         this.rating = dto.getRating();
@@ -37,7 +36,7 @@ public class ProfessorGradeMngmnUpRes {
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();
         this.finalExamination = dto.getFinalExamination();
-        this.totalScore = dto.getTotalScore();
+
         this.finishedYn = dto.getFinishedYn();
         this.point = dto.getPoint();
         this.rating = dto.getRating();

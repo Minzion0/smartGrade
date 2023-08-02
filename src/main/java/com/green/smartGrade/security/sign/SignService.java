@@ -47,10 +47,10 @@ public class SignService {
 //        return dto;
 //    }
 
-    public SignInResultDto signIn(String id, String password, String ip) throws RuntimeException {
+    public SignInResultDto signIn(String id, String password, String ip, String role) throws RuntimeException {
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
         UserEntity user = MAPPER.getByUid(id); // null 처리를 지금은 안 한상태
-
+        log.info("user : {}", user);
         log.info("[getSignInResult] id: {}", id);
 
         log.info("[getSignInResult] 패스워드 비교");
@@ -65,6 +65,7 @@ public class SignService {
         String refreshToken = JWT_PROVIDER.generateJwtToken(String.valueOf(user.getIuser()), Collections.singletonList(user.getRole()), JWT_PROVIDER.REFRESH_TOKEN_VALID_MS, JWT_PROVIDER.REFRESH_KEY);
         UserTokenEntity tokenEntity = UserTokenEntity.builder()
                 .iuser(user.getIuser())
+                .role(role)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .ip(ip)

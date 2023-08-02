@@ -19,11 +19,10 @@ public class ProfessorController {
 
 
     @GetMapping("/list")
-    @Operation(summary = "교수 리스트 보기",description = "Page : 페이지,기본적으로 1부터 시작"+"row : 리스트갯수 : 기본 10개 시작")
-    public professorSelRes getProfessor(@RequestParam(defaultValue = "1") int page
-            , @RequestParam(required = false) Long iprofessor) {
+    @Operation(summary = "교수 리스트 보기",description = "iprofessor : 교수pk")
+    public professorSelRes getProfessor(@RequestParam(required = false) Long iprofessor) {
 
-        return service.selProfessor(page,iprofessor);
+        return service.selProfessor(iprofessor);
     }
 
 
@@ -36,16 +35,20 @@ public class ProfessorController {
 
 
     @PutMapping("/{iprofessor}")
-    @Operation(summary = "교수 프로필 수정")
+    @Operation(summary = "교수 프로필 수정",description = "imajor : 전공pk<br>"+"phone : 폰번호<br>"+
+    "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>")
     public ProfessorUpRes putProfessor(@PathVariable Long iprofessor, @RequestBody ProfessorParam param) {
         ProfessorParam param1 = new ProfessorParam();
         param1.setIprofessor(iprofessor);
         return service.upProfessor(param,iprofessor);
     }
     @GetMapping
-    @Operation(summary = "교수 프로필 전체 보기")
-    public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page) {
-        return service.selAllProfessor(page);
+    @Operation(summary = "교수 프로필 전체 보기" ,description = "page : 기본 1<br>"+ "row : 기본 프로필 10개 <br>")
+    public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10")  int row) {
+        ProfessorSelDto dto = new ProfessorSelDto();
+        dto.setPage(page);
+        dto.setRow(row);
+        return service.selAllProfessor(dto,page);
     }
 
     @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
