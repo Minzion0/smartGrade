@@ -22,8 +22,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(authz ->
                             authz.requestMatchers(
-                                    "/**"
-                                    ,"/sign-api/sign-in"
+                                    "/sign-api/sign-in"
                                     ,"/swagger.html"
                                     , "/swagger-ui/**"
                                     , "/v3/api-docs/**"
