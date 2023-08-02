@@ -19,12 +19,13 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity entity = mapper.getByUid(username);
-        return MyUserDetails.builder()
-                .uid(entity.getUid())
-                .iuser(entity.getIuser())
-                .upw(entity.getUpw())
-                .roles(Collections.singletonList(entity.getRole()))
-                .build();
+//        UserEntity entity = mapper.getByUid(username);
+//        return MyUserDetails.builder()
+//                .uid(entity.getUid())
+//                .iuser(entity.getIuser())
+//                .upw(entity.getUpw())
+//                .roles(Collections.singletonList(entity.getRole()))
+//                .build();
+        return null;
     }
 }
