@@ -3,6 +3,7 @@ package com.green.smartGrade.security.config.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -30,12 +31,12 @@ public class SecurityConfiguration {
                                     , "/index.html"
                                     ,"/static/**"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.
-//                            .requestMatchers(HttpMethod.GET, "/sign-api/refresh-token").permitAll()
-//                            .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
-//                            .requestMatchers("**exception**").permitAll()
-//                            .requestMatchers("/todo-api").hasAnyRole("USER", "ADMIN") // 권한있는 사람만 필터링 한거다
-//                            .requestMatchers("/todo-api").hasAnyRole("USER", "ADMIN") // 권한있는 사람만 필터링 한거다
-//                            .anyRequest().hasRole("ADMIN") // anyRequest 는 거의 마지막에 작성 되어야함
+                            .requestMatchers(HttpMethod.GET, "/sign-api/refresh-token").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/api/board/**").permitAll()
+                            .requestMatchers("**exception**").permitAll()
+                            .requestMatchers("/api/professor/**").hasRole("PROFESSOR") // 권한있는 사람만 필터링 한거다
+//                            .requestMatchers("/api/student/**").hasAnyRole("STUDENT", "ADMIN") // 권한있는 사람만 필터링 한거다
+                            .anyRequest().hasRole("ADMIN") // anyRequest 는 거의 마지막에 작성 되어야함
                 ) //사용 권한 체크
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //세션 사용 X
         .httpBasic(http -> http.disable()) //UI 있는 시큐리티 설정을 비활성화
