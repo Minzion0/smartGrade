@@ -134,5 +134,11 @@
 <!--        GROUP BY A.istudent-->
 
 <!--    </select>-->
+    
+    <update id="promotionGrade">
+        UPDATE student
+        SET grade = grade +1
+        WHERE grade &lt; 4 AND del_yn = 0
+    </update>
 
 </mapper>
