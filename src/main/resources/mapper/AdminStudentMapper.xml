@@ -55,6 +55,10 @@
             <if test="finishedYn>0">
                 and A.finished_yn=#{finishedYn}
             </if>
+
+            <if test="imajor > 0">
+                and A.imajor=#{imajor}
+            </if>
         </where>
 
         GROUP BY A.istudent
@@ -76,6 +80,9 @@
             </if>
             <if test="grade >=1  ">
              and  grade=#{grade}
+            </if>
+            <if test="imajor > 0">
+                and imajor=#{imajor}
             </if>
 
 

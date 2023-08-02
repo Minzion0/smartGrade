@@ -7,9 +7,10 @@ import java.time.LocalDateTime;
 
 @Data
 public class AdminProfessorMajor {
+    private Long ilecture;
     private LocalDate lectureStrDate;
     private LocalDate lectureEndDate;
-    private LocalDateTime lectureStrTime;
-    private LocalDateTime lectureEndTime;
+    private String  lectureStrTime;
+    private String  lectureEndTime;
     private String lectureName;
 }

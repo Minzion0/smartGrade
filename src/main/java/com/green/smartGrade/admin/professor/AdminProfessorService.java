@@ -51,11 +51,11 @@ public class AdminProfessorService {
         return res;
     }
 
-    public AdminProfessorRes findProfessors(int page, String name) {
-        int maxPage = MAPPER.countProfessor();
+    public AdminProfessorRes findProfessors(int page, AdminFindProfessorDto dto) {
+        int maxPage = MAPPER.countProfessor(dto);
         PagingUtils pagingUtils = new PagingUtils(page, maxPage);
-
-        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(pagingUtils.getStaIdx(), name);
+        dto.setStaIdx(pagingUtils.getStaIdx());
+        List<AdminFindProfessorRes> professors = MAPPER.findProfessors(dto);
 
         return AdminProfessorRes.builder().professors(professors)
                 .page(pagingUtils).build();

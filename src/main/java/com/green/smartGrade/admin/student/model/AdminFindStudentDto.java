@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AdminFindStudentDto {
+    private Long imajor;
     private String studentNum;
     private String nm;
     private int finishedYn;
