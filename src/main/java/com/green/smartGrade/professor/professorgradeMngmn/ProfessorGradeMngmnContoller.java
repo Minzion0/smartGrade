@@ -16,7 +16,9 @@ public class ProfessorGradeMngmnContoller {
     private final ProfessorGradeMngmnService service;
 
     @PutMapping("/{iprofessor}")
-    @Operation(summary = "성적 입력")
+    @Operation(summary = "성적 입력",description = "attendace : 출결<br>"+"midtermExamination : 중간고사점수<br>"
+            +"finalExamination <br>: 기말고사 점수"+"finishedYn : 수료여부 1 수료 0 수강중<br>"+"ilectureStudent : 학생pk<br>"+
+    "ipofessor:교수pk<br>"+"point : 총점수 <br>"+"rating : 알파벳등급<br>"+"ilecture : 강의pk<br>"+"msg : 강사가 지정한 출결,중간고사,기말고사 배점이 넘으면 에러메세지 뜨면서 모두 null값으로 안들어감")
     public ProfessorGradeMngmnUpRes putProfessorGradeMngnm(@PathVariable Long iprofessor
                                                          , @RequestParam Long ilecture
                                                          , @RequestParam Long ilectureStudent
