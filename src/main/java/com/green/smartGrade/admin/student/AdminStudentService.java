@@ -5,11 +5,14 @@ import com.green.smartGrade.utils.CheckUtils;
 import com.green.smartGrade.utils.CommonUtils;
 import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminStudentService {
@@ -21,7 +24,7 @@ public class AdminStudentService {
         String format = String.format("%s%02d", year, param.getImajor());
         AdminInsStudentDto dto = new AdminInsStudentDto(param);
         AdminIInsStudentRes res = new AdminIInsStudentRes();
-        //이메일 유효성검사도 해야할듯?
+
         dto.setStudentNum(format);
 
         String rePw = dto.getBirthdate().toString().replaceAll("-", "");
@@ -31,8 +34,8 @@ public class AdminStudentService {
         CheckUtils utils = CheckUtils.builder().email(dto.getEmail()).phoneNum(dto.getPhone()).gender(dto.getGender()).build();
         String msg = utils.getMsg();
         if (msg != null) {
-            String substring = msg.substring(4);
-            String msgs = String.format("%s 오류가 있습니다", substring);
+
+            String msgs = String.format("%s 오류가 있습니다", msg);
             res.setMsg(msgs);
             return res;
 
@@ -71,6 +74,14 @@ public class AdminStudentService {
             e.printStackTrace();
             return null;
         }
+
+    }
+    // todo 매년 연말에 4학년을 제외한 모든 학생들을 진학
+    @Scheduled(cron = "0 59 23 31 12 ?")
+    //@Scheduled(cron = "0 0 15 * * ?")
+    public void greade(){
+        int result = MAPPER.promotionGrade();
+        log.info("{}년도 진학한 학생의수 : {}", LocalDateTime.now().plusYears(1).getYear(),result);
 
     }
 }

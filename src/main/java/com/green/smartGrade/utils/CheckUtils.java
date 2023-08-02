@@ -3,6 +3,8 @@ package com.green.smartGrade.utils;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 @Slf4j
@@ -50,16 +52,21 @@ public class CheckUtils {
     }
 
     public String getMsg(){
+        List<String> temp= new ArrayList<>();
         if (!phoneCheck()){
-            msg+=" 전화번호";
+           temp.add("전화번호") ;
         }
         if (!emailCheck()){
-            msg+=" 이메일";
+            temp.add("이메일");
         }
         if (!genderCheck()){
-            msg+=" 성별";
+            temp.add("성별");
         }
-        return msg;
+        if (temp.size()==0){
+            return null;
+        }
+
+        return temp.toString();
     }
 
 }

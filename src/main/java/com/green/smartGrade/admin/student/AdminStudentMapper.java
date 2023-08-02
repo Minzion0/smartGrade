@@ -13,4 +13,5 @@ public interface AdminStudentMapper {
     int countStudents(AdminFindStudentDto dto);
     AdminStudentDetalRes studentDt(Long istudent);
     List<AdminStudentLectureDataRes> studentLectures(Long istudent);
+    int promotionGrade();
 }
