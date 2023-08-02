@@ -9,9 +9,9 @@ import java.util.List;
 public interface AdminProfessorMapper {
     int insProfessor(AdminInsProfessorDto dto);
 
-    int countProfessor();
+    int countProfessor(AdminFindProfessorDto dto);
 
-    List<AdminFindProfessorRes> findProfessors(int staIdx, String name);
+    List<AdminFindProfessorRes> findProfessors(AdminFindProfessorDto dto);
 
     AdminProfessorDetailVo findProfessorDetail(AdminProfessorDetailDto dto);
 

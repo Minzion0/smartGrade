@@ -23,8 +23,12 @@ public class AdminProfessorController {
 
     @GetMapping("/professor")
     @Operation(summary = "교수 검색")
-    public AdminProfessorRes findP(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String name) {
-        return SERVICE.findProfessors(page, name);
+    public AdminProfessorRes findP(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String name,@RequestParam (required = false,defaultValue = "0")Long imajor) {
+
+        AdminFindProfessorDto dto = new AdminFindProfessorDto();
+        dto.setImajor(imajor);
+        dto.setName(name);
+        return SERVICE.findProfessors(page, dto);
     }
 
     @GetMapping("/professor/{iprofessor}")
