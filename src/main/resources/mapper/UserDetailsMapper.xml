@@ -28,13 +28,13 @@
     <!-- ///////////////////////////////////////// user_token /////////-->
     <insert id="updUserToken">
         INSERT INTO user_token
-        (role, iuser, ip, access_token, refresh_token)
+        (role, iuser, ip)
         VALUES
-        (#{role}, #{iuser}, #{ip}, #{accessToken}, #{refreshToken})
+        (#{role}, #{iuser}, #{ip})
 
         ON DUPLICATE KEY UPDATE
-          access_token = #{accessToken}
-        , refresh_token = #{refreshToken}
+        role = #{role}
+        , iuser = #{iuser}
     </insert>
 
     <select id="selUserToken">

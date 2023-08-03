@@ -108,4 +108,13 @@ public class JwtTokenProvider {
         // 만료시간이 현재시간보다 지났으면 true > 리턴값 : false;
         // 만료시간이 현재시간보다 안 지났으면 false > 리턴값 : true;
     }
+
+    public long getTokenExpirationTime(String token, Key key) {
+        try {
+            return getClaims(token, key).getExpiration().getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
 }

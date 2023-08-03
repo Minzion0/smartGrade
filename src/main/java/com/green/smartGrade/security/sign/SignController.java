@@ -4,10 +4,13 @@ package com.green.smartGrade.security.sign;
 import com.green.smartGrade.security.CommonRes;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +26,8 @@ public class SignController {
 
 
     @PostMapping("/sign-in")
-    public SignInResultDto signIn(HttpServletRequest req, @RequestParam String id, @RequestParam String password, @RequestParam String role) throws RuntimeException {
+    @Operation(summary = "로그인")
+    public SignInResultDto signIn(HttpServletRequest req, @RequestParam String id, @RequestParam String password, @RequestParam String role) throws Exception {
 
         String ip = req.getRemoteAddr();
         log.info("[signIn] 로그인을 시도하고 있습니다. id: {}, pw: {}, role: {}, ip: {}", id, password, role, ip);
@@ -47,10 +51,24 @@ public class SignController {
 //    }
 
     @GetMapping("/refresh-token")
+    @Operation(summary = "토큰발행")
     public ResponseEntity<SignUpResultDto> refreshToken(HttpServletRequest req,
                                                         @RequestParam String refreshToken) {
 
         SignUpResultDto dto = SERVICE.refreshToken(req, refreshToken);
         return dto == null ? ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null) : ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout (HttpServletRequest req) {
+        SERVICE.logout(req);
+        ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
+                .maxAge(0)
+                .path("/")
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .build();
     }
 }
