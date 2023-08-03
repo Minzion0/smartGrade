@@ -13,7 +13,7 @@
     <select id="findProfessors">
         SELECT iprofessor,major_name majorName
         ,nm,gender,birthdate,phone,email
-        ,address,A.del_yn delYn
+        ,address,A.del_yn delYn,date(A.created_at) createdAt
         FROM professor A
         INNER JOIN major B
         ON A.imajor=B.imajor

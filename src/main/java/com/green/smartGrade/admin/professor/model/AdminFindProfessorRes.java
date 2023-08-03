@@ -14,5 +14,7 @@ public class AdminFindProfessorRes {
     private String phone;
     private String email;
     private String address;
+    private LocalDate createdAt;
     private int delYn;
+
 }

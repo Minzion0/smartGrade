@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class AdminSelLectureVo {
     private Long ilecture;
     private String lectureNm;
-    private Long isemester;
+    private int semester;
     private String nm;
     private String lectureRoomNm;
     private String buildingNm;
@@ -23,7 +23,7 @@ public class AdminSelLectureVo {
     public AdminSelLectureVo(AdminSelLectureRes re) {
         this.ilecture = re.getIlecture();
         this.lectureNm = re.getLectureNm();
-        this.isemester = re.getIsemester();
+        this.semester = re.getSemester();
         this.nm = re.getNm();
         this.lectureRoomNm = re.getLectureRoomNm();
         this.buildingNm = re.getBuildingNm();
