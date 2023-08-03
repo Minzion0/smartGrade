@@ -45,7 +45,7 @@ public class ProfessorService {
 
 
 
-        public ProfessorUpRes upProfessor(ProfessorParam param,Long ip) {
+        public ProfessorUpRes upProfessor(ProfessorParam param, Long ip) {
         ProfessorUpDto dto = new ProfessorUpDto();
         dto.setImajor(param.getImajor());
         dto.setPhone(param.getPhone());

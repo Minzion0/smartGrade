@@ -9,4 +9,5 @@ public class ProfessorParam {
     private String email;
     private String address;
     private Long iprofessor;
+    private String pic;
 }
