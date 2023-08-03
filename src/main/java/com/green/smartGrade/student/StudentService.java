@@ -1,11 +1,16 @@
 package com.green.smartGrade.student;
 
-import com.green.smartGrade.student.model.StudentInsDto;
-import com.green.smartGrade.student.model.StudentInsRes;
-import com.green.smartGrade.student.model.StudentParam;
+import com.green.smartGrade.admin.board.model.BoardUpdRes;
+import com.green.smartGrade.professor.model.SelProfessorRes;
+import com.green.smartGrade.student.model.*;
+import com.green.smartGrade.utils.GradeUtils;
+import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +33,66 @@ public class StudentService {
         }
         return null;
     }
+
+
+    public StudentSelRes selAllSdy(StudentSelDto dto,int page) {
+        int maxpage = mapper.StudentCount();
+        PagingUtils utils = new PagingUtils(page,maxpage);
+        dto.setStartIdx(utils.getStaIdx());
+        dto.setStudentNum(dto.getStudentNum());
+        dto.setRow(utils.getROW());
+
+        List<StudentSelVo> list = mapper.selAllSdy(dto);
+        for (StudentSelVo  vo  :  list ) {
+            GradeUtils gradeUtils = new GradeUtils(vo.getTotalScore());
+            double score = gradeUtils.totalScore();
+            String rating = gradeUtils.totalRating(score);
+            vo.setRating(rating);
+        }
+        return StudentSelRes.builder()
+                .list(list)
+                .page(utils)
+                .build();
+
+    }
+
+    public StudentSelProfileRes selStudentProfile(StudentSelProfileDto dto,int page) {
+        int maxpage = mapper.StudentCount();
+        PagingUtils utils = new PagingUtils(page,maxpage);
+        dto.setStartIdx(utils.getStaIdx());
+        dto.setStudentNum(dto.getStudentNum());
+        dto.setRow(utils.getROW());
+        List<StudentSelProfileVo> list = mapper.selStudentProfile(dto);
+
+        return StudentSelProfileRes.builder().list(list).page(utils).build();
+    }
+
+    public StudentSelPointRes selStudentRemainingPoint(StudentSelPointDto dto, int page) {
+        int maxpage = mapper.StudentCount();
+        PagingUtils utils = new PagingUtils(page, maxpage);
+        dto.setStartIdx(utils.getStaIdx());
+        dto.setRow(utils.getROW());
+        dto.setStudentNum(dto.getStudentNum());
+        List<StudentSelPointVo> list = mapper.selStudentRemainingPoint(dto);
+
+        return StudentSelPointRes.builder().list(list).page(utils).build();
+    }
+
+    public StudentUpRes upStudent(StudentUpParam param) {
+        StudentUpdto dto = new StudentUpdto();
+        dto.setAddress(param.getAddress());
+        dto.setPhone(param.getPhone());
+        dto.setEmail(param.getEmail());
+        dto.setStudentNum(param.getStudentNum());
+
+        int result = mapper.upStudent(dto);
+        if (result == 1) {
+            return new StudentUpRes(dto);
+        }
+        return null;
+
+    }
+
+
+
 }

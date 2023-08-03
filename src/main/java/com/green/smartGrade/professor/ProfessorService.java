@@ -37,47 +37,21 @@ public class ProfessorService {
     }
 
 
-    public int upProfessorPw(ProfessorUpPW dto) {
-        String hashedPw = commonUtils.encodeSha256(dto.getPassword());
-        dto.setPassword(hashedPw);
-        return mapper.upProfessorPw(dto);
-    }
-
-
-
-        public ProfessorUpRes upProfessor(ProfessorParam param,Long ip) {
+        public ProfessorUpRes upProfessor(ProfessorParam param) {
         ProfessorUpDto dto = new ProfessorUpDto();
-        dto.setImajor(param.getImajor());
         dto.setPhone(param.getPhone());
         dto.setEmail(param.getEmail());
         dto.setAddress(param.getAddress());
-        dto.setIprofessor(ip);
-
+        dto.setIprofessor(param.getIprofessor());
 
         int result = mapper.upProfessor(dto);
         if (result == 1 ) {
             ProfessorUpRes res = new ProfessorUpRes(dto);
-            res.setIprofessor(ip);
             return res;
         }
         return null;
     }
-
-    public professorSelRes selAllProfessor(ProfessorSelDto dto,int page) {
-        int maxPage = mapper.ProfessorCount();
-        PagingUtils utils = new PagingUtils(page,maxPage);
-
-
-        dto.setRow(utils.getROW());
-        dto.setStartIdx(utils.getStaIdx());
-
-        List<ProfessorVo> professorVos = mapper.selAllProfessor(dto);
-
-        return professorSelRes.builder().list(professorVos).page(utils).build();
-    }
-
-
-     public String upPicProfessor(MultipartFile pic , ProfessorPicDto dto) {
+    public String upPicProfessor(MultipartFile pic , ProfessorPicDto dto) {
         String centerPath = String.format("professor/%d", dto.getIprofessor());
         String dicPath = String.format("%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath);
         String temp = "0";
@@ -108,6 +82,21 @@ public class ProfessorService {
         return savedFilePath;
 
     }
+    public professorSelRes selAllProfessor(ProfessorSelDto dto,int page) {
+        int maxPage = mapper.ProfessorCount();
+        PagingUtils utils = new PagingUtils(page,maxPage);
+
+
+        dto.setRow(utils.getROW());
+        dto.setStartIdx(utils.getStaIdx());
+
+        List<ProfessorVo> professorVos = mapper.selAllProfessor(dto);
+
+        return professorSelRes.builder().list(professorVos).page(utils).build();
+    }
+
+
+
     public SelProfessorRes selProfessorLecture(ProfessorSelLectureDto dto) {
         int maxPage = mapper.selProfessorLectureCount(dto);
         PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
