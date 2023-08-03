@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smartGrade.student.StudentMapper">
-    <insert id="inslecture">
+    <insert id="insSdy" useGeneratedKeys="true" keyProperty="ilectureStudent">
         INSERT INTO lecture_student (istudent, ilecture, finished_yn)
-        SELECT s.istudent, la.ilecture, finished_yn finishedYn
+        SELECT s.istudent, la.ilecture, 0 as finishedYn
         FROM student s, lecture_applly la
-        WHERE s.istudent = #{isutdent} AND la.ilecture = {ilecture};
+        WHERE s.istudent = #{istudent}
+        AND la.ilecture = #{ilecture}
     </insert>
     
     

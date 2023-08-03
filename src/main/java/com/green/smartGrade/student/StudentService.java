@@ -16,11 +16,12 @@ public class StudentService {
 
     public StudentInsRes inslecture(StudentParam param) {
         StudentInsDto dto = new StudentInsDto();
-        dto.setIsudent(param.getIsudent());
+
+        dto.setIstudent(param.getIstudent());
         dto.setIlecture(param.getIlecture());
         dto.setFinishedYn(param.getFinishedYn());
 
-        int result = mapper.inslecture(dto);
+        int result = mapper.insSdy(dto);
         if (result == 1) {
             StudentInsRes res = new StudentInsRes(dto);
             return res;

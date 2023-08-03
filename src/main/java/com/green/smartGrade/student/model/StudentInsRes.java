@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 public class StudentInsRes {
     private Long ilectureStudent;
-    private Long isudent;
+    private Long istudent;
     private Long ilecture;
     private int finishedYn;
     private int attendance;
@@ -21,14 +21,14 @@ public class StudentInsRes {
 
     public StudentInsRes(StudentInsDto dto) {
         this.ilectureStudent = dto.getIlectureStudent();
-        this.isudent = dto.getIsudent();
+        this.istudent = dto.getIstudent();
         this.ilecture = dto.getIlecture();
         this.finishedYn =  dto.getFinishedYn();
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();
         this.finalExamination =dto.getFinalExamination();
         this.totalScore = dto.getTotalScore();
-        this.createdAt = dto.getCreatedAt();
+        this.createdAt = LocalDate.now();
         this.delYn = dto.getFinishedYn();
     }
 

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class StudentInsDto {
     private Long ilectureStudent;
-    private Long isudent;
+    private Long istudent;
     private Long ilecture;
     private int finishedYn;
     private int attendance;

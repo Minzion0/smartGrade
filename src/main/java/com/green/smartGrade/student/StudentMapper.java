@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface StudentMapper {
 
-    int inslecture(StudentInsDto dto);
+    int insSdy(StudentInsDto dto);
 }
