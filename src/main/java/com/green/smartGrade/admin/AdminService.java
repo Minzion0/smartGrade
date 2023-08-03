@@ -72,18 +72,8 @@ public class AdminService {
             String s = utils.totalRating(v);
             res.setGread(s);
             res.setAvg(v);
-//            int score = res.getTotalScore();
-//            utils2.getGread(score);
-//            String grade = utils2.getGrade();
-//            double pp = utils2.getPp();
-//            res.setAvg(pp);
-//            res.setGread(grade);
 
         }
-
-        long end = System.currentTimeMillis();
-        log.info("종료시간 : {}",end);
-        log.info("시간은? : {}",end-str);
         AdminLectureStudentResm resm = new AdminLectureStudentResm();
         resm.setList(adminLectureInStudentRes);
         resm.setPage(pagingUtils);

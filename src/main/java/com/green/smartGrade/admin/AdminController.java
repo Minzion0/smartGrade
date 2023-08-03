@@ -22,7 +22,7 @@ public class AdminController {
 
     @GetMapping("/lecture/{ilecture}")
     @Operation(summary = "해당 강의 수강학생 리스트")
-    public AdminLectureStudentResm findProfessors(@PathVariable Long ilecture,@RequestParam(defaultValue = "1") int page){
+    public AdminLectureStudentResm findProfessors(@PathVariable Long ilecture,@RequestParam(defaultValue = "1") int page ){
 
         return SERVICE.findlectureStudent(ilecture,page);
     }

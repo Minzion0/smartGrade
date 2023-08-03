@@ -7,6 +7,5 @@ public class AdminUpdLectureDto {
     private Long ilecture;
     private String ctnt;
     private int procedures;
-    private int strIdx;
-    private int row;
+
 }

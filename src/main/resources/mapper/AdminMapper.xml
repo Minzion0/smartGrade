@@ -40,6 +40,7 @@
 
     </select>
 
+
     <select id="lectureInStudent">
         SELECT C.istudent,C.nm,D.major_name majorNm,A.attendance,A.midterm_examination minEx,A.final_examination finEx,A.total_score totalScore
         FROM lecture_student A
