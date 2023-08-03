@@ -32,8 +32,6 @@ public class AdminService {
         dto.setStrIdx(utils.getStaIdx());
         List<AdminSelLectureRes> res = MAPPER.selLecture(dto);
 
-
-
        return AdminSelRes.builder().lectures(res).page(utils).build();
 
     }

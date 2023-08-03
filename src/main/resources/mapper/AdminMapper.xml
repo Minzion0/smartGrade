@@ -21,6 +21,9 @@
         ON G.imajor= C.imajor
 
         <where>
+            <if test="procedures==-2">
+                and  A.opening_procedures BETWEEN 0 AND 2
+            </if>
             <if test="procedures>=0">
                 and  A.opening_procedures=#{procedures}
             </if>

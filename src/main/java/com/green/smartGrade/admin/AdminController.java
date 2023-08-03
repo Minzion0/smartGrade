@@ -44,7 +44,7 @@ public class AdminController {
             "      \"endTime\": \"10:00:00<br>\",\n" +
             "      \"maxPeople\": 강의 수강 가능인원,<br>\n" +
             "      \"currentPeople\": 현 수강인원,<br>\n" +
-            "      \"procedures\": 강의 상태 0 : 반려 1강의 개설 신청 2개설 인가 수강신청 가능 3 개강,<br>\n" +
+            "      \"procedures\": 강의 상태 0 : 반려 1강의 개설 신청 2개설 인가 수강신청 가능 3 개강 -2 개강중 빼고 모두 보기 ,<br>\n" +
             "      \"delYn\": 삭제여부<br>")
     public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam (required = false,defaultValue = "-1")int  procedures,@RequestParam (required = false) String nm){
         AdminSelLectureParam param = new AdminSelLectureParam();

@@ -5,6 +5,7 @@ import com.green.smartGrade.security.CommonRes;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/sign-api")
+@Tag(name = "로그인")
+@RequestMapping("/api")
 public class SignController {
     private final SignService SERVICE;
 
@@ -70,5 +72,20 @@ public class SignController {
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
+    }
+    @GetMapping("/otp")
+    @Operation(summary = "otp 등록 어플에 등록",description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
+            "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번" +
+            "<br>\"barcodeUrl : qr코트 주소")
+    public ResponseEntity<?> otp(String iuser,String role) {
+
+        return SERVICE.otp(iuser,role);
+    }
+    @GetMapping("/otp-valid")
+    @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
+            "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
+            "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
+    public ResponseEntity<?> otpValid(@RequestParam String otpNum,String iuser,String role) {
+        return ResponseEntity.status(HttpStatus.OK).body(SERVICE.otpValid(otpNum,iuser,role));
     }
 }

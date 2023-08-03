@@ -6,16 +6,20 @@ import com.green.smartGrade.security.CommonRes;
 import com.green.smartGrade.security.config.RedisService;
 import com.green.smartGrade.security.config.security.JwtTokenProvider;
 import com.green.smartGrade.security.config.security.UserDetailsMapper;
-import com.green.smartGrade.security.config.security.model.AuthenticationFacade;
-import com.green.smartGrade.security.config.security.model.RedisJwtVo;
-import com.green.smartGrade.security.config.security.model.UserEntity;
-import com.green.smartGrade.security.config.security.model.UserTokenEntity;
+import com.green.smartGrade.security.config.security.model.*;
+import com.green.smartGrade.security.config.security.otp.OtpRes;
+import com.green.smartGrade.security.config.security.otp.TOTP;
+import com.green.smartGrade.security.config.security.otp.TOTPTokenGenerator;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base32;
+import org.apache.commons.codec.binary.Hex;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +38,7 @@ public class SignService {
     private final RedisService REDIS_SERVICE;
     private final AuthenticationFacade FACADE;
     private final ObjectMapper OBJECT_MAPPER;
+    private final TOTPTokenGenerator totp;
 
 
     public SignInResultDto signIn(String id, String password, String ip, String role) throws Exception {
@@ -163,6 +168,56 @@ public class SignService {
         // Redis에 로그아웃 처리한 AT 저장
         long expiration = JWT_PROVIDER.getTokenExpirationTime(accessToken, JWT_PROVIDER.ACCESS_KEY) - LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         REDIS_SERVICE.setValuesWithTimeout(accessToken, "logout", expiration);  //남은시간 이후가 되면 삭제가 되도록 함.
+    }
+
+    public ResponseEntity<?>otp(String uid,String role){
+        String secretKey = totp.generateSecretKey();//설정할 secretKey를 생성
+        UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
+        log.info("vo : {}",vo.toString());
+        String issuer = "GreenUniversity";
+        String account = vo.getEmail();
+        String barcodeUrl = totp.getGoogleAuthenticatorBarcode(secretKey,account,issuer);
+        OtpRes res = OtpRes.builder().barcodeUrl(barcodeUrl).secretKey(secretKey).build();
+
+        try {
+            updSecretKey(uid,role,secretKey);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+
+    }
+
+
+    public int updSecretKey(String uid,String role,String secretKey)throws Exception{
+        UserUpdSecretKeyDto dto = new UserUpdSecretKeyDto();
+        dto.setRole(role);
+        dto.setSecretKey(secretKey);
+        dto.setUid(uid);
+        int result= MAPPER.updSecretKey(dto);
+        if (result==0){
+            throw  new Exception();
+        }
+
+        return result;
+    }
+
+    public boolean otpValid(String inputCode,String uid,String role){
+        UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
+        log.info("secretKey : {}",vo.getSecretKey());
+        String otpCode = getTOTPCode(vo.getSecretKey());
+        log.info("otp Code : {}",otpCode);
+        log.info("inputCode : {}",inputCode);
+       return otpCode.equals(inputCode);
+    }
+
+    private String getTOTPCode(String secretKey) {
+        Base32 base32 = new Base32();
+        // 실제로는 로그인한 회원에게 생성된 개인키가 필요합니다.
+        byte[] bytes = base32.decode(secretKey);
+        String hexKey = Hex.encodeHexString(bytes);
+        return TOTP.getOTP(hexKey);
     }
 }
 
