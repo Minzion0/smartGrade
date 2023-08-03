@@ -8,10 +8,13 @@ import java.time.LocalDate;
 public class AdminSelLectureRes {
     private Long ilecture;
     private String lectureNm;
-    private Long isemester;
+    private int semester;
+    private String majorName;
     private String nm;
     private String lectureRoomNm;
     private String buildingNm;
+    private int gradeLimit;
+    private int score;
     private LocalDate strDate;
     private LocalDate endDate;
     private String  strTime;
