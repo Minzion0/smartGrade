@@ -28,17 +28,29 @@ public class AdminController {
     }
 
     @GetMapping("/lecture")
-    @Operation(summary = "강의 리스트")
-    public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam (required = false)String  procedures,@RequestParam (required = false) String nm){
+    @Operation(summary = "강의 리스트" ,
+            description = "ilecture\": pk,<br>\n" +
+            "      \"lectureNm\": \"강의명<br>\",\n" +
+            "      \"semester\": 학기,<br>\n" +
+            "      \"majorName\": \"전공명<br>\",\n" +
+            "      \"nm\": \"교수명\",<br>\n" +
+            "      \"lectureRoomNm\": \"호실<br>\",\n" +
+            "      \"buildingNm\": \"건물명<br>\",\n" +
+            "      \"gradeLimit\": 학년제한 ex )3이면 3학년이상 수강가능<br>,\n" +
+            "      \"score\": 해당 강의 이수학점<br>,\n" +
+            "      \"strDate\": \"2023-03-04<br>\",\n" +
+            "      \"endDate\": \"2023-06-30<br>\",\n" +
+            "      \"strTime\": \"09:00:00<br>\",\n" +
+            "      \"endTime\": \"10:00:00<br>\",\n" +
+            "      \"maxPeople\": 강의 수강 가능인원,<br>\n" +
+            "      \"currentPeople\": 현 수강인원,<br>\n" +
+            "      \"procedures\": 강의 상태 0 : 반려 1강의 개설 신청 2개설 인가 수강신청 가능 3 개강,<br>\n" +
+            "      \"delYn\": 삭제여부<br>")
+    public AdminSelRes selLecture(@RequestParam (defaultValue = "1") int page,@RequestParam (required = false,defaultValue = "-1")int  procedures,@RequestParam (required = false) String nm){
         AdminSelLectureParam param = new AdminSelLectureParam();
         param.setNm(nm);
         param.setPage(page);
-        if (procedures==null){
-            int i = -1;
-            param.setProcedures(i);
-        }else {
-            param.setProcedures(Integer.parseInt(procedures));
-        }
+        param.setProcedures(procedures);
         return SERVICE.selLecture(param);
     }
 

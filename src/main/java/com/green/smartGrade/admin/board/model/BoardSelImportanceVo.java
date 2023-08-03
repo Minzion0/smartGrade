@@ -15,4 +15,5 @@ public class BoardSelImportanceVo {
     private int importance;
     private LocalDateTime createdAt;
     private int delYn;
+    private int boardView;
 }

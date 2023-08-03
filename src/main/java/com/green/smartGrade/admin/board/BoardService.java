@@ -63,8 +63,8 @@ public class BoardService {
                     list.add(picEntity);
                 }
                 MAPPER.insBoardPic(list);
-                return  new BoardInsRes(dto);
             }
+            return  new BoardInsRes(dto);
         }
         return null;
     }
