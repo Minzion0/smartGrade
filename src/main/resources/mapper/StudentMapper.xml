@@ -60,10 +60,16 @@
         ON D.imajor = E.imajor
         WHERE D.student_num = #{studentNum} AND A.finished_yn = 1
         LIMIT #{startIdx}, #{row}
-
-
     </select>
-    
+    <update id="upStudent">
+        update student
+        set
+         phone = #{phone}
+        ,email = #{email}
+        ,address = #{address}
+        ,updated_at = current_timestamp
+        where student_num = #{studentNum}
+    </update>
     
 
 </mapper>

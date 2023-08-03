@@ -25,19 +25,13 @@
     </select>
 
 
-    <update id="upProfessorPw">
-        update professor
-        set professor_password = #{password}
-        where iprofessor = #{iprofessor}
-    </update>
-
-
     <update id="upProfessor">
         update professor
-        set imajor = #{imajor}
-        ,phone = #{phone}
+        set
+         phone = #{phone}
         ,email = #{email}
         ,address = #{address}
+        ,updated_at = current_timestamp
         where iprofessor = #{iprofessor}
     </update>
 

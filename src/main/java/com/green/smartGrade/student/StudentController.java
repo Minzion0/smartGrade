@@ -48,4 +48,10 @@ public class StudentController {
         dto.setStudentNum(studentNum);
         return service.selStudentRemainingPoint(dto, page);
     }
+
+    @PutMapping
+    @Operation(summary = "학생 프로필 수정")
+    public StudentUpRes putStudentProfile(@RequestBody StudentUpParam param) {
+        return service.upStudent(param);
+    }
 }

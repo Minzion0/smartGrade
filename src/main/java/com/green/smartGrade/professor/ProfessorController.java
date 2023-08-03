@@ -26,22 +26,8 @@ public class ProfessorController {
     }
 
 
-    @PatchMapping("/password")
-    @Operation(summary = "교수 비밀번호 번경")
-    public int patchProfessor(@RequestBody ProfessorUpPW dto) {
-        return service.upProfessorPw(dto);
-    }
 
 
-
-    @PutMapping("/{iprofessor}")
-    @Operation(summary = "교수 프로필 수정",description = "imajor : 전공pk<br>"+"phone : 폰번호<br>"+
-    "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>")
-    public ProfessorUpRes putProfessor(@PathVariable Long iprofessor, @RequestBody ProfessorParam param) {
-        ProfessorParam param1 = new ProfessorParam();
-        param1.setIprofessor(iprofessor);
-        return service.upProfessor(param,iprofessor);
-    }
     @GetMapping
     @Operation(summary = "교수 프로필 전체 보기" ,description = "page : 기본 1<br>"+ "row : 기본 프로필 10개 <br>")
     public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10")  int row) {
@@ -59,6 +45,16 @@ public class ProfessorController {
 
         return service.upPicProfessor(pic, dto);
     }
+
+    @PutMapping
+    @Operation(summary = "교수 프로필 수정",description = "imajor : 전공pk<br>"+"phone : 폰번호<br>"+
+            "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>")
+    public ProfessorUpRes putProfessor(@RequestBody ProfessorParam param) {
+
+        return service.upProfessor(param);
+    }
+
+
 
     @GetMapping("/{iprofessor}")
     @Operation(summary = "본인이 강의하고 있는 강의 목록 전체")

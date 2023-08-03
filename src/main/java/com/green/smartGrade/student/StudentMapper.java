@@ -17,4 +17,6 @@ public interface StudentMapper {
     List<StudentSelProfileVo> selStudentProfile(StudentSelProfileDto dto);
 
     List<StudentSelPointVo> selStudentRemainingPoint(StudentSelPointDto dto);
+
+    int upStudent(StudentUpdto dto);
 }

@@ -1,5 +1,6 @@
 package com.green.smartGrade.student;
 
+import com.green.smartGrade.admin.board.model.BoardUpdRes;
 import com.green.smartGrade.professor.model.SelProfessorRes;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.GradeUtils;
@@ -76,6 +77,22 @@ public class StudentService {
 
         return StudentSelPointRes.builder().list(list).page(utils).build();
     }
+
+    public StudentUpRes upStudent(StudentUpParam param) {
+        StudentUpdto dto = new StudentUpdto();
+        dto.setAddress(param.getAddress());
+        dto.setPhone(param.getPhone());
+        dto.setEmail(param.getEmail());
+        dto.setStudentNum(param.getStudentNum());
+
+        int result = mapper.upStudent(dto);
+        if (result == 1) {
+            return new StudentUpRes(dto);
+        }
+        return null;
+
+    }
+
 
 
 }

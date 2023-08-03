@@ -12,7 +12,6 @@ public interface ProfessorMapper {
     List<ProfessorVo> selProfessor(ProfessorSelDto dto); //  페이지 로우 교수 리스트
     int ProfessorCount();
 
-    int upProfessorPw(ProfessorUpPW dto);
 
     int upProfessor(ProfessorUpDto dto);
 
