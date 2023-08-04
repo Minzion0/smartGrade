@@ -38,7 +38,8 @@ public class ProfessorController {
     }
 
     @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값<br> "+" 쿼리스트링")
+    @Operation(summary = "프로필 수정", description = "phone : 폰번호<br>"+
+            "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>" + "pic : 사진")
     public ProfessorUpRes patchPicProfessor(@RequestPart(required = false) MultipartFile pic,
                                             @RequestPart  ProfessorParam param) {
         return service.upProfessor(pic, param);

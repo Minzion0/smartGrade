@@ -17,7 +17,7 @@ public interface ProfessorMapper {
 
     List<ProfessorVo> selAllProfessor(ProfessorSelDto dto); // 교수 리스트 전체 뽑기
 
-    int upPicProfessor(ProfessorPicDto dto);
+
     List<ProfessorSelLectureVo> selProfessorLecture(ProfessorSelLectureDto dto);
     List<ProfessorSelLectureVo> selProfessorLectureALl(ProfessorSelLectureDto dto);
     int selProfessorLectureCount(ProfessorSelLectureDto dto);
