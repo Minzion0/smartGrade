@@ -11,6 +11,7 @@ import com.green.smartGrade.security.config.security.model.*;
 import com.green.smartGrade.security.config.security.otp.OtpRes;
 import com.green.smartGrade.security.config.security.otp.TOTP;
 import com.green.smartGrade.security.config.security.otp.TOTPTokenGenerator;
+import com.green.smartGrade.security.sign.model.SignInParam;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
 import io.jsonwebtoken.Claims;
@@ -43,9 +44,12 @@ public class SignService {
 
 
 
-    public SignInResultDto signIn(String id, String password, String ip, String role) throws Exception {
+    public SignInResultDto signIn(SignInParam param, String ip) throws Exception {
         SignInResultDto dto = SignInResultDto.builder().build();
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
+        String id = param.getId();
+        String password = param.getPassword();
+        String role = param.getRole();
         UserEntity user = MAPPER.getByUid(id, role); // null 처리를 지금은 안 한상태
 
         log.info("[getSignInResult] id: {}", id);
@@ -68,7 +72,8 @@ public class SignService {
 //             return null;
 //        }
         if (user.getSecretKey()==null){
-            dto=issueToken(ip,id, role);
+            dto=issueToken(ip,id,role);
+            dto.setSecretKey(false);
             return dto;
         }
         setSuccessResult(dto);
@@ -135,6 +140,7 @@ public class SignService {
 
     private void setSuccessResult(SignUpResultDto result) {
         result.setSuccess(true);
+        result.setSecretKey(true);
         result.setCode(CommonRes.SUCCESS.getCode());
         result.setMsg(CommonRes.SUCCESS.getMsg());
     }

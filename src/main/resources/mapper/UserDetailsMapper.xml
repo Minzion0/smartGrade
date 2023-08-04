@@ -26,13 +26,13 @@
     </select>
     <select id="getUserRoleEmail">
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
-            select nm,email,secret_key secretKey
+            select nm,secret_key secretKey
             from professor
             where iprofessor = #{uid}
         </if>
 
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
-            SELECT nm,email,secret_key secretKey
+            SELECT nm,secret_key secretKey
             FROM student
             WHERE student_num = #{uid}
         </if>

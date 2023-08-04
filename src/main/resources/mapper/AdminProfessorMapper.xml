@@ -5,9 +5,9 @@
 <mapper namespace="com.green.smartGrade.admin.professor.AdminProfessorMapper">
     <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
         insert ignore professor
-        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
+        (imajor,professor_password,nm,gender,birthdate,phone)
         values
-        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
+        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone})
     </insert>
 
     <select id="findProfessors">

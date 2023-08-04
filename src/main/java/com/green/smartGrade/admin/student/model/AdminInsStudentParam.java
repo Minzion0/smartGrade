@@ -12,7 +12,5 @@ public class AdminInsStudentParam {
     private String  gender;
     private LocalDate birthdate;
     private String phone;
-    private String email;
-    private String address;
 
 }

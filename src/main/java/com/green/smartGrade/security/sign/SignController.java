@@ -2,6 +2,7 @@ package com.green.smartGrade.security.sign;
 
 
 import com.green.smartGrade.security.CommonRes;
+import com.green.smartGrade.security.sign.model.SignInParam;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,12 +43,12 @@ public class SignController {
 //    }
     @PostMapping("/sign-in")
     @Operation(summary = "로그인")
-    public SignInResultDto signIn(HttpServletRequest req, @RequestParam String id, @RequestParam String password, @RequestParam String role) throws Exception {
-
+    public SignInResultDto signIn(HttpServletRequest req, @RequestBody SignInParam param) throws Exception {
+//@RequestParam String id, @RequestParam String password, @RequestParam String role
         String ip = req.getRemoteAddr();
-        log.info("[signIn] 로그인을 시도하고 있습니다. id: {}, pw: {}, role: {}, ip: {}", id, password, role, ip);
+        log.info("[signIn] 로그인을 시도하고 있습니다. id: {}, pw: {}, role: {}, ip: {}", param.getId(), param.getPassword(), param.getRole(), ip);
 
-        SignInResultDto dto = SERVICE.signIn(id, password, ip, role);
+        SignInResultDto dto = SERVICE.signIn(param, ip);
 
 //
 //        if(dto.getCode() == CommonRes.SUCCESS.getCode()) {

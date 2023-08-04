@@ -32,7 +32,7 @@ public class AdminStudentService {
         String encode = PW_ENCODER.encode(rePw);
         dto.setStudentPassword(encode);
 
-        CheckUtils utils = CheckUtils.builder().email(dto.getEmail()).phoneNum(dto.getPhone()).gender(dto.getGender()).build();
+        CheckUtils utils = CheckUtils.builder().phoneNum(dto.getPhone()).gender(dto.getGender()).build();
         String msg = utils.getMsg();
         if (msg != null) {
 
@@ -45,11 +45,11 @@ public class AdminStudentService {
 
         int result = MAPPER.insStudent(dto);
         if (result == 0) {
-            res.setMsg("이미 등록한 이메일 입니다");
+            res.setMsg("등록 오류");
             return res;
         }
 
-        res = MAPPER.selStudent(dto.getEmail());
+        res = MAPPER.selStudent(dto.getStudentPassword());
 
         return res;
 

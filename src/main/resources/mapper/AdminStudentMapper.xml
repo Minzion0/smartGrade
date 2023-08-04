@@ -6,12 +6,10 @@
     <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
         insert ignore student
         (   student_num, student_password, imajor, nm, gender
-        , birthdate, phone, email, address
-        )
+        , birthdate, phone )
         VALUES
         ( concat(#{studentNum}, LPAD(#{majorCnt}, 4, 0)), #{studentPassword}, #{imajor}, #{nm}, #{gender}
-        ,#{birthdate},#{phone},#{email},#{address}
-        )
+        ,#{birthdate},#{phone})
         <selectKey order="BEFORE" resultType="Long" keyProperty="majorCnt">
             select IFNULL(count(imajor),0) + 1 AS majorCnt
             from student
@@ -24,7 +22,7 @@
         ,imajor,grade,nm,gender,pic,birthdate
         ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
         from student
-        where email=#{email}
+        where student_password= #{studentPassword}
     </select>
 
     <select id="findStudents">

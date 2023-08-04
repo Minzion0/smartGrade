@@ -56,9 +56,12 @@ public class CheckUtils {
         if (!phoneCheck()){
            temp.add("전화번호") ;
         }
-        if (!emailCheck()){
-            temp.add("이메일");
+        if (this.email!=null){
+            if (!emailCheck()){
+                temp.add("이메일");
+            }
         }
+
         if (!genderCheck()){
             temp.add("성별");
         }
