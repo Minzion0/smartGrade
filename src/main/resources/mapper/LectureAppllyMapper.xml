@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smartGrade.lecture_applly.LectureAppllyMapper">
-    <insert id="InsApplly">
+    <insert id="InsApplly" useGeneratedKeys="true" keyProperty="ilecture">
         insert into lecture_applly
         (ilecture_name  ,ilecture_room ,iprofessor,isemester,opening_procedures,
         lecture_str_date,lecture_end_date,lecture_str_time,lecture_end_time,attendance,
@@ -19,7 +19,7 @@
         ,lecture_end_time lectureEndTime
         ,lecture_max_people lectureMaxPeople,grade_limit gradeLimit,del_yn delYn,opening_procedures openingProcedures
         from lecture_applly
-        where iprofessor = #{iprofessor}
+        where iprofessor = #{iprofessor} and opening_procedures = 1
         order by iprofessor desc
         LIMIT #{startIdx}, #{row}
     </select>

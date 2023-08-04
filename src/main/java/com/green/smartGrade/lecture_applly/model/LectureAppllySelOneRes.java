@@ -18,5 +18,5 @@ public class LectureAppllySelOneRes {
     private int lectureMaxPeople;
     private int gradeLimit;
     private int delYn;
-    private int opening_procedures;
+    private int openingProcedures;
 }
