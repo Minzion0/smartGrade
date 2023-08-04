@@ -28,11 +28,12 @@ public class AdminMajorService {
         return null;
     }
 
-    public MajorfindRes selMajor(int page) {
+    public MajorfindRes selMajor(MajorSelDto dto) {
         int maxPage = MAPPER.countMajor();
-        PagingUtils utils = new PagingUtils(page,maxPage);
+        PagingUtils utils = new PagingUtils(dto.getPage(),maxPage);
 
-        List<MajorVo> major = MAPPER.selMajor(utils.getStaIdx());
+
+        List<MajorVo> major = MAPPER.selMajor(dto);
         return MajorfindRes.builder()
                 .major(major)
                 .page(utils)

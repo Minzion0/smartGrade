@@ -7,5 +7,7 @@ public class LectureRoomDetailDto {
     private Long ilectureRoom;
     private String buildingName;
     private String lectureRoomName;
+    private int page;
+    private int staIdx;
 
 }

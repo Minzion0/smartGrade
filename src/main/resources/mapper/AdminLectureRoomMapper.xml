@@ -13,14 +13,15 @@
     <select id="selLectureRoom">
         SELECT ilecture_room ilectureRoom
         , lecture_room_name lectureRoomName
-        , building_name buildingName ,del_yn delYn
+        , building_name buildingName ,
+        max_capacity maxCapacity, del_yn delYn
         from lecture_room
         <where>
             <if test="lectureRoomName != null and lectureRoomName != ''">
-                lecture_room_name = #{lectureRoomName}
+                and lecture_room_name = #{lectureRoomName}
             </if>
             <if test="buildingName != null and buildingName != ''">
-                building_name = #{buildingName}
+                and building_name = #{buildingName}
             </if>
         </where>
         LIMIT #{staIdx}, 10
