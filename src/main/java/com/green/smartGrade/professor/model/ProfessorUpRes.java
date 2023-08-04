@@ -11,6 +11,7 @@ public class ProfessorUpRes {
     private String email;
     private String address;
     private LocalDateTime updatedAt;
+    private String pic;
 
 
     public ProfessorUpRes(ProfessorUpDto dto) {
@@ -18,6 +19,7 @@ public class ProfessorUpRes {
         this.email = dto.getEmail();
         this.address = dto.getAddress();
         this.iprofessor= dto.getIprofessor();
+        this.pic = dto.getPic();
         this.updatedAt = LocalDateTime.now();
     }
 
