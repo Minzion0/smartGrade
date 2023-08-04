@@ -3,6 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smartGrade.admin.AdminMapper">
+
+    <insert id="semesterIns" keyProperty="isemester" useGeneratedKeys="true">
+        insert into semester
+        set year = #{year}
+        ,semester = #{semester}
+        ,semester_str_date =#{semesterStrDate}
+        ,semester_end_date =#{semesterEndDate}
+    </insert>
+
+    <select id="getSemester">
+        SELECT isemester,year,semester,semester_str_date semesterStrDate,semester_end_date semesterEndDate
+        FROM semester
+        <where>
+            <if test="year != null">
+                and year =#{year}
+            </if>
+        </where>
+    </select>
+
     <select id="selLecture">
         SELECT A.ilecture,D.lecture_name lectureNm,F.semester,G.major_name majorName,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,A.grade_limit gradeLimit,D.score,lecture_str_date strDate,lecture_end_date endDate,lecture_str_time strTime,lecture_end_time endTime
         ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn,COUNT(E.ilecture) currentPeople
@@ -35,7 +54,7 @@
 
         </where>
         GROUP BY A.ilecture
-        limit #{strIdx},#{row}
+
 
 
     </select>
@@ -51,7 +70,7 @@
         INNER JOIN major D
         ON D.imajor= C.imajor
         WHERE A.ilecture=#{ilecture}
-        limit #{strIdx},#{row}
+
     </select>
 
     <select id="lectureCountStudent">

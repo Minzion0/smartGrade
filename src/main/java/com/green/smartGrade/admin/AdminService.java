@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Slf4j
@@ -22,7 +25,6 @@ public class AdminService {
 
     @Autowired
     private final AdminMapper MAPPER;
-    private final CommonUtils commonUtils;
 
     public AdminSelRes selLecture(AdminSelLectureParam param){
         AdminSelLectureDto dto = new AdminSelLectureDto(param);
@@ -52,19 +54,11 @@ public class AdminService {
         return null;
     }
 
-    public AdminLectureStudentResm findlectureStudent(Long ilecture,int page ){
+    public AdminLectureStudentResm findlectureStudent(Long ilecture ){
         AdminLectureInStudentDto dto = new AdminLectureInStudentDto();
-
-        int currentPeople = MAPPER.lectureCountStudent(ilecture);
-        PagingUtils pagingUtils = new PagingUtils(page,currentPeople);
-        dto.setIlecture(ilecture);
-        dto.setRow(pagingUtils.getROW());
-        dto.setStrIdx(pagingUtils.getStaIdx());
-
+       dto.setIlecture(ilecture);
 
         List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(dto);
-        long str = System.currentTimeMillis();
-        log.info("시작시간 : {}",str);
         for (AdminLectureInStudentRes res : adminLectureInStudentRes) {
 
             GradeUtils utils = new GradeUtils(res.getTotalScore());
@@ -76,10 +70,46 @@ public class AdminService {
         }
         AdminLectureStudentResm resm = new AdminLectureStudentResm();
         resm.setList(adminLectureInStudentRes);
-        resm.setPage(pagingUtils);
         return resm;
     }
 
+    public AdminInsSemesterRes semesterIns(AdminInsSemesterParam param){
+        AdminInsSemesterDto dto = new AdminInsSemesterDto(param);
+        String year = dto.getYear();
+        Pattern pattern = Pattern.compile(year);
+        LocalDate strDate = dto.getSemesterStrDate();
+        int strDateYear = strDate.getYear();
+        String strYear = String.valueOf(strDateYear);
+        LocalDate eDate = dto.getSemesterEndDate();
+        String endDate = String.valueOf(eDate.getYear());
+        AdminInsSemesterRes res = new AdminInsSemesterRes();
+        boolean matches = pattern.matcher(strYear).matches();
+        boolean matches1 = pattern.matcher(endDate).matches();
+
+        if (matches&&matches1){
+
+            int result=0;
+            try {
+
+                result = MAPPER.semesterIns(dto);
+            }catch (Exception e){
+                res.setMsg("학기는 년도당 하나씩 가능합니다");
+            }
+            if (result==1){
+                res.semesterSet(dto);
+                return res;
+            }
+            res.setMsg("학기 중복 입니다");
+            return res;
+        }
+
+        res.setMsg("학기와 같은 년도가 아님");
+        return res;
+    }
+
+    public List<AdminGetSemesterVo> getSemester(String year){
+        return MAPPER.getSemester(year);
+    }
 
 
 

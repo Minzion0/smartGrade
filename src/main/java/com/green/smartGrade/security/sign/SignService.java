@@ -71,7 +71,7 @@ public class SignService {
 //
 //             return null;
 //        }
-        if (user.getSecretKey()==null){
+        if (role.equals("ROLE_ADMIN")||user.getSecretKey()==null ){
             dto=issueToken(ip,id,role);
             dto.setSecretKey(false);
             return dto;

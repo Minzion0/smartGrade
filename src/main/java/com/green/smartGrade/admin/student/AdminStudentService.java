@@ -32,7 +32,7 @@ public class AdminStudentService {
         String encode = PW_ENCODER.encode(rePw);
         dto.setStudentPassword(encode);
 
-        CheckUtils utils = CheckUtils.builder().phoneNum(dto.getPhone()).gender(dto.getGender()).build();
+        CheckUtils utils = CheckUtils.builder().nm(dto.getNm()).phoneNum(dto.getPhone()).gender(dto.getGender()).build();
         String msg = utils.getMsg();
         if (msg != null) {
 

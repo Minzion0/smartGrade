@@ -23,6 +23,7 @@
         ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
         from student
         where student_password= #{studentPassword}
+
     </select>
 
     <select id="findStudents">
@@ -60,6 +61,7 @@
         </where>
 
         GROUP BY A.istudent
+        order by A.created_at desc
         limit #{staIdx},#{row}
 
 

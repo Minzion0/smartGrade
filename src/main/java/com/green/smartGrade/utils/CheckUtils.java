@@ -14,8 +14,16 @@ public class CheckUtils {
     private String email;
     private String phoneNum;
     private String msg;
+    private String nm;
 
 
+    public boolean nmCheck(){
+        String nm=this.nm.trim();
+        if (nm==null||nm==""){
+            return false;
+        }
+        return true;
+    }
 
     public boolean genderCheck(){
         String regx = "^[FM]$";
@@ -53,6 +61,12 @@ public class CheckUtils {
 
     public String getMsg(){
         List<String> temp= new ArrayList<>();
+        if (this.nm!=null){
+            if (!nmCheck()){
+                temp.add("이름");
+            }
+        }
+
         if (!phoneCheck()){
            temp.add("전화번호") ;
         }

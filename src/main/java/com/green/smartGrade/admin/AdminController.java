@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/admin")
@@ -19,12 +21,22 @@ public class AdminController {
     @Autowired
     private final AdminService SERVICE;
 
+    @PostMapping("/semester")
+    @Operation(summary = "학기 등록", description = "semester = 학기 1~2만 ")
+    public AdminInsSemesterRes semesterIns(@RequestBody AdminInsSemesterParam param){
+        return SERVICE.semesterIns(param);
+    }
+
+    @GetMapping("/semester")
+    public List<AdminGetSemesterVo> getSemester(@RequestParam(required = false) String year){
+        return SERVICE.getSemester(year);
+    }
 
     @GetMapping("/lecture/{ilecture}")
     @Operation(summary = "해당 강의 수강학생 리스트")
-    public AdminLectureStudentResm findProfessors(@PathVariable Long ilecture,@RequestParam(defaultValue = "1") int page ){
+    public AdminLectureStudentResm findProfessors(@PathVariable Long ilecture){
 
-        return SERVICE.findlectureStudent(ilecture,page);
+        return SERVICE.findlectureStudent(ilecture);
     }
 
     @GetMapping("/lecture")
