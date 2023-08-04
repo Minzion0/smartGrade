@@ -69,4 +69,18 @@
         WHERE iboard = #{iboard}
     </update>
 
+    <select id="selSearchBoard">
+        SELECT iboard, iadmin, title,importance, created_at createdAt, del_yn delYn, board_view boardView
+        FROM board
+        WHERE title LIKE CONCAT(‘%’, #{title}, ‘%’) AND del_yn = 0
+        ORDER BY createdAt DESC
+        LIMIT #{staIdx}, #{row}
+    </select>
+
+    <select id="countSearchBoard">
+        SELECT COUNT(*)
+        FROM board
+        WHERE title LIKE CONCAT(‘%’, #{title}, ‘%’) AND del_yn = 0
+    </select>
+
 </mapper>
