@@ -10,5 +10,6 @@ public class UserEntity {
     private String uid;
     private String upw;
     private String role;
+    private String secretKey;
 
 }

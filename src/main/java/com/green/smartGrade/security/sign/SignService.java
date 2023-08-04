@@ -54,8 +54,8 @@ public class SignService {
             throw new RuntimeException("비밀번호 다름");
         }
         log.info("[getSignInResult] 패스워드 일치");
-//        /// -- opt
-//        // RT가 이미 있을 경우
+////        /// -- opt
+////        // RT가 이미 있을 경우
 //        if (user.getSecretKey()==null){
 //            //토큰 발행 메소드
 //            return issueToken(ip, role, user);
@@ -64,7 +64,10 @@ public class SignService {
 //
 //             return null;
 //        }
-        return issueToken(ip, role, user);
+        if (user.getSecretKey()==null){
+            return issueToken(ip,id, role);
+        }
+       return null;
 
     }
 
@@ -187,12 +190,22 @@ public class SignService {
         return result;
     }
 
-    public boolean otpValid(String inputCode, String uid, String role) {
+    public SignInResultDto otpValid(HttpServletRequest req,String inputCode, String uid, String role) {
 
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String otpCode = getOtpCode(vo.getSecretKey());
 
-        return otpCode.equals(inputCode);
+        boolean result = otpCode.equals(inputCode);
+        if (result){
+            String ip = req.getRemoteAddr();
+            try {
+
+                return issueToken(ip,uid,role);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     private String getOtpCode(String secretKey) {
@@ -203,7 +216,8 @@ public class SignService {
 
         return TOTP.getOTP(hexKey);
     }
-    private SignInResultDto issueToken(String ip, String role, UserEntity user) throws JsonProcessingException {
+    private SignInResultDto issueToken(String ip, String iuser,String role) throws JsonProcessingException {
+        UserEntity user = MAPPER.getByUid(iuser, role);
         String redisKey = String.format("b:RT(%s):%s:%s", "Server", user.getIuser(), ip);
         if (REDIS_SERVICE.getValues(redisKey) != null) {
             REDIS_SERVICE.deleteValues(redisKey);

@@ -27,6 +27,19 @@ public class SignController {
     //RequestParam은 http 로부터 요청 온 정보를 받아오기 위한 스프링 어노테이션이다.
 
 
+//    @PostMapping("/sign-in")   로그인 하자마자 토큰
+//    @Operation(summary = "로그인")
+//    public SignInResultDto signIn(HttpServletRequest req, @RequestParam String id, @RequestParam String password, @RequestParam String role) throws Exception {
+//
+//        String ip = req.getRemoteAddr();
+//        log.info("[signIn] 로그인을 시도하고 있습니다. id: {}, pw: {}, role: {}, ip: {}", id, password, role, ip);
+//
+//        SignInResultDto dto = SERVICE.signIn(id, password, ip, role);
+//        if(dto.getCode() == CommonRes.SUCCESS.getCode()) {
+//            log.info("[signIn] 정상적으로 로그인 되었습니다. id: {}, token: {}", id, dto.getAccessToken());
+//        }
+//        return dto;
+//    }
     @PostMapping("/sign-in")
     @Operation(summary = "로그인")
     public SignInResultDto signIn(HttpServletRequest req, @RequestParam String id, @RequestParam String password, @RequestParam String role) throws Exception {
@@ -35,10 +48,15 @@ public class SignController {
         log.info("[signIn] 로그인을 시도하고 있습니다. id: {}, pw: {}, role: {}, ip: {}", id, password, role, ip);
 
         SignInResultDto dto = SERVICE.signIn(id, password, ip, role);
+        if (dto==null){
+            return null;
+        }
         if(dto.getCode() == CommonRes.SUCCESS.getCode()) {
             log.info("[signIn] 정상적으로 로그인 되었습니다. id: {}, token: {}", id, dto.getAccessToken());
         }
+
         return dto;
+
     }
 
 //    @PostMapping("/sign-up")
@@ -85,7 +103,7 @@ public class SignController {
     @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
             "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
-    public ResponseEntity<?> otpValid(@RequestParam String otpNum,String iuser,String role) {
-        return ResponseEntity.status(HttpStatus.OK).body(SERVICE.otpValid(otpNum,iuser,role));
+    public SignInResultDto otpValid(HttpServletRequest req,@RequestParam String otpNum,String iuser,String role) {
+       return   SERVICE.otpValid(req,otpNum, iuser,role);
     }
 }
