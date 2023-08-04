@@ -2,6 +2,7 @@ package com.green.smartGrade.admin;
 
 
 import com.green.smartGrade.admin.model.*;
+import com.green.smartGrade.admin.student.model.AdminGraduationStudentVo;
 import com.green.smartGrade.utils.CommonUtils;
 
 import com.green.smartGrade.utils.GradeUtils;
@@ -97,6 +98,11 @@ public class AdminService {
             }
             if (result==1){
                 res.semesterSet(dto);
+                List<AdminGraduationStudentVo> vo = MAPPER.graduationStudent();
+                int graduationStudent = MAPPER.updGraduationStudent(vo);
+                log.info("이번년도 졸업인원 : {}",graduationStudent);
+                String format = String.format("이번학기 졸업인원은 : %s명 입니다", graduationStudent);
+                res.setMsg(format);
                 return res;
             }
             res.setMsg("학기 중복 입니다");

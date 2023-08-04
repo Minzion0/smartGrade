@@ -90,6 +90,8 @@
 
     </select>
 
+
+
 <!--    <resultMap id="studentLectures" type="AdminStudentDetalRes">-->
 <!--        <id property="istudent" column="istudent"/>-->
 <!--        <collection property="lectureList" javaType="List" select="studentLectures" column="istudent" ofType="AdminStudentLectureDataRes"/>-->

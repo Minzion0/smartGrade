@@ -58,6 +58,31 @@
 
 
     </select>
+    <select id="graduationStudent">
+        SELECT A.istudent,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score,C.graduation_score graduationScore
+        FROM student A
+        left JOIN lecture_student B
+        ON A.istudent=B.istudent
+        inner JOIN major C
+        ON A.imajor=C.imajor
+        left JOIN lecture_applly D
+        ON D.ilecture=B.ilecture
+        left JOIN lecture_name G
+        ON G.ilecture_name=D.ilecture_name
+        WHERE A.finished_yn=1
+        GROUP BY A.istudent
+        HAVING score>= C.graduation_score
+
+
+    </select>
+    <update id="updGraduationStudent">
+        <foreach collection="list" item="item" open="" close="">
+            update student
+            set finished_yn=2
+            where istudent =#{item.istudent}
+        </foreach>
+
+    </update>
 
 
     <select id="lectureInStudent">
