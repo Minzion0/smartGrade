@@ -7,7 +7,7 @@ import lombok.Data;
 public class ProfessorGradeUpdParam {
     private int totalScore;
     private int avgScore;
-    private double rating;
+    private GradeUtils rating;
     private Long istudent;
     private int semester;
 }
