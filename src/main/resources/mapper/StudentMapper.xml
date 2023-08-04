@@ -68,6 +68,7 @@
         ,email = #{email}
         ,address = #{address}
         ,updated_at = current_timestamp
+        ,pic = #{pic}
         where student_num = #{studentNum}
     </update>
     

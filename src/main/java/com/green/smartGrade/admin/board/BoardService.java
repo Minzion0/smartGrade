@@ -102,6 +102,9 @@ public class BoardService {
                 .list(list)
                 .build();
     }
+    public List<BoardSelVo> selSearchBoard (BoardSelSearchDto dto) {
+        return  null;
+    }
     public List <BoardSelImportanceVo> selBoardImportance () {
        return MAPPER.selBoardImportance();
     }

@@ -6,19 +6,19 @@
     <select id="getByUid">
 
         <if test='role.equalsIgnoreCase("ROLE_ADMIN")'>
-            SELECT iadmin iuser, admin_Id uid, admin_password upw, role
+            SELECT iadmin iuser, admin_Id uid, admin_password upw, role,secret_key secretKey
             FROM admin
             WHERE admin_Id = #{uid} AND role = "ROLE_ADMIN"
         </if>
 
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
-            SELECT iprofessor iuser, iprofessor uid, professor_password upw, role
+            SELECT iprofessor iuser, iprofessor uid, professor_password upw, role,secret_key secretKey
             FROM professor
             WHERE iprofessor = #{uid}
         </if>
 
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
-            SELECT istudent iuser, student_num uid, student_password upw, role
+            SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
             FROM student
             WHERE student_num = #{uid}
         </if>

@@ -59,4 +59,12 @@ public class BoardController {
         dto.setIboard(iboard);
         return SERVICE.updDelYnBoard(dto);
     }
+
+    @GetMapping("/{title}")
+    @Operation(summary = "게시글 검색")
+    public  List<BoardSelVo> getSearchBoard (@RequestParam String title) {
+        BoardSelSearchDto dto = new BoardSelSearchDto();
+        dto.setTitle(title);
+        return SERVICE.selSearchBoard(dto);
+    }
 }
