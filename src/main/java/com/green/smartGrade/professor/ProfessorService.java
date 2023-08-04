@@ -69,7 +69,8 @@ public class ProfessorService {
             pic.transferTo(target);
         } catch (Exception e) {
             return temp;
-        }dto.setPic(savedFilePath);
+        }
+        dto.setPic(savedFilePath);
         try {
             int result = mapper.upPicProfessor(dto);
             if (result == Integer.parseInt(temp)) {
