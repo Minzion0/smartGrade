@@ -14,4 +14,6 @@ public interface AdminStudentMapper {
     AdminStudentDetalRes studentDt(Long istudent);
     List<AdminStudentLectureDataRes> studentLectures(Long istudent);
     int promotionGrade();
+
+
 }

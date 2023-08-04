@@ -7,6 +7,5 @@ import java.util.List;
 
 @Data
 public class AdminLectureStudentResm {
-    private PagingUtils page;
     private List<AdminLectureInStudentRes> list;
 }
