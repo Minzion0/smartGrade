@@ -29,10 +29,9 @@ public class AdminProfessorService {
         log.info("{}", dto.getPhone());
 
         //이메일 유효성검사도 해야할듯?
-        CheckUtils utils = CheckUtils.builder().phoneNum(dto.getPhone()).gender(dto.getGender()).email(dto.getEmail()).build();
+        CheckUtils utils = CheckUtils.builder().phoneNum(dto.getPhone()).gender(dto.getGender()).build();
         String msg = utils.getMsg();
         if (msg != null) {
-
             String format = String.format("%s 오류가 있습니다", msg);
             res.setMsg(format);
             return res;
@@ -42,7 +41,7 @@ public class AdminProfessorService {
         int result = MAPPER.insProfessor(dto);
         log.info("result : {}",result);
         if (result == 0) {
-            res.setMsg("이미 등록한 이메일 입니다");
+            res.setMsg("등록오류");
             return res;
         }
         res.setRes(dto);

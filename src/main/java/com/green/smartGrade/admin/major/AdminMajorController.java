@@ -29,15 +29,16 @@ public class AdminMajorController {
     }
 
     @GetMapping
-    @Operation(summary = "전공리스트 전체 보기 (검색기능 추가 필요)", description = "" +
+    @Operation(summary = "전공리스트 전체 보기", description = "" +
             "imajor : 전공 pk\n" +
             "\nmajorName : 전공 이름\n" +
             "\ngraduationScore : 졸업 시 필요한 학점")
     public MajorfindRes getMajor(@RequestParam (defaultValue = "1") int page,
                                  @RequestParam (required = false) String majorName) {
-        MajorDetailDto dto = new MajorDetailDto();
+        MajorSelDto dto = new MajorSelDto();
         dto.setMajorName(majorName);
-        return SERVICE.selMajor(page);
+        dto.setPage(page);
+        return SERVICE.selMajor(dto);
     }
 
 

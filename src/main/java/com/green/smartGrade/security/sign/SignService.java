@@ -11,6 +11,7 @@ import com.green.smartGrade.security.config.security.model.*;
 import com.green.smartGrade.security.config.security.otp.OtpRes;
 import com.green.smartGrade.security.config.security.otp.TOTP;
 import com.green.smartGrade.security.config.security.otp.TOTPTokenGenerator;
+import com.green.smartGrade.security.sign.model.SignInParam;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
 import io.jsonwebtoken.Claims;
@@ -43,19 +44,25 @@ public class SignService {
 
 
 
-    public SignInResultDto signIn(String id, String password, String ip, String role) throws Exception {
+    public SignInResultDto signIn(SignInParam param, String ip) throws Exception {
+        SignInResultDto dto = SignInResultDto.builder().build();
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
+        String id = param.getId();
+        String password = param.getPassword();
+        String role = param.getRole();
         UserEntity user = MAPPER.getByUid(id, role); // null 처리를 지금은 안 한상태
 
         log.info("[getSignInResult] id: {}", id);
-
         log.info("[getSignInResult] 패스워드 비교");
         if (!PW_ENCODER.matches(password, user.getUpw())) {
-            throw new RuntimeException("비밀번호 다름");
+            log.info("비밀번호 다름");
+            //throw new RuntimeException("비밀번호 다름");
+            setFileResult(dto);
+           return dto;
         }
         log.info("[getSignInResult] 패스워드 일치");
-//        /// -- opt
-//        // RT가 이미 있을 경우
+////        /// -- opt
+////        // RT가 이미 있을 경우
 //        if (user.getSecretKey()==null){
 //            //토큰 발행 메소드
 //            return issueToken(ip, role, user);
@@ -64,7 +71,14 @@ public class SignService {
 //
 //             return null;
 //        }
-        return issueToken(ip, role, user);
+        if (user.getSecretKey()==null){
+            dto=issueToken(ip,id,role);
+            dto.setSecretKey(false);
+            return dto;
+        }
+        setSuccessResult(dto);
+
+       return dto;
 
     }
 
@@ -126,6 +140,7 @@ public class SignService {
 
     private void setSuccessResult(SignUpResultDto result) {
         result.setSuccess(true);
+        result.setSecretKey(true);
         result.setCode(CommonRes.SUCCESS.getCode());
         result.setMsg(CommonRes.SUCCESS.getMsg());
     }
@@ -187,12 +202,22 @@ public class SignService {
         return result;
     }
 
-    public boolean otpValid(String inputCode, String uid, String role) {
+    public SignInResultDto otpValid(HttpServletRequest req,String inputCode, String uid, String role) {
 
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String otpCode = getOtpCode(vo.getSecretKey());
 
-        return otpCode.equals(inputCode);
+        boolean result = otpCode.equals(inputCode);
+        if (result){
+            String ip = req.getRemoteAddr();
+            try {
+
+                return issueToken(ip,uid,role);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     private String getOtpCode(String secretKey) {
@@ -203,7 +228,8 @@ public class SignService {
 
         return TOTP.getOTP(hexKey);
     }
-    private SignInResultDto issueToken(String ip, String role, UserEntity user) throws JsonProcessingException {
+    private SignInResultDto issueToken(String ip, String iuser,String role) throws JsonProcessingException {
+        UserEntity user = MAPPER.getByUid(iuser, role);
         String redisKey = String.format("b:RT(%s):%s:%s", "Server", user.getIuser(), ip);
         if (REDIS_SERVICE.getValues(redisKey) != null) {
             REDIS_SERVICE.deleteValues(redisKey);

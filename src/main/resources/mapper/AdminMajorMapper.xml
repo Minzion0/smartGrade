@@ -12,7 +12,7 @@
 
     <select id="selMajor">
         SELECT imajor, major_name majorName
-        , graduation_score graduationScore
+        , graduation_score graduationScore, del_yn delYn
         from major
         <where>
             <if test="majorName != null and majorName != ''">
@@ -22,13 +22,6 @@
         LIMIT #{staIdx},10
     </select>
 
-    <select id="selMajorDetail">
-        SELECT imajor, major_name majorName
-        , graduation_score graduationScore
-        from major
-        WHERE major_name = #{majorName}
-        AND imajor = #{imajor}
-    </select>
     <update id="delMajor">
         UPDATE major
         SET del_yn = 1

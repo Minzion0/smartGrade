@@ -14,8 +14,6 @@ public class AdminInsStudentDto {
     private String  gender;
     private LocalDate birthdate;
     private String phone;
-    private String email;
-    private String address;
     private Long majorCnt;
 
     public AdminInsStudentDto(AdminInsStudentParam param) {
@@ -24,7 +22,6 @@ public class AdminInsStudentDto {
         this.gender = param.getGender();
         this.birthdate = param.getBirthdate();
         this.phone = param.getPhone();
-        this.email = param.getEmail();
-        this.address = param.getAddress();
+
     }
 }

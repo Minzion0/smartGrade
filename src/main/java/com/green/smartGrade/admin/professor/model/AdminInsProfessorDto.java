@@ -13,8 +13,7 @@ public class AdminInsProfessorDto {
     private String gender;
     private LocalDate birthdate;
     private String phone;
-    private String email;
-    private String address;
+
 
     public AdminInsProfessorDto(AdminInsProfessorParam param) {
 
@@ -23,7 +22,6 @@ public class AdminInsProfessorDto {
         this.gender = param.getGender();
         this.birthdate = param.getBirthdate();
         this.phone = param.getPhone();
-        this.email = param.getEmail();
-        this.address = param.getAddress();
+
     }
 }

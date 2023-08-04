@@ -9,7 +9,7 @@ import java.util.List;
 public interface AdminMajorMapper {
     int insMajor(MajorInsDto dto);
 
-    List<MajorVo> selMajor(int staIdx);
+    List<MajorVo> selMajor(MajorSelDto dto);
 
     int delMajor(MajorDelDto dto);
 
