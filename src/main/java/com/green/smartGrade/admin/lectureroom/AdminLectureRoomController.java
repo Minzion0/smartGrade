@@ -36,9 +36,10 @@ public class AdminLectureRoomController {
                                              @RequestParam (required = false) String buildingName,
                                              @RequestParam (required = false) String lectureRoomName) {
         LectureRoomDetailDto dto = new LectureRoomDetailDto();
+        dto.setPage(page);
         dto.setLectureRoomName(lectureRoomName);
         dto.setBuildingName(buildingName);
-        return SERVICE.selLectureRoom(page);
+        return SERVICE.selLectureRoom(dto);
     }
 
 

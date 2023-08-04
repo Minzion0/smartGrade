@@ -9,4 +9,5 @@ public class MajorVo {
     private Long imajor;
     private String majorName;
     private int graduationScore;
+    private int delYn;
 }
