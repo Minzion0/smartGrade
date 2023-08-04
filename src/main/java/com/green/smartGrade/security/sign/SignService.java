@@ -44,14 +44,17 @@ public class SignService {
 
 
     public SignInResultDto signIn(String id, String password, String ip, String role) throws Exception {
+        SignInResultDto dto = SignInResultDto.builder().build();
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
         UserEntity user = MAPPER.getByUid(id, role); // null 처리를 지금은 안 한상태
 
         log.info("[getSignInResult] id: {}", id);
-
         log.info("[getSignInResult] 패스워드 비교");
         if (!PW_ENCODER.matches(password, user.getUpw())) {
-            throw new RuntimeException("비밀번호 다름");
+            log.info("비밀번호 다름");
+            //throw new RuntimeException("비밀번호 다름");
+            setFileResult(dto);
+           return dto;
         }
         log.info("[getSignInResult] 패스워드 일치");
 ////        /// -- opt
@@ -65,9 +68,12 @@ public class SignService {
 //             return null;
 //        }
         if (user.getSecretKey()==null){
-            return issueToken(ip,id, role);
+            dto=issueToken(ip,id, role);
+            return dto;
         }
-       return null;
+        setSuccessResult(dto);
+
+       return dto;
 
     }
 
