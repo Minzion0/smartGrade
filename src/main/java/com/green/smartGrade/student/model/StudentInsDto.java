@@ -10,6 +10,7 @@ public class StudentInsDto {
     private Long istudent;
     private Long studentNum;
     private Long ilecture;
+    private String dayWeek;
     private int finishedYn;
     private int attendance;
     private int midtermExamination;

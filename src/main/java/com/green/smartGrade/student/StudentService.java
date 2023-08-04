@@ -1,6 +1,7 @@
 package com.green.smartGrade.student;
 
 import com.green.smartGrade.admin.board.model.BoardUpdRes;
+import com.green.smartGrade.lecture_applly.model.LectureApllyDto;
 import com.green.smartGrade.professor.model.SelProfessorRes;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.FileUtils;
@@ -33,9 +34,27 @@ public class StudentService {
         dto.setIlecture(param.getIlecture());
         dto.setFinishedYn(param.getFinishedYn());
 
+//        StudentInsDto apllyDto = new StudentInsDto();
+//        apllyDto.setDayWeek(String.valueOf(integer));
+//        apllyDto.setIlecture(dto.getIlecture());
+//        updatedDayList.add(apllyDto);
+
+        List<Integer> dayList = mapper.selDayWeek(dto.getIlecture());
+//        List<StudentInsDto> updatedDayList = new ArrayList<>();
+        String temp="";
+        temp=dayList.get(0).toString();
+        for (int i = 1; i < dayList.size(); i++) {
+            temp+=",";
+            temp+=dayList.get(i).toString();
+
+        }
+
+
+
         int result = mapper.insSdy(dto);
         if (result == 1) {
             StudentInsRes res = new StudentInsRes(dto);
+            res.setDayWeek(temp);
             return res;
         }
         return null;
