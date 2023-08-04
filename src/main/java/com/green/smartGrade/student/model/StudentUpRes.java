@@ -14,6 +14,7 @@ public class StudentUpRes {
     private String email;
     private String address;
     private LocalDateTime updatedAt;
+    private String pic;
 
     public StudentUpRes(StudentUpdto dto) {
         this.studentNum = dto.getStudentNum();
@@ -21,5 +22,6 @@ public class StudentUpRes {
         this.email = dto.getEmail();
         this.address = dto.getAddress();
         this.updatedAt = LocalDateTime.now();
+        this.pic = dto.getPic();
     }
 }

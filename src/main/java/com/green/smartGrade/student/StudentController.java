@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,9 +51,10 @@ public class StudentController {
         return service.selStudentRemainingPoint(dto, page);
     }
 
-    @PutMapping
+    @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "학생 프로필 수정")
-    public StudentUpRes putStudentProfile(@RequestBody StudentUpParam param) {
-        return service.upStudent(param);
+    public StudentUpRes putStudentProfile(@RequestPart(required = false) MultipartFile pic
+                , @RequestPart StudentUpParam param) {
+        return service.upStudent(pic,param);
     }
 }

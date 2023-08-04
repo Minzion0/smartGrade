@@ -8,6 +8,5 @@ public class StudentUpdto {
     private String phone;
     private String email;
     private String address;
-    private int strIdx;
-    private int row;
+    private String pic;
 }

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class StudentInsRes {
     private Long ilectureStudent;
     private Long istudent;
+
     private Long ilecture;
     private int finishedYn;
     private int attendance;
@@ -22,6 +23,7 @@ public class StudentInsRes {
     public StudentInsRes(StudentInsDto dto) {
         this.ilectureStudent = dto.getIlectureStudent();
         this.istudent = dto.getIstudent();
+
         this.ilecture = dto.getIlecture();
         this.finishedYn =  dto.getFinishedYn();
         this.attendance = dto.getAttendance();
