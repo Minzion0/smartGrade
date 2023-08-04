@@ -64,6 +64,6 @@ spring:
   datasource:
     url: jdbc:mariadb://192.168.0.144:3306/team_b
 file:
-  dir: /home/download/
+  dir: /home/download/smartGrade
 server:
   port: 8080
