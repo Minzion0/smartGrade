@@ -37,22 +37,20 @@ public class ProfessorController {
         return service.selAllProfessor(dto,page);
     }
 
-    @PatchMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "프로필 사진 등록", description = "iprofessr : 유저 PK 값<br> "+" 쿼리스트링")
-    public String patchPicProfessor(@RequestPart MultipartFile pic, @RequestParam Long iprofessor) {
-        ProfessorPicDto dto = new ProfessorPicDto();
-        dto.setIprofessor(iprofessor);
-
-        return service.upPicProfessor(pic, dto);
+    public ProfessorUpRes patchPicProfessor(@RequestPart(required = false) MultipartFile pic,
+                                            @RequestPart  ProfessorParam param) {
+        return service.upProfessor(pic, param);
     }
 
-    @PutMapping
-    @Operation(summary = "교수 프로필 수정",description = "imajor : 전공pk<br>"+"phone : 폰번호<br>"+
-            "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>")
-    public ProfessorUpRes putProfessor(@RequestBody ProfessorParam param) {
-
-        return service.upProfessor(param);
-    }
+//    @PutMapping
+//    @Operation(summary = "교수 프로필 수정",description = "imajor : 전공pk<br>"+"phone : 폰번호<br>"+
+//            "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>")
+//    public ProfessorUpRes putProfessor(@RequestBody ProfessorParam param) {
+//
+//        return service.upProfessor(param);
+//    }
 
 
 
