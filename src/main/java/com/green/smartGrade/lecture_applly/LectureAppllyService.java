@@ -29,6 +29,7 @@ public class LectureAppllyService {
         dto.setLectureEndDate(param.getLectureEndDate());
         dto.setLectureStrTime(param.getLectureStrTime());
         dto.setLectureEndTime(param.getLectureEndTime());
+        dto.setDayWeek(param.getDayWeek());
 
         // 입력 값들을 가져온다
         int attendance = param.getAttendance();

@@ -21,6 +21,7 @@ public class LectureAppllyRes {
     private int finalExamination;
     private int lectureMaxPeople;
     private int garedLimit;
+    private int dayWeek;
     private int delYn;
     private String msg;
 
@@ -60,6 +61,7 @@ public class LectureAppllyRes {
         this.attendance = dto.getAttendance();
         this.midtermExamination = dto.getMidtermExamination();
         this.finalExamination = dto.getFinalExamination();
+        this.dayWeek = dto.getDayWeek();
         this.lectureMaxPeople = dto.getLectureMaxPeople();
         this.garedLimit = dto.getGaredLimit();
         this.delYn = dto.getDelYn();

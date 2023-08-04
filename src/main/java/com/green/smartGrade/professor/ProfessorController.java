@@ -29,7 +29,8 @@ public class ProfessorController {
 
 
     @GetMapping
-    @Operation(summary = "교수 프로필 전체 보기" ,description = "page : 기본 1<br>"+ "row : 기본 프로필 10개 <br>")
+    @Operation(summary = "교수 프로필 전체 보기" ,description = "page : 기본 1<br>"+ "row : 기본 프로필 10개 <br>"+"<br>"+"iprofessor : 교수pk"
+    +"name : 이름<br>"+ "gender : 성별<br>"+"birthdate : 생년월일<br>"+"phone : 폰번호<br>"+"email : 이메일<br>" + "address : 주소")
     public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10")  int row) {
         ProfessorSelDto dto = new ProfessorSelDto();
         dto.setPage(page);
@@ -56,7 +57,10 @@ public class ProfessorController {
 
 
     @GetMapping("/{iprofessor}")
-    @Operation(summary = "본인이 강의하고 있는 강의 목록 전체")
+    @Operation(summary = "본인의 강의 목록 전체",description = "iprofessor : 교수pk<br>"+"openingProcedures : 개강절차 0 반려 1개강신청 2개강인원모집중 3개강 4수강종료<br>"
+    +"lectureStrDate : 강의 시작일자<br>"+"lectureEndDate : 강의 종강 일자<br>"+"lectureStrTime : 강의시작 시간<br>"+"lectureEndTime : 강의종료 시간<br>"
+    +"gradeLimit : 입력된 학년 이상 들을 수 있음<br>"+"lectureName : 강의 이름<br>"+"score : 강의 학점<br>"+"lectureRoomName : 강의실<br>"
+    +"maxCapacity : 강의실 수용 인원<br>"+"dayWeek : 강의 시작요일<br>"+"semester : 학기")
     public SelProfessorRes selProfessorLecture (@PathVariable int iprofessor,
                                                 @RequestParam (defaultValue = "1") int page,
                                                 @RequestParam (required = false ) String openingProcedures) {
