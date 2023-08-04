@@ -30,18 +30,20 @@
         ]]>
     </update>
     <update id="updAvgScore">
-        UPDATE student_semester_score
-        SET avg_score = (SELECT AVG(total_score)
-                            FROM lecture_student A
-                            INNER JOIN student_semester_score B
-                            on A.istudent = B.istudent
-                            INNER JOIN semester C
-                            ON B.isemester = C.isemester
-                            WHERE A.istudent = #{istudent}
-                            AND B.semester = #{semester}),
-        `rating` = #{rating}
-        WHERE istudent = #{istudent}
-        AND semester = #{semester};
+        UPDATE student_semester_score A
+        INNER JOIN semester B
+        ON A.isemester = B.isemester
+        SET A.avg_score = (SELECT AVG(total_score)
+                            FROM lecture_student C
+                            INNER JOIN student_semester_score D
+                            on C.istudent = D.istudent
+                            INNER JOIN semester E
+                            ON D.isemester = E.isemester
+                            WHERE C.istudent = #{istudent}
+                            AND E.semester = #{semester}),
+        A.`rating` = #{rating}
+        WHERE A.istudent = #{istudent}
+        AND B.semester = #{semester};
     </update>
 
 

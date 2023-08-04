@@ -91,13 +91,16 @@ public class ProfessorGradeMngmnService {
         dto.setIstudent(p.getIstudent());
 
         GradeUtils utils = new GradeUtils(p.getTotalScore());
-        dto.setRating(utils.rating);
-        double rating = utils.totalScore();
+        double rating;
+        rating = utils.totalScore();
+        p.setRating(rating);
+        dto.setRating(rating);
+
 
         mapper.updAvgScore(dto);
 
         return ProfessorGradeUpdRes.builder()
-                .rating(rating)
+                .rating(dto.getRating())
                 .build();
     }
 

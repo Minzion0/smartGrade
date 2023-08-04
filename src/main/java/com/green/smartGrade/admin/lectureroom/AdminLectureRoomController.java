@@ -26,7 +26,7 @@ public class AdminLectureRoomController {
     }
 
     @GetMapping
-    @Operation(summary = "강의실 리스트 전체 보기 (검색기능 추가 필요)", description = "" +
+    @Operation(summary = "강의실 리스트 전체 보기", description = "" +
             "ilectureRoom : 강의실 pk\n" +
             "\n lectureRoomName : 강의실 이름\n" +
             "\n buildingname : 건물 이름\n" +
