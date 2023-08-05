@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smartGrade.student.StudentMapper">
+    <insert id="insSdy" useGeneratedKeys="true" keyProperty="ilectureStudent">
+        INSERT INTO lecture_student (istudent, ilecture, finished_yn)
+        SELECT s.istudent, la.ilecture, 0 as finishedYn
+        FROM student s, lecture_applly la
+        WHERE s.istudent = #{istudent}
+        AND la.ilecture = #{ilecture}
+    </insert>
+    
+    <select id="selDayWeek">
+        select day_week dayWeek
+        from lecture_day_week
+        where ilecture = #{ilecture}
+    </select>
+
+
+    
+    <select id="selAllSdy">
+        SELECT A.istudent ,D.student_num studentNum,D.grade,B.ilecture_name ilectureName,C.lecture_name lectureName,B.iprofessor
+        ,C.score,A.attendance,A.midterm_examination midtermExamination
+        ,A.final_examination finalExamination,A.total_score totalScore,A.finished_yn finishedYn
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture = B.ilecture
+        INNER JOIN lecture_name C
+        ON B.ilecture_name = C.ilecture_name
+        INNER JOIN student D
+        ON A.istudent = D.istudent
+        WHERE D.student_num = #{studentNum} and A.finished_yn = 1
+        LIMIT #{startIdx}, #{row}
+    </select>
+
+    <select id="StudentCount">
+        SELECT COUNT(*)
+        FROM student
+        WHERE student_num = #{studentNum}
+    </select>
+
+    <select id="selStudentProfile">
+        SELECT A.istudent,D.student_num studentNum
+        ,D.imajor,D.grade,D.nm,
+        D.gender,D.pic,D.birthdate,D.phone,D.email,D.address,D.finished_yn finishedYn,sum(C.score) score
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture = B.ilecture
+        INNER JOIN lecture_name C
+        ON B.ilecture_name = C.ilecture_name
+        INNER JOIN student D
+        ON A.istudent = D.istudent
+        WHERE D.student_num = #{studentNum} AND A.finished_yn = 1
+        LIMIT #{startIdx}, #{row}
+    </select>
+
+    <select id="selStudentRemainingPoint">
+        SELECT A.istudent,D.student_num studentNum
+        ,D.imajor,D.grade,D.nm,
+        D.gender,D.finished_yn finishedYn,sum(C.score) score,E.graduation_score graduationScore, E.graduation_score-sum(C.score) remainingPoints
+        FROM lecture_student A
+        INNER JOIN lecture_applly B
+        ON A.ilecture = B.ilecture
+        INNER JOIN lecture_name C
+        ON B.ilecture_name = C.ilecture_name
+        INNER JOIN student D
+        ON A.istudent = D.istudent
+        INNER JOIN major E
+        ON D.imajor = E.imajor
+        WHERE D.student_num = #{studentNum} AND A.finished_yn = 1
+        LIMIT #{startIdx}, #{row}
+    </select>
+    <update id="upStudent">
+        update student
+        set
+         phone = #{phone}
+        ,email = #{email}
+        ,address = #{address}
+        ,updated_at = current_timestamp
+        ,pic = #{pic}
+        where student_num = #{studentNum}
+    </update>
+    
+
+</mapper>

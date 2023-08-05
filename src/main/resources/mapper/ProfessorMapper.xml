@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.smart_grade.professor.ProfessorMapper">
+<mapper namespace="com.green.smartGrade.professor.ProfessorMapper">
 
     <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
         insert into professor
@@ -25,21 +25,14 @@
     </select>
 
 
-
-
-    <update id="upProfessorPw">
-        update professor
-        set professor_password = #{password}
-        where iprofessor = #{iprofessor}
-    </update>
-
-
     <update id="upProfessor">
         update professor
-        set imajor = #{imajor}
-        ,phone = #{phone}
+        set
+         phone = #{phone}
         ,email = #{email}
         ,address = #{address}
+        ,updated_at = current_timestamp
+        ,pic = #{pic}
         where iprofessor = #{iprofessor}
     </update>
 
@@ -47,6 +40,8 @@
     <select id="selAllProfessor">
         select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
         from professor
+        ORDER BY iprofessor DESC
+        LIMIT #{startIdx}, #{row}
     </select>
 
     <update id="upPicProfessor">

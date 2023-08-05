@@ -1,46 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.green.smart_grade.security.config.security.UserDetailsMapper">
+<mapper namespace="com.green.smartGrade.security.config.security.UserDetailsMapper">
 
     <select id="getByUid">
-        <if test="role == ROLE_ADMIN">
-            SELECT admin_Id uid, admin_password upw
+
+        <if test='role.equalsIgnoreCase("ROLE_ADMIN")'>
+            SELECT iadmin iuser, admin_Id uid, admin_password upw, role,secret_key secretKey
             FROM admin
-            WHERE admin_Id = #{uid}
+            WHERE admin_Id = #{uid} AND role = "ROLE_ADMIN"
         </if>
 
-        <if test="role == ROLE_PROFESSOR">
-            SELECT iprofessor uid, professor_password upw
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            SELECT iprofessor iuser, iprofessor uid, professor_password upw, role,secret_key secretKey
             FROM professor
             WHERE iprofessor = #{uid}
         </if>
 
-        <if test="role == ROLE_USER">
-            SELECT student_num uid, student_password upw
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
             FROM student
             WHERE student_num = #{uid}
         </if>
+
     </select>
+    <select id="getUserRoleEmail">
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            select nm,secret_key secretKey
+            from professor
+            where iprofessor = #{uid}
+        </if>
+
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            SELECT nm,secret_key secretKey
+            FROM student
+            WHERE student_num = #{uid}
+        </if>
+
+    </select>
+    <update id="updSecretKey">
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            update  student
+            set secret_key=#{secretKey}
+            where student_num = #{uid}
+        </if>
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            update  professor
+            set secret_key=#{secretKey}
+            where iprofessor = #{uid}
+        </if>
+    </update>
 
     <!-- ///////////////////////////////////////// user_token /////////-->
     <insert id="updUserToken">
         INSERT INTO user_token
-        (iuser, ip, access_token, refresh_token)
+        (role, iuser, ip)
         VALUES
-        (#{iuser}, #{ip}, #{accessToken}, #{refreshToken})
+        (#{role}, #{iuser}, #{ip})
 
         ON DUPLICATE KEY UPDATE
-          access_token = #{accessToken}
-        , refresh_token = #{refreshToken}
+        role = #{role}
+        , iuser = #{iuser}
     </insert>
 
     <select id="selUserToken">
-        SELECT iuser, ip, access_token accessToken,
+        SELECT iuser, role, ip, access_token accessToken,
         refresh_token refreshToken, created_at createdAt,
         updated_at updatedAt
         FROM user_token
-        WHERE iuser = #{iuser} AND ip = #{ip}
+        WHERE iuser = #{iuser} AND role = #{role}
     </select>
 
 </mapper>

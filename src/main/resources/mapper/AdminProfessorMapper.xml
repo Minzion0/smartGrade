@@ -2,24 +2,31 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.smart_grade.admin.professor.AdminProfessorMapper">
+<mapper namespace="com.green.smartGrade.admin.professor.AdminProfessorMapper">
     <insert id="insProfessor" useGeneratedKeys="true" keyProperty="iprofessor">
         insert ignore professor
-        (imajor,professor_password,nm,gender,birthdate,phone,email,address)
+        (imajor,professor_password,nm,gender,birthdate,phone)
         values
-        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone},#{email},#{address})
+        (#{imajor},#{professorPassword},#{nm},#{gender},#{birthdate},#{phone})
     </insert>
 
     <select id="findProfessors">
         SELECT iprofessor,major_name majorName
         ,nm,gender,birthdate,phone,email
-        ,address,A.del_yn delYn
+        ,address,A.del_yn delYn,date(A.created_at) createdAt
         FROM professor A
         INNER JOIN major B
         ON A.imajor=B.imajor
-        <if test="name!=null">
-            where A.nm in (#{name})
-        </if>
+        <where>
+            <if test="name!=null">
+              and  A.nm in (#{name})
+            </if>
+
+            <if test="imajor >0 ">
+             and B.imajor =#{imajor}
+            </if>
+        </where>
+
         ORDER BY A.imajor
         LIMIT #{staIdx},10
     </select>
@@ -45,6 +52,15 @@
     <select id="countProfessor" >
         select count(*)
         from professor
+        <where>
+            <if test="name!=null">
+                and  nm in (#{name})
+            </if>
+
+            <if test="imajor >0 ">
+                and imajor =#{imajor}
+            </if>
+        </where>
     </select>
 
     <select id="professorProfile">
@@ -58,7 +74,7 @@
 
     </select>
     <select id="professorMajor">
-        SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate
+        SELECT A.ilecture,A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate
         , A.lecture_str_time lectureStrTime,
         A.lecture_end_time lectureEndTime, B.lecture_name lectureName
         from lecture_applly A

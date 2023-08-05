@@ -2,16 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.smart_grade.admin.student.AdminStudentMapper">
+<mapper namespace="com.green.smartGrade.admin.student.AdminStudentMapper">
     <insert id="insStudent" useGeneratedKeys="true" keyProperty="istudent">
         insert ignore student
         (   student_num, student_password, imajor, nm, gender
-        , birthdate, phone, email, address
-        )
+        , birthdate, phone )
         VALUES
         ( concat(#{studentNum}, LPAD(#{majorCnt}, 4, 0)), #{studentPassword}, #{imajor}, #{nm}, #{gender}
-        ,#{birthdate},#{phone},#{email},#{address}
-        )
+        ,#{birthdate},#{phone})
         <selectKey order="BEFORE" resultType="Long" keyProperty="majorCnt">
             select IFNULL(count(imajor),0) + 1 AS majorCnt
             from student
@@ -24,7 +22,8 @@
         ,imajor,grade,nm,gender,pic,birthdate
         ,phone,email,address,finished_yn finishedYn,created_at createdAt,updated_at updatedAt,del_yn delYn
         from student
-        where email=#{email}
+        where student_password= #{studentPassword}
+
     </select>
 
     <select id="findStudents">
@@ -55,9 +54,14 @@
             <if test="finishedYn>0">
                 and A.finished_yn=#{finishedYn}
             </if>
+
+            <if test="imajor > 0">
+                and A.imajor=#{imajor}
+            </if>
         </where>
 
         GROUP BY A.istudent
+        order by A.created_at desc
         limit #{staIdx},#{row}
 
 
@@ -77,11 +81,16 @@
             <if test="grade >=1  ">
              and  grade=#{grade}
             </if>
+            <if test="imajor > 0">
+                and imajor=#{imajor}
+            </if>
 
 
         </where>
 
     </select>
+
+
 
 <!--    <resultMap id="studentLectures" type="AdminStudentDetalRes">-->
 <!--        <id property="istudent" column="istudent"/>-->
@@ -134,5 +143,11 @@
 <!--        GROUP BY A.istudent-->
 
 <!--    </select>-->
+    
+    <update id="promotionGrade">
+        UPDATE student
+        SET grade = grade +1
+        WHERE grade &lt; 4 AND del_yn = 0
+    </update>
 
 </mapper>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.green.smart_grade.admin.board.BoardMapper">
+<mapper namespace="com.green.smartGrade.admin.board.BoardMapper">
 
     <insert id="insBoard" useGeneratedKeys="true" keyProperty="iboard">
         INSERT INTO board
@@ -68,5 +68,19 @@
         SET board_view = board_view + 1
         WHERE iboard = #{iboard}
     </update>
+
+    <select id="selSearchBoard">
+        SELECT iboard, iadmin, title,importance, created_at createdAt, del_yn delYn, board_view boardView
+        FROM board
+        WHERE title LIKE CONCAT(‘%’, #{title}, ‘%’) AND del_yn = 0
+        ORDER BY createdAt DESC
+        LIMIT #{staIdx}, #{row}
+    </select>
+
+    <select id="countSearchBoard">
+        SELECT COUNT(*)
+        FROM board
+        WHERE title LIKE CONCAT(‘%’, #{title}, ‘%’) AND del_yn = 0
+    </select>
 
 </mapper>
