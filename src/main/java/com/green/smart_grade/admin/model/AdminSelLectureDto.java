@@ -9,6 +9,9 @@ public class AdminSelLectureDto {
     private int strIdx;
     private int row;
 
+    public AdminSelLectureDto() {
+    }
+
     public AdminSelLectureDto(AdminSelLectureParam param) {
         this.procedures = param.getProcedures();
         this.nm = param.getNm();
