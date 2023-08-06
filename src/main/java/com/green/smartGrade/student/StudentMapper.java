@@ -19,4 +19,7 @@ public interface StudentMapper {
     List<StudentSelPointVo> selStudentRemainingPoint(StudentSelPointDto dto);
 
     int upStudent(StudentUpdto dto);
+
+
+    List<Integer> selDayWeek(Long ilecture);
 }

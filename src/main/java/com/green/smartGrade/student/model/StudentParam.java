@@ -11,4 +11,5 @@ public class StudentParam {
     private Long ilecture;
     private int finishedYn;
 
+
 }

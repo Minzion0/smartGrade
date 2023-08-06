@@ -22,13 +22,13 @@ public class AdminController {
     private final AdminService SERVICE;
 
     @PostMapping("/semester")
-    @Operation(summary = "학기 등록", description = "semester = 학기 1~2만  <br>학기 등록시 졸업 학점 충족한 인원은 자동 졸업처리")
+    @Operation(summary = "학기 등록", description = "semester = 학기 1~2만 ")
     public AdminInsSemesterRes semesterIns(@RequestBody AdminInsSemesterParam param){
         return SERVICE.semesterIns(param);
     }
 
     @GetMapping("/semester")
-    @Operation(summary = "학기 검색",description = "년도 없이 검색하면 모든 학기 출력")
+    @Operation(summary = "학기 확인")
     public List<AdminGetSemesterVo> getSemester(@RequestParam(required = false) String year){
         return SERVICE.getSemester(year);
     }

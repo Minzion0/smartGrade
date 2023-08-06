@@ -9,6 +9,14 @@
         AND la.ilecture = #{ilecture}
     </insert>
     
+    <select id="selDayWeek">
+        select day_week dayWeek
+        from lecture_day_week
+        where ilecture = #{ilecture}
+    </select>
+
+
+    
     <select id="selAllSdy">
         SELECT A.istudent ,D.student_num studentNum,D.grade,B.ilecture_name ilectureName,C.lecture_name lectureName,B.iprofessor
         ,C.score,A.attendance,A.midterm_examination midtermExamination

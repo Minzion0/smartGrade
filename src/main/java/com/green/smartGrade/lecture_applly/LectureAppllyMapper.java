@@ -11,6 +11,8 @@ public interface LectureAppllyMapper {
 
     List<LectureAppllySelOneRes> selLectureApplly(LectureApllyT t);
 
+    int InsDayWeek(List<LectureApllyDto> dto);
+
     int selAplly();
 
 }

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +32,8 @@ public class LectureAppllyService {
         dto.setLectureStrTime(param.getLectureStrTime());
         dto.setLectureEndTime(param.getLectureEndTime());
         dto.setDayWeek(param.getDayWeek());
+
+
 
         // 입력 값들을 가져온다
         int attendance = param.getAttendance();
@@ -77,18 +81,35 @@ public class LectureAppllyService {
         }
         dto.setOpeningProcedures(openingProcedures);
 
+
         try {
             int result = mapper.InsApplly(dto);
-            if (result == 1) {
-                res.setDto(dto);
-
-                return res;
+            if (result != 1) {
+                throw new RuntimeException();
             }
         } catch (IllegalArgumentException ex) {
            ex.fillInStackTrace();
         }
 
-        return null;
+        String dayWeek = dto.getDayWeek();
+        String[] split = dayWeek.split(",");
+
+        List<LectureApllyDto> liss = new ArrayList<>();
+        for (String s : split) {
+            LectureApllyDto apllyDto = new LectureApllyDto();
+            apllyDto.setDayWeek(s);
+            apllyDto.setIlecture(dto.getIlecture());
+            liss.add(apllyDto);
+        }
+
+        int re = mapper.InsDayWeek(liss);
+        if (re ==0){
+            return null;
+        }
+        res.setDto(dto);
+
+        return res;
+
 
     }
 

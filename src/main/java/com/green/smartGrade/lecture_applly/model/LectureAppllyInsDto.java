@@ -19,7 +19,7 @@ public class LectureAppllyInsDto {
     private int attendance;
     private int midtermExamination;
     private int finalExamination;
-    private int dayWeek;
+    private String dayWeek;
     private int lectureMaxPeople;
     private int garedLimit;
     private int delYn;

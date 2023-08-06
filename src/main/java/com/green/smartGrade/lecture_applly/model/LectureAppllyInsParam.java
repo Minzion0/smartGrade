@@ -15,7 +15,7 @@ public class LectureAppllyInsParam {
     private LocalDate lectureEndDate;
     private String lectureStrTime;
     private String lectureEndTime;
-    private int dayWeek;
+    private String dayWeek;
     private int attendance;
     private int midtermExamination;
     private int finalExamination;

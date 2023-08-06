@@ -21,7 +21,7 @@ public class LectureAppllyRes {
     private int finalExamination;
     private int lectureMaxPeople;
     private int garedLimit;
-    private int dayWeek;
+    private String dayWeek;
     private int delYn;
     private String msg;
 
