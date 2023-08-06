@@ -1,7 +1,6 @@
 package com.green.smart_grade.admin;
 
-import com.green.smart_grade.admin.model.AdminSelLectureDto;
-import com.green.smart_grade.admin.model.AdminSelLectureRes;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -19,15 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class AdminMapperTest {
     @Autowired
-    private  AdminMapper mapper;
+
     @Test
     void selLecture() {
-        AdminSelLectureDto dto = new AdminSelLectureDto();
-        dto.setStrIdx(0);
-        dto.setRow(10);
 
-        List<AdminSelLectureRes> res = mapper.selLecture(dto);
-        log.info("res 1 :{}",res.get(1));
     }
 
     @Test

@@ -28,6 +28,7 @@ public class AdminController {
     }
 
     @GetMapping("/semester")
+    @Operation(summary = "학기 확인")
     public List<AdminGetSemesterVo> getSemester(@RequestParam(required = false) String year){
         return SERVICE.getSemester(year);
     }
