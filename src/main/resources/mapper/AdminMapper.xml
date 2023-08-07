@@ -54,10 +54,9 @@
 
         </where>
         GROUP BY A.ilecture
-
-
-
+        limit #{strIdx},#{row}
     </select>
+    <!--졸업 요건을 충족한 학생들 리스트 -->
     <select id="graduationStudent">
         SELECT A.istudent,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score,C.graduation_score graduationScore
         FROM student A
@@ -98,11 +97,6 @@
 
     </select>
 
-    <select id="lectureCountStudent">
-        SELECT COUNT(ilecture)
-        FROM lecture_student
-        WHERE ilecture=#{ilecture}
-    </select>
 
     <select id="countLceture">
         select count(*)

@@ -20,21 +20,21 @@
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
             FROM student
-            WHERE student_num = #{uid}
+            WHERE istudent = #{uid}
         </if>
 
     </select>
     <select id="getUserRoleEmail">
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
-            select nm,secret_key secretKey
+            select nm,secret_key secretKey,email
             from professor
             where iprofessor = #{uid}
         </if>
 
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
-            SELECT nm,secret_key secretKey
+            SELECT nm,secret_key secretKey,email
             FROM student
-            WHERE student_num = #{uid}
+            WHERE istudent = #{uid}
         </if>
 
     </select>
@@ -42,7 +42,7 @@
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             update  student
             set secret_key=#{secretKey}
-            where student_num = #{uid}
+            where istudent = #{uid}
         </if>
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
             update  professor

@@ -2,18 +2,21 @@ package com.green.smartGrade.security.sign;
 
 
 import com.green.smartGrade.security.CommonRes;
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import com.green.smartGrade.security.sign.model.SignInParam;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -94,10 +97,15 @@ public class SignController {
     @GetMapping("/otp")
     @Operation(summary = "otp 등록 어플에 등록",description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번" +
-            "<br>\"barcodeUrl : qr코트 주소")
-    public ResponseEntity<?> otp(String iuser,String role) {
+            "<br>\"barcodeUrl : qr코드 주소")
+    public ResponseEntity<?> otp(@AuthenticationPrincipal MyUserDetails details) {
 
-        return SERVICE.otp(iuser,role);
+        Long iuser = details.getIuser();
+        String result = String.valueOf(iuser);
+        String role = details.getRoles().get(0);
+
+
+        return SERVICE.otp(result,role);
     }
     @GetMapping("/otp-valid")
     @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +

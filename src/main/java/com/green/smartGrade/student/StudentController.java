@@ -21,7 +21,7 @@ public class StudentController {
 
     @PostMapping
     @Operation(summary = "학생 수강 신청",description = "ilectureStudent : 강의 pk 자동으로 올라감<br>"
-            +"istudent : 학생pk<br>"+"ilecture : 수강신청할 강의pk<br>"+"finishedYn : 수료여부<br>"
+            +"istudent : 학생pk<br>"+"ilecture : 수강신청할 강의pk<br>"+"dayweek : 수강요일 0~6 일~토<br>"+"finishedYn : 수료여부<br>"
             +"attendance : 출결<br>"+"midtermExamination : 중간고사<br>"+"finalExamination : 기말고사<br>"+"totalScore : 총점수<br>"
     +"createdAt : 수강신청 일자<br>"+"delYn : 삭제여부<br>"+"<br>"+"finishedYn : 수료여부는 신청이기 때문에 0으로 시작")
     public StudentInsRes postStudent(@RequestBody StudentParam param) {
