@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class AdminFindProfessorRes {
     private Long iprofessor;
-    private Long imajor;
+    private String  majorName;
     private String nm;
     private String gender;
     private LocalDate birthdate;
