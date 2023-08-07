@@ -54,6 +54,7 @@
 
         </where>
         GROUP BY A.ilecture
+        limit #{strIdx},#{row}
 
 
 
