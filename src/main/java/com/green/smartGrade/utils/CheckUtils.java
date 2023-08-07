@@ -51,7 +51,6 @@ public class CheckUtils {
 
         Pattern regexPattern = Pattern.compile(pattern);
         Matcher matcher = regexPattern.matcher(phoneNum);
-        String s = phoneNum.replaceAll(" ", "");
 
         log.info("phoneNum : {}",phoneNum);
         log.info("matcher.matches() : {}",matcher.matches());

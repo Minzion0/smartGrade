@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @Builder
 public class MyUserDetails implements UserDetails {
     private Long iuser;
+    private String userNum;
     private String uid;
     private String upw;
 

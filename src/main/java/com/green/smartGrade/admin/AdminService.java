@@ -123,48 +123,6 @@ public class AdminService {
 
 }
 
-class GradeUtils2{
-    private  double pp;
-    private  String grade;
 
-    public double getPp() {
-        return pp;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-
-    public void getGread(int totalScore){
-        int temp= totalScore/10;
-        int temp2=totalScore%10;
-        double result=0;
-        String gread="F";
-        if (temp>=9){
-            result=4.0;
-            gread="A";
-        }else if (temp>=8){
-            result= 3.0;
-            gread="B";
-        }else if (temp>=7){
-            result=2.0;
-            gread="C";
-        } else if (temp >= 6) {
-            result=1.0;
-            gread="D";
-
-        }
-
-        if (temp2>4 || totalScore== 100){
-            result+=0.5;
-            gread+="+";
-        }
-        this.pp=result;
-        this.grade=gread;
-    }
-
-
-}
 
 
