@@ -10,7 +10,7 @@ public class AdminFindStudentRes {
     private String studentNum;
     private int grade;
     private String nm;
-    private String majorName;
+    private Long imajor;
     private char gender;
     private LocalDate birthdate;
     private String phone;

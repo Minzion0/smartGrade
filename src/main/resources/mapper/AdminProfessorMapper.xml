@@ -11,7 +11,7 @@
     </insert>
 
     <select id="findProfessors">
-        SELECT iprofessor,major_name majorName
+        SELECT iprofessor,A.imajor
         ,nm,gender,birthdate,phone,email
         ,address,A.del_yn delYn,date(A.created_at) createdAt
         FROM professor A

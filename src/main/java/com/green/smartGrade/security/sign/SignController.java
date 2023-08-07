@@ -102,6 +102,7 @@ public class SignController {
 
         Long iuser = details.getIuser();
         String result = String.valueOf(iuser);
+
         String role = details.getRoles().get(0);
 
 
