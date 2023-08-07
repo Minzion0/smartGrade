@@ -67,7 +67,7 @@ public class ProfessorGradeMngmnService {
         GradeUtils gradeUtils = new GradeUtils(point);
         double score = gradeUtils.totalScore();
         String rating = gradeUtils.totalRating(score);
-        dto.setTotalScore(point);
+
         dto.setPoint(point);
         dto.setRating(rating);
 
