@@ -6,6 +6,8 @@ import java.security.MessageDigest;
 
 @Component
 public class CommonUtils {
+
+    //이제는 사용하지 않는 암호화 코드
     public  String encodeSha256(String source) {
         String mSalt = "abcd123";
         String result = "";
