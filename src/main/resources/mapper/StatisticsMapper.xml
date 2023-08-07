@@ -3,14 +3,18 @@
 <mapper namespace="com.green.smartGrade.statistics.StatisticsMapper">
     <select id="selStatistics">
         SELECT ilecture,
-        COUNT(ilecture) AS lecture_count,
+        COUNT(ilecture) AS lectureCount,
         ROUND(COUNT(ilecture) * 100.0 / SUM(COUNT(ilecture)) OVER(), 2) AS percentage
         FROM lecture_student
+        WHERE finished_yn = 1
         GROUP BY ilecture
         ORDER BY percentage desc
     </select>
 
-
+    <select id="statisticsCount">
+        SELECT COUNT(*)
+        FROM lecture_student
+    </select>
 
 
 </mapper>

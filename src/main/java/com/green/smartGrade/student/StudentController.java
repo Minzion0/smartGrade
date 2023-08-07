@@ -37,7 +37,6 @@ public class StudentController {
         StudentSelDto dto = new StudentSelDto();
         dto.setStudentNum(studentnum);
 
-
         return service.selAllSdy(dto, page);
     }
 
