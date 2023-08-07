@@ -30,7 +30,7 @@ public class ProfessorGradeMngmnContoller {
     }
 
     @GetMapping("/{iprofessor}")
-    @Operation(summary = "내 강의를 듣고 있는 학생 목록"+"iprofessor : 교수pk<br>"+ "studentNum : 학생학번<br>"
+    @Operation(summary = "내 강의를 듣고 있는 학생 목록", description = "iprofessor : 교수pk<br>"+ "studentNum : 학생학번<br>"
            + "nm : 학생이름<br>"
            + "majorName : 전공<br>"
             +"attendance : 출결점수<br>"
