@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,26 +21,54 @@ public class BoardController {
     private final BoardService SERVICE;
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "게시판 등록")
+    @Operation(summary = "게시판 등록",
+            description =
+                    "      \"iadmin\": \"작성자 pk<br>\",\n" +
+                            "      \"title\": 제목,<br>\n" +
+                            "      \"ctnt\": 내용,<br>\n" +
+                            "      \"importance\": 중요도<br>")
     public BoardInsRes insBoard (@RequestPart BoardInsParam param,
                                  @RequestPart(required = false) List<MultipartFile> pics) {
         return SERVICE.insBoard(param,pics);
     }
 
     @PutMapping
-    @Operation(summary = "게시판 수정")
+    @Operation(summary = "게시판 수정",
+            description =
+                    "      \"iadmin\": \"작성자 pk<br>\",\n" +
+                    "      \"title\": 제목,<br>\n" +
+                    "      \"ctnt\": 내용,<br>\n" +
+                    "      \"importance\": 중요도<br>")
     public BoardUpdRes UpdBoard(@RequestBody BoardUpdParam param) {
         return SERVICE.updBoard(param);
     }
 
     @GetMapping
-    @Operation(summary = "게시판 목록")
+    @Operation(summary = "게시판 목록",
+            description =
+            "      \"iboard\": \"board pk<br>\",\n" +
+            "      \"iadmin\": \"작성자 pk<br>\",\n" +
+            "      \"title\": 제목,<br>\n" +
+            "      \"ctnt\": 내용,<br>\n" +
+            "      \"importance\": 중요도<br>\n" +
+            "      \"createdAt\": 작성날짜<br>\n" +
+            "      \"delYn\": 삭제여부<br>\n" +
+            "      \"boardView\": 조회수<br>")
     public BoardRes selBoard (@RequestParam (defaultValue = "1") int page) {
         return SERVICE.selBoard(page);
     }
 
     @GetMapping("/importanceList")
-    @Operation(summary = "주요 공지사항")
+    @Operation(summary = "주요 공지사항",
+            description =
+            "      \"iboard\": \"board pk<br>\",\n" +
+            "      \"iadmin\": \"작성자 pk<br>\",\n" +
+            "      \"title\": 제목,<br>\n" +
+            "      \"ctnt\": 내용,<br>\n" +
+            "      \"importance\": 중요도<br>\n" +
+            "      \"createdAt\": 작성날짜<br>\n" +
+            "      \"delYn\": 삭제여부<br>\n" +
+            "      \"boardView\": 조회수<br>")
     public List<BoardSelImportanceVo> selImportanceList () {
         return SERVICE.selBoardImportance();
     }
@@ -60,11 +89,23 @@ public class BoardController {
         return SERVICE.updDelYnBoard(dto);
     }
 
-    @GetMapping("/{title}")
-    @Operation(summary = "게시글 검색")
-    public  List<BoardSelVo> getSearchBoard (@RequestParam String title) {
+    @GetMapping("/search")
+    @Operation(summary = "게시글 검색",
+            description =
+            "      \"iboard\": \"board pk<br>\",\n" +
+            "      \"iadmin\": \"작성자 pk<br>\",\n" +
+            "      \"title\": 제목,<br>\n" +
+            "      \"ctnt\": 내용,<br>\n" +
+            "      \"importance\": 중요도<br>\n" +
+            "      \"createdAt\": 작성날짜<br>\n" +
+            "      \"delYn\": 삭제여부<br>\n" +
+            "      \"boardView\": 조회수<br>")
+
+    public  BoardRes getSearchBoard (@RequestParam (defaultValue = "1") int page,
+                                             String keyword) {
         BoardSelSearchDto dto = new BoardSelSearchDto();
-        dto.setTitle(title);
+        dto.setTitle(keyword);
+        dto.setPage(page);
         return SERVICE.selSearchBoard(dto);
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.smartGrade.statistics.StatisticsMapper">
+    <select id="selStatistics">
+        SELECT ilecture,
+        COUNT(ilecture) AS lecture_count,
+        ROUND(COUNT(ilecture) * 100.0 / SUM(COUNT(ilecture)) OVER(), 2) AS percentage
+        FROM lecture_student
+        GROUP BY ilecture
+        ORDER BY percentage desc
+    </select>
+
+
+
+
+</mapper>
