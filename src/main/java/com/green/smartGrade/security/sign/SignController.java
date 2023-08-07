@@ -112,7 +112,12 @@ public class SignController {
     @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
             "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
-    public SignInResultDto otpValid(HttpServletRequest req,@RequestParam String otpNum,String iuser,String role) {
-       return   SERVICE.otpValid(req,otpNum, iuser,role);
+    public SignInResultDto otpValid(@AuthenticationPrincipal MyUserDetails details,HttpServletRequest req,@RequestParam String otpNum) {
+        Long iuser = details.getIuser();
+        String result = String.valueOf(iuser);
+        System.out.println("result = " + result);
+        String role = details.getRoles().get(0);
+        System.out.println("role = " + role);
+       return   SERVICE.otpValid(req,otpNum, result,role);
     }
 }

@@ -22,9 +22,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(authz ->
                             authz.requestMatchers(
-
-                                    "/api/sign-in"
-
+                                                "/**"
+                                            ,"/api/sign-in"
+                                            ,"/api/otp-valid"
+                                            ,"/api/otp"
                                     ,"/swagger.html"
                                     , "/swagger-ui/**"
                                     , "/v3/api-docs/**"

@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserDetailsMapper {
 //    int save(UserEntity p);
     UserEntity getByUid(String uid, String role);
-
+    UserEntity getUserSecret(String uid, String role);
 
     int updUserToken(UserTokenEntity p);
     UserTokenEntity selUserToken(UserTokenEntity p);

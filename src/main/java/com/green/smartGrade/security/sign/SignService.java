@@ -72,12 +72,12 @@ public class SignService {
 //
 //             return null;
 //        }
-        if (role.equals("ROLE_ADMIN")||user.getSecretKey()==null ){
-            dto=issueToken(ip,id,role);
-            dto.setSecretKey(false);
-            return dto;
-        }
         setSuccessResult(dto);
+        dto=issueToken(ip, user.getUid(),role);
+        if (role.equals("ROLE_ADMIN")||user.getSecretKey()==null ){
+            dto.setSecretKey(false);
+
+        }
 
        return dto;
 
@@ -239,8 +239,17 @@ public class SignService {
         return TOTP.getOTP(hexKey);
     }
     private SignInResultDto issueToken(String ip, String iuser,String role) throws JsonProcessingException {
+
+        System.out.println("iuser = " + iuser);
         UserEntity user = MAPPER.getByUid(iuser, role);
-        String redisKey = String.format("b:RT(%s):%s:%s", "Server", user.getIuser(), ip);
+        if ("ROLE_STUDENT".equals(role)){
+            user = MAPPER.getUserSecret(iuser, role);
+
+        }
+
+
+        System.out.println("user = " + user);
+        String  redisKey = String.format("b:RT(%s):%s:%s", "Server", user.getIuser(), ip);
         if (REDIS_SERVICE.getValues(redisKey) != null) {
             REDIS_SERVICE.deleteValues(redisKey);
         }
