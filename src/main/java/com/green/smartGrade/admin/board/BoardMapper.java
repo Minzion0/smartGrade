@@ -15,8 +15,9 @@ public interface BoardMapper {
 
     // 게시판 리스트 뽑기
     List<BoardSelVo> selBoard (int staIdx, int row);
-    List<BoardSelVo> selSearchBoard ();
-    int countSearchBoard();
+    // 검색기능
+    List<BoardSelVo> selSearchBoard (BoardSelSearchDto dto);
+    int countSearchBoard(BoardSelSearchDto dto);
     List <BoardSelImportanceVo> selBoardImportance ();
     int countBoard();
     BoardSelDetailVo selByIdBoard(BoardSelDetailDto dto);

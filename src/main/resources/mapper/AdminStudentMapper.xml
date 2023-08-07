@@ -28,14 +28,14 @@
 
     <select id="findStudents">
         SELECT A.istudent,A.student_num studentNum
-        ,A.grade,A.nm,c.major_name majorName
+        ,A.grade,A.nm,C.major_name majorName
         ,A.gender,A.birthdate,A.phone,DATE(A.created_at) createdAt
         ,A.finished_yn finishedYn,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score
         FROM student A
         left JOIN lecture_student B
         ON A.istudent=B.istudent
-        inner JOIN major C
-        ON A.imajor=C.imajor
+        INNER JOIN major C
+        ON C.imajor=A.imajor
         left JOIN lecture_applly D
         ON D.ilecture=B.ilecture
         left JOIN lecture_name G
@@ -98,7 +98,7 @@
 <!--    </resultMap>-->
 
     <select id="studentDt" >
-        SELECT A.istudent,A.student_num studentNum,B.major_name majorNm,A.grade,A.nm,A.gender,A.pic,A.birthdate,A.phone,A.email,A.address,A.finished_yn finishedYn
+        SELECT A.istudent,A.student_num studentNum,B.imajor,A.grade,A.nm name,A.gender,A.pic,A.birthdate,A.phone,A.email,A.address,A.finished_yn finishedYn
         FROM student A
         INNER JOIN major B
         ON A.imajor=B.imajor

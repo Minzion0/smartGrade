@@ -13,6 +13,6 @@ public class AdminProfessorDetailProfile {
     private String phone;
     private String address;
     private String email;
-    private String majorName;
+    private Long imajor;
     private LocalDateTime createdAt;
 }

@@ -11,7 +11,7 @@
     </insert>
 
     <select id="findProfessors">
-        SELECT iprofessor,major_name majorName
+        SELECT iprofessor,B.major_name majorName
         ,nm,gender,birthdate,phone,email
         ,address,A.del_yn delYn,date(A.created_at) createdAt
         FROM professor A
@@ -66,7 +66,7 @@
     <select id="professorProfile">
         SELECT A.nm name, A.gender gender, A.birthdate birthDate
         , A.phone phone, A.address address, A.email email
-        , B.major_name majorName, A.created_at createdAt
+        , B.imajor, A.created_at createdAt
         from professor A
         INNER JOIN major B
         ON A.imajor = B.imajor

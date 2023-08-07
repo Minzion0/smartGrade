@@ -8,9 +8,9 @@ import java.util.List;
 public class AdminStudentLectureRes {
     private Long istudent;
     private String studentNum;
-    private String majorName;
+    private Long imajor;
     private int grade;
-    private String  nm;
+    private String  name;
 
     private List<AdminStudentLectureDataRes>list;
 
@@ -18,8 +18,8 @@ public class AdminStudentLectureRes {
     public AdminStudentLectureRes(AdminStudentDetalRes res) {
         this.istudent = res.getIstudent();
         this.studentNum = res.getStudentNum();
-        this.majorName = res.getMajorNm();
+        this.imajor = res.getImajor();
         this.grade = res.getGrade();
-        this.nm = res.getNm();
+        this.name = res.getName();
     }
 }

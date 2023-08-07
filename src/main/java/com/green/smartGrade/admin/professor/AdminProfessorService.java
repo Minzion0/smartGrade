@@ -29,7 +29,12 @@ public class AdminProfessorService {
         log.info("{}", dto.getPhone());
 
         //이메일 유효성검사도 해야할듯?
-        CheckUtils utils = CheckUtils.builder().nm(dto.getNm()).phoneNum(dto.getPhone()).gender(dto.getGender()).build();
+        CheckUtils utils = CheckUtils
+                .builder()
+                .nm(dto.getNm())
+                .phoneNum(dto.getPhone())
+                .gender(dto.getGender())
+                .build();
         String msg = utils.getMsg();
         if (msg != null) {
             String format = String.format("%s 오류가 있습니다", msg);
@@ -70,5 +75,6 @@ public class AdminProfessorService {
                 .majorList(major)
                 .build();
     }
+
 
 }

@@ -102,8 +102,19 @@ public class BoardService {
                 .list(list)
                 .build();
     }
-    public List<BoardSelVo> selSearchBoard (BoardSelSearchDto dto) {
-        return  null;
+    public BoardRes selSearchBoard (BoardSelSearchDto dto) {
+
+        int maxPage = MAPPER.countSearchBoard(dto);
+
+        PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
+        dto.setRow(utils.getROW());
+        List<BoardSelVo> list = MAPPER.selSearchBoard(dto);
+        log.info("list : {}", list);
+        return BoardRes.builder()
+                .list(list)
+                .page(utils)
+                .build();
+
     }
     public List <BoardSelImportanceVo> selBoardImportance () {
        return MAPPER.selBoardImportance();

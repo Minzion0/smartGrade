@@ -9,9 +9,9 @@ import java.util.List;
 public class AdminStudentDetalRes {
     private Long istudent;
     private String StudentNum;
-    private String majorNm;
+    private Long imajor;
     private int grade;
-    private String  nm;
+    private String  name;
     private String  gender;
     private String pic;
     private LocalDate birthdate;

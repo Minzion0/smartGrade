@@ -20,7 +20,7 @@
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
             FROM student
-            WHERE istudent = #{uid}
+            WHERE student_num = #{uid}
         </if>
 
     </select>
