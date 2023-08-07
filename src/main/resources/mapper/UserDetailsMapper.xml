@@ -74,13 +74,13 @@
     <update id="updForgetPassword">
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             UPDATE student
-            SET student_password = #{studentPassword}
-            WHERE  student_num = #{studentNum}
+            SET student_password = #{upw}
+            WHERE  student_num = #{uid}
         </if>
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
             UPDATE  professor
-            SET professor_password = #{professorPassword}
-            WHERE iprofessor = #{iprofessor}
+            SET professor_password = #{upw}
+            WHERE iprofessor = #{uid}
         </if>
     </update>
 
