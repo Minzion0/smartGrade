@@ -134,7 +134,11 @@
         ON F.imajor = E.imajor
 
     </select>
-    
-    
+
+    <update id="updPassword">
+        UPDATE professor
+        SET professor_password = #{professorPassword}
+        WHERE iprofessor = #{iprofessor}
+    </update>
     
 </mapper>
