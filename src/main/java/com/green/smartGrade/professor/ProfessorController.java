@@ -70,4 +70,10 @@ public class ProfessorController {
         dto.setOpeningProcedures(openingProcedures);
         return service.selProfessorLecture(dto);
     }
+
+    @PutMapping("/{iprofessor}")
+    @Operation(summary = "초기 비밀번호 변경")
+    public int  updPassword(@RequestBody ProfessorUpdPasswordDto dto) {
+        return service.updPassword(dto);
+    }
 }

@@ -79,6 +79,11 @@
         ,pic = #{pic}
         where student_num = #{studentNum}
     </update>
-    
+
+    <update id="updPassword">
+        UPDATE student
+        SET student_password = #{studentPassword}
+        WHERE student_num = #{studentNum}
+    </update>
 
 </mapper>

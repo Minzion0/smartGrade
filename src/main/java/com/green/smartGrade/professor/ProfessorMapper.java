@@ -22,6 +22,7 @@ public interface ProfessorMapper {
     List<ProfessorSelLectureVo> selProfessorLectureALl(ProfessorSelLectureDto dto);
     int selProfessorLectureCount(ProfessorSelLectureDto dto);
 
+    int updPassword(ProfessorUpdPasswordDto dto);
 
 
 }

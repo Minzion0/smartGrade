@@ -2,6 +2,7 @@ package com.green.smartGrade.student;
 
 import com.green.smartGrade.admin.board.model.BoardUpdRes;
 import com.green.smartGrade.lecture_applly.model.LectureApllyDto;
+import com.green.smartGrade.professor.model.ProfessorUpdPasswordDto;
 import com.green.smartGrade.professor.model.SelProfessorRes;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.FileUtils;
@@ -10,6 +11,7 @@ import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +25,7 @@ import java.util.List;
 @Slf4j
 public class StudentService {
     private final StudentMapper mapper;
+    private final PasswordEncoder PW_ENCODER;
     @Value("${file.dir}")
     private String fileDir;
 
@@ -154,7 +157,15 @@ public class StudentService {
         return null;
 
     }
+    public int updPassword(StudentUpdPasswordDto dto) {
+        String npw = PW_ENCODER.encode(dto.getStudentPassword());
+        dto.setStudentPassword(npw);
+        return mapper.updPassword(dto);
+    }
 
-
-
+//    public int updForgetPassword (StudentUpdPasswordDto dto) {
+//        String npw = PW_ENCODER.encode(dto.getStudentPassword());
+//        dto.setStudentPassword(npw);
+//        return mapper.updForgetPassword(dto);
+//    }
 }

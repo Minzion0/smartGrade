@@ -1,5 +1,6 @@
 package com.green.smartGrade.student;
 
+import com.green.smartGrade.professor.model.ProfessorUpdPasswordDto;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.GradeUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,5 +68,11 @@ public class StudentController {
     public StudentUpRes putStudentProfile(@RequestPart(required = false) MultipartFile pic
                 , @RequestPart StudentUpParam param) {
         return service.upStudent(pic,param);
+    }
+
+    @PutMapping("/{studentNum}")
+    @Operation(summary = "초기 비밀번호 변경")
+    public int  updPassword(@RequestBody StudentUpdPasswordDto dto) {
+        return service.updPassword(dto);
     }
 }

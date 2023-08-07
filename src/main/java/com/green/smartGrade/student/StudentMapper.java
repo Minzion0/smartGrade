@@ -22,4 +22,8 @@ public interface StudentMapper {
 
 
     List<Integer> selDayWeek(Long ilecture);
+
+    int updPassword (StudentUpdPasswordDto dto);
+
+
 }

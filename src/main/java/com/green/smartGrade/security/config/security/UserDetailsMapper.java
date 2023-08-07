@@ -4,6 +4,7 @@ import com.green.smartGrade.security.config.security.model.UserEntity;
 import com.green.smartGrade.security.config.security.model.UserSelRoleEmailVo;
 import com.green.smartGrade.security.config.security.model.UserTokenEntity;
 import com.green.smartGrade.security.config.security.model.UserUpdSecretKeyDto;
+import com.green.smartGrade.student.model.StudentUpdPasswordDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -17,4 +18,5 @@ public interface UserDetailsMapper {
 
     UserSelRoleEmailVo getUserRoleEmail(String uid, String role);
    int updSecretKey(UserUpdSecretKeyDto dto);
+    int updForgetPassword (StudentUpdPasswordDto dto);
 }
