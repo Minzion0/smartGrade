@@ -8,6 +8,7 @@ import com.green.smartGrade.security.config.RedisService;
 import com.green.smartGrade.security.config.security.JwtTokenProvider;
 import com.green.smartGrade.security.config.security.UserDetailsMapper;
 import com.green.smartGrade.security.config.security.model.*;
+import com.green.smartGrade.security.config.security.AuthenticationFacade;
 import com.green.smartGrade.security.config.security.otp.OtpRes;
 import com.green.smartGrade.security.config.security.otp.TOTP;
 import com.green.smartGrade.security.config.security.otp.TOTPTokenGenerator;
@@ -170,6 +171,13 @@ public class SignService {
     }
 
     public ResponseEntity<?> otp(String uid, String role) {
+
+//        String s = JWT_PROVIDER.resolveToken(haber, JWT_PROVIDER.TOKEN_TYPE);
+//        log.info("sssssssssss : {}",s);
+//        Object details = JWT_PROVIDER.getAuthentication(s);
+//        System.out.println("authentication = " + details);
+
+
         String secretKey = totp.generateSecretKey();//설정할 secretKey를 생성
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         log.info("vo : {}", vo.toString());

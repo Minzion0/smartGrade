@@ -2,6 +2,7 @@ package com.green.smartGrade.security.sign;
 
 
 import com.green.smartGrade.security.CommonRes;
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import com.green.smartGrade.security.sign.model.SignInParam;
 import com.green.smartGrade.security.sign.model.SignInResultDto;
 import com.green.smartGrade.security.sign.model.SignUpResultDto;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -95,8 +97,11 @@ public class SignController {
     @Operation(summary = "otp 등록 어플에 등록",description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번" +
             "<br>\"barcodeUrl : qr코트 주소")
-    public ResponseEntity<?> otp(String iuser,String role) {
+    public ResponseEntity<?> otp(@AuthenticationPrincipal MyUserDetails details, String iuser, String role) {
 
+//        String substring = authorization.substring(6).trim();
+//        log.info("authorization : {}",substring);
+//        log.info("authorization : {}",authorization);
         return SERVICE.otp(iuser,role);
     }
     @GetMapping("/otp-valid")
