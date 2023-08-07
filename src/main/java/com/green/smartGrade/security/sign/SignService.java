@@ -171,6 +171,8 @@ public class SignService {
     }
 
     public ResponseEntity<?> otp(String uid, String role) {
+        System.out.println("uid = " + uid);
+        System.out.println("role = " + role);
 
 //        String s = JWT_PROVIDER.resolveToken(haber, JWT_PROVIDER.TOKEN_TYPE);
 //        log.info("sssssssssss : {}",s);
@@ -180,7 +182,7 @@ public class SignService {
 
         String secretKey = totp.generateSecretKey();//설정할 secretKey를 생성
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
-        log.info("vo : {}", vo.toString());
+
         String issuer = "GreenUniversity";
         String account = vo.getEmail();
         String barcodeUrl = totp.getGoogleAuthenticatorBarcode(secretKey, account, issuer);
