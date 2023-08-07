@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class AdminIInsStudentRes {
     private Long istudent;
     private String  studentNum;
-
     private Long imajor;
     private String nm;
     private String  gender;

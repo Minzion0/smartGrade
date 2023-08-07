@@ -20,7 +20,7 @@
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
             FROM student
-            WHERE istudent = #{uid}
+            WHERE student_num = #{uid}
         </if>
 
     </select>
@@ -42,7 +42,7 @@
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             update  student
             set secret_key=#{secretKey}
-            where istudent = #{uid}
+            where student_num = #{uid}
         </if>
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
             update  professor
@@ -70,5 +70,18 @@
         FROM user_token
         WHERE iuser = #{iuser} AND role = #{role}
     </select>
+
+    <update id="updForgetPassword">
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            UPDATE student
+            SET student_password = #{studentPassword}
+            WHERE  student_num = #{studentNum}
+        </if>
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            UPDATE  professor
+            SET professor_password = #{professorPassword}
+            WHERE iprofessor = #{iprofessor}
+        </if>
+    </update>
 
 </mapper>
