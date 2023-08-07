@@ -34,6 +34,11 @@ public class AdminService {
         dto.setRow(utils.getROW());
         dto.setStrIdx(utils.getStaIdx());
         List<AdminSelLectureRes> res = MAPPER.selLecture(dto);
+        for (AdminSelLectureRes re : res) {
+            int str = re.getStrTime().lastIndexOf(":");
+            re.getStrTime().substring(str);
+            re.getEndTime();
+        }
 
        return AdminSelRes.builder().lectures(res).page(utils).build();
 
