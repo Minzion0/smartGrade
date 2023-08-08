@@ -30,7 +30,7 @@ public class StudentService {
     private String fileDir;
 
 
-    public StudentInsRes inslecture(StudentParam param) {
+    public StudentInsRes insSdy(StudentParam param) {
         StudentInsDto dto = new StudentInsDto();
 
         dto.setIstudent(param.getIstudent());
