@@ -66,13 +66,11 @@ public class AdminService {
 
         List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(dto);
         for (AdminLectureInStudentRes res : adminLectureInStudentRes) {
-
             GradeUtils utils = new GradeUtils(res.getTotalScore());
-            double v = utils.totalScore();
-            String s = utils.totalRating(v);
-            res.setGread(s);
-            res.setAvg(v);
-
+            double num = utils.totalScore();
+            String result = utils.totalRating(num);
+            res.setGread(result);
+            res.setAvg(num);
         }
         AdminLectureStudentResm resm = new AdminLectureStudentResm();
         resm.setList(adminLectureInStudentRes);
