@@ -3,8 +3,6 @@ package com.green.smartGrade.student.model;
 import lombok.Data;
 
 @Data
-public class StudentUpdPasswordDto {
+public class StudentUpdPasswordParam {
     private String studentPassword;
-    private Long istudent;
-    private String role;
 }

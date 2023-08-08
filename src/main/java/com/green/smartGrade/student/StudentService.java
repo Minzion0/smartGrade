@@ -163,7 +163,8 @@ public class StudentService {
         return null;
 
     }
-    public int updPassword(StudentUpdPasswordDto dto) {
+    public int updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) {
+        dto.setStudentPassword(param.getStudentPassword());
         String npw = PW_ENCODER.encode(dto.getStudentPassword());
         dto.setStudentPassword(npw);
         return mapper.updPassword(dto);

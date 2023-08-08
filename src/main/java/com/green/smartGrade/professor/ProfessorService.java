@@ -143,7 +143,8 @@ public class ProfessorService {
                   .build();
     }
 
-    public int updPassword(ProfessorUpdPasswordDto dto) {
+    public int updPassword(ProfessorUpdPasswordDto dto, ProfessorUpdPasswordParam param) {
+        dto.setProfessorPassword(param.getProfessorPassword());
         String npw = PW_ENCODER.encode(dto.getProfessorPassword());
         dto.setProfessorPassword(npw);
         return mapper.updPassword(dto);

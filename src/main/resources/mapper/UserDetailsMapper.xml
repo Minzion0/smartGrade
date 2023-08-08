@@ -84,6 +84,19 @@
         </if>
     </update>
 
+    <update id="updForgetPasswordTrue">
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            UPDATE student
+            SET student_password = 'true'
+            WHERE  student_num = #{uid}
+        </if>
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            UPDATE  professor
+            SET professor_password = 'true'
+            WHERE iprofessor = #{uid}
+        </if>
+    </update>
+
     <select id="getUserSecret">
         <if test='role.equalsIgnoreCase("ROLE_ADMIN")'>
             SELECT iadmin iuser, admin_Id uid, admin_password upw, role,secret_key secretKey
@@ -102,9 +115,19 @@
             FROM student
             WHERE istudent = #{uid}
         </if>
+    </select>
 
-
-
+    <select id="selTruePassword">
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            SELECT student_password upw, student_num uid, role
+            FROM student
+            WHERE student_num = #{uid}
+        </if>
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            SELECT professor_password upw, iprofessor uid, role
+            FROM professor
+            WHERE iprofessor = #{uid}
+        </if>
     </select>
 
 </mapper>

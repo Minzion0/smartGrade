@@ -12,9 +12,7 @@ import com.green.smartGrade.security.config.security.AuthenticationFacade;
 import com.green.smartGrade.security.config.security.otp.OtpRes;
 import com.green.smartGrade.security.config.security.otp.TOTP;
 import com.green.smartGrade.security.config.security.otp.TOTPTokenGenerator;
-import com.green.smartGrade.security.sign.model.SignInParam;
-import com.green.smartGrade.security.sign.model.SignInResultDto;
-import com.green.smartGrade.security.sign.model.SignUpResultDto;
+import com.green.smartGrade.security.sign.model.*;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -287,7 +286,32 @@ public class SignService {
         return dto;
     }
 
+    public boolean  updForgetPassword (String uid, String role, String inputCode) {
+        UserEntity entity = MAPPER.getByUid(uid, role);
+        String otpCode = getOtpCode(entity.getSecretKey());
+        boolean result = otpCode.equals(inputCode);
 
+        if (result) {
+            MAPPER.updForgetPasswordTrue(uid, role);
+            return true;
+        }
+            return false;
+    }
 
+    public String updPasswordNew(SignSelPasswordTrueDto dto) {
+        SignSelPasswordTrueVo result = MAPPER.selTruePassword(dto);
+
+        log.info("result.getUpw() : {}", result.getUpw());
+       if (result.getUpw().equals("true")) {
+           UpdForgetPasswordDto passwordDto = new UpdForgetPasswordDto();
+           String npw = PW_ENCODER.encode(dto.getUpw());
+           passwordDto.setUpw(npw);
+           passwordDto.setRole(result.getRole());
+           passwordDto.setUid(result.getUid());
+           MAPPER.updForgetPassword(passwordDto);
+           return "비밀번호 변경이 완료되었습니다.";
+       }
+       return "비밀번호 변경이 실패하였습니다.";
+    }
 }
 

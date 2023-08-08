@@ -83,7 +83,7 @@
     <update id="updPassword">
         UPDATE student
         SET student_password = #{studentPassword}
-        WHERE student_num = #{studentNum}
+        WHERE istudent = #{istudent} AND role = #{role}
     </update>
 
 
