@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.smartGrade.statistics.StatisticsMapper">
     <select id="selStatistics">
-        SELECT ilecture,
-        COUNT(ilecture) AS lectureCount,
-        ROUND(COUNT(ilecture) * 100.0 / SUM(COUNT(ilecture)) OVER(), 1) AS percentage
-        FROM lecture_student
-        WHERE finished_yn = 1
-        GROUP BY ilecture
+        SELECT A.ilecture,B.imajor,
+        COUNT(A.ilecture) AS lectureCount,
+        ROUND(COUNT(A.ilecture) * 100.0 / SUM(COUNT(A.ilecture)) OVER(), 1) AS percentage
+        FROM lecture_student A
+        inner join student B
+        ON A.istudent = B.istudent
+        WHERE A.finished_yn = 1
+        GROUP BY A.ilecture
         ORDER BY percentage desc
     </select>
 
