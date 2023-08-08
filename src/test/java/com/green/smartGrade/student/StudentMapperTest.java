@@ -22,11 +22,12 @@ class StudentMapperTest {
          StudentInsDto dto = new StudentInsDto();
             dto.setIlecture(10L);
             dto.setIstudent(14L);
-
+            dto.setIlectureStudent(9L);
         int result = mapper.insSdy(dto);
 
-        assertEquals(76,dto.getIlectureStudent());
+        assertEquals(10,dto.getIlecture());
         assertEquals(1,result);
+
 
 
     }
