@@ -79,7 +79,7 @@ public class SignController {
                                                         @RequestParam String refreshToken) {
 
         SignUpResultDto dto = SERVICE.refreshToken(req, refreshToken);
-        return dto == null ? ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null) : ResponseEntity.ok(dto);
+        return dto == null ? ResponseEntity.status(405).body(null) : ResponseEntity.ok(dto);
     }
 
     @PostMapping("/logout")
@@ -108,17 +108,21 @@ public class SignController {
 
         return SERVICE.otp(result,role);
     }
+
     @GetMapping("/otp-valid")
     @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
             "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
-    public SignInResultDto otpValid(@AuthenticationPrincipal MyUserDetails details,HttpServletRequest req,@RequestParam String otpNum) {
+    public ResponseEntity<?> otpValid(@AuthenticationPrincipal MyUserDetails details,HttpServletRequest req,@RequestParam String otpNum) {
         Long iuser = details.getIuser();
         String result = String.valueOf(iuser);
         System.out.println("result = " + result);
         String role = details.getRoles().get(0);
         System.out.println("role = " + role);
-       return   SERVICE.otpValid(req,otpNum, result,role);
+        boolean otpe = SERVICE.otpValid(req, otpNum, result, role);
+
+
+       return otpe ? ResponseEntity.ok().body(otpe) : ResponseEntity.status(400).body(otpe);
     }
 
     @PutMapping("/forgetPassword")

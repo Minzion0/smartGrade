@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,8 +20,13 @@ public class AdminStudentController {
 
     @PostMapping("/students")
     @Operation(summary = "학생등록")
-    public AdminIInsStudentRes studentEnrollment(@RequestBody AdminInsStudentParam param){
-        return SERVICE.insStudent(param);
+    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws IllegalAccessException {
+        AdminIInsStudentRes res = SERVICE.insStudent(param);
+        Long istudent = res.getIstudent();
+        if (istudent==null){
+            return ResponseEntity.status(400).body(res);
+        }
+        return ResponseEntity.ok().body(res);
     }
 
     @GetMapping("/students")

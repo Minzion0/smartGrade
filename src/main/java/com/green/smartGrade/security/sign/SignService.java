@@ -211,22 +211,14 @@ public class SignService {
         return result;
     }
 
-    public SignInResultDto otpValid(HttpServletRequest req,String inputCode, String uid, String role) {
+    public boolean otpValid(HttpServletRequest req,String inputCode, String uid, String role) {
 
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String otpCode = getOtpCode(vo.getSecretKey());
 
         boolean result = otpCode.equals(inputCode);
-        if (result){
-            String ip = req.getRemoteAddr();
-            try {
 
-                return issueToken(ip,uid,role);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return null;
+        return result;
     }
 
     private String getOtpCode(String secretKey) {
