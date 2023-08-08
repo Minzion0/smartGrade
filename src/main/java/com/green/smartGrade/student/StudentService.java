@@ -162,10 +162,4 @@ public class StudentService {
         dto.setStudentPassword(npw);
         return mapper.updPassword(dto);
     }
-
-//    public int updForgetPassword (StudentUpdPasswordDto dto) {
-//        String npw = PW_ENCODER.encode(dto.getStudentPassword());
-//        dto.setStudentPassword(npw);
-//        return mapper.updForgetPassword(dto);
-//    }
 }

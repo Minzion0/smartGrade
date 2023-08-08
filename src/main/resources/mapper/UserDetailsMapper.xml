@@ -18,7 +18,7 @@
         </if>
 
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
-            SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
+            SELECT istudent iuser, istudent uid, student_password upw, role,secret_key secretKey
             FROM student
             WHERE student_num = #{uid}
         </if>
@@ -42,7 +42,7 @@
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             update  student
             set secret_key=#{secretKey}
-            where student_num = #{uid}
+            where istudent = #{uid}
         </if>
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
             update  professor
@@ -74,14 +74,37 @@
     <update id="updForgetPassword">
         <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
             UPDATE student
-            SET student_password = #{studentPassword}
-            WHERE  student_num = #{studentNum}
+            SET student_password = #{upw}
+            WHERE  student_num = #{uid}
         </if>
         <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
             UPDATE  professor
-            SET professor_password = #{professorPassword}
-            WHERE iprofessor = #{iprofessor}
+            SET professor_password = #{upw}
+            WHERE iprofessor = #{uid}
         </if>
     </update>
+
+    <select id="getUserSecret">
+        <if test='role.equalsIgnoreCase("ROLE_ADMIN")'>
+            SELECT iadmin iuser, admin_Id uid, admin_password upw, role,secret_key secretKey
+            FROM admin
+            WHERE admin_Id = #{uid} AND role = "ROLE_ADMIN"
+        </if>
+
+        <if test='role.equalsIgnoreCase("ROLE_PROFESSOR")'>
+            SELECT iprofessor iuser, iprofessor uid, professor_password upw, role,secret_key secretKey
+            FROM professor
+            WHERE iprofessor = #{uid}
+        </if>
+
+        <if test='role.equalsIgnoreCase("ROLE_STUDENT")'>
+            SELECT istudent iuser, student_num uid, student_password upw, role,secret_key secretKey
+            FROM student
+            WHERE istudent = #{uid}
+        </if>
+
+
+
+    </select>
 
 </mapper>

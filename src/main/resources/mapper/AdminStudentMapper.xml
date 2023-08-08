@@ -106,7 +106,7 @@
     </select>
 
     <select id="studentLectures" >
-        SELECT A.ilecture,B.lecture_str_date lectureStrDate,B.lecture_end_date lectureEndDate,B.lecture_str_time lectureStrTime,B.lecture_end_time lectureEndTime,C.lecture_name lectureNm
+        SELECT A.ilecture,B.lecture_str_date lectureStrDate,B.lecture_end_date lectureEndDate,date_format(B.lecture_str_time,'%h:%i') lectureStrTime,date_format(B.lecture_end_time,'%h:%i') lectureEndTime,C.lecture_name lectureNm
         FROM lecture_student A
         INNER JOIN lecture_applly B
         ON A.ilecture=B.ilecture
