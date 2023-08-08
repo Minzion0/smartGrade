@@ -83,6 +83,7 @@ public class SignController {
     }
 
     @PostMapping("/logout")
+    @Operation(summary = "로그아웃")
     public ResponseEntity<?> logout (HttpServletRequest req) {
         SERVICE.logout(req);
         ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
@@ -125,9 +126,9 @@ public class SignController {
     public boolean updForgetPassword (String uid, String role, String inputCode) {
         return SERVICE.updForgetPassword(uid, role, inputCode);
     }
-    @GetMapping("/changPassword")
+    @PutMapping("/changPassword")
     @Operation(summary = "비밀번호 변경")
-    public String  updPasswordNew(SignSelPasswordTrueDto dto, String upw) {
-        return SERVICE.updPasswordNew(dto, upw);
+    public String updPasswordNew(@RequestBody SignSelPasswordTrueDto dto) {
+        return SERVICE.updPasswordNew(dto);
     }
 }

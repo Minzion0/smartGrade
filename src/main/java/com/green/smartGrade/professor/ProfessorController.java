@@ -1,11 +1,14 @@
 package com.green.smartGrade.professor;
 
 import com.green.smartGrade.professor.model.*;
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,9 +74,15 @@ public class ProfessorController {
         return service.selProfessorLecture(dto);
     }
 
-    @PutMapping("/{iprofessor}")
+    @PutMapping("/changPassword")
     @Operation(summary = "초기 비밀번호 변경")
-    public int  updPassword(@RequestBody ProfessorUpdPasswordDto dto) {
-        return service.updPassword(dto);
+    public ResponseEntity<?> updPassword(@AuthenticationPrincipal MyUserDetails details,
+                                         @RequestBody ProfessorUpdPasswordParam param) {
+        ProfessorUpdPasswordDto dto = new ProfessorUpdPasswordDto();
+        Long iuser = details.getIuser();
+        String role = details.getRoles().get(0);
+        dto.setIprofessor(iuser);
+        dto.setRole(role);
+        return ResponseEntity.ok().body(service.updPassword(dto, param));
     }
 }
