@@ -10,6 +10,5 @@ import java.util.List;
 @Getter
 @Builder
 public class StatisticsSelRes {
-    private PagingUtils page;
     private List<StatisticsSelVo> list;
 }

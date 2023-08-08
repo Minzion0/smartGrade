@@ -16,14 +16,11 @@ import java.util.List;
 public class StatisticsService {
     private final  StatisticsMapper mapper;
 
-    public StatisticsSelRes selStatistics(StatisticsSelDto dto) {
-
-
-
+    public StatisticsSelRes selStatistics() {
+        StatisticsSelDto dto = new StatisticsSelDto();
         List<StatisticsSelVo> list = mapper.selStatistics(dto);
 
         return StatisticsSelRes.builder()
-
                 .list(list)
                 .build();
     }

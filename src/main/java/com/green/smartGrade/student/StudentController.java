@@ -1,6 +1,7 @@
 package com.green.smartGrade.student;
 
 import com.green.smartGrade.professor.model.ProfessorUpdPasswordDto;
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.GradeUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,7 +73,11 @@ public class StudentController {
 
     @PutMapping("/{studentNum}")
     @Operation(summary = "초기 비밀번호 변경")
-    public int  updPassword(@RequestBody StudentUpdPasswordDto dto) {
-        return service.updPassword(dto);
+    public int  updPassword(@AuthenticationPrincipal MyUserDetails details, StudentUpdPasswordDto dto) {
+
+        Long  studentResultIuser = details.getIuser();
+        String studentResultRole = details.getRoles().get(0);
+
+        return service.updPassword(dto,studentResultIuser, studentResultRole);
     }
 }

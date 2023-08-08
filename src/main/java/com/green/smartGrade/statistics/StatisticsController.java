@@ -18,13 +18,12 @@ public class StatisticsController {
     private final StatisticsService service;
 
     @GetMapping
-    @Operation(summary = "통계표" ,description = "imajor : 학생전공<br>"+"ilecture : 강의 pk<br>"+
+    @Operation(summary = "통계표" ,description = "imajor : 학생전공<br>"+"ilecture : 강의 pk<br>"+"lectureName : 강의 이름 <br>"+
             "lectureCount : 강의 들은 수<br>"+
             "percentage 각 강의 퍼센트" )
-    public StatisticsSelRes getStatistics(@RequestParam(defaultValue = "1") int page) {
-        StatisticsSelDto dto = new StatisticsSelDto();
-        dto.setPage(page);
-        return service.selStatistics(dto);
+    public StatisticsSelRes getStatistics() {
+
+        return service.selStatistics();
     }
 
 }

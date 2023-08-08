@@ -69,7 +69,7 @@ public class LectureAppllyService {
         dto.setGaredLimit(garedLimit);
 
         int lectureMaxPeople = param.getLectureMaxPeople();
-        // lectureMaxPeople 값이 1부터 30 사이에 없는 경우, 기본값으로 1을 설정
+        // lectureMaxPeople 값이 1부터 30 사이에 없는 경우, 기본값으로 10을 설정
         if (lectureMaxPeople < 1 || lectureMaxPeople >= 30) {
             lectureMaxPeople = 10;
         }

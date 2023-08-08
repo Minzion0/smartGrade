@@ -52,8 +52,6 @@ public class StudentService {
 
         }
 
-
-
         int result = mapper.insSdy(dto);
         if (result == 1) {
             StudentInsRes res = new StudentInsRes(dto);
@@ -119,7 +117,7 @@ public class StudentService {
          result = mapper.upStudent(dto);
         if (result == 1) {
             if (pic != null) {
-                String centerPath = String.format("student/%d", param.getStudentNum());
+                String centerPath = String.format("students/%d", param.getStudentNum());
                 String dicPath = String.format("%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath);
                 String temp = "0";
 
@@ -157,9 +155,11 @@ public class StudentService {
         return null;
 
     }
-    public int updPassword(StudentUpdPasswordDto dto) {
+    public int updPassword(StudentUpdPasswordDto dto, Long  studentResultIuser, String studentResultRole) {
         String npw = PW_ENCODER.encode(dto.getStudentPassword());
         dto.setStudentPassword(npw);
+        dto.setRole(studentResultRole);
+        dto.setIstudent(studentResultIuser);
         return mapper.updPassword(dto);
     }
 }
