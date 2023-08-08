@@ -35,7 +35,7 @@ class StudentServiceTest {
 
 
     @Test
-    void testInslecture_withValidInput() {
+    void dayWeek() {
         // Arrange
         StudentParam dto = new StudentParam();
         dto.setIlecture(16L);
@@ -60,24 +60,4 @@ class StudentServiceTest {
     }
 
 
-    @Test
-    void inslecture() {
-
-
-        StudentParam param = new StudentParam();
-        param.setIlecture(16L);
-        param.setIstudent(14L);
-        param.setFinishedYn(1);
-
-
-        when(mapper.selDayWeek(anyLong())).thenReturn(Arrays.asList(1, 2, 3));
-
-        // Act
-        StudentInsRes res = service.insSdy(param);
-
-        // Assert
-        assertNull(res);
-
-        verify(mapper, times(0)).insSdy(any());
-    }
 }

@@ -5,9 +5,14 @@
         SELECT A.ilecture,B.imajor,
         COUNT(A.ilecture) AS lectureCount,
         ROUND(COUNT(A.ilecture) * 100.0 / SUM(COUNT(A.ilecture)) OVER(), 1) AS percentage
+        ,D.lecture_name lectureName
         FROM lecture_student A
         inner join student B
         ON A.istudent = B.istudent
+        INNER JOIN lecture_applly C
+        ON C.ilecture = A.ilecture
+        INNER JOIN lecture_name D
+        ON D.ilecture_name = C.ilecture_name
         WHERE A.finished_yn = 1
         GROUP BY A.ilecture
         ORDER BY percentage desc
