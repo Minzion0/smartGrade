@@ -6,13 +6,11 @@ import java.time.LocalDate;
 
 @Data
 public class GradeMngmnVo {
-    private Long istudent;
-    private Long ilecture;
-    private Long imajor;
-    private String studentNum;
-    private String name;
-    private char gender;
-    private LocalDate birthDate;
-    private int avgScore;
-    private double rating;
+    private int grade;
+    private int semester;
+    private String lectureName;
+    private String professorName;
+    private int lectureScore;
+    private int score;
+    private String rating;
 }
