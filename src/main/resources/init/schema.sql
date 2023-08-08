@@ -38,44 +38,6 @@ CREATE TABLE IF NOT EXISTS board_pics (
 
 
 
-
-CREATE TABLE IF NOT EXISTS lecture_applly (
-  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의신청pk',
-  `ilecture_name` bigint(20) unsigned NOT NULL COMMENT '강의pk',
-  `ilecture_room` bigint(20) unsigned NOT NULL COMMENT '강의실pk',
-  `iprofessor` bigint(20) unsigned NOT NULL COMMENT '교수pk',
-  `isemester` bigint(20) unsigned NOT NULL COMMENT '학기pk',
-  `opening_procedures` tinyint(4) DEFAULT 1 COMMENT '개강절차(0,1,2,3)',
-  `lecture_str_date` date DEFAULT NULL COMMENT '강의시작일',
-  `lecture_end_date` date DEFAULT NULL COMMENT '강의종료일',
-  `lecture_str_time` time DEFAULT NULL COMMENT '강의시작시간',
-  `lecture_end_time` time DEFAULT NULL COMMENT '강의종료시간',
-  `attendance` int(10) unsigned DEFAULT 20 COMMENT '출결',
-  `midterm_examination` int(10) unsigned DEFAULT 40 COMMENT '중간고사',
-  `final_examination` int(10) unsigned DEFAULT 40 COMMENT '기말고사',
-  `lecture_max_people` int(10) unsigned NOT NULL COMMENT '강의최대인원',
-  `grade_limit` int(10) unsigned NOT NULL COMMENT '학년범위',
-  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
-  `created_at` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`ilecture`),
-  KEY `ilecture_name` (`ilecture_name`),
-  KEY `ilecture_room` (`ilecture_room`),
-  KEY `iprofessor` (`iprofessor`),
-  KEY `isemester` (`isemester`),
-  CONSTRAINT `lecture_applly_ibfk_1` FOREIGN KEY (`ilecture_name`) REFERENCES `lecture_name` (`ilecture_name`),
-  CONSTRAINT `lecture_applly_ibfk_2` FOREIGN KEY (`ilecture_room`) REFERENCES `lecture_room` (`ilecture_room`),
-  CONSTRAINT `lecture_applly_ibfk_3` FOREIGN KEY (`iprofessor`) REFERENCES `professor` (`iprofessor`),
-  CONSTRAINT `lecture_applly_ibfk_4` FOREIGN KEY (`isemester`) REFERENCES `semester` (`isemester`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 신청';
-
-CREATE TABLE IF NOT EXISTS lecture_day_week (
-  `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
-  `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
-  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
-  KEY `ilecture` (`ilecture`),
-  CONSTRAINT `lecture_day_week_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 요일';
-
 CREATE TABLE IF NOT EXISTS lecture_name (
   `ilecture_name` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의pk',
   `lecture_name` varchar(50) NOT NULL COMMENT '강의 이름',
@@ -83,47 +45,9 @@ CREATE TABLE IF NOT EXISTS lecture_name (
   `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
   PRIMARY KEY (`ilecture_name`),
   UNIQUE KEY `lecture_name` (`lecture_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의';
+  ) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의';
 
 
-CREATE TABLE IF NOT EXISTS lecture_room (
-  `ilecture_room` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의실pk',
-  `lecture_room_name` varchar(50) NOT NULL COMMENT '강의실이름',
-  `building_name` varchar(50) NOT NULL COMMENT '건물이름',
-  `max_capacity` int(10) unsigned NOT NULL COMMENT '최대수용인원',
-  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
-  PRIMARY KEY (`ilecture_room`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의실';
-
-CREATE TABLE IF NOT EXISTS lecture_student (
-  `ilecture_student` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `istudent` bigint(20) unsigned NOT NULL,
-  `ilecture` bigint(20) unsigned NOT NULL,
-  `finished_yn` int(10) unsigned NOT NULL DEFAULT 1,
-  `attendance` int(10) unsigned NOT NULL DEFAULT 0,
-  `midterm_examination` int(10) unsigned NOT NULL DEFAULT 0,
-  `final_examination` int(10) unsigned NOT NULL DEFAULT 0,
-  `total_score` int(10) unsigned NOT NULL DEFAULT 0,
-  `created_at` datetime DEFAULT current_timestamp() COMMENT '처음 인서트한날 0점',
-  `update_at` datetime DEFAULT current_timestamp() COMMENT '성적 넣은 날',
-  `finished_at` date DEFAULT NULL COMMENT '수강 완료 날',
-  `correction_at` datetime DEFAULT NULL COMMENT '2주간 정정기간 날짜 기준',
-  `del_yn` int(10) unsigned DEFAULT 0 CHECK (`del_yn` in (0,1)),
-  PRIMARY KEY (`ilecture_student`),
-  UNIQUE KEY (`istudent`,`ilecture`),
-  KEY `ilecture` (`ilecture`),
-  CONSTRAINT `lecture_student_ibfk_1` FOREIGN KEY (`istudent`) REFERENCES `student` (`istudent`),
-  CONSTRAINT `lecture_student_ibfk_2` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-CREATE TABLE IF NOT EXISTS `leture_condition` (
-  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '수강반려pk',
-  `return_ctnt` text NOT NULL COMMENT '신청반려 내용',
-  `return_date` datetime DEFAULT current_timestamp() COMMENT '반려일시',
-  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
-  PRIMARY KEY (`ilecture`),
-  CONSTRAINT `leture_condition_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 상태';
 
 
 CREATE TABLE IF NOT EXISTS major (
@@ -133,8 +57,7 @@ CREATE TABLE IF NOT EXISTS major (
   `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
   PRIMARY KEY (`imajor`),
   UNIQUE KEY `major_name` (`major_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='전공';
-
+  ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='전공';
 
 CREATE TABLE IF NOT EXISTS professor (
   `iprofessor` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '교수pk',
@@ -156,9 +79,7 @@ CREATE TABLE IF NOT EXISTS professor (
   UNIQUE KEY `email` (`email`),
   KEY `imajor` (`imajor`),
   CONSTRAINT `professor_ibfk_1` FOREIGN KEY (`imajor`) REFERENCES `major` (`imajor`)
-) ENGINE=InnoDB AUTO_INCREMENT=100046 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='교수프로필';
-
-
+  ) ENGINE=InnoDB AUTO_INCREMENT=100046 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='교수프로필';
 
 CREATE TABLE IF NOT EXISTS semester (
   `isemester` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -169,7 +90,14 @@ CREATE TABLE IF NOT EXISTS semester (
   `del_yn` int(10) unsigned DEFAULT 0 CHECK (`del_yn` in (0,1)),
   PRIMARY KEY (`isemester`),
   UNIQUE KEY  (`year`,`semester`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+
+
 
 
 
@@ -200,7 +128,9 @@ CREATE TABLE IF NOT EXISTS student (
 ) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-	
+
+
+
 CREATE TABLE IF NOT EXISTS student_semester_score (
   `istudent` bigint(20) unsigned NOT NULL,
   `isemester` bigint(20) unsigned NOT NULL,
@@ -227,3 +157,84 @@ CREATE TABLE IF NOT EXISTS user_token (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+CREATE TABLE IF NOT EXISTS lecture_applly (
+  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의신청pk',
+  `ilecture_name` bigint(20) unsigned NOT NULL COMMENT '강의pk',
+  `ilecture_room` bigint(20) unsigned NOT NULL COMMENT '강의실pk',
+  `iprofessor` bigint(20) unsigned NOT NULL COMMENT '교수pk',
+  `isemester` bigint(20) unsigned NOT NULL COMMENT '학기pk',
+  `opening_procedures` tinyint(4) DEFAULT 1 COMMENT '개강절차(0,1,2,3)',
+  `lecture_str_date` date DEFAULT NULL COMMENT '강의시작일',
+  `lecture_end_date` date DEFAULT NULL COMMENT '강의종료일',
+  `lecture_str_time` time DEFAULT NULL COMMENT '강의시작시간',
+  `lecture_end_time` time DEFAULT NULL COMMENT '강의종료시간',
+  `attendance` int(10) unsigned DEFAULT 20 COMMENT '출결',
+  `midterm_examination` int(10) unsigned DEFAULT 40 COMMENT '중간고사',
+  `final_examination` int(10) unsigned DEFAULT 40 COMMENT '기말고사',
+  `lecture_max_people` int(10) unsigned NOT NULL COMMENT '강의최대인원',
+  `grade_limit` int(10) unsigned NOT NULL COMMENT '학년범위',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`ilecture`),
+  KEY `ilecture_name` (`ilecture_name`),
+  KEY `ilecture_room` (`ilecture_room`),
+  KEY `iprofessor` (`iprofessor`),
+  KEY `isemester` (`isemester`),
+  CONSTRAINT `lecture_applly_ibfk_1` FOREIGN KEY (`ilecture_name`) REFERENCES `lecture_name` (`ilecture_name`),
+  CONSTRAINT `lecture_applly_ibfk_2` FOREIGN KEY (`ilecture_room`) REFERENCES `lecture_room` (`ilecture_room`),
+  CONSTRAINT `lecture_applly_ibfk_3` FOREIGN KEY (`iprofessor`) REFERENCES `professor` (`iprofessor`),
+  CONSTRAINT `lecture_applly_ibfk_4` FOREIGN KEY (`isemester`) REFERENCES `semester` (`isemester`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 신청';
+CREATE TABLE IF NOT EXISTS lecture_day_week (
+  `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
+  `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  KEY `ilecture` (`ilecture`),
+  CONSTRAINT `lecture_day_week_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 요일';
+CREATE TABLE IF NOT EXISTS lecture_student (
+  `ilecture_student` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `istudent` bigint(20) unsigned NOT NULL,
+  `ilecture` bigint(20) unsigned NOT NULL,
+  `finished_yn` int(10) unsigned NOT NULL DEFAULT 1,
+  `attendance` int(10) unsigned NOT NULL DEFAULT 0,
+  `midterm_examination` int(10) unsigned NOT NULL DEFAULT 0,
+  `final_examination` int(10) unsigned NOT NULL DEFAULT 0,
+  `total_score` int(10) unsigned NOT NULL DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp() COMMENT '처음 인서트한날 0점',
+  `update_at` datetime DEFAULT current_timestamp() COMMENT '성적 넣은 날',
+  `finished_at` date DEFAULT NULL COMMENT '수강 완료 날',
+  `correction_at` datetime DEFAULT NULL COMMENT '2주간 정정기간 날짜 기준',
+  `del_yn` int(10) unsigned DEFAULT 0 CHECK (`del_yn` in (0,1)),
+  PRIMARY KEY (`ilecture_student`),
+  UNIQUE KEY (`istudent`,`ilecture`),
+  KEY `ilecture` (`ilecture`),
+  CONSTRAINT `lecture_student_ibfk_1` FOREIGN KEY (`istudent`) REFERENCES `student` (`istudent`),
+  CONSTRAINT `lecture_student_ibfk_2` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS lecture_day_week (
+  `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
+  `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  KEY `ilecture` (`ilecture`),
+  CONSTRAINT `lecture_day_week_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 요일';
+CREATE TABLE IF NOT EXISTS lecture_room (
+  `ilecture_room` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의실pk',
+  `lecture_room_name` varchar(50) NOT NULL COMMENT '강의실이름',
+  `building_name` varchar(50) NOT NULL COMMENT '건물이름',
+  `max_capacity` int(10) unsigned NOT NULL COMMENT '최대수용인원',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  PRIMARY KEY (`ilecture_room`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의실';
+
+
+
+CREATE TABLE IF NOT EXISTS `leture_condition` (
+  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '수강반려pk',
+  `return_ctnt` text NOT NULL COMMENT '신청반려 내용',
+  `return_date` datetime DEFAULT current_timestamp() COMMENT '반려일시',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  PRIMARY KEY (`ilecture`),
+  CONSTRAINT `leture_condition_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 상태';
