@@ -1,3 +1,5 @@
+set foreign_key_checks = 0;
+
 CREATE DATABASE IF NOT EXISTS `smart_grade_test`;
 USE `smart_grade_test`;
 
@@ -157,7 +159,6 @@ CREATE TABLE IF NOT EXISTS user_token (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-
 CREATE TABLE IF NOT EXISTS lecture_applly (
   `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의신청pk',
   `ilecture_name` bigint(20) unsigned NOT NULL COMMENT '강의pk',
@@ -186,7 +187,6 @@ CREATE TABLE IF NOT EXISTS lecture_applly (
   CONSTRAINT `lecture_applly_ibfk_3` FOREIGN KEY (`iprofessor`) REFERENCES `professor` (`iprofessor`),
   CONSTRAINT `lecture_applly_ibfk_4` FOREIGN KEY (`isemester`) REFERENCES `semester` (`isemester`)
   ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 신청';
-
 CREATE TABLE IF NOT EXISTS lecture_day_week (
   `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
   `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
@@ -194,7 +194,6 @@ CREATE TABLE IF NOT EXISTS lecture_day_week (
   KEY `ilecture` (`ilecture`),
   CONSTRAINT `lecture_day_week_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 요일';
-
 CREATE TABLE IF NOT EXISTS lecture_student (
   `ilecture_student` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `istudent` bigint(20) unsigned NOT NULL,
@@ -215,7 +214,6 @@ CREATE TABLE IF NOT EXISTS lecture_student (
   CONSTRAINT `lecture_student_ibfk_1` FOREIGN KEY (`istudent`) REFERENCES `student` (`istudent`),
   CONSTRAINT `lecture_student_ibfk_2` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 CREATE TABLE IF NOT EXISTS lecture_day_week (
   `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
   `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
@@ -234,4 +232,12 @@ CREATE TABLE IF NOT EXISTS lecture_room (
 
 
 
-
+CREATE TABLE IF NOT EXISTS `leture_condition` (
+  `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '수강반려pk',
+  `return_ctnt` text NOT NULL COMMENT '신청반려 내용',
+  `return_date` datetime DEFAULT current_timestamp() COMMENT '반려일시',
+  `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  PRIMARY KEY (`ilecture`),
+  CONSTRAINT `leture_condition_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 상태';
+set foreign_key_checks = 1;
