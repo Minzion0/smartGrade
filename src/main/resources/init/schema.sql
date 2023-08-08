@@ -1,3 +1,5 @@
+set foreign_key_checks = 0;
+
 CREATE DATABASE IF NOT EXISTS `smart_grade_test`;
 USE `smart_grade_test`;
 
@@ -238,3 +240,4 @@ CREATE TABLE IF NOT EXISTS `leture_condition` (
   PRIMARY KEY (`ilecture`),
   CONSTRAINT `leture_condition_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 상태';
+set foreign_key_checks = 1;
