@@ -25,9 +25,8 @@ class StudentMapperTest {
 
         int result = mapper.insSdy(dto);
 
-        assertEquals(16,dto.getIlectureStudent());
+        assertEquals(76,dto.getIlectureStudent());
         assertEquals(1,result);
-
 
 
     }

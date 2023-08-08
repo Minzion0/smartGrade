@@ -1,3 +1,4 @@
+set foreign_key_checks = 0;
 CREATE DATABASE IF NOT EXISTS `smart_grade_test`;
 USE `smart_grade_test`;
 
@@ -227,3 +228,4 @@ CREATE TABLE IF NOT EXISTS user_token (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+set foreign_key_checks = 1;

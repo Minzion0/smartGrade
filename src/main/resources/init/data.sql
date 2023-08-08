@@ -1,3 +1,4 @@
+set foreign_key_checks = 0;
 INSERT ignore  `admin` (`iadmin`, `admin_Id`, `admin_password`, `del_yn`, `role`, `secret_key`) VALUES
     (1, 'admin', '{bcrypt}$2a$10$JaMwQdbpjKN/BgycWDDRKurWqpA9WFufe42h1ToIIipI1TO5ztRWm', 0, 'ROLE_ADMIN', NULL);
 
@@ -467,3 +468,4 @@ INSERT ignore  `user_token` (`iuser`, `ip`, `created_at`, `updated_at`, `role`) 
                                                                                  (100040, '127.0.0.1', '2023-08-07 15:31:15', '2023-08-07 15:31:15', 'ROLE_PROFESSOR'),
                                                                                  (100041, '0:0:0:0:0:0:0:1', '2023-08-07 17:42:44', '2023-08-07 17:42:44', 'ROLE_PROFESSOR'),
                                                                                  (100045, '172.17.0.1', '2023-08-07 17:21:57', '2023-08-07 17:21:57', 'ROLE_PROFESSOR');
+set foreign_key_checks = 1;
