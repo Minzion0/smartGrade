@@ -45,7 +45,7 @@ public class AdminLectureRoomService {
 
     public LectureRoomRes delLectureRoom(LectureRoomDelParam p) {
         LectureRoomDelDto dto = new LectureRoomDelDto();
-        dto.setBuildingName(p.getBuildingName());
+        dto.setIlectureRoom(p.getIlectureRoom());
         int result = MAPPER.delLectureRoom(dto);
         if (result == 1) {
             new LectureRoomRes(dto);
