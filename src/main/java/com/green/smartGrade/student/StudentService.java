@@ -155,11 +155,10 @@ public class StudentService {
         return null;
 
     }
-    public int updPassword(StudentUpdPasswordDto dto, Long  studentResultIuser, String studentResultRole) {
+    public int updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) {
+        dto.setStudentPassword(param.getStudentPassword());
         String npw = PW_ENCODER.encode(dto.getStudentPassword());
         dto.setStudentPassword(npw);
-        dto.setRole(studentResultRole);
-        dto.setIstudent(studentResultIuser);
         return mapper.updPassword(dto);
     }
 }

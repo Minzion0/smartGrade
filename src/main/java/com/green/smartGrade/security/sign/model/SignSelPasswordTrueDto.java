@@ -8,4 +8,5 @@ import lombok.Getter;
 public class SignSelPasswordTrueDto {
     private String uid;
     private String role;
+    private String upw;
 }

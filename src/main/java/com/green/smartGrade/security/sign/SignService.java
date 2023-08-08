@@ -298,13 +298,13 @@ public class SignService {
             return false;
     }
 
-    public String updPasswordNew(SignSelPasswordTrueDto dto, String upw) {
+    public String updPasswordNew(SignSelPasswordTrueDto dto) {
         SignSelPasswordTrueVo result = MAPPER.selTruePassword(dto);
 
         log.info("result.getUpw() : {}", result.getUpw());
        if (result.getUpw().equals("true")) {
            UpdForgetPasswordDto passwordDto = new UpdForgetPasswordDto();
-           String npw = PW_ENCODER.encode(upw);
+           String npw = PW_ENCODER.encode(dto.getUpw());
            passwordDto.setUpw(npw);
            passwordDto.setRole(result.getRole());
            passwordDto.setUid(result.getUid());
