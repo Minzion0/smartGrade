@@ -92,21 +92,32 @@
 
 
 
-<!--    <resultMap id="studentLectures" type="AdminStudentDetalRes">-->
+<!--    <resultMap id="studentLectures" type="AdminStudentDetalVo">-->
 <!--        <id property="istudent" column="istudent"/>-->
 <!--        <collection property="lectureList" javaType="List" select="studentLectures" column="istudent" ofType="AdminStudentLectureDataRes"/>-->
 <!--    </resultMap>-->
 
     <select id="studentDt" >
-        SELECT A.istudent,A.student_num studentNum,B.imajor,A.grade,A.nm name,A.gender,A.pic,A.birthdate,A.phone,A.email,A.address,A.finished_yn finishedYn
+        SELECT A.istudent,A.student_num studentNum
+        ,A.grade,A.nm 'name',A.imajor,A.pic,A.email
+        ,A.gender,A.birthdate,A.phone,A.address
+        ,A.finished_yn finishedYn,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score
         FROM student A
-        INNER JOIN major B
-        ON A.imajor=B.imajor
+        left JOIN lecture_student B
+        ON A.istudent=B.istudent
+        INNER JOIN major C
+        ON C.imajor=A.imajor
+        left JOIN lecture_applly D
+        ON D.ilecture=B.ilecture
+        left JOIN lecture_name G
+        ON G.ilecture_name=D.ilecture_name
         WHERE A.istudent =#{istudent}
     </select>
 
     <select id="studentLectures" >
-        SELECT A.ilecture,B.lecture_str_date lectureStrDate,B.lecture_end_date lectureEndDate,date_format(B.lecture_str_time,'%h:%i') lectureStrTime,date_format(B.lecture_end_time,'%h:%i') lectureEndTime,C.lecture_name lectureNm
+        SELECT A.ilecture,B.lecture_str_date lectureStrDate
+            ,B.lecture_end_date lectureEndDate,date_format(B.lecture_str_time,'%h:%i') lectureStrTime
+            ,date_format(B.lecture_end_time,'%h:%i') lectureEndTime,C.lecture_name lectureNm
         FROM lecture_student A
         INNER JOIN lecture_applly B
         ON A.ilecture=B.ilecture

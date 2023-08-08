@@ -11,7 +11,7 @@ public interface AdminStudentMapper {
     AdminIInsStudentRes selStudent(String email);
     List<AdminFindStudentRes> findStudents(AdminFindStudentDto param);
     int countStudents(AdminFindStudentDto dto);
-    AdminStudentDetalRes studentDt(Long istudent);
+    AdminStudentDetalVo studentDt(Long istudent);
     List<AdminStudentLectureDataRes> studentLectures(Long istudent);
     int promotionGrade();
 
