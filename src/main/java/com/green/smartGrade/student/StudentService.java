@@ -107,12 +107,20 @@ public class StudentService {
 
     public StudentUpRes upStudent(MultipartFile pic, StudentUpParam param) {
         StudentUpdto dto = new StudentUpdto();
-        dto.setAddress(param.getAddress());
-        dto.setPhone(param.getPhone());
-        dto.setEmail(param.getEmail());
+//        dto.setAddress(param.getAddress());
+//        dto.setPhone(param.getPhone());
+//        dto.setEmail(param.getEmail());
         dto.setStudentNum(param.getStudentNum());
         int result = 0;
-
+        if (param.getPhone() != null && !param.getPhone().equals("string")) {
+            dto.setPhone(param.getPhone());
+        }
+        if (param.getEmail() != null && !param.getEmail().equals("string")) {
+            dto.setEmail(param.getEmail());
+        }
+        if (param.getAddress() != null && !param.getAddress().equals("string")) {
+            dto.setAddress(param.getAddress());
+        }
 
          result = mapper.upStudent(dto);
         if (result == 1) {

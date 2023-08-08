@@ -58,10 +58,23 @@ public class ProfessorService {
 
         int result = 0;
         ProfessorUpDto dto = new ProfessorUpDto();
-        dto.setAddress(param.getAddress());
-        dto.setPhone(param.getPhone());
-        dto.setEmail(param.getEmail());
+//        dto.setAddress(param.getAddress());
+//        dto.setPhone(param.getPhone());
+//        dto.setEmail(param.getEmail());
         dto.setIprofessor(param.getIprofessor());
+        if (param.getPhone() != null && !param.getPhone().equals("string")) {
+            dto.setPhone(param.getPhone());
+        }
+        if (param.getEmail() != null && !param.getEmail().equals("string")) {
+            dto.setEmail(param.getEmail());
+        }
+        if (param.getAddress() != null && !param.getAddress().equals("string")) {
+            dto.setAddress(param.getAddress());
+        }
+
+
+
+
         result = mapper.upProfessor(dto);
 
         if (result == 1 ) {
