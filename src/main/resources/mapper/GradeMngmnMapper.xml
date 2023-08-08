@@ -5,22 +5,31 @@
 <mapper namespace="com.green.smartGrade.admin.grade_mngmn.GradeMngmnMapper">
 
     <select id="selGradeFindStudent">
-        SELECT B.istudent, B.ilecture
-        , A.imajor, A.student_num studentNum,
-        A.nm name, A.gender, A.birthdate, C.score, C.rating
-        FROM student A
-        INNER JOIN lecture_student B
-        ON A.istudent = B.istudent
-        INNER JOIN student_semester_score C
-        ON B.istudent = C.istudent
-        INNER JOIN semester D
-        ON C.isemester = D.isemester
+        SELECT A.grade grade,B.semester semester,
+        D.lecture_name lectureName,
+        E.nm professorName, D.score lectureScore,
+        F.total_score totalScore, A.rating rating,
+        A.grade grade, B.semester semester,
+        A.avg_score avgScore, A.rating avgRating
+        FROM student_semester_score A
+        INNER JOIN semester B
+        ON A.isemester = B.isemester
+        INNER JOIN lecture_applly C
+        ON B.isemester = C.isemester
+        INNER JOIN lecture_name D
+        ON C.ilecture_name = D.ilecture_name
+        INNER JOIN professor E
+        ON C.iprofessor = E.iprofessor
+        INNER JOIN lecture_student F
+        ON C.ilecture = F.ilecture
+        INNER JOIN student G
+        ON A.istudent = G.istudent
         <where>
             <if test="semester > 0">
-                and D.semester = #{semester}
+                and B.semester = #{semester}
             </if>
         <if test="studentNum != null and studentNum != ''">
-            and A.student_num = #{studentNum}
+            and G.student_num = #{studentNum}
         </if>
             <if test="grade > 0">
                 and A.grade = #{grade}

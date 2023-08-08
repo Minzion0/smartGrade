@@ -46,10 +46,9 @@ public class AdminMajorController {
     @Operation(summary = "전공 삭제 ( 삭제여부 0 1 변경)" , description = "" +
             "imajor : 전공 pk \n" +
             "\n majorName : 전공 이름")
-    public int delMajor(@RequestParam Long imajor, @RequestParam String majorName) {
+    public int delMajor(@RequestParam Long imajor) {
         MajorDelDto dto = new MajorDelDto();
         dto.setImajor(imajor);
-        dto.setMajorName(majorName);
         return SERVICE.delMajor(dto);
     }
 

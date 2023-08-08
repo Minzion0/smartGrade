@@ -22,26 +22,16 @@ public class GradeMngmnController {
             "\nistudent : 학생pk\n" +
             "\nstudenNum : 학번\n" +
             "\nname : 이름\n")
-    public GradeMngmnDetailAvgVo getGradeFindStudent(@RequestParam (defaultValue = ("1"))int page
-                        ,@RequestParam (required = false) String semester,@RequestParam (required = false) String grade, @RequestParam (required = false) String studentNum) {
+    public GradeMngmnDetailAvgVo getGradeFindStudent(@RequestParam(defaultValue = ("1")) int page
+            , @RequestParam(required = false, defaultValue = "0") int semester, @RequestParam(required = false, defaultValue = "0") int grade, @RequestParam String studentNum) {
         GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
-        if (grade == null) {
-            int temp = 0;
-            dto.setGrade(temp);
-        } else {
-            int temp2 = Integer.parseInt(grade);
-            dto.setGrade(temp2);
-        }
-        if (semester == null) {
-            int temp = 0;
-            dto.setSemester(temp);
-        } else {
-            int temp2 = Integer.parseInt(semester);
-            dto.setSemester(temp2);
-        }
+        dto.setGrade(grade);
+        dto.setSemester(semester);
         dto.setStudentNum(studentNum);
-        return SERVICE.selGradeFindStudentVo(dto,page);
+
+        return SERVICE.selGradeFindStudentVo(dto, page);
     }
+
     @GetMapping("/{istudent}")
     @Operation(summary = "상세보기", description = "" +
             "사진 pic \n" +
