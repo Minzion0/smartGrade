@@ -64,5 +64,7 @@ class AdminLectureRoomServiceTest {
 
     @Test
     void delLectureRoom() {
+        LectureRoomDelDto dto = new LectureRoomDelDto();
+        dto.setBuildingName("510호");
     }
 }

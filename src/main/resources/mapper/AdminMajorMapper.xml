@@ -26,7 +26,6 @@
         UPDATE major
         SET del_yn = 1
         WHERE imajor = #{imajor}
-        AND major_name = #{majorName}
     </update>
 
     <select id="countMajor">
