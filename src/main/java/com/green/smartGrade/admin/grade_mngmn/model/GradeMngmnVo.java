@@ -13,6 +13,6 @@ public class GradeMngmnVo {
     private String name;
     private char gender;
     private LocalDate birthDate;
-    private int score;
+    private int avgScore;
     private double rating;
 }

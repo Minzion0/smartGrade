@@ -7,7 +7,7 @@
     <select id="selGradeFindStudent">
         SELECT B.istudent, B.ilecture
         , A.imajor, A.student_num studentNum,
-        A.nm name, A.gender, A.birthdate, C.score, C.rating
+        A.nm name, A.gender, A.birthdate, C.Score avgScore, C.rating
         FROM student A
         INNER JOIN lecture_student B
         ON A.istudent = B.istudent
