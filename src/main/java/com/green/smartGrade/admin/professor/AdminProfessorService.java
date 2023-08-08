@@ -72,7 +72,7 @@ public class AdminProfessorService {
 
         return AdminProfessorDetailVo.builder()
                 .profile(profile)
-                .majorList(major)
+                .lectureList(major)
                 .build();
     }
 

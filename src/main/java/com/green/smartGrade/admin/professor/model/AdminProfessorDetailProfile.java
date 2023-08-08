@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 public class AdminProfessorDetailProfile {
     private String name;
     private String gender;
-    private String birthDate;
+    private String birthdate;
     private String phone;
     private String address;
     private String email;
     private Long imajor;
     private LocalDateTime createdAt;
+    private int delYn;
 }
