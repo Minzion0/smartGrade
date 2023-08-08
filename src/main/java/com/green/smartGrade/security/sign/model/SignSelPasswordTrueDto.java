@@ -1,10 +1,11 @@
 package com.green.smartGrade.security.sign.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
-public class UpdForgetPasswordDto {
+public class SignSelPasswordTrueDto {
     private String uid;
-    private String upw;
     private String role;
 }

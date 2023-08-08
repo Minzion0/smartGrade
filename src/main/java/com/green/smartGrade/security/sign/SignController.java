@@ -3,9 +3,7 @@ package com.green.smartGrade.security.sign;
 
 import com.green.smartGrade.security.CommonRes;
 import com.green.smartGrade.security.config.security.model.MyUserDetails;
-import com.green.smartGrade.security.sign.model.SignInParam;
-import com.green.smartGrade.security.sign.model.SignInResultDto;
-import com.green.smartGrade.security.sign.model.SignUpResultDto;
+import com.green.smartGrade.security.sign.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +16,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -119,5 +119,16 @@ public class SignController {
         String role = details.getRoles().get(0);
         System.out.println("role = " + role);
        return   SERVICE.otpValid(req,otpNum, result,role);
+    }
+
+    @PutMapping("/forgetPassword")
+    @Operation(summary = "비밀번호 찾기(변경) 아이디와 OTP 확인")
+    public boolean updForgetPassword (String uid, String role, String inputCode) {
+        return SERVICE.updForgetPassword(uid, role, inputCode);
+    }
+    @GetMapping("/changPassword")
+    @Operation(summary = "비밀번호 변경")
+    public String  updPasswordNew(SignSelPasswordTrueDto dto, String upw) {
+        return SERVICE.updPasswordNew(dto, upw);
     }
 }
