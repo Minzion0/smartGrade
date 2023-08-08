@@ -30,5 +30,8 @@ class AdminMapperTest {
         List<AdminSelLectureRes> adminSelLectureRes = mapper.selLecture(dto);
         int size = adminSelLectureRes.size();
         Assertions.assertEquals(6,size);
+        AdminSelLectureRes res = adminSelLectureRes.get(0);
+        Long ilecture = res.getIlecture();
+        assertEquals(4,ilecture);
     }
 }
