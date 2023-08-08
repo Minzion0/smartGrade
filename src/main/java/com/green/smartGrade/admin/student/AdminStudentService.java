@@ -2,7 +2,6 @@ package com.green.smartGrade.admin.student;
 
 import com.green.smartGrade.admin.student.model.*;
 import com.green.smartGrade.utils.CheckUtils;
-import com.green.smartGrade.utils.CommonUtils;
 import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,9 +66,11 @@ public class AdminStudentService {
 
     public AdminStudentDetalRes studentDet(Long istudent) {
         try {
-            AdminStudentDetalRes res = MAPPER.studentDt(istudent);
+            AdminStudentDetalRes res = new AdminStudentDetalRes();
+            AdminStudentDetalVo vo = MAPPER.studentDt(istudent);
             List<AdminStudentLectureDataRes> dataRes = MAPPER.studentLectures(istudent);
-            res.setLectureList(dataRes);
+            res.setLectureList(dataRes);//private List<AdminStudentLectureDataRes>lectureList;
+            res.setProfile(vo);
             return res;
         } catch (Exception e) {
             e.printStackTrace();

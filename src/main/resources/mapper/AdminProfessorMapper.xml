@@ -36,7 +36,7 @@
         A.lecture_end_time lectureEndTime, B.lecture_name lectureName
         , C.nm name, C.gender gender, C.birthdate birthDate,
         C.phone phone , C.address address, C.email email
-        , D.major_name majorName, C.created_at createdAt
+        , D.major_name majorName, C.created_at createdAt,C.del_yn delYn
         FROM lecture_applly A
         INNER JOIN lecture_name B
         ON A.ilecture_name = B.ilecture_name
@@ -66,7 +66,7 @@
     <select id="professorProfile">
         SELECT A.nm name, A.gender gender, A.birthdate birthDate
         , A.phone phone, A.address address, A.email email
-        , B.imajor, A.created_at createdAt
+        , B.imajor, A.created_at createdAt,A.del_yn delYn
         from professor A
         INNER JOIN major B
         ON A.imajor = B.imajor
