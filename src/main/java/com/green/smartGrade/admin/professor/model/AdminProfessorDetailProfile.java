@@ -11,6 +11,7 @@ public class AdminProfessorDetailProfile {
     private String gender;
     private String birthdate;
     private String phone;
+    private String pic;
     private String address;
     private String email;
     private Long imajor;

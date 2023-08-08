@@ -105,7 +105,6 @@ public class SignController {
 
         String role = details.getRoles().get(0);
 
-
         return SERVICE.otp(result,role);
     }
     @GetMapping("/otp-valid")

@@ -64,7 +64,7 @@
     </select>
 
     <select id="professorProfile">
-        SELECT A.nm name, A.gender gender, A.birthdate birthDate
+        SELECT A.nm name, A.gender gender,A.pic, A.birthdate birthDate
         , A.phone phone, A.address address, A.email email
         , B.imajor, A.created_at createdAt,A.del_yn delYn
         from professor A

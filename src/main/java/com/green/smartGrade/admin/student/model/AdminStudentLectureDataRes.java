@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AdminStudentLectureDataRes {
     private Long ilecture;
-    private String lectureNm;
+    private String lectureName;
     private String  lectureStrDate;
     private String  lectureEndDate;
     private String  lectureStrTime;
