@@ -30,7 +30,7 @@ public class StudentService {
     private String fileDir;
 
 
-    public StudentInsRes inslecture(StudentParam param) {
+    public StudentInsRes insSdy(StudentParam param) {
         StudentInsDto dto = new StudentInsDto();
 
         dto.setIstudent(param.getIstudent());
@@ -51,8 +51,6 @@ public class StudentService {
             temp+=dayList.get(i).toString();
 
         }
-
-
 
         int result = mapper.insSdy(dto);
         if (result == 1) {
@@ -119,7 +117,7 @@ public class StudentService {
          result = mapper.upStudent(dto);
         if (result == 1) {
             if (pic != null) {
-                String centerPath = String.format("student/%d", param.getStudentNum());
+                String centerPath = String.format("students/%d", param.getStudentNum());
                 String dicPath = String.format("%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath);
                 String temp = "0";
 

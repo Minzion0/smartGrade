@@ -14,7 +14,6 @@ public class StudentSelVo {
     private int midtermExamination;
     private int finalExamination;
     private int totalScore;
-    
     private String grade;
     private String rating;
     private int finishedYn;

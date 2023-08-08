@@ -28,7 +28,7 @@ public class StudentController {
             +"attendance : 출결<br>"+"midtermExamination : 중간고사<br>"+"finalExamination : 기말고사<br>"+"totalScore : 총점수<br>"
     +"createdAt : 수강신청 일자<br>"+"delYn : 삭제여부<br>"+"<br>"+"finishedYn : 수료여부는 신청이기 때문에 0으로 시작")
     public StudentInsRes postStudent(@RequestBody StudentParam param) {
-        return service.inslecture(param);
+        return service.insSdy(param);
     }
 
     @GetMapping

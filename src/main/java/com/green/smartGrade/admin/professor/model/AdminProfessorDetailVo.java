@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Builder
 public class AdminProfessorDetailVo {
-    List<AdminProfessorMajor> majorList;
+    List<AdminProfessorMajor> lectureList;
     AdminProfessorDetailProfile profile;
 
 }

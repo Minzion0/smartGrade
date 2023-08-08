@@ -15,7 +15,7 @@ public class AdminStudentLectureRes {
     private List<AdminStudentLectureDataRes>list;
 
 
-    public AdminStudentLectureRes(AdminStudentDetalRes res) {
+    public AdminStudentLectureRes(AdminStudentDetalVo res) {
         this.istudent = res.getIstudent();
         this.studentNum = res.getStudentNum();
         this.imajor = res.getImajor();
