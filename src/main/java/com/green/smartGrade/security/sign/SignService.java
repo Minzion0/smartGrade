@@ -215,8 +215,15 @@ public class SignService {
         return result;
     }
 
-    public SignInResultDto otpValid(HttpServletRequest req,String inputCode, String uid, String role) throws Exception {
+    public SignInResultDto otpValid(HttpServletRequest req,OtpValidParam param) throws Exception {
         String ip = req.getRemoteAddr();
+        String inputCode = param.getOtpNum();
+        String uid = param.getUid();
+        String role = param.getRole();
+        if ("ROLE_STUDENT".equals(role)){
+            uid= MAPPER.getStudentNum(uid);
+        }
+
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String otpCode = getOtpCode(vo.getSecretKey());
 

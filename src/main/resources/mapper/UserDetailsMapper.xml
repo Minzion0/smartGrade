@@ -62,7 +62,11 @@
         role = #{role}
         , iuser = #{iuser}
     </insert>
-
+    <select id="getStudentNum">
+        select student_num
+        from student
+        where student_num =#{studentNum}
+    </select>
     <select id="selUserToken">
         SELECT iuser, role, ip, access_token accessToken,
         refresh_token refreshToken, created_at createdAt,
