@@ -85,4 +85,10 @@ public class ProfessorController {
         dto.setRole(role);
         return ResponseEntity.ok().body(service.updPassword(dto, param));
     }
+
+    @DeleteMapping
+    @Operation(summary = "사진삭제", description = "pic : 사진 업데이트로 null 값으로 바꿈<br>" + "iprofessor : 교수pk")
+    public int delPicProfessor(@RequestBody ProfessorDelPic pic) {
+        return service.delpicByprofessor(pic);
+    }
 }

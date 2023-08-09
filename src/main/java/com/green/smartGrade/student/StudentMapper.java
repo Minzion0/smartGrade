@@ -25,5 +25,6 @@ public interface StudentMapper {
 
     int updPassword (StudentUpdPasswordDto dto);
 
+    int delpicByIstudent(StudentDelPic dto);
 
 }

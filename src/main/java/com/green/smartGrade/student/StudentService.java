@@ -169,4 +169,11 @@ public class StudentService {
         dto.setStudentPassword(npw);
         return mapper.updPassword(dto);
     }
+
+    int delpicByIstudent(StudentDelPic dto) {
+        if ("string".equals(dto.getPic())) {
+            dto.setPic(null);
+        }
+        return mapper.delpicByIstudent(dto);
+    }
 }

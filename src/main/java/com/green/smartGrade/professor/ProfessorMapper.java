@@ -24,5 +24,5 @@ public interface ProfessorMapper {
 
     int updPassword(ProfessorUpdPasswordDto dto);
 
-
+    int delpicByprofessor(ProfessorDelPic pic);
 }

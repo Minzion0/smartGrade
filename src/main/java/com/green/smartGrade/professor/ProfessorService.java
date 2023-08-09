@@ -150,4 +150,10 @@ public class ProfessorService {
         return mapper.updPassword(dto);
     }
 
+    public int delpicByprofessor(ProfessorDelPic pic) {
+        if ("string".equals(pic.getPic())) {
+           pic.setPic(null);
+        }
+        return mapper.delpicByprofessor(pic);
+    }
 }
