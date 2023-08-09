@@ -31,7 +31,6 @@
     </update>
     <update id="updAvgScore">
         <![CDATA[
-
         UPDATE student_semester_score A
         INNER JOIN semester B
         ON A.isemester = B.isemester
