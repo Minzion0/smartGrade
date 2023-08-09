@@ -25,13 +25,13 @@ public class ProfessorService {
     private String fileDir;
 
 
-    public professorSelRes selProfessor(Long ip) {
+    public professorSelRes selProfessor() {
         int maxPage = mapper.ProfessorCount();
         PagingUtils utils = new PagingUtils();
         ProfessorSelDto dto = new ProfessorSelDto();
         dto.setRow(utils.getROW());
         dto.setStartIdx(utils.getStaIdx());
-        dto.setIprofessor(ip);
+
 
 
         List<ProfessorVo> professorVos = mapper.selProfessor(dto);
@@ -71,8 +71,6 @@ public class ProfessorService {
         if (param.getAddress() != null && !param.getAddress().equals("string")) {
             dto.setAddress(param.getAddress());
         }
-
-
 
 
         result = mapper.upProfessor(dto);

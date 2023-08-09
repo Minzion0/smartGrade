@@ -22,10 +22,10 @@ public class ProfessorController {
 
 
     @GetMapping
-    @Operation(summary = "교수 프로필 보기",description = "iprofessor : 교수pk")
-    public professorSelRes getProfessor(@RequestParam(required = false) Long iprofessor) {
+    @Operation(summary = "교수 프로필 보기")
+    public professorSelRes getProfessor() {
 
-        return service.selProfessor(iprofessor);
+        return service.selProfessor();
     }
 
 
