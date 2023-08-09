@@ -1,6 +1,7 @@
 package com.green.smartGrade.config.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 public class MyErrorResponse {
     private final String code;
     private final String message;
+
 
     // Errors가 없다면 응답이 내려가지 않게 처리
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

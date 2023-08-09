@@ -12,7 +12,7 @@
 
     <select id="selMajor">
         SELECT imajor, major_name majorName
-        , graduation_score graduationScore, del_yn delYn
+        , graduation_score graduationScore, del_yn delYn, remarks remarks
         from major
         <where>
             <if test="majorName != null and majorName != ''">
@@ -34,5 +34,9 @@
         from major
     </select>
 
-
+    <update id="updMajor">
+        UPDATE major
+        SET major_name = #{majorName}
+        WHERE imajor = #{imajor}
+    </update>
 </mapper>

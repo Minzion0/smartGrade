@@ -1,10 +1,13 @@
 package com.green.smartGrade.admin.student;
 
 import com.green.smartGrade.admin.student.model.*;
+import com.green.smartGrade.config.exception.AdminException;
+import com.green.smartGrade.config.exception.CommonErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +23,9 @@ public class AdminStudentController {
 
     @PostMapping("/students")
     @Operation(summary = "학생등록")
-    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws IllegalAccessException {
+    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws AdminException {
         AdminIInsStudentRes res = SERVICE.insStudent(param);
-        Long istudent = res.getIstudent();
-        if (istudent==null){
-            return ResponseEntity.status(400).body(res);
-        }
+
         return ResponseEntity.ok().body(res);
     }
 
@@ -49,4 +49,6 @@ public class AdminStudentController {
     public AdminStudentDetalRes studentDet(@PathVariable Long istudent){
         return SERVICE.studentDet(istudent);
     }
+
+
 }

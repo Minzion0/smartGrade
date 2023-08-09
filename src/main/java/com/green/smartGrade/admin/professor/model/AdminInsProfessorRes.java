@@ -15,7 +15,6 @@ public class AdminInsProfessorRes {
     private String phone;
     private LocalDateTime createdAt;
     private int delYn;
-    private String msg;
 
 //    public AdminInsProfessorRes(AdminInsProfessorDto dto) {
 //        this.iprofessor = dto.getIprofessor();

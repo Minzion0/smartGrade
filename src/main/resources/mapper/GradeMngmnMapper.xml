@@ -33,7 +33,7 @@
                 and A.grade = #{grade}
             </if>
         </where>
-        LIMIT #{staIdx}, 7
+        LIMIT #{staIdx}, 10
     </select>
 
     <select id="selGradeFindStudentDetail">

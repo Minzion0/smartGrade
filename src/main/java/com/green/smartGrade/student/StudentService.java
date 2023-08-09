@@ -170,7 +170,7 @@ public class StudentService {
         StudentSelCurrentPasswordVo vo = mapper.selPasswordCurrent(passwordDto);
 
         if (!PW_ENCODER.matches(param.getCurrentStudentPassword(), vo.getCurrentStudentPassword())){
-            return "비밀번호 변경을 실패했습니다";
+            return "비밀번호 변경을 실패했습니다.";
         }
         dto.setStudentPassword(param.getStudentPassword());
         String npw = PW_ENCODER.encode(dto.getStudentPassword());
