@@ -60,7 +60,7 @@
     </select>
 
     <select id="GradeMngmnAvg1">
-        SELECT A.istudent istudent, A.nm name, A.student_num studentNum,
+        SELECT C.istudent istudent, A.nm name, A.student_num studentNum,
         C.grade grade ,D.semester semester
         , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
         FROM student A
