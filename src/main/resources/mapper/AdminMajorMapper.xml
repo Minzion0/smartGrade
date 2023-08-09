@@ -35,8 +35,10 @@
     </select>
 
     <update id="updMajor">
-        UPDATE major
-        SET major_name = #{majorName}
-        WHERE imajor = #{imajor}
+        INSERT IGNORE INTO major
+        (major_name, remarks)
+        VALUES
+        (#{majorName), #{remakrs})
+        ON DUPLICATE KEY UPDATE remarks = major_name
     </update>
 </mapper>

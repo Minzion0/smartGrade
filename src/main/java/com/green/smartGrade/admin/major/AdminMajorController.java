@@ -53,6 +53,9 @@ public class AdminMajorController {
     }
 
     @PatchMapping
+    @Operation(summary = "전공 이름 수정", description = "" +
+            "imajor : 전공 pk \n" +
+            "\n majorName : 전공 이름")
     public MajorUpdRes patchMajor(@RequestBody MajorUpdParam p) {
         return SERVICE.updMajor(p);
     }

@@ -6,4 +6,5 @@ import lombok.Data;
 public class MajorUpdParam {
     private Long imajor;
     private String majorName;
+    private String remarks;
 }
