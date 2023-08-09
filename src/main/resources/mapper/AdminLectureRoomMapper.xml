@@ -49,7 +49,7 @@
     </select>
 
     <select id="lectureRoomList">
-        SELECT building_name buildingName
+        SELECT distinct(building_name) buildingName
         from lecture_room
     </select>
 </mapper>
