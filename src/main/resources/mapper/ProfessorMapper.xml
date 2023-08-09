@@ -37,12 +37,6 @@
     </update>
 
 
-    <select id="selAllProfessor">
-        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
-        from professor
-        ORDER BY iprofessor DESC
-        LIMIT #{startIdx}, #{row}
-    </select>
 
     <update id="upPicProfessor">
         update professor
@@ -140,5 +134,14 @@
         SET professor_password = #{professorPassword}
         WHERE iprofessor = #{iprofessor} AND role = #{role}
     </update>
-    
+
+    <update id="delpicByprofessor">
+        UPDATE professor
+        SET pic = #{pic}
+        WHERE iprofessor = #{iprofessor}
+    </update>
+
+
+
+
 </mapper>

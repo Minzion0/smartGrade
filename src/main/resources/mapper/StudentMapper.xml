@@ -86,6 +86,11 @@
         WHERE istudent = #{istudent} AND role = #{role}
     </update>
 
+    <update id="delpicByIstudent">
+        UPDATE student
+        SET pic = #{pic}
+        WHERE istudent = #{istudent}
+    </update>
 
 
 </mapper>
