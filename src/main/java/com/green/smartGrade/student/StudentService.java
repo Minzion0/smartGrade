@@ -107,25 +107,25 @@ public class StudentService {
 
     public StudentUpRes upStudent(MultipartFile pic, StudentUpParam param) {
         StudentUpdto dto = new StudentUpdto();
-//        dto.setAddress(param.getAddress());
-//        dto.setPhone(param.getPhone());
-//        dto.setEmail(param.getEmail());
-        dto.setStudentNum(param.getStudentNum());
+        dto.setAddress(param.getAddress());
+        dto.setPhone(param.getPhone());
+        dto.setEmail(param.getEmail());
+        dto.setIstudent(param.getIstudent());
         int result = 0;
-        if (param.getPhone() != null && !param.getPhone().equals("string")) {
-            dto.setPhone(param.getPhone());
-        }
-        if (param.getEmail() != null && !param.getEmail().equals("string")) {
-            dto.setEmail(param.getEmail());
-        }
-        if (param.getAddress() != null && !param.getAddress().equals("string")) {
-            dto.setAddress(param.getAddress());
-        }
+//        if (dto.getPhone() != null && !dto.getPhone().equals("string")) {
+//            dto.setPhone(param.getPhone());
+//        }
+//        if (dto.getEmail() != null && !dto.getEmail().equals("string")) {
+//            dto.setEmail(param.getEmail());
+//        }
+//        if (dto.getAddress() != null && !dto.getAddress().equals("string")) {
+//            dto.setAddress(param.getAddress());
+//        }
 
          result = mapper.upStudent(dto);
         if (result == 1) {
             if (pic != null) {
-                String centerPath = String.format("students/%d", param.getStudentNum());
+                String centerPath = String.format("students/%d", param.getIstudent());
                 String dicPath = String.format("%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath);
                 String temp = "0";
 
@@ -179,10 +179,32 @@ public class StudentService {
         return "비밀번호 변경이 완료되었습니다.";
     }
 
-    int delPicByIstudent(StudentDelPic dto) {
-        if ("string".equals(dto.getPic())) {
-            dto.setPic(null);
+    public void deleteUploadedFile(Long studentNum) {
+        // 데이터베이스에서 파일 경로 조회
+
+        String filePath = mapper.picFilePathByStudent(studentNum);
+        String centerPath = String.format("students/%d", studentNum);
+        String dicPath = String.format("%s/%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath,filePath);
+
+
+
+        if (dicPath != null) {
+            File fileToDelete = new File(dicPath);
+            if (fileToDelete.exists()) {
+                if (fileToDelete.delete()) {
+                    // 파일 삭제 성공
+                    mapper.updateFilePathNullByStudent(studentNum);
+                } else {
+                    // 파일 삭제 실패
+                    throw new RuntimeException("파일 삭제 실패");
+                }
+            } else {
+                // 파일이 존재하지 않음
+                throw new RuntimeException("파일이 존재하지 않음: " + filePath);
+            }
+        } else {
+            // 파일 경로가 없음
+            throw new RuntimeException("파일 경로가 없음");
         }
-        return mapper.delPicByIstudent(dto);
     }
 }

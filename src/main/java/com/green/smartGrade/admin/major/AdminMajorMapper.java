@@ -15,5 +15,6 @@ public interface AdminMajorMapper {
 
     int countMajor();
 
+    int updMajor(MajorUpdDto dto);
 
 }

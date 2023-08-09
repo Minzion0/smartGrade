@@ -43,7 +43,7 @@ public class AdminMajorController {
 
 
     @DeleteMapping
-    @Operation(summary = "전공 삭제 ( 삭제여부 0 1 변경)" , description = "" +
+    @Operation(summary = "전공 폐지 ( 삭제여부 0 1 변경)" , description = "" +
             "imajor : 전공 pk \n" +
             "\n majorName : 전공 이름")
     public int delMajor(@RequestParam Long imajor) {
@@ -52,5 +52,11 @@ public class AdminMajorController {
         return SERVICE.delMajor(dto);
     }
 
-
+    @PatchMapping
+    @Operation(summary = "전공 이름 수정", description = "" +
+            "imajor : 전공 pk \n" +
+            "\n majorName : 전공 이름")
+    public MajorUpdRes patchMajor(@RequestBody MajorUpdParam p) {
+        return SERVICE.updMajor(p);
+    }
 }
