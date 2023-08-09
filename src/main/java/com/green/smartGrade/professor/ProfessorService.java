@@ -25,13 +25,13 @@ public class ProfessorService {
     private String fileDir;
 
 
-    public professorSelRes selProfessor(Long ip) {
+    public professorSelRes selProfessor() {
         int maxPage = mapper.ProfessorCount();
         PagingUtils utils = new PagingUtils();
         ProfessorSelDto dto = new ProfessorSelDto();
         dto.setRow(utils.getROW());
         dto.setStartIdx(utils.getStaIdx());
-        dto.setIprofessor(ip);
+
 
 
         List<ProfessorVo> professorVos = mapper.selProfessor(dto);
@@ -71,8 +71,6 @@ public class ProfessorService {
         if (param.getAddress() != null && !param.getAddress().equals("string")) {
             dto.setAddress(param.getAddress());
         }
-
-
 
 
         result = mapper.upProfessor(dto);
@@ -117,18 +115,7 @@ public class ProfessorService {
         }
         return null;
     }
-    public professorSelRes selAllProfessor(ProfessorSelDto dto,int page) {
-        int maxPage = mapper.ProfessorCount();
-        PagingUtils utils = new PagingUtils(page,maxPage);
 
-
-        dto.setRow(utils.getROW());
-        dto.setStartIdx(utils.getStaIdx());
-
-        List<ProfessorVo> professorVos = mapper.selAllProfessor(dto);
-
-        return professorSelRes.builder().list(professorVos).page(utils).build();
-    }
 
 
 
@@ -150,4 +137,10 @@ public class ProfessorService {
         return mapper.updPassword(dto);
     }
 
+    public int delpicByprofessor(ProfessorDelPic pic) {
+        if ("string".equals(pic.getPic())) {
+           pic.setPic(null);
+        }
+        return mapper.delpicByprofessor(pic);
+    }
 }

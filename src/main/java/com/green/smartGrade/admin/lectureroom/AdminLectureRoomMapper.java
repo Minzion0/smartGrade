@@ -16,4 +16,6 @@ public interface AdminLectureRoomMapper {
 
     int countLectureRoom();
 
+    List<LectureRoomListVo> lectureRoomList(LectureRoomDetailDto dto);
+
 }

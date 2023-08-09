@@ -86,10 +86,11 @@
         WHERE istudent = #{istudent} AND role = #{role}
     </update>
 
-    <select id="selCurrentStudentPassword">
-        SELECT istudent, role, student_num id, student_password currentStudentPassword
-        FROM student
-        WHERE istudent = #{istudent} AND role = #{role}
-    </select>
+    <update id="delpicByIstudent">
+        UPDATE student
+        SET pic = #{pic}
+        WHERE istudent = #{istudent}
+    </update>
+
 
 </mapper>

@@ -21,25 +21,14 @@ public class ProfessorController {
     private final ProfessorService service;
 
 
-    @GetMapping("/list")
-    @Operation(summary = "교수 리스트 보기",description = "iprofessor : 교수pk")
-    public professorSelRes getProfessor(@RequestParam(required = false) Long iprofessor) {
-
-        return service.selProfessor(iprofessor);
-    }
-
-
-
-
     @GetMapping
-    @Operation(summary = "교수 프로필 전체 보기" ,description = "page : 기본 1<br>"+ "row : 기본 프로필 10개 <br>"+"<br>"+"iprofessor : 교수pk"
-    +"name : 이름<br>"+ "gender : 성별<br>"+"birthdate : 생년월일<br>"+"phone : 폰번호<br>"+"email : 이메일<br>" + "address : 주소")
-    public professorSelRes gstAllProfessor(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10")  int row) {
-        ProfessorSelDto dto = new ProfessorSelDto();
-        dto.setPage(page);
-        dto.setRow(row);
-        return service.selAllProfessor(dto,page);
+    @Operation(summary = "교수 프로필 보기")
+    public professorSelRes getProfessor() {
+
+        return service.selProfessor();
     }
+
+
 
     @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "프로필 수정", description = "phone : 폰번호<br>"+
@@ -84,5 +73,11 @@ public class ProfessorController {
         dto.setIprofessor(iuser);
         dto.setRole(role);
         return ResponseEntity.ok().body(service.updPassword(dto, param));
+    }
+
+    @DeleteMapping
+    @Operation(summary = "사진삭제", description = "pic : 사진 업데이트로 null 값으로 바꿈<br>" + "iprofessor : 교수pk")
+    public int delPicProfessor(@RequestBody ProfessorDelPic pic) {
+        return service.delpicByprofessor(pic);
     }
 }

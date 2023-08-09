@@ -10,6 +10,8 @@ public class GradeUtils {
     public GradeUtils(int totalScore) {
         this.totalScore = totalScore;
     }
+
+
     public String totalRating(double rating) {
         if (rating == 4.5) {
             this.result = "A+";

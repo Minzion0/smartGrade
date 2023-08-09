@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,4 +84,11 @@ public class StudentController {
 
         return ResponseEntity.ok().body(service.updPassword(dto, param));
     }
+
+    @DeleteMapping
+    @Operation(summary = "사진 삭제", description = "pic : 사진만 삭제가 안되서 null값으로 변경<br>" + "istudent : 학생pk")
+    public int delPic(@RequestBody StudentDelPic pic) {
+        return service.delpicByIstudent(pic);
+    }
+
 }
