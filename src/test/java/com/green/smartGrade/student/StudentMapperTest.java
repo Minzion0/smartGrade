@@ -109,7 +109,7 @@ class StudentMapperTest {
     @Test
     void upStudent() {
         StudentUpdto dto = new StudentUpdto();
-        dto.setStudentNum(2310010L);
+        dto.setIstudent(13L);
         dto.setPhone("010-222-444");
         dto.setAddress("몰라");
         dto.setEmail("akak@am.com");
@@ -119,7 +119,7 @@ class StudentMapperTest {
         assertEquals(1, r1);
 
         StudentUpdto dto2 = new StudentUpdto();
-        dto2.setStudentNum(2310011L);
+        dto2.setIstudent(24L);
         dto2.setPhone("010-7777-5564");
         dto2.setAddress("어디");
         dto2.setEmail("aloq@am.com");

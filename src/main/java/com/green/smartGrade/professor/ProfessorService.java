@@ -25,18 +25,17 @@ public class ProfessorService {
     private String fileDir;
 
 
-    public professorSelRes selProfessor() {
-        int maxPage = mapper.ProfessorCount();
-        PagingUtils utils = new PagingUtils();
+    public professorSelRes selProfessor(Long iuser) {
+
         ProfessorSelDto dto = new ProfessorSelDto();
-        dto.setRow(utils.getROW());
-        dto.setStartIdx(utils.getStaIdx());
+        dto.setIprofessor(iuser);
+
 
 
 
         List<ProfessorVo> professorVos = mapper.selProfessor(dto);
 
-        return professorSelRes.builder().list(professorVos).page(utils).build();
+        return professorSelRes.builder().list(professorVos).build();
     }
 
 
@@ -141,7 +140,6 @@ public class ProfessorService {
 
     public void deleteUploadedFile(Long iprofessor) {
         // 데이터베이스에서 파일 경로 조회
-
 
         String filePath = mapper.picFilePathByProfessor(iprofessor);
         String centerPath = String.format("professor/%d", iprofessor);
