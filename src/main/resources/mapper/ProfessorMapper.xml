@@ -37,12 +37,6 @@
     </update>
 
 
-    <select id="selAllProfessor">
-        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
-        from professor
-        ORDER BY iprofessor DESC
-        LIMIT #{startIdx}, #{row}
-    </select>
 
     <update id="upPicProfessor">
         update professor
