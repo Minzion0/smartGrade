@@ -8,7 +8,7 @@
         SELECT A.grade grade,B.semester semester,
         D.lecture_name lectureName,
         E.nm professorName, D.score lectureScore,
-        F.total_score totalScore, A.rating rating,
+        F.total_score totalScore,
         A.grade grade, B.semester semester,
         A.avg_score avgScore, A.rating avgRating
         FROM student_semester_score A
@@ -40,18 +40,20 @@
 
     <select id="selGradeFindStudentDetail">
         SELECT A.pic pic, A.nm name, A.gender
-        , A.birthdate, A.phone
+        , A.birthdate, A.phone , A.address address
         , A.student_num studentNum, B.major_name majorName
         , A.created_at createdAt, A.email,
         sum(C.score) scoreStudent, B.graduation_score graduationScore
-        , A.grade grade, C.isemester isemester, B.ilecture ilecture
+        , A.grade grade, C.isemester isemester, D.ilecture ilecture
         , A.student_num studentNum, C.avg_score avgScore, avg(C.rating) rating
         FROM student A
         INNER JOIN major B
         ON A.imajor = B.imajor
         INNER JOIN student_semester_score C
         ON A.istudent = C.istudent
-        WHERE A.istudent = #{istudent};
+        INNER JOIN lecture_student D
+        ON A.istudent = D.istudent
+        WHERE A.istudent = #{istudent}
     </select>
 
     <select id="countGradeFindStudent">
@@ -109,5 +111,9 @@
             </if>
         </where>
         LIMIT #{staIdx}, 7
+    </select>
+    <select id="selScoreLecture">
+        SELECT total_score totalScore
+        from lecture_student
     </select>
 </mapper>

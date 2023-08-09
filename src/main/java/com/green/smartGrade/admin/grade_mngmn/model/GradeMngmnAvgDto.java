@@ -9,5 +9,7 @@ public class GradeMngmnAvgDto {
     private int staIdx;
     private int semester;
     private int grade;
+    private int totalScore;
+    private String rating;
 
 }

@@ -11,6 +11,7 @@ public class GradeMngmnDetailVo {
     private String gender;
     private LocalDate birthDate;
     private String phone;
+    private String address;
     private String studentNum;
     private String majorName;
     private LocalDate createdAt;
