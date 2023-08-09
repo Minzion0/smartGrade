@@ -21,15 +21,25 @@ public class GradeMngmnService {
 
     public GradeMngmnDetailAvgVo selGradeFindStudentVo(GradeMngmnAvgDto dto, int page) {
         int maxPage = MAPPER.countGradeFindStudent();
+
         PagingUtils utils = new PagingUtils(page, maxPage);
 
         if (dto.getStudentNum() != null) {
             dto.setStudentNum(dto.getStudentNum().replaceAll(" ", ""));
         }
-
         GradeMngmnAvgVo avgVo = MAPPER.GradeMngmnAvg(dto);
         List<GradeMngmnVo> student = MAPPER.selGradeFindStudent(dto);
 
+        int point;
+        double score;
+        String rating;
+        for (GradeMngmnVo a : student) {
+            point = a.getTotalScore();
+            GradeUtils utils2 = new GradeUtils(point);
+            score = utils2.totalScore();
+            rating = utils2.totalRating(score);
+            a.setRating(rating);
+        }
 
         return GradeMngmnDetailAvgVo.builder()
                 .voList(student)

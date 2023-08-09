@@ -19,15 +19,24 @@ public class GradeMngmnController {
     @GetMapping
     @Operation(summary = "이름 학번으로 검색 ", description = "" +
             "page: 페이지번호\n" +
-            "\nistudent : 학생pk\n" +
-            "\nstudenNum : 학번\n" +
-            "\nname : 이름\n")
+            "\ngrade : 학년\n" +
+            "\nsemester : 학기\n" +
+            "\nlectureName : 과목이름\n" +
+            "\nprofessorName : 교수이름\n" +
+            "\nlectureScore : 과목학점\n" +
+            "\ntotalScore : 과목 총점\n" +
+            "\nrating : 과목 등급\n" +
+            "\navgScore : 학기 평균점수\n" +
+            "\navgRating : 학기 평점")
     public GradeMngmnDetailAvgVo getGradeFindStudent(@RequestParam(defaultValue = ("1")) int page
-            , @RequestParam(required = false, defaultValue = "0") int semester, @RequestParam(required = false, defaultValue = "0") int grade, @RequestParam String studentNum) {
+            , @RequestParam(required = false, defaultValue = "0") int semester
+            , @RequestParam(required = false, defaultValue = "0") int grade
+            , @RequestParam String studentNum) {
         GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
         dto.setGrade(grade);
         dto.setSemester(semester);
         dto.setStudentNum(studentNum);
+
 
         return SERVICE.selGradeFindStudentVo(dto, page);
     }
