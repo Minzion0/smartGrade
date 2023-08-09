@@ -25,5 +25,5 @@ public interface StudentMapper {
 
     int updPassword (StudentUpdPasswordDto dto);
 
-
+    StudentSelCurrentPasswordVo selCurrentStudentPassword (Long istudent, String role);
 }
