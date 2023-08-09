@@ -134,12 +134,6 @@
         WHERE iprofessor = #{iprofessor} AND role = #{role}
     </update>
 
-    <update id="delpicByprofessor">
-        UPDATE professor
-        SET pic = #{pic}
-        WHERE iprofessor = #{iprofessor}
-    </update>
-
 
     <select id="picFilePathByProfessor">
         SELECT pic
