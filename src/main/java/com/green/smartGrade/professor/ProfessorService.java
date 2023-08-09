@@ -137,10 +137,39 @@ public class ProfessorService {
         return mapper.updPassword(dto);
     }
 
-    public int delpicByprofessor(ProfessorDelPic pic) {
-        if ("string".equals(pic.getPic())) {
-           pic.setPic(null);
+
+
+    public void deleteUploadedFile(Long iprofessor) {
+        // 데이터베이스에서 파일 경로 조회
+
+
+        String filePath = mapper.picFilePathByProfessor(iprofessor);
+        String centerPath = String.format("professor/%d", iprofessor);
+        String dicPath = String.format("%s/%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath,filePath);
+
+
+
+        if (dicPath != null) {
+            File fileToDelete = new File(dicPath);
+            if (fileToDelete.exists()) {
+                if (fileToDelete.delete()) {
+                    // 파일 삭제 성공
+                    mapper.updateFilePathNullByProfessor(iprofessor);
+                } else {
+                    // 파일 삭제 실패
+                    throw new RuntimeException("파일 삭제 실패");
+                }
+            } else {
+                // 파일이 존재하지 않음
+                throw new RuntimeException("파일이 존재하지 않음: " + filePath);
+            }
+        } else {
+            // 파일 경로가 없음
+            throw new RuntimeException("파일 경로가 없음");
         }
-        return mapper.delpicByprofessor(pic);
     }
+
+
+
+
 }
