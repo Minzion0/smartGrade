@@ -37,7 +37,7 @@ public class AdminProfessorService {
                 .build();
         String msg = utils.getMsg();
         if (msg != null) {
-            String format = String.format("%s 오류가 있습니다", msg);
+            String format = String.format("%s 의 입력 오류가 있습니다", msg);
             res.setMsg(format);
             return res;
         }

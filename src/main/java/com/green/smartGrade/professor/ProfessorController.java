@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -75,9 +76,17 @@ public class ProfessorController {
         return ResponseEntity.ok().body(service.updPassword(dto, param));
     }
 
-    @DeleteMapping
-    @Operation(summary = "사진삭제", description = "pic : 사진 업데이트로 null 값으로 바꿈<br>" + "iprofessor : 교수pk")
-    public int delPicProfessor(@RequestBody ProfessorDelPic pic) {
-        return service.delpicByprofessor(pic);
+
+
+
+    @DeleteMapping("/{iprofessor}")
+    @Operation(summary = "교수 사진 삭제")
+    public ResponseEntity<String> deleteFile(@PathVariable Long iprofessor) {
+        try {
+            service.deleteUploadedFile(iprofessor);
+            return ResponseEntity.ok("File deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting file: " + e.getMessage());
+        }
     }
 }
