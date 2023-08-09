@@ -8,13 +8,16 @@ import lombok.RequiredArgsConstructor;
 @Getter
 
 public class AdminException extends RuntimeException {
-    private final ErrorCode errorCode;
-    private final String  msg;
-    private final String path;
+    private  ErrorCode errorCode;
+    private  String  msg;
 
-    public AdminException(ErrorCode errorCode, String msg, String path) {
-        this.errorCode = errorCode;
+
+    public AdminException(String msg){
+        this.msg=msg;
+    }
+    public AdminException( String msg, String path) {
+        this.errorCode = CommonErrorCode.ADMIN_PROFESSOR_ERROR;
         this.msg = msg;
-        this.path = path;
+
     }
 }

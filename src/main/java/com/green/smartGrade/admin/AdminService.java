@@ -3,6 +3,7 @@ package com.green.smartGrade.admin;
 
 import com.green.smartGrade.admin.model.*;
 import com.green.smartGrade.admin.student.model.AdminGraduationStudentVo;
+import com.green.smartGrade.config.exception.AdminException;
 import com.green.smartGrade.utils.CommonUtils;
 
 import com.green.smartGrade.utils.GradeUtils;
@@ -55,9 +56,9 @@ public class AdminService {
                return new AdminUpdLectureRes(dto);
            }
        }catch (Exception e){
-           return null;
+           throw new AdminException("수정오류");
        }
-        return null;
+       throw  new AdminException("수정 오류");
     }
 
     public AdminLectureStudentResm findlectureStudent(Long ilecture ){
@@ -77,7 +78,7 @@ public class AdminService {
         return resm;
     }
 
-    public AdminInsSemesterRes semesterIns(AdminInsSemesterParam param){
+    public AdminInsSemesterRes semesterIns(AdminInsSemesterParam param) throws AdminException {
         AdminInsSemesterDto dto = new AdminInsSemesterDto(param);
         String year = dto.getYear();
         Pattern pattern = Pattern.compile(year);
@@ -113,7 +114,7 @@ public class AdminService {
         }
 
         res.setMsg("학기와 같은 년도가 아님");
-        return res;
+        throw new AdminException(res.getMsg());
     }
 
     public List<AdminGetSemesterVo> getSemester(String year){

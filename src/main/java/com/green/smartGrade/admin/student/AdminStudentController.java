@@ -23,11 +23,17 @@ public class AdminStudentController {
 
     @PostMapping("/students")
     @Operation(summary = "학생등록")
-    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws Exception {
+    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws AdminException {
         AdminIInsStudentRes res = SERVICE.insStudent(param);
         Long istudent = res.getIstudent();
         if (istudent==null){
-            return ResponseEntity.status(400).body(res);
+            //return ResponseEntity.status(400).body(res);
+            StackTraceElement element = Thread.currentThread().getStackTrace()[1];
+            String methodName = element.getMethodName();
+            String className = element.getClassName().substring(element.getClassName().lastIndexOf(".")+1);
+
+            String path = String.format("class :%s / method : %s ", className, methodName);
+            throw new AdminException(res.getMsg(),path);
         }
         return ResponseEntity.ok().body(res);
     }
@@ -53,14 +59,5 @@ public class AdminStudentController {
         return SERVICE.studentDet(istudent);
     }
 
-    @ExceptionHandler(Exception.class)
-    public AdminException handlerAdminStudent(Exception e){
-        StackTraceElement element = Thread.currentThread().getStackTrace()[1];
-        String methodName = element.getMethodName();
-        String className = element.getClassName().substring(element.getClassName().lastIndexOf(".")+1);
 
-        String path = String.format("class :%s  ", className);
-        return new AdminException(CommonErrorCode.ADMIN_PROFESSOR_ERROR,e.getMessage(),path);
-
-    }
 }

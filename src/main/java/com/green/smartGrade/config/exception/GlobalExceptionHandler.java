@@ -15,15 +15,10 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    // RuntimeException 처리
-    @ExceptionHandler(RestApiException.class)
-    public ResponseEntity<Object> handleCustomException(RestApiException e) {
-        return handleExceptionInternal(e.getErrorCode());
-    }
 
     @ExceptionHandler(AdminException.class)
     public ResponseEntity<Object> handleAdminExcoption(AdminException e){
-        return handleAdminExceptionSet(e.getErrorCode(), e.getMsg(),e.getPath());
+        return handleAdminExceptionSet(CommonErrorCode.ADMIN_EXCEPTION, e.getMsg());
     }
 
 
@@ -31,14 +26,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException e) {
         log.warn("handleIllegalArgument", e);
-        return handleExceptionInternal(CommonErrorCode.INVALID_PARAMETER, e.getMessage());
+        return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION, e.getMessage());
     }
 
     // 대부분의 에러 처리
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAllException(Exception ex) {
         log.warn("handleAllException", ex);
-        return handleExceptionInternal(CommonErrorCode.INTERNAL_SERVER_ERROR,ex.getMessage());
+        return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION,CommonErrorCode.FIX_EXCEPTION.getMessage());
     }
 
     // RuntimeException과 대부분의 에러 처리 메세지를 보내기 위한 메소드
@@ -47,8 +42,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(makeErrorResponse(errorCode));
     }
 
-    private ResponseEntity<Object> handleAdminExceptionSet(ErrorCode errorCode,String msg,String path){
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeErrorResponse(errorCode,msg,path));
+    private ResponseEntity<Object> handleAdminExceptionSet(ErrorCode errorCode,String msg){
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeErrorResponse(errorCode,msg));
     }
 
     // 코드 가독성을 위해 에러 처리 메세지를 만드는 메소드 분리
@@ -72,9 +67,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // 코드 가독성을 위해 에러 처리 메세지를 만드는 메소드 분리
     private MyErrorResponse makeErrorResponse(ErrorCode errorCode, String message,String path) {
         return MyErrorResponse.builder()
-                .code(errorCode.name())
+                .code(errorCode.getMessage())
                 .message(message)
-                .path(path)
+
                 .build();
     }
 

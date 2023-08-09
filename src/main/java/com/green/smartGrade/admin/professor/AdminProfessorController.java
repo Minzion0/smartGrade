@@ -31,7 +31,7 @@ public class AdminProfessorController {
             String path = String.format("class :%s / method : %s ", className, methodName);
 
            // throw new RuntimeException("오류오류");
-             throw new AdminException(CommonErrorCode.ADMIN_PROFESSOR_ERROR,res.getMsg(),path);
+             throw new AdminException(res.getMsg(),path);
         }
 
         return ResponseEntity.ok().body(res);

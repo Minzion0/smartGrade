@@ -23,7 +23,7 @@ public class AdminStudentService {
     private final AdminStudentMapper MAPPER;
     private final PasswordEncoder PW_ENCODER;
 
-    public AdminIInsStudentRes insStudent(AdminInsStudentParam param) throws Exception {
+    public AdminIInsStudentRes insStudent(AdminInsStudentParam param) throws AdminException {
         String year = String.valueOf(LocalDate.now().getYear()).substring(2);
         String format = String.format("%s%02d", year, param.getImajor());
         AdminInsStudentDto dto = new AdminInsStudentDto(param);
@@ -38,10 +38,9 @@ public class AdminStudentService {
         CheckUtils utils = CheckUtils.builder().nm(dto.getNm()).phoneNum(dto.getPhone()).gender(dto.getGender()).build();
         String msg = utils.getMsg();
         if (msg != null) {
-
             String msgs = String.format("%s 오류가 있습니다", msg);
             res.setMsg(msgs);
-            throw new Exception(res.getMsg());
+            throw new AdminException(res.getMsg());
 
         }
 

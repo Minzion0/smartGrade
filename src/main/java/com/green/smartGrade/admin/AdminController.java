@@ -2,6 +2,10 @@ package com.green.smartGrade.admin;
 
 
 import com.green.smartGrade.admin.model.*;
+import com.green.smartGrade.config.exception.AdminException;
+import com.green.smartGrade.config.exception.CommonErrorCode;
+import com.green.smartGrade.config.exception.ErrorCode;
+import com.green.smartGrade.config.exception.MyErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +30,7 @@ public class AdminController {
 
     @PostMapping("/semester")
     @Operation(summary = "학기 등록", description = "semester = 학기 1~2만 ")
-    public AdminInsSemesterRes semesterIns(@RequestBody AdminInsSemesterParam param){
+    public AdminInsSemesterRes semesterIns(@RequestBody AdminInsSemesterParam param) throws AdminException {
         return SERVICE.semesterIns(param);
     }
 
@@ -80,7 +85,13 @@ public class AdminController {
     }
 
 
-
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<?> adminException(ErrorCode e){
+//        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
+//        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
+//
+//        return ResponseEntity.status(400).body(builder);
+//    }
 
 
 
