@@ -137,12 +137,7 @@ public class ProfessorService {
         return mapper.updPassword(dto);
     }
 
-    public int delpicByprofessor(ProfessorDelPic pic) {
-        if ("string".equals(pic.getPic())) {
-           pic.setPic(null);
-        }
-        return mapper.delpicByprofessor(pic);
-    }
+
 
     public void deleteUploadedFile(Long iprofessor) {
         // 데이터베이스에서 파일 경로 조회
