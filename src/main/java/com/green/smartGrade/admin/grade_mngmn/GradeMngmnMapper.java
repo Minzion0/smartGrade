@@ -12,9 +12,7 @@ public interface GradeMngmnMapper {
 
     List<GradeMngmnVo> selGradeFindStudent(GradeMngmnAvgDto dto);
 
-    GradeMngmnAvgVo GradeMngmnAvg1(GradeMngmnAvgDto dto);
-
-    GradeMngmnAvgVo GradeMngmnAvg2(GradeMngmnAvgDto dto);
+    List<GradeMngmnAvgVo> GradeMngmnAvg(GradeMngmnAvgDto dto);
 
     GradeMngmnDetailAvgVo selGradeFindStudentVo(GradeMngmnAvgDto dto);
 
