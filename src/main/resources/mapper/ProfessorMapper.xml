@@ -11,7 +11,7 @@
 
 
     <select id="selProfessor">
-    select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
+        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
         from professor
         WHERE iprofessor = #{iprofessor}
         ORDER BY iprofessor DESC
@@ -28,14 +28,13 @@
     <update id="upProfessor">
         update professor
         set
-         phone = #{phone}
+        phone = #{phone}
         ,email = #{email}
         ,address = #{address}
         ,updated_at = current_timestamp
         ,pic = #{pic}
         where iprofessor = #{iprofessor}
     </update>
-
 
 
     <update id="upPicProfessor">
@@ -110,9 +109,9 @@
 
         </where>
     </select>
-    
+
     <select id="selProfessorMngnm">
-        SELECT A.istudent ,E.imajor , F.major_name ,B.iprofessor  , E.student_num,E.nm  ,C.lecture_name , E.gender
+        SELECT A.istudent ,E.imajor , F.major_name ,B.iprofessor , E.student_num,E.nm ,C.lecture_name , E.gender
         ,E.phone
         ,E.created_at,E.finished_yn , D.rating
         FROM lecture_student A
@@ -142,6 +141,17 @@
     </update>
 
 
+    <select id="picFilePathByProfessor">
+        SELECT pic
+        FROM professor
+        WHERE iprofessor = #{professorId}
+    </select>
+
+    <update id="updateFilePathNullByProfessor">
+        UPDATE professor
+        SET pic = NULL
+        WHERE iprofessor = #{professorId}
+    </update>
 
 
 </mapper>

@@ -34,7 +34,7 @@ springdoc:
 
 
 file:
-  dir: \home\smart_grade
+  dir: /home/smart_grade
 
 ---
 
