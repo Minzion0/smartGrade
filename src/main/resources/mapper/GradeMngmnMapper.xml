@@ -62,9 +62,8 @@
     </select>
 
     <select id="GradeMngmnAvg">
-        SELECT A.grade grade ,C.isemester isemester
-        , B.ilecture ilecture, A.student_num studentNum
-        , C.avg_score avgScore, avg(C.rating) rating
+        SELECT A.grade grade ,D.semester semester
+        , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
         FROM student A
         INNER JOIN lecture_student B
         ON A.istudent = B.istudent
@@ -112,8 +111,5 @@
         </where>
         LIMIT #{staIdx}, 7
     </select>
-    <select id="selScoreLecture">
-        SELECT total_score totalScore
-        from lecture_student
-    </select>
+
 </mapper>

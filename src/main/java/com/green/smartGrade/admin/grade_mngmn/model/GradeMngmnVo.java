@@ -11,6 +11,6 @@ public class GradeMngmnVo {
     private String lectureName;
     private String professorName;
     private int lectureScore;
-    private int score;
+    private int totalScore;
     private String rating;
 }
