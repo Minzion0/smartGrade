@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -69,7 +70,13 @@ public class StudentController {
     @Operation(summary = "학생 프로필 수정",description = "studentNum : 학번<br>"+"phone : 폰번호<br>"+"email : 이메일<br>"+"address : 주소<br>"
     +"updatedAt : 수정일자 <br>" + "pic : 사진")
     public StudentUpRes putStudentProfile(@RequestPart(required = false) MultipartFile pic
-                , @RequestPart StudentUpParam param) {
+                ,@AuthenticationPrincipal MyUserDetails details
+            ,@RequestPart(required = false) StudentUpdDto dto) {
+        StudentUpParam param = new StudentUpParam();
+        param.setPhone(dto.getPhone());
+        param.setEmail(dto.getEmail());
+        param.setAddress(dto.getAddress());
+        param.setIstudent(details.getIuser());
         return service.upStudent(pic,param);
     }
 
@@ -87,9 +94,14 @@ public class StudentController {
     }
 
     @DeleteMapping
-    @Operation(summary = "사진 삭제", description = "pic : 사진만 삭제가 안되서 null값으로 변경<br>" + "istudent : 학생pk")
-    public int delPic(@RequestBody StudentDelPic pic) {
-        return service.delPicByIstudent(pic);
+    @Operation(summary = "학생 사진 삭제")
+    public ResponseEntity<String> deleteFile(@AuthenticationPrincipal MyUserDetails details) {
+        try {
+            service.deleteUploadedFile(details.getIuser());
+            return ResponseEntity.ok("File deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting file: " + e.getMessage());
+        }
     }
 
 }

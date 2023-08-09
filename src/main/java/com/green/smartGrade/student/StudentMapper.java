@@ -25,7 +25,9 @@ public interface StudentMapper {
 
     int updPassword (StudentUpdPasswordDto dto);
 
-    int delPicByIstudent(StudentDelPic dto);
     StudentSelCurrentPasswordVo selPasswordCurrent (StudentSelCurrentPasswordDto dto);
 
+    String picFilePathByStudent(Long studentNum);
+
+    void updateFilePathNullByStudent(Long studentNum);
 }

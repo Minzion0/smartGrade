@@ -24,9 +24,9 @@ public class ProfessorController {
 
     @GetMapping
     @Operation(summary = "교수 프로필 보기")
-    public professorSelRes getProfessor() {
+    public professorSelRes getProfessor(@AuthenticationPrincipal MyUserDetails details) {
 
-        return service.selProfessor();
+        return service.selProfessor(details.getIuser());
     }
 
 
@@ -80,11 +80,11 @@ public class ProfessorController {
 
 
 
-    @DeleteMapping("/{iprofessor}")
+    @DeleteMapping
     @Operation(summary = "교수 사진 삭제")
-    public ResponseEntity<String> deleteFile(@PathVariable Long iprofessor) {
+    public ResponseEntity<String> deleteFile(@AuthenticationPrincipal MyUserDetails details) {
         try {
-            service.deleteUploadedFile(iprofessor);
+            service.deleteUploadedFile(details.getIuser());
             return ResponseEntity.ok("File deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting file: " + e.getMessage());

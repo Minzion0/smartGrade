@@ -70,14 +70,25 @@
         LIMIT #{startIdx}, #{row}
     </select>
     <update id="upStudent">
+
         update student
         set
-         phone = #{phone}
-        ,email = #{email}
-        ,address = #{address}
-        ,updated_at = current_timestamp
-        ,pic = #{pic}
-        where student_num = #{studentNum}
+
+        <if test="pic != null">
+            pic = #{pic},
+        </if>
+        <if test="phone != null">
+            phone = #{phone},
+        </if>
+        <if test="email != null">
+            email = #{email},
+        </if>
+        <if test="address != null">
+            address = #{address},
+        </if>
+
+        updated_at = current_timestamp
+        where istudent = #{istudent}
     </update>
 
     <update id="updPassword">
@@ -86,18 +97,23 @@
         WHERE istudent = #{istudent} AND role = #{role}
     </update>
 
-    <update id="delPicByIstudent">
-        UPDATE student
-        SET pic = #{pic}
-        WHERE istudent = #{istudent}
-    </update>
-
     <select id="selPasswordCurrent">
         SELECT istudent, role, student_num id,
         student_password currentStudentPassword
         FROM student
-        WHERE istudent = #{istudent} AND role = #{role};
+        WHERE istudent = #{istudent} AND role = #{role}
     </select>
 
+    <select id="picFilePathByStudent">
+        SELECT pic
+        FROM student
+        WHERE student_num = #{studentNum}
+    </select>
+
+    <update id="updateFilePathNullByStudent">
+        UPDATE student
+        SET pic = NULL
+        WHERE student_num = #{studentNum}
+    </update>
 
 </mapper>

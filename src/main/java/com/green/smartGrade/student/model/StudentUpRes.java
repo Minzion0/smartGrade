@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class StudentUpRes {
-    private Long studentNum;
+    private Long istudent;
     private String phone;
     private String email;
     private String address;
@@ -17,7 +17,7 @@ public class StudentUpRes {
     private String pic;
 
     public StudentUpRes(StudentUpdto dto) {
-        this.studentNum = dto.getStudentNum();
+        this.istudent = dto.getIstudent();
         this.phone = dto.getPhone();
         this.email = dto.getEmail();
         this.address = dto.getAddress();
