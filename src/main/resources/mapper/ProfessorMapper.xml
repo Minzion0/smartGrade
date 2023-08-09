@@ -147,5 +147,11 @@
         WHERE iprofessor = #{professorId}
     </update>
 
+    <select id="selPasswordCurrent">
+        SELECT iprofessor id, role,
+        professor_password currentStudentPassword
+        FROM professor
+        WHERE iprofessor = #{iprofessor} AND role = #{role}
+    </select>
 
 </mapper>
