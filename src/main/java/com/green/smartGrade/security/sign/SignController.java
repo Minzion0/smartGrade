@@ -113,13 +113,9 @@ public class SignController {
     @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
             "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
-    public ResponseEntity<?> otpValid(@AuthenticationPrincipal MyUserDetails details,HttpServletRequest req,@RequestParam String otpNum) throws Exception {
-        Long iuser = details.getIuser();
-        String result = String.valueOf(iuser);
-        System.out.println("result = " + result);
-        String role = details.getRoles().get(0);
-        System.out.println("role = " + role);
-        SignInResultDto otpe = SERVICE.otpValid(req, otpNum, result, role);
+    public ResponseEntity<?> otpValid(HttpServletRequest req,@RequestParam String otpNum,String uid,String role) throws Exception {
+
+        SignInResultDto otpe = SERVICE.otpValid(req, otpNum, uid, role);
 
 
         return ResponseEntity.ok().body(otpe);

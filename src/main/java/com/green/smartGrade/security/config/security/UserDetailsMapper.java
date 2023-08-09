@@ -26,4 +26,5 @@ public interface UserDetailsMapper {
     int updForgetPassword (UpdForgetPasswordDto dto);
     int updForgetPasswordTrue (String uid, String role);
     SignSelPasswordTrueVo selTruePassword (SignSelPasswordTrueDto dto);
+    String getStudentNum(String studentNum);
 }
