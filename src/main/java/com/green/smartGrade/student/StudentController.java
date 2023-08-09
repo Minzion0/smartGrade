@@ -74,7 +74,8 @@ public class StudentController {
     }
 
     @PutMapping("/changPassword")
-    @Operation(summary = "초기 비밀번호 변경")
+    @Operation(summary = "비밀번호 변경",
+    description = "studentPassword : 바꿀 비밀번호 <br>" + "currentStudentPassword : 현재 비밀번호")
     public ResponseEntity<?> updPassword(@AuthenticationPrincipal MyUserDetails details, @RequestBody StudentUpdPasswordParam param ) {
         StudentUpdPasswordDto dto = new StudentUpdPasswordDto();
         Long  iuser = details.getIuser();
