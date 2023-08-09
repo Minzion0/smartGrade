@@ -1,6 +1,7 @@
 package com.green.smartGrade.admin.grade_mngmn;
 
 import com.green.smartGrade.admin.grade_mngmn.model.*;
+import com.green.smartGrade.utils.GradeUtils;
 import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ public class GradeMngmnService {
 
         GradeMngmnAvgVo avgVo = MAPPER.GradeMngmnAvg(dto);
         List<GradeMngmnVo> student = MAPPER.selGradeFindStudent(dto);
+
 
         return GradeMngmnDetailAvgVo.builder()
                 .voList(student)

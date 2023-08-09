@@ -50,7 +50,7 @@ public class ProfessorGradeMngmnContoller {
         return service.selStudentScore(dto);
     }
     @PatchMapping
-    @Operation(summary = "총점 + 평점 수정하기 ( 수정 필요 )")
+    @Operation(summary = "총점 + 평점 수정하기")
     public ProfessorGradeUpdRes updAvgScore(@RequestParam Long istudent, @RequestParam int semester) {
         ProfessorGradeUpdParam p = new ProfessorGradeUpdParam();
         p.setIstudent(istudent);

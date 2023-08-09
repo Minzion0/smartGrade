@@ -12,4 +12,5 @@ public class GradeMngmnDetailAvgVo {
     private PagingUtils page;
     private List<GradeMngmnVo> voList;
     private GradeMngmnAvgVo avgVo;
+
 }

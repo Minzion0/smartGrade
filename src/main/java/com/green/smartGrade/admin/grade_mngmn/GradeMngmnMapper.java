@@ -18,6 +18,8 @@ public interface GradeMngmnMapper {
 
     int countGradeFindStudent();
 
+    int selScoreLecture();
+
 
 
 }
