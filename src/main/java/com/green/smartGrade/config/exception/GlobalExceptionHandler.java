@@ -21,6 +21,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e.getErrorCode());
     }
 
+    @ExceptionHandler(AdminException.class)
+    public ResponseEntity<Object> handleAdminExcoption(AdminException e){
+        return handleAdminExceptionSet(e.getErrorCode(), e.getMsg(),e.getPath());
+    }
+
+
     // IllegalArgumentException 에러 처리
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException e) {
@@ -32,13 +38,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAllException(Exception ex) {
         log.warn("handleAllException", ex);
-        return handleExceptionInternal(CommonErrorCode.INTERNAL_SERVER_ERROR);
+        return handleExceptionInternal(CommonErrorCode.INTERNAL_SERVER_ERROR,ex.getMessage());
     }
 
     // RuntimeException과 대부분의 에러 처리 메세지를 보내기 위한 메소드
     private ResponseEntity<Object> handleExceptionInternal(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(makeErrorResponse(errorCode));
+    }
+
+    private ResponseEntity<Object> handleAdminExceptionSet(ErrorCode errorCode,String msg,String path){
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeErrorResponse(errorCode,msg,path));
     }
 
     // 코드 가독성을 위해 에러 처리 메세지를 만드는 메소드 분리
@@ -53,12 +63,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(errorCode.getHttpStatus())
                 .body(makeErrorResponse(errorCode, message));
     }
-
-    // 코드 가독성을 위해 에러 처리 메세지를 만드는 메소드 분리
     private MyErrorResponse makeErrorResponse(ErrorCode errorCode, String message) {
         return MyErrorResponse.builder()
                 .code(errorCode.name())
                 .message(message)
+                .build();
+    }
+    // 코드 가독성을 위해 에러 처리 메세지를 만드는 메소드 분리
+    private MyErrorResponse makeErrorResponse(ErrorCode errorCode, String message,String path) {
+        return MyErrorResponse.builder()
+                .code(errorCode.name())
+                .message(message)
+                .path(path)
                 .build();
     }
 

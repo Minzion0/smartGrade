@@ -1,9 +1,14 @@
 package com.green.smartGrade.admin.professor;
 
 import com.green.smartGrade.admin.professor.model.*;
+import com.green.smartGrade.config.exception.AdminException;
+import com.green.smartGrade.config.exception.CommonErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Path;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,9 +21,20 @@ public class AdminProfessorController {
 
     @PostMapping("/professor")
     @Operation(summary = "교수등록")
-    public AdminInsProfessorRes professorEnrollment(@RequestBody AdminInsProfessorParam param) {
-        return SERVICE.insProfessor(param);
+    public ResponseEntity<AdminInsProfessorRes> professorEnrollment(@RequestBody AdminInsProfessorParam param)throws AdminException{
+        AdminInsProfessorRes res = SERVICE.insProfessor(param);
+        if (res.getMsg()!=null){
+            StackTraceElement element = Thread.currentThread().getStackTrace()[1];
+            String methodName = element.getMethodName();
+            String className = element.getClassName().substring(element.getClassName().lastIndexOf(".")+1);
 
+            String path = String.format("class :%s / method : %s ", className, methodName);
+
+           // throw new RuntimeException("오류오류");
+             throw new AdminException(CommonErrorCode.ADMIN_PROFESSOR_ERROR,res.getMsg(),path);
+        }
+
+        return ResponseEntity.ok().body(res);
     }
 
     @GetMapping("/professor")

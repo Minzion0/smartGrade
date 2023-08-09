@@ -1,10 +1,13 @@
 package com.green.smartGrade.admin.student;
 
 import com.green.smartGrade.admin.student.model.*;
+import com.green.smartGrade.config.exception.AdminException;
+import com.green.smartGrade.config.exception.CommonErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ public class AdminStudentController {
 
     @PostMapping("/students")
     @Operation(summary = "학생등록")
-    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws IllegalAccessException {
+    public ResponseEntity<?> studentEnrollment(@RequestBody AdminInsStudentParam param) throws Exception {
         AdminIInsStudentRes res = SERVICE.insStudent(param);
         Long istudent = res.getIstudent();
         if (istudent==null){
@@ -48,5 +51,16 @@ public class AdminStudentController {
     @Operation(summary = "학생 디테일")
     public AdminStudentDetalRes studentDet(@PathVariable Long istudent){
         return SERVICE.studentDet(istudent);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public AdminException handlerAdminStudent(Exception e){
+        StackTraceElement element = Thread.currentThread().getStackTrace()[1];
+        String methodName = element.getMethodName();
+        String className = element.getClassName().substring(element.getClassName().lastIndexOf(".")+1);
+
+        String path = String.format("class :%s  ", className);
+        return new AdminException(CommonErrorCode.ADMIN_PROFESSOR_ERROR,e.getMessage(),path);
+
     }
 }
