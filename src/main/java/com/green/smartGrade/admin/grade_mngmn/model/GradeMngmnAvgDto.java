@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class GradeMngmnAvgDto {
+    private Long istudent;
     private String studentNum;
     private String name;
     private int staIdx;
