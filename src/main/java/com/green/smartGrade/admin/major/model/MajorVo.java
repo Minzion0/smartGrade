@@ -10,4 +10,5 @@ public class MajorVo {
     private String majorName;
     private int graduationScore;
     private int delYn;
+    private String remarks;
 }
