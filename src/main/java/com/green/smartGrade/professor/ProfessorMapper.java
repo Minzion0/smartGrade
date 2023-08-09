@@ -25,5 +25,7 @@ public interface ProfessorMapper {
     String picFilePathByProfessor(Long iprofessor);
     void updateFilePathNullByProfessor(Long iprofessor);
 
+    ProfessorSelCurrentPasswordVo selPasswordCurrent (ProfessorSelCurrentPasswordDto dto);
+
 
 }

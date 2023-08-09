@@ -130,11 +130,20 @@ public class ProfessorService {
                   .build();
     }
 
-    public int updPassword(ProfessorUpdPasswordDto dto, ProfessorUpdPasswordParam param) {
+    public String updPassword(ProfessorUpdPasswordDto dto, ProfessorUpdPasswordParam param) {
+        ProfessorSelCurrentPasswordDto passwordDto = new ProfessorSelCurrentPasswordDto();
+        passwordDto.setRole(dto.getRole());
+        passwordDto.setIprofessor(dto.getIprofessor());
+        ProfessorSelCurrentPasswordVo vo = mapper.selPasswordCurrent(passwordDto);
+
+        if (!PW_ENCODER.matches(param.getCurrentStudentPassword(), vo.getCurrentStudentPassword())){
+            return "비밀번호 변경이 완료되었습니다.";
+        }
         dto.setProfessorPassword(param.getProfessorPassword());
         String npw = PW_ENCODER.encode(dto.getProfessorPassword());
         dto.setProfessorPassword(npw);
-        return mapper.updPassword(dto);
+        mapper.updPassword(dto);
+        return "비밀번호 변경이 완료 되었습니다.";
     }
 
 
