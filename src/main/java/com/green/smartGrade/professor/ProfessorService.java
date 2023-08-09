@@ -117,18 +117,7 @@ public class ProfessorService {
         }
         return null;
     }
-    public professorSelRes selAllProfessor(ProfessorSelDto dto,int page) {
-        int maxPage = mapper.ProfessorCount();
-        PagingUtils utils = new PagingUtils(page,maxPage);
 
-
-        dto.setRow(utils.getROW());
-        dto.setStartIdx(utils.getStaIdx());
-
-        List<ProfessorVo> professorVos = mapper.selAllProfessor(dto);
-
-        return professorSelRes.builder().list(professorVos).page(utils).build();
-    }
 
 
 
