@@ -18,7 +18,7 @@ public class AdminIInsStudentRes {
     private LocalDateTime createdAt;
     private int grade;
     private int delYn;
-    private String msg;
+
 
     public AdminIInsStudentRes() {
     }

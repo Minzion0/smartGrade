@@ -3,6 +3,7 @@ package com.green.smartGrade.security.sign;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.green.smartGrade.config.exception.AdminException;
 import com.green.smartGrade.security.CommonRes;
 import com.green.smartGrade.security.config.RedisService;
 import com.green.smartGrade.security.config.security.JwtTokenProvider;
@@ -72,8 +73,8 @@ public class SignService {
 //             return null;
 //        }
         setSuccessResult(dto);
-        dto=issueToken(ip, user.getUid(),role);
         if (role.equals("ROLE_ADMIN")||user.getSecretKey()==null ){
+            dto=issueToken(ip, user.getUid(),role);
             dto.setSecretKey(false);
 
         }
@@ -169,7 +170,7 @@ public class SignService {
         REDIS_SERVICE.setValuesWithTimeout(accessToken, "logout", expiration);  //남은시간 이후가 되면 삭제가 되도록 함.
     }
 
-    public ResponseEntity<?> otp(String uid, String role) {
+    public ResponseEntity<?> otp(String uid, String role) throws Exception {
         System.out.println("uid = " + uid);
         System.out.println("role = " + role);
 
@@ -181,9 +182,12 @@ public class SignService {
 
         String secretKey = totp.generateSecretKey();//설정할 secretKey를 생성
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
-
+        String email = vo.getEmail();
+        if (email==null){
+            throw new Exception("이메일 등록 필요");
+        }
         String issuer = "GreenUniversity";
-        String account = vo.getEmail();
+        String account = email;
         String barcodeUrl = totp.getGoogleAuthenticatorBarcode(secretKey, account, issuer);
         OtpRes res = OtpRes.builder().barcodeUrl(barcodeUrl).secretKey(secretKey).build();
 
@@ -211,14 +215,16 @@ public class SignService {
         return result;
     }
 
-    public boolean otpValid(HttpServletRequest req,String inputCode, String uid, String role) {
-
+    public SignInResultDto otpValid(HttpServletRequest req,String inputCode, String uid, String role) throws Exception {
+        String ip = req.getRemoteAddr();
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String otpCode = getOtpCode(vo.getSecretKey());
 
         boolean result = otpCode.equals(inputCode);
-
-        return result;
+        if (!result){
+            throw new Exception("유효하지 않은 otp 코드");
+        }
+        return issueToken(ip, uid, role);
     }
 
     private String getOtpCode(String secretKey) {

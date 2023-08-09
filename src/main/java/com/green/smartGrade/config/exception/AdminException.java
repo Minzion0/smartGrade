@@ -1,9 +1,7 @@
 package com.green.smartGrade.config.exception;
 
-import lombok.AllArgsConstructor;
-
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
 
 @Getter
 

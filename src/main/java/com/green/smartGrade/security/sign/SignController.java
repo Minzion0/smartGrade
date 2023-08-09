@@ -99,7 +99,7 @@ public class SignController {
     @Operation(summary = "otp 등록 어플에 등록",description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번" +
             "<br>\"barcodeUrl : qr코드 주소")
-    public ResponseEntity<?> otp(@AuthenticationPrincipal MyUserDetails details) {
+    public ResponseEntity<?> otp(@AuthenticationPrincipal MyUserDetails details) throws Exception {
 
         Long iuser = details.getIuser();
         String result = String.valueOf(iuser);
@@ -113,16 +113,16 @@ public class SignController {
     @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
             "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
-    public ResponseEntity<?> otpValid(@AuthenticationPrincipal MyUserDetails details,HttpServletRequest req,@RequestParam String otpNum) {
+    public ResponseEntity<?> otpValid(@AuthenticationPrincipal MyUserDetails details,HttpServletRequest req,@RequestParam String otpNum) throws Exception {
         Long iuser = details.getIuser();
         String result = String.valueOf(iuser);
         System.out.println("result = " + result);
         String role = details.getRoles().get(0);
         System.out.println("role = " + role);
-        boolean otpe = SERVICE.otpValid(req, otpNum, result, role);
+        SignInResultDto otpe = SERVICE.otpValid(req, otpNum, result, role);
 
 
-       return otpe ? ResponseEntity.ok().body(otpe) : ResponseEntity.status(400).body(otpe);
+        return ResponseEntity.ok().body(otpe);
     }
 
     @PutMapping("/forgetPassword")

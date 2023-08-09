@@ -23,17 +23,6 @@ public class AdminProfessorController {
     @Operation(summary = "교수등록")
     public ResponseEntity<AdminInsProfessorRes> professorEnrollment(@RequestBody AdminInsProfessorParam param)throws AdminException{
         AdminInsProfessorRes res = SERVICE.insProfessor(param);
-        if (res.getMsg()!=null){
-            StackTraceElement element = Thread.currentThread().getStackTrace()[1];
-            String methodName = element.getMethodName();
-            String className = element.getClassName().substring(element.getClassName().lastIndexOf(".")+1);
-
-            String path = String.format("class :%s / method : %s ", className, methodName);
-
-           // throw new RuntimeException("오류오류");
-             throw new AdminException(res.getMsg(),path);
-        }
-
         return ResponseEntity.ok().body(res);
     }
 

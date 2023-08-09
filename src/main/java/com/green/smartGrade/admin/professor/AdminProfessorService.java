@@ -1,6 +1,7 @@
 package com.green.smartGrade.admin.professor;
 
 import com.green.smartGrade.admin.professor.model.*;
+import com.green.smartGrade.config.exception.AdminException;
 import com.green.smartGrade.utils.CheckUtils;
 import com.green.smartGrade.utils.CommonUtils;
 import com.green.smartGrade.utils.PagingUtils;
@@ -38,16 +39,15 @@ public class AdminProfessorService {
         String msg = utils.getMsg();
         if (msg != null) {
             String format = String.format("%s 의 입력 오류가 있습니다", msg);
-            res.setMsg(format);
-            return res;
+            throw new AdminException(format);
+
         }
 
 
         int result = MAPPER.insProfessor(dto);
         log.info("result : {}",result);
         if (result == 0) {
-            res.setMsg("등록오류");
-            return res;
+            throw new AdminException("등록오류");
         }
         res.setRes(dto);
 

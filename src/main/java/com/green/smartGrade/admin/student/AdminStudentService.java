@@ -39,16 +39,16 @@ public class AdminStudentService {
         String msg = utils.getMsg();
         if (msg != null) {
             String msgs = String.format("%s 오류가 있습니다", msg);
-            res.setMsg(msgs);
-            throw new AdminException(res.getMsg());
+
+            throw new AdminException(msgs);
 
         }
 
 
         int result = MAPPER.insStudent(dto);
         if (result == 0) {
-            res.setMsg("등록 오류");
-            return res;
+            throw new AdminException("등록 오류");
+
         }
 
         res = MAPPER.selStudent(dto.getStudentPassword());
