@@ -34,11 +34,10 @@
         from major
     </select>
 
-    <update id="updMajor">
-        INSERT IGNORE INTO major
-        (major_name, remarks)
-        VALUES
-        (#{majorName), #{remakrs})
-        ON DUPLICATE KEY UPDATE remarks = major_name
-    </update>
+    <insert id="updMajor">
+        UPDATE major
+        SET major_name = #{majorName}
+        ,remarks = (SELECT CONCAT('구 ' , major_name) from major WHERE imajor = #{imajor})
+        WHERE imajor = #{imajor}
+    </insert>
 </mapper>

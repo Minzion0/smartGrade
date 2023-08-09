@@ -50,7 +50,6 @@ public class AdminMajorService {
         MajorUpdDto dto = new MajorUpdDto();
         dto.setMajorName(p.getMajorName());
         dto.setImajor(p.getImajor());
-        dto.setRemarks(p.getRemarks());
 
         int result = MAPPER.updMajor(dto);
         if (result == 1) {
