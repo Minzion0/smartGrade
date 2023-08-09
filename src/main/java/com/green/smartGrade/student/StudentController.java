@@ -88,7 +88,7 @@ public class StudentController {
     @DeleteMapping
     @Operation(summary = "사진 삭제", description = "pic : 사진만 삭제가 안되서 null값으로 변경<br>" + "istudent : 학생pk")
     public int delPic(@RequestBody StudentDelPic pic) {
-        return service.delpicByIstudent(pic);
+        return service.delPicByIstudent(pic);
     }
 
 }

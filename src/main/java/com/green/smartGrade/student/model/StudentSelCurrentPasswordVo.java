@@ -1,10 +1,10 @@
 package com.green.smartGrade.student.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
-@Data
+@AllArgsConstructor
+@Getter
 public class StudentSelCurrentPasswordVo {
     private Long istudent;
     private String role;
