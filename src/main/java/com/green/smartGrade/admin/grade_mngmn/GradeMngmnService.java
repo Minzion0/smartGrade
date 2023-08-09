@@ -27,7 +27,8 @@ public class GradeMngmnService {
         if (dto.getStudentNum() != null) {
             dto.setStudentNum(dto.getStudentNum().replaceAll(" ", ""));
         }
-        GradeMngmnAvgVo avgVo = MAPPER.GradeMngmnAvg(dto);
+        GradeMngmnAvgVo avgVo1 = MAPPER.GradeMngmnAvg1(dto);
+        GradeMngmnAvgVo avgVo2 = MAPPER.GradeMngmnAvg2(dto);
         List<GradeMngmnVo> student = MAPPER.selGradeFindStudent(dto);
 
         int point;
@@ -43,7 +44,8 @@ public class GradeMngmnService {
 
         return GradeMngmnDetailAvgVo.builder()
                 .voList(student)
-                .avgVo(avgVo)
+                .avgVo1(avgVo1)
+                .avgVo2(avgVo2)
                 .page(utils)
                 .build();
 

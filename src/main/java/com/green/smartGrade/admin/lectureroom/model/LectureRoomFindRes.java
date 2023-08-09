@@ -10,5 +10,6 @@ import java.util.List;
 @Builder
 public class LectureRoomFindRes {
     private PagingUtils page;
+    private List<LectureRoomListVo> lectureRoomList;
     private List<LectureRoomVo> lectureRoom;
 }

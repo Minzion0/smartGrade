@@ -29,14 +29,11 @@ public class GradeMngmnController {
             "\navgScore : 학기 평균점수\n" +
             "\navgRating : 학기 평점")
     public GradeMngmnDetailAvgVo getGradeFindStudent(@RequestParam(defaultValue = ("1")) int page
-            , @RequestParam(required = false, defaultValue = "0") int semester
             , @RequestParam(required = false, defaultValue = "0") int grade
             , @RequestParam String studentNum) {
         GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
         dto.setGrade(grade);
-        dto.setSemester(semester);
         dto.setStudentNum(studentNum);
-
 
         return SERVICE.selGradeFindStudentVo(dto, page);
     }

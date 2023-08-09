@@ -47,4 +47,9 @@
         SELECT count(*)
         from lecture_room
     </select>
+
+    <select id="lectureRoomList">
+        SELECT building_name buildingName
+        from lecture_room
+    </select>
 </mapper>

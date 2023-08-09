@@ -9,6 +9,7 @@
         D.lecture_name lectureName,
         E.nm professorName, D.score lectureScore,
         F.total_score totalScore,
+        G.istudent istudent, G.nm name, G.student_num studentNum,
         A.grade grade, B.semester semester,
         A.avg_score avgScore, A.rating avgRating
         FROM student_semester_score A
@@ -25,9 +26,6 @@
         INNER JOIN student G
         ON A.istudent = G.istudent
         <where>
-            <if test="semester > 0">
-                and B.semester = #{semester}
-            </if>
         <if test="studentNum != null and studentNum != ''">
             and G.student_num = #{studentNum}
         </if>
@@ -61,8 +59,32 @@
         from student
     </select>
 
-    <select id="GradeMngmnAvg">
-        SELECT A.grade grade ,D.semester semester
+    <select id="GradeMngmnAvg1">
+        SELECT A.istudent istudent, A.nm name, A.student_num studentNum,
+        C.grade grade ,D.semester semester
+        , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
+        FROM student A
+        INNER JOIN lecture_student B
+        ON A.istudent = B.istudent
+        INNER JOIN student_semester_score C
+        ON B.istudent = C.istudent
+        INNER JOIN semester D
+        ON C.isemester = D.isemester
+
+        <where>
+            D.semester = 1
+            <if test="studentNum != null and studentNum != ''">
+                and A.student_num = #{studentNum}
+            </if>
+            <if test="grade != null and grade != ''">
+                and A.grade = #{grade}
+            </if>
+        </where>
+    </select>
+
+    <select id="GradeMngmnAvg2">
+        SELECT A.istudent istudent, A.nm name, A.student_num studentNum,
+        C.grade grade ,D.semester semester
         , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
         FROM student A
         INNER JOIN lecture_student B
@@ -72,9 +94,7 @@
         INNER JOIN semester D
         ON C.isemester = D.isemester
         <where>
-            <if test="semester != null and semester != ''">
-                and D.semester = #{semester}
-            </if>
+            D.semester = 2
             <if test="studentNum != null and studentNum != ''">
                 and A.student_num = #{studentNum}
             </if>
@@ -99,9 +119,6 @@
         INNER JOIN semester D
         ON C.isemester = D.isemester
         <where>
-            <if test="semester != null and semester != ''">
-                and D.semester = #{semester}
-            </if>
             <if test="studentNum != null and studentNum != ''">
                 and A.student_num = #{studentNum}
             </if>
