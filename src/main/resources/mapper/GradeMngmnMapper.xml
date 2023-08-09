@@ -9,7 +9,7 @@
         D.lecture_name lectureName,
         E.nm professorName, D.score lectureScore,
         F.total_score totalScore,
-        G.istudent istudent, G.nm name, G.student_num studentNum,
+        A.istudent istudent, G.nm name, G.student_num studentNum,
         A.grade grade, B.semester semester,
         A.avg_score avgScore, A.rating avgRating
         FROM student_semester_score A
@@ -60,7 +60,7 @@
     </select>
 
     <select id="GradeMngmnAvg1">
-        SELECT A.istudent istudent, A.nm name, A.student_num studentNum,
+        SELECT C.istudent istudent, A.nm name, A.student_num studentNum,
         C.grade grade ,D.semester semester
         , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
         FROM student A
@@ -76,8 +76,8 @@
             <if test="studentNum != null and studentNum != ''">
                 and A.student_num = #{studentNum}
             </if>
-            <if test="grade != null and grade != ''">
-                and A.grade = #{grade}
+            <if test="grade > 0">
+                and C.grade = #{grade}
             </if>
         </where>
     </select>
@@ -98,8 +98,8 @@
             <if test="studentNum != null and studentNum != ''">
                 and A.student_num = #{studentNum}
             </if>
-            <if test="grade != null and grade != ''">
-                and A.grade = #{grade}
+            <if test="grade > 0">
+                and C.grade = #{grade}
             </if>
         </where>
     </select>
@@ -122,7 +122,7 @@
             <if test="studentNum != null and studentNum != ''">
                 and A.student_num = #{studentNum}
             </if>
-            <if test="grade != null and grade != ''">
+            <if test="grade > 0">
                 and A.grade = #{grade}
             </if>
         </where>

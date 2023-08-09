@@ -74,7 +74,8 @@ public class StudentController {
     }
 
     @PutMapping("/changPassword")
-    @Operation(summary = "초기 비밀번호 변경")
+    @Operation(summary = "비밀번호 변경",
+    description = "studentPassword : 바꿀 비밀번호 <br>" + "currentStudentPassword : 현재 비밀번호")
     public ResponseEntity<?> updPassword(@AuthenticationPrincipal MyUserDetails details, @RequestBody StudentUpdPasswordParam param ) {
         StudentUpdPasswordDto dto = new StudentUpdPasswordDto();
         Long  iuser = details.getIuser();
@@ -88,7 +89,7 @@ public class StudentController {
     @DeleteMapping
     @Operation(summary = "사진 삭제", description = "pic : 사진만 삭제가 안되서 null값으로 변경<br>" + "istudent : 학생pk")
     public int delPic(@RequestBody StudentDelPic pic) {
-        return service.delpicByIstudent(pic);
+        return service.delPicByIstudent(pic);
     }
 
 }

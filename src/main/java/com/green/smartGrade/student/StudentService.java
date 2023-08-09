@@ -163,17 +163,26 @@ public class StudentService {
         return null;
 
     }
-    public int updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) {
+    public String updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) {
+        StudentSelCurrentPasswordDto passwordDto = new StudentSelCurrentPasswordDto();
+        passwordDto.setRole(dto.getRole());
+        passwordDto.setIstudent(dto.getIstudent());
+        StudentSelCurrentPasswordVo vo = mapper.selPasswordCurrent(passwordDto);
+
+        if (!PW_ENCODER.matches(param.getCurrentStudentPassword(), vo.getCurrentStudentPassword())){
+            return "비밀번호 변경을 실패했습니다";
+        }
         dto.setStudentPassword(param.getStudentPassword());
         String npw = PW_ENCODER.encode(dto.getStudentPassword());
         dto.setStudentPassword(npw);
-        return mapper.updPassword(dto);
+        mapper.updPassword(dto);
+        return "비밀번호 변경이 완료되었습니다.";
     }
 
-    int delpicByIstudent(StudentDelPic dto) {
+    int delPicByIstudent(StudentDelPic dto) {
         if ("string".equals(dto.getPic())) {
             dto.setPic(null);
         }
-        return mapper.delpicByIstudent(dto);
+        return mapper.delPicByIstudent(dto);
     }
 }
