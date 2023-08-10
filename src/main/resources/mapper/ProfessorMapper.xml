@@ -39,12 +39,28 @@
 
     <update id="upProfessor">
         update professor
-        set
-        phone = #{phone}
-        ,email = #{email}
-        ,address = #{address}
-        ,updated_at = current_timestamp
-        ,pic = #{pic}
+        <set>
+        <if test="pic!= null">
+             phone = #{phone}
+            , email = #{email}
+            , address = #{address}
+            , pic = #{pic}
+            , updated_at = current_timestamp
+        </if>
+        <if test="pic==null">
+            phone = #{phone}
+            , email = #{email}
+            , address = #{address}
+            , updated_at = current_timestamp
+        </if>
+        </set>
+<!--        phone = #{phone}-->
+<!--        ,email = #{email}-->
+<!--        ,address = #{address}-->
+<!--        ,updated_at = current_timestamp-->
+<!--        <if test="pic != null">-->
+<!--            ,pic = #{pic}-->
+<!--        </if>-->
         where iprofessor = #{iprofessor}
     </update>
 
