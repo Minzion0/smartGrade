@@ -54,13 +54,6 @@
             , updated_at = current_timestamp
         </if>
         </set>
-<!--        phone = #{phone}-->
-<!--        ,email = #{email}-->
-<!--        ,address = #{address}-->
-<!--        ,updated_at = current_timestamp-->
-<!--        <if test="pic != null">-->
-<!--            ,pic = #{pic}-->
-<!--        </if>-->
         where iprofessor = #{iprofessor}
     </update>
 
