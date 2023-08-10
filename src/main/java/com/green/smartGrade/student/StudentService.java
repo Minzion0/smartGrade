@@ -1,13 +1,8 @@
 package com.green.smartGrade.student;
 
-import com.green.smartGrade.admin.board.model.BoardUpdRes;
-import com.green.smartGrade.lecture_applly.model.LectureApllyDto;
-import com.green.smartGrade.professor.model.ProfessorUpdPasswordDto;
-import com.green.smartGrade.professor.model.SelProfessorRes;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.FileUtils;
 import com.green.smartGrade.utils.GradeUtils;
-import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,21 +76,18 @@ public class StudentService {
 
         dto.setIstudent(dto.getIstudent());
 
-        List<StudentSelProfileVo> list = mapper.selStudentProfile(dto);
+        List<StudentSelProfile> list = mapper.selStudentProfile(dto);
 
         return StudentSelProfileRes.builder().list(list).build();
     }
 
     public StudentSelPointRes selStudentRemainingPoint(StudentSelPointDto dto) {
-        int maxpage = mapper.StudentCount();
-        PagingUtils utils = new PagingUtils(dto.getPage(), maxpage);
-        dto.setStartIdx(utils.getStaIdx());
-        dto.setRow(utils.getROW());
+
         dto.setStudentNum(dto.getStudentNum());
         dto.setIstudent(dto.getIstudent());
         List<StudentSelPointVo> list = mapper.selStudentRemainingPoint(dto);
 
-        return StudentSelPointRes.builder().list(list).page(utils).build();
+        return StudentSelPointRes.builder().list(list).build();
     }
 
     public StudentUpRes upStudent(MultipartFile pic, StudentUpParam param) {
