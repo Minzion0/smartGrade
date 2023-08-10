@@ -19,7 +19,7 @@
                 and major_name = #{majorName}
             </if>
         </where>
-        LIMIT #{staIdx},10
+        LIMIT #{staIdx}, 10
     </select>
 
     <update id="delMajor">
@@ -37,7 +37,8 @@
     <insert id="updMajor">
         UPDATE major
         SET major_name = #{majorName}
-        ,remarks = (SELECT CONCAT('구 ' , major_name) from major WHERE imajor = #{imajor})
+        ,remarks = (SELECT CONCAT('구 ' , major_name)
+                    from major WHERE imajor = #{imajor})
         WHERE imajor = #{imajor}
     </insert>
 </mapper>

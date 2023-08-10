@@ -53,7 +53,7 @@ public class GradeMngmnController {
             "평점 rating\n" +
             "\nnum : 학번\n" +
             "\nname : 이름")
-    public GradeMngmnDetailVo getGradeFindStudentDetail(@PathVariable int istudent) {
+    public GradeMngmnDetailVo getGradeFindStudentDetail(@PathVariable Long istudent) {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
         dto.setIstudent(istudent);
         return SERVICE.selGradeFindStudentDetail(dto);
