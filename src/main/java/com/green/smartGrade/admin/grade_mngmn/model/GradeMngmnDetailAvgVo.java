@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 public class GradeMngmnDetailAvgVo {
     private PagingUtils page;
+    private GradeMngmnStudentVo student;
     private List<GradeMngmnVo> voList;
     private List<GradeMngmnAvgVo> avgVo;
 
