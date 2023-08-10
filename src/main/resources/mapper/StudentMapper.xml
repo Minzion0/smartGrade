@@ -41,6 +41,7 @@
         SELECT A.istudent,D.student_num studentNum
         ,D.imajor,D.grade,D.nm,
         D.gender,D.pic,D.birthdate,D.phone,D.email,D.address,D.finished_yn finishedYn,sum(C.score) score
+        ,D.created_at createdAt
         FROM lecture_student A
         INNER JOIN lecture_applly B
         ON A.ilecture = B.ilecture
@@ -48,8 +49,27 @@
         ON B.ilecture_name = C.ilecture_name
         INNER JOIN student D
         ON A.istudent = D.istudent
-        WHERE D.istudent = #{istudent} AND A.finished_yn = 1
+        WHERE D.istudent = #{istudent} AND D.finished_yn = 1
     </select>
+    
+    <select id="selStudentMajor">
+        SELECT A.ilecture_student ilectureStudent, A.istudent,A.ilecture
+        ,D.ilecture_name ilectureName,A.finished_yn finishedYn,B.day_week dayWeek,C.opening_procedures openingProcedures
+        ,C.lecture_str_date lectureStrDate ,C.lecture_end_date lectureEndDate
+        ,C.lecture_str_time lectureStrTime,C.lecture_end_time lectureEndTime,C.attendance,C.midterm_examination midtermExamination
+        ,C.final_examination finalExamination,D.score
+        from lecture_student A
+        INNER JOIN lecture_day_week B
+        ON A.ilecture = B.ilecture
+        INNER JOIN lecture_applly C
+        ON B.ilecture = C.ilecture
+        INNER JOIN lecture_name D
+        ON C.ilecture_name = D.ilecture_name
+        WHERE C.opening_procedures = 3 AND A.finished_yn = 0
+    </select>
+    
+    
+    
 
     <select id="selStudentRemainingPoint">
         SELECT A.istudent,D.student_num studentNum

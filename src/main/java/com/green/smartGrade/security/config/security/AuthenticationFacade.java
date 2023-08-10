@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-
+// 클라이언트가 요청한 값을
 @Component
 @Configuration
 public class AuthenticationFacade {

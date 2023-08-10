@@ -1,12 +1,15 @@
 package com.green.smartGrade.config.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.naming.AuthenticationException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,31 +19,38 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-
-    @ExceptionHandler(AdminException.class)
-    public ResponseEntity<Object> handleAdminExcoption(AdminException e){
-        return handleAdminExceptionSet(CommonErrorCode.ADMIN_EXCEPTION, e.getMsg());
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleClientErrorException(HttpServletRequest request){
+        return handleExceptionInternal(CommonErrorCode.AUTHENTICATION_ERROR,CommonErrorCode.AUTHENTICATION_ERROR.getMessage(),request.getRequestURI());
     }
 
+    @ExceptionHandler(AdminException.class)
+    public ResponseEntity<Object> handleAdminException(AdminException e, HttpServletRequest request){
+        return handleAdminExceptionSet(CommonErrorCode.ADMIN_EXCEPTION, e.getMsg(),request.getRequestURI());
+    }
+
+//    @ExceptionHandler(HttpClientErrorException.class)
+//    public
 
     // IllegalArgumentException 에러 처리
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException e) {
+    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException e,HttpServletRequest request) {
         log.warn("handleIllegalArgument", e);
-        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, e.getMessage());
+        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, e.getMessage(),request.getRequestURI());
     }
 
     // 대부분의 에러 처리
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleAllException(Exception ex) {
+    public ResponseEntity<Object> handleAllException(Exception ex,HttpServletRequest request) {
         log.warn("handleAllException", ex);
         if (ex.getMessage().length()<30){
-            return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, ex.getMessage());
+
+            return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, ex.getMessage(),request.getRequestURI());
         }
-        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION,CommonErrorCode.OTHER_EXCEPTION.getMessage());
+        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION,CommonErrorCode.OTHER_EXCEPTION.getMessage(),request.getRequestURI());
     }
 
     // RuntimeException과 대부분의 에러 처리 메세지를 보내기 위한 메소드
@@ -49,8 +59,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(makeErrorResponse(errorCode));
     }
 
-    private ResponseEntity<Object> handleAdminExceptionSet(ErrorCode errorCode,String msg){
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeErrorResponse(errorCode,msg));
+    private ResponseEntity<Object> handleAdminExceptionSet(ErrorCode errorCode,String msg,String path){
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(makeErrorResponse(errorCode,msg,path));
     }
 
     // 코드 가독성을 위해 에러 처리 메세지를 만드는 메소드 분리
@@ -62,9 +72,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
     }
 
-    private ResponseEntity<Object> handleExceptionInternal(ErrorCode errorCode, String message) {
+    private ResponseEntity<Object> handleExceptionInternal(ErrorCode errorCode, String message,String path) {
         return ResponseEntity.status(errorCode.getHttpStatus())
-                .body(makeErrorResponse(errorCode, message));
+                .body(makeErrorResponse(errorCode, message,path));
     }
     private MyErrorResponse makeErrorResponse(ErrorCode errorCode, String message) {
         return MyErrorResponse.builder()
@@ -78,6 +88,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return MyErrorResponse.builder()
                 .code(errorCode.getMessage())
                 .message(message)
+                .path(path)
                 .dateTime(now())
                 .build();
     }

@@ -14,6 +14,7 @@ public class MyErrorResponse {
     private final String code;
     private final String dateTime;
     private final String message;
+    private final String path;
 
 
     // Errors가 없다면 응답이 내려가지 않게 처리

@@ -10,6 +10,5 @@ import java.util.List;
 @Getter
 @Builder
 public class StudentSelPointRes {
-    private PagingUtils page;
     private List<StudentSelPointVo> list;
 }
