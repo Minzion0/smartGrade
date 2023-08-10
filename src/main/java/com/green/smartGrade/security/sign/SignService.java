@@ -84,7 +84,7 @@ public class SignService {
     }
 
 
-
+/* 원래 있던 코드
     public SignInResultDto refreshToken(HttpServletRequest req, String refreshToken) throws RuntimeException {
         if (!(JWT_PROVIDER.isValidateToken(refreshToken, JWT_PROVIDER.REFRESH_KEY))) {
             return null;
@@ -133,6 +133,48 @@ public class SignService {
 
             setSuccessResult(result);
             return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    } */
+
+    public SignInResultDto refreshToken(HttpServletRequest req, String refreshToken) {
+        if(!(JWT_PROVIDER.isValidateToken(refreshToken, JWT_PROVIDER.REFRESH_KEY))) {
+            return null;
+        }
+
+        Claims claims = null;
+        try {
+            claims = JWT_PROVIDER.getClaims(refreshToken, JWT_PROVIDER.REFRESH_KEY);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (claims == null) {
+            return null;
+        }
+
+        String strIuser = claims.getSubject();
+        Long iuser = Long.valueOf(strIuser);
+        String ip = req.getRemoteAddr();
+
+        String redisKey = String.format("b:RT(%s):%s:%s", "Server", iuser, ip);
+        String redisRt = REDIS_SERVICE.getValues(redisKey);
+        if (redisRt == null) { // Redis에 저장되어 있는 RT가 없을 경우
+            return null; // -> 재로그인 요청
+        }
+        try {
+            if(!redisRt.equals(refreshToken)) {
+                return null;
+            }
+
+            List<String> roles = (List<String>)claims.get("roles");
+            String reAccessToken = JWT_PROVIDER.generateJwtToken(strIuser, roles, JWT_PROVIDER.ACCESS_TOKEN_VALID_MS, JWT_PROVIDER.ACCESS_KEY);
+
+            return SignInResultDto.builder()
+                    .accessToken(reAccessToken)
+                    .refreshToken(refreshToken)
+                    .build();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -277,6 +319,7 @@ public class SignService {
                 .role(role)
                 .ip(ip)
                 .build();
+        REDIS_SERVICE.setValues(redisKey,refreshToken);
 
         int result = MAPPER.updUserToken(tokenEntity);
 

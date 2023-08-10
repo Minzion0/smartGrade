@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.naming.AuthenticationException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,10 @@ import java.util.stream.Collectors;
 public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
 
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleClientErrorException(HttpServletRequest request){
+        return handleExceptionInternal(CommonErrorCode.AUTHENTICATION_ERROR,CommonErrorCode.AUTHENTICATION_ERROR.getMessage(),request.getRequestURI());
+    }
 
     @ExceptionHandler(AdminException.class)
     public ResponseEntity<Object> handleAdminException(AdminException e, HttpServletRequest request){

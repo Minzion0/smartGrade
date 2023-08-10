@@ -24,7 +24,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(authz ->
                             authz.requestMatchers(
-                                        "/**",
+
                                     "/api/sign-in"
                                     ,"/api/otp-valid"
                                     ,"/api/otp"

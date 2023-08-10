@@ -31,31 +31,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            Authentication auth = PROVIDER.getAuthentication(token);
 //            SecurityContextHolder.getContext().setAuthentication(auth);
 //        }
-if (token != null){
-    Authentication auth = PROVIDER.getAuthentication(token);
-    SecurityContextHolder.getContext().setAuthentication(auth);
-}
-//        if(token != null && PROVIDER.isValidateToken(token, PROVIDER.ACCESS_KEY)) {
-//            Authentication auth = PROVIDER.getAuthentication(token);
-//            SecurityContextHolder.getContext().setAuthentication(auth);
-//            log.info("JwtAuthenticationFilter - doFilterInternal: 토큰 유효성 체크 완료");
-//        }
-        if(token != null) {
 
-            if (!PROVIDER.isValidateToken(token, PROVIDER.ACCESS_KEY)){
-                res.setStatus(401);
-                res.getWriter();
-            }else {
-                String isLogout = redisService.getValues(token);
-                if (ObjectUtils.isEmpty(isLogout)){
-                    Authentication auth = PROVIDER.getAuthentication(token);
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                    log.info("JwtAuthenticationFilter - doFilterInternal: 토큰 유효성 체크 완료");
-
-                }
-
-            }
+        if(token != null && PROVIDER.isValidateToken(token, PROVIDER.ACCESS_KEY)) {
+            Authentication auth = PROVIDER.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            log.info("JwtAuthenticationFilter - doFilterInternal: 토큰 유효성 체크 완료");
         }
+//        if(token != null) {
+//
+//            if (!PROVIDER.isValidateToken(token, PROVIDER.ACCESS_KEY)){
+//                res.setStatus(401);
+//                res.getWriter();
+//            }else {
+//                String isLogout = redisService.getValues(token);
+//                if (ObjectUtils.isEmpty(isLogout)){
+//                    Authentication auth = PROVIDER.getAuthentication(token);
+//                    SecurityContextHolder.getContext().setAuthentication(auth);
+//                    log.info("JwtAuthenticationFilter - doFilterInternal: 토큰 유효성 체크 완료");
+//
+//                }
+//
+//            }
+//        }
 
       filterChain.doFilter(req, res);
     }
