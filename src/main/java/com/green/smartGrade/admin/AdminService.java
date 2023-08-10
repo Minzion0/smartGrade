@@ -4,7 +4,6 @@ package com.green.smartGrade.admin;
 import com.green.smartGrade.admin.model.*;
 import com.green.smartGrade.admin.student.model.AdminGraduationStudentVo;
 import com.green.smartGrade.config.exception.AdminException;
-import com.green.smartGrade.utils.CommonUtils;
 
 import com.green.smartGrade.utils.GradeUtils;
 import com.green.smartGrade.utils.PagingUtils;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -59,14 +57,16 @@ public class AdminService {
        throw  new AdminException("수정 오류");
     }
 
-    public ResponseEntity<?> findlectureStudent(Long ilecture ){
-        AdminLectureInStudentDto dto = new AdminLectureInStudentDto();
-       dto.setIlecture(ilecture);
+    public ResponseEntity<?> findLectureStudent(Long ilecture ){
+      
+
         int condition = MAPPER.findLectureCondition(ilecture);
         if (condition==0){
             AdminLectureConditionVo vo = MAPPER.lectureCondition(ilecture);
             return ResponseEntity.ok().body(vo);
         }
+        AdminLectureInStudentDto dto = new AdminLectureInStudentDto();
+        dto.setIlecture(ilecture);
 
         List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(dto);
         for (AdminLectureInStudentRes res : adminLectureInStudentRes) {
