@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,17 +30,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException e) {
         log.warn("handleIllegalArgument", e);
-        return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION, e.getMessage());
+        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, e.getMessage());
     }
 
     // 대부분의 에러 처리
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAllException(Exception ex) {
         log.warn("handleAllException", ex);
-        if (ex.getMessage()!=null){
-            return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION,ex.getMessage());
+        if (ex.getMessage().length()<30){
+            return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, ex.getMessage());
         }
-        return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION,"관리자에 문의");
+        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION,CommonErrorCode.OTHER_EXCEPTION.getMessage());
     }
 
     // RuntimeException과 대부분의 에러 처리 메세지를 보내기 위한 메소드
@@ -53,7 +57,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private MyErrorResponse makeErrorResponse(ErrorCode errorCode) {
         return MyErrorResponse.builder()
                 .code(errorCode.name())
-                .message(errorCode.getMessage())
+                .dateTime(now())
+                .message(CommonErrorCode.OTHER_EXCEPTION.getMessage())
                 .build();
     }
 
@@ -64,6 +69,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private MyErrorResponse makeErrorResponse(ErrorCode errorCode, String message) {
         return MyErrorResponse.builder()
                 .code(errorCode.name())
+                .dateTime(now())
                 .message(message)
                 .build();
     }
@@ -72,7 +78,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return MyErrorResponse.builder()
                 .code(errorCode.getMessage())
                 .message(message)
-
+                .dateTime(now())
                 .build();
     }
 
@@ -93,7 +99,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return MyErrorResponse.builder()
                 .code(errorCode.name())
                 .message(errorCode.getMessage())
+                .dateTime(now())
                 .errors(validationErrorList)
                 .build();
+    }
+
+    private String now(){
+        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-dd-MM HH:mm:ss"));
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd // HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+
+        return formatter.format(date);
     }
 }

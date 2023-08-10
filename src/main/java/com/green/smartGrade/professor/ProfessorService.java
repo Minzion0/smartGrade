@@ -57,9 +57,11 @@ public class ProfessorService {
 
         int result = 0;
         ProfessorUpDto dto = new ProfessorUpDto();
-//        dto.setAddress(param.getAddress());
-//        dto.setPhone(param.getPhone());
-//        dto.setEmail(param.getEmail());
+        dto.setAddress(param.getAddress());
+        dto.setPhone(param.getPhone());
+        dto.setEmail(param.getEmail());
+        dto.setIprofessor(param.getIprofessor());
+
         dto.setIprofessor(param.getIprofessor());
         if (param.getPhone() != null && !param.getPhone().equals("string")) {
             dto.setPhone(param.getPhone());

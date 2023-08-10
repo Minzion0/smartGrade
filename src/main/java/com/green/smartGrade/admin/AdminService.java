@@ -46,7 +46,7 @@ public class AdminService {
     }
     @Transactional(rollbackFor = Exception.class)
     public AdminUpdLectureRes lectureModify(AdminUpdLectureDto dto){
-       try {
+
 
            int upded = MAPPER.updLecture(dto);
            if (dto.getProcedures()==0){
@@ -55,9 +55,6 @@ public class AdminService {
            if (upded==1){
                return new AdminUpdLectureRes(dto);
            }
-       }catch (Exception e){
-           throw new AdminException("수정오류");
-       }
        throw  new AdminException("수정 오류");
     }
 

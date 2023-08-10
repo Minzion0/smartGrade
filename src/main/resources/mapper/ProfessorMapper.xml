@@ -35,12 +35,6 @@
     </update>
 
 
-    <update id="upPicProfessor">
-        update professor
-        set pic = #{pic}
-        where iprofessor = #{iprofessor}
-    </update>
-
     <select id="selProfessorLecture">
         SELECT A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate,
         A.lecture_str_time lectureStrTime, A.lecture_end_time lectureEndTime,
