@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class StudentSelDto {
+    private  Long istudent;
     protected Long studentNum;
     private int startIdx;
     private int page;

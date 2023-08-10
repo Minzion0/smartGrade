@@ -25,17 +25,12 @@ public class ProfessorService {
     private String fileDir;
 
 
-    public professorSelRes selProfessor(Long iuser) {
-
-        ProfessorSelDto dto = new ProfessorSelDto();
-        dto.setIprofessor(iuser);
-
+    public ProfessoreDatailProFileVo selProfessor(ProfessorSelDto dto) {
+        List<ProfessorMajor> major = mapper.professorMajor(dto);
+        ProfessorDatilProfile profile = mapper.selProfessor(dto);
 
 
-
-        List<ProfessorVo> professorVos = mapper.selProfessor(dto);
-
-        return professorSelRes.builder().list(professorVos).build();
+        return ProfessoreDatailProFileVo.builder().profile(profile).lectureList(major).build();
     }
 
 

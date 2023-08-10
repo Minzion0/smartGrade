@@ -11,10 +11,10 @@ public interface AdminMajorMapper {
 
     List<MajorVo> selMajor(MajorSelDto dto);
 
+    int updMajor(MajorUpdDto dto);
+
     int delMajor(MajorDelDto dto);
 
     int countMajor();
-
-    int updMajor(MajorUpdDto dto);
 
 }

@@ -11,6 +11,7 @@ import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,9 +59,14 @@ public class AdminService {
        throw  new AdminException("수정 오류");
     }
 
-    public AdminLectureStudentResm findlectureStudent(Long ilecture ){
+    public ResponseEntity<?> findlectureStudent(Long ilecture ){
         AdminLectureInStudentDto dto = new AdminLectureInStudentDto();
        dto.setIlecture(ilecture);
+        int condition = MAPPER.findLectureCondition(ilecture);
+        if (condition==0){
+            AdminLectureConditionVo vo = MAPPER.lectureCondition(ilecture);
+            return ResponseEntity.ok().body(vo);
+        }
 
         List<AdminLectureInStudentRes> adminLectureInStudentRes = MAPPER.lectureInStudent(dto);
         for (AdminLectureInStudentRes res : adminLectureInStudentRes) {
@@ -72,7 +78,8 @@ public class AdminService {
         }
         AdminLectureStudentResm resm = new AdminLectureStudentResm();
         resm.setList(adminLectureInStudentRes);
-        return resm;
+
+        return ResponseEntity.ok().body(resm);
     }
 
     public AdminInsSemesterRes semesterIns(AdminInsSemesterParam param) throws AdminException {

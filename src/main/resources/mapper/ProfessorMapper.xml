@@ -11,10 +11,24 @@
 
 
     <select id="selProfessor">
-        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address
+        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address,del_yn delYn
+        ,created_at createdAt
         from professor
         WHERE iprofessor = #{iprofessor}
     </select>
+
+    <select id="professorMajor">
+        SELECT A.ilecture,A.lecture_str_date lectureStrDate, A.lecture_end_date lectureEndDate
+        , date_format(A.lecture_str_time,'%H:%i') lectureStrTime,
+        date_format(A.lecture_end_time,'%H:%i') lectureEndTime, B.lecture_name lectureName
+        from lecture_applly A
+        INNER JOIN lecture_name B
+        ON A.ilecture_name = B.ilecture_name
+        WHERE A.iprofessor = #{iprofessor}
+    </select>
+
+
+
 
     <select id="ProfessorCount">
         SELECT COUNT(*)

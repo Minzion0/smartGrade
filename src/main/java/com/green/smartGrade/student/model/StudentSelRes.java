@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Builder
 public class StudentSelRes {
-    private PagingUtils page;
     private List<StudentSelVo> list;
 
 }
