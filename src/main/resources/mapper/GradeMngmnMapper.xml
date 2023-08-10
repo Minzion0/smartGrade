@@ -59,33 +59,10 @@
         from student
     </select>
 
-    <select id="GradeMngmnAvg1">
-        SELECT C.istudent istudent, A.nm name, A.student_num studentNum,
-        C.grade grade ,D.semester semester
-        , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
-        FROM student A
-        INNER JOIN lecture_student B
-        ON A.istudent = B.istudent
-        INNER JOIN student_semester_score C
-        ON B.istudent = C.istudent
-        INNER JOIN semester D
-        ON C.isemester = D.isemester
-
-        <where>
-            D.semester = 1
-            <if test="studentNum != null and studentNum != ''">
-                and A.student_num = #{studentNum}
-            </if>
-            <if test="grade > 0">
-                and C.grade = #{grade}
-            </if>
-        </where>
-    </select>
-
-    <select id="GradeMngmnAvg2">
-        SELECT A.istudent istudent, A.nm name, A.student_num studentNum,
-        C.grade grade ,D.semester semester
-        , C.avg_score avgScore, ROUND(AVG(C.rating), 2) avgRating
+    <select id="GradeMngmnAvg">
+        SELECT DISTINCT C.istudent istudent, A.nm name, A.student_num studentNum,
+        C.grade grade , D.semester semester
+        , C.avg_score avgScore, C.rating avgRating
         FROM student A
         INNER JOIN lecture_student B
         ON A.istudent = B.istudent
@@ -94,14 +71,11 @@
         INNER JOIN semester D
         ON C.isemester = D.isemester
         <where>
-            D.semester = 2
             <if test="studentNum != null and studentNum != ''">
                 and A.student_num = #{studentNum}
             </if>
-            <if test="grade > 0">
-                and C.grade = #{grade}
-            </if>
         </where>
+        LIMIT #{staIdx}, 7
     </select>
 
     <select id="selGradeFindStudentVo">

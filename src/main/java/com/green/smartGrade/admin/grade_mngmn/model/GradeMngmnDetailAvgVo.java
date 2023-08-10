@@ -11,7 +11,6 @@ import java.util.List;
 public class GradeMngmnDetailAvgVo {
     private PagingUtils page;
     private List<GradeMngmnVo> voList;
-    private GradeMngmnAvgVo avgVo1;
-    private GradeMngmnAvgVo avgVo2;
+    private List<GradeMngmnAvgVo> avgVo;
 
 }

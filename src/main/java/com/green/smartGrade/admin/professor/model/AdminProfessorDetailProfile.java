@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class AdminProfessorDetailProfile {
+    private Long iprofessor;
     private String name;
     private String gender;
     private String birthdate;

@@ -36,7 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         if (ex.getMessage()!=null){
             return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION,ex.getMessage());
         }
-        return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION,CommonErrorCode.FIX_EXCEPTION.getMessage());
+        return handleExceptionInternal(CommonErrorCode.FIX_EXCEPTION,"관리자에 문의");
     }
 
     // RuntimeException과 대부분의 에러 처리 메세지를 보내기 위한 메소드

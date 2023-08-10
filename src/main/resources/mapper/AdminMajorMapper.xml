@@ -34,9 +34,10 @@
         from major
     </select>
 
-    <update id="updMajor">
+    <insert id="updMajor">
         UPDATE major
         SET major_name = #{majorName}
+        ,remarks = (SELECT CONCAT('구 ' , major_name) from major WHERE imajor = #{imajor})
         WHERE imajor = #{imajor}
-    </update>
+    </insert>
 </mapper>
