@@ -8,7 +8,7 @@
         WHERE s.istudent = #{istudent}
         AND la.ilecture = #{ilecture}
     </insert>
-    
+
     <select id="selDayWeek">
         select day_week dayWeek
         from lecture_day_week
@@ -16,9 +16,9 @@
     </select>
 
 
-    
     <select id="selAllSdy">
-        SELECT A.istudent ,D.student_num studentNum,D.grade,B.ilecture_name ilectureName,C.lecture_name lectureName,B.iprofessor
+        SELECT A.istudent ,D.student_num studentNum,D.grade,B.ilecture_name ilectureName,C.lecture_name
+        lectureName,B.iprofessor
         ,C.score,A.attendance,A.midterm_examination midtermExamination
         ,A.final_examination finalExamination,A.total_score totalScore,A.finished_yn finishedYn
         FROM lecture_student A
@@ -28,8 +28,7 @@
         ON B.ilecture_name = C.ilecture_name
         INNER JOIN student D
         ON A.istudent = D.istudent
-        WHERE D.student_num = #{studentNum} and A.finished_yn = 1
-        LIMIT #{startIdx}, #{row}
+        WHERE A.istudent = #{istudent} and A.finished_yn = 1
     </select>
 
     <select id="StudentCount">
@@ -49,14 +48,14 @@
         ON B.ilecture_name = C.ilecture_name
         INNER JOIN student D
         ON A.istudent = D.istudent
-        WHERE D.student_num = #{studentNum} AND A.finished_yn = 1
-        LIMIT #{startIdx}, #{row}
+        WHERE D.istudent = #{istudent} AND A.finished_yn = 1
     </select>
 
     <select id="selStudentRemainingPoint">
         SELECT A.istudent,D.student_num studentNum
         ,D.imajor,D.grade,D.nm,
-        D.gender,D.finished_yn finishedYn,sum(C.score) score,E.graduation_score graduationScore, E.graduation_score-sum(C.score) remainingPoints
+        D.gender,D.finished_yn finishedYn,sum(C.score) score,E.graduation_score graduationScore,
+        E.graduation_score-sum(C.score) remainingPoints
         FROM lecture_student A
         INNER JOIN lecture_applly B
         ON A.ilecture = B.ilecture
@@ -66,27 +65,17 @@
         ON A.istudent = D.istudent
         INNER JOIN major E
         ON D.imajor = E.imajor
-        WHERE D.student_num = #{studentNum} AND A.finished_yn = 1
+        WHERE A.istudent = #{istudent} AND A.finished_yn = 1
         LIMIT #{startIdx}, #{row}
     </select>
     <update id="upStudent">
 
         update student
         set
-
-        <if test="pic != null">
-            pic = #{pic},
-        </if>
-        <if test="phone != null">
-            phone = #{phone},
-        </if>
-        <if test="email != null">
-            email = #{email},
-        </if>
-        <if test="address != null">
-            address = #{address},
-        </if>
-
+        pic = #{pic},
+        phone = #{phone},
+        email = #{email},
+        address = #{address},
         updated_at = current_timestamp
         where istudent = #{istudent}
     </update>
@@ -107,13 +96,13 @@
     <select id="picFilePathByStudent">
         SELECT pic
         FROM student
-        WHERE student_num = #{studentNum}
+        WHERE istudent = #{istudent}
     </select>
 
     <update id="updateFilePathNullByStudent">
         UPDATE student
         SET pic = NULL
-        WHERE student_num = #{studentNum}
+        WHERE istudent = #{istudent}
     </update>
 
 </mapper>
