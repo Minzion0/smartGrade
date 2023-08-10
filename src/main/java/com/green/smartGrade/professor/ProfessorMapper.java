@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProfessorMapper {
 
 
-    List<ProfessorVo> selProfessor(ProfessorSelDto dto); //  페이지 로우 교수 리스트
+//    List<ProfessorVo> selProfessor(ProfessorSelDto dto); //  페이지 로우 교수 리스트
     int ProfessorCount();
 
     int upProfessor(ProfessorUpDto dto);
@@ -28,5 +28,7 @@ public interface ProfessorMapper {
 
     ProfessorSelCurrentPasswordVo selPasswordCurrent (ProfessorSelCurrentPasswordDto dto);
 
+    ProfessorDatilProfile selProfessor(ProfessorSelDto dto);
 
+    List<ProfessorMajor> professorMajor(ProfessorSelDto dto);
 }

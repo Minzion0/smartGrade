@@ -9,6 +9,5 @@ import java.util.List;
 @Getter
 @Builder
 public class StudentSelProfileRes {
-    private PagingUtils page;
     private List<StudentSelProfileVo> list;
 }

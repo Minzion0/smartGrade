@@ -30,10 +30,9 @@ public class StudentService {
     private String fileDir;
 
 
-    public StudentInsRes insSdy(StudentParam param) {
-        StudentInsDto dto = new StudentInsDto();
+    public StudentInsRes insSdy(StudentInsDto dto) {
+        StudentParam param = new StudentParam();
 
-        dto.setIstudent(param.getIstudent());
         dto.setIlecture(param.getIlecture());
         dto.setFinishedYn(param.getFinishedYn());
 
@@ -62,12 +61,8 @@ public class StudentService {
     }
 
 
-    public StudentSelRes selAllSdy(StudentSelDto dto,int page) {
-        int maxpage = mapper.StudentCount();
-        PagingUtils utils = new PagingUtils(page,maxpage);
-        dto.setStartIdx(utils.getStaIdx());
-        dto.setStudentNum(dto.getStudentNum());
-        dto.setRow(utils.getROW());
+    public StudentSelRes selAllSdy(StudentSelDto dto) {
+
 
         List<StudentSelVo> list = mapper.selAllSdy(dto);
         for (StudentSelVo  vo  :  list ) {
@@ -78,28 +73,27 @@ public class StudentService {
         }
         return StudentSelRes.builder()
                 .list(list)
-                .page(utils)
                 .build();
 
     }
 
-    public StudentSelProfileRes selStudentProfile(StudentSelProfileDto dto,int page) {
-        int maxpage = mapper.StudentCount();
-        PagingUtils utils = new PagingUtils(page,maxpage);
-        dto.setStartIdx(utils.getStaIdx());
-        dto.setStudentNum(dto.getStudentNum());
-        dto.setRow(utils.getROW());
+    public StudentSelProfileRes selStudentProfile(StudentSelProfileDto dto) {
+
+
+        dto.setIstudent(dto.getIstudent());
+
         List<StudentSelProfileVo> list = mapper.selStudentProfile(dto);
 
-        return StudentSelProfileRes.builder().list(list).page(utils).build();
+        return StudentSelProfileRes.builder().list(list).build();
     }
 
-    public StudentSelPointRes selStudentRemainingPoint(StudentSelPointDto dto, int page) {
+    public StudentSelPointRes selStudentRemainingPoint(StudentSelPointDto dto) {
         int maxpage = mapper.StudentCount();
-        PagingUtils utils = new PagingUtils(page, maxpage);
+        PagingUtils utils = new PagingUtils(dto.getPage(), maxpage);
         dto.setStartIdx(utils.getStaIdx());
         dto.setRow(utils.getROW());
         dto.setStudentNum(dto.getStudentNum());
+        dto.setIstudent(dto.getIstudent());
         List<StudentSelPointVo> list = mapper.selStudentRemainingPoint(dto);
 
         return StudentSelPointRes.builder().list(list).page(utils).build();
@@ -179,11 +173,11 @@ public class StudentService {
         return "비밀번호 변경이 완료되었습니다.";
     }
 
-    public void deleteUploadedFile(Long studentNum) {
+    public void deleteUploadedFile(Long istudent) {
         // 데이터베이스에서 파일 경로 조회
 
-        String filePath = mapper.picFilePathByStudent(studentNum);
-        String centerPath = String.format("students/%d", studentNum);
+        String filePath = mapper.picFilePathByStudent(istudent);
+        String centerPath = String.format("students/%d", istudent);
         String dicPath = String.format("%s/%s/%s", FileUtils.getAbsolutePath(fileDir), centerPath,filePath);
 
 
@@ -193,7 +187,7 @@ public class StudentService {
             if (fileToDelete.exists()) {
                 if (fileToDelete.delete()) {
                     // 파일 삭제 성공
-                    mapper.updateFilePathNullByStudent(studentNum);
+                    mapper.updateFilePathNullByStudent(istudent);
                 } else {
                     // 파일 삭제 실패
                     throw new RuntimeException("파일 삭제 실패");
