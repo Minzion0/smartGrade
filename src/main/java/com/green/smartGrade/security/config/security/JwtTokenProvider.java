@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     //public final long ACCESS_TOKEN_VALID_MS = 60_000L; // 1분
     public final long REFRESH_TOKEN_VALID_MS = 1_296_000_000L; // 1000L * 60 * 60 * 24 * 15 -> 15일
 
-
+    // application.yml에서 주입받은 secret 값을 base64 decode하여 key 변수에 할당
     public JwtTokenProvider(@Value("${springboot.jwt.access-secret}") String accessSecretKey
                             , @Value("${springboot.jwt.refresh-secret}") String refreshSecretKey
                             , @Value("${springboot.jwt.token-type}") String tokenType) {
@@ -39,7 +39,7 @@ public class JwtTokenProvider {
         this.TOKEN_TYPE = tokenType;
     }
 
-
+    // Authentication 객체에 포함되어 있는 권한 정보들을 담은 토큰을 생성
     public String generateJwtToken(String strIuser, List<String> roles, long token_valid_ms, Key key) {
         log.info("JwtTokenProvider - generateJwtToken: 토큰 생성 시작");
         Date now = new Date();
@@ -62,6 +62,7 @@ public class JwtTokenProvider {
         return claims;
     }
 
+    // JWT토큰을 복호화하여 토큰에 들어있는 정보를 꺼냅니다.
     public Authentication getAuthentication (String token) {
         log.info("JwtTokenProvider - getAuthentication: 토큰 인증 정보 조회 시작");
         //UserDetails userDetails = SERVICE.loadUserByUsername(getUsername(token));
@@ -70,7 +71,7 @@ public class JwtTokenProvider {
                 , userDetails.getUsername());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
-
+    // UserDetails 객체를 만들어서 복호화된 User정보 값 리턴
     private UserDetails getUserDetailsFromToken(String token, Key key) {
         Claims claims = getClaims(token, key);
         String strIuser = claims.getSubject();
