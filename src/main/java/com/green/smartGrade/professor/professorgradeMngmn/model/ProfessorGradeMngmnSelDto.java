@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProfessorGradeMngmnSelDto {
-    private int iprofessor;
+    private Long iprofessor;
     private int page;
     private int ilecture;
     private int studentNum;
