@@ -28,13 +28,14 @@ public class GradeMngmnService {
             dto.setStudentNum(dto.getStudentNum().replaceAll(" ", ""));
         }
 
+        GradeMngmnStudentVo student = MAPPER.selGradeMngmnStudent(dto);
         List<GradeMngmnAvgVo> mngmnAvg = MAPPER.GradeMngmnAvg(dto);
-        List<GradeMngmnVo> student = MAPPER.selGradeFindStudent(dto);
+        List<GradeMngmnVo> voList = MAPPER.selGradeFindStudent(dto);
 
         int point;
         double score;
         String rating;
-        for (GradeMngmnVo a : student) {
+        for (GradeMngmnVo a : voList) {
             point = a.getTotalScore();
             GradeUtils utils2 = new GradeUtils(point);
             score = utils2.totalScore();
@@ -43,7 +44,8 @@ public class GradeMngmnService {
         }
 
         return GradeMngmnDetailAvgVo.builder()
-                .voList(student)
+                .voList(voList)
+                .student(student)
                 .avgVo(mngmnAvg)
                 .page(utils)
                 .build();
