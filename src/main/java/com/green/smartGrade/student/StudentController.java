@@ -65,10 +65,9 @@ public class StudentController {
     @Operation(summary = "학점 조회",description = "studentNum : 학번<br>"+"istudent : 학생pk<br>"+"imajor : 전공<br>"+
     "grade : 학년<br>"+"finishedYn : 재학여부<br> 1->재학중, 2-> 졸업<br>"+"score : 현재 학점<br>"
             +"graduationScore : 전공학점<br>"+"remainingPoints : 채워야할 학점")
-    public StudentSelPointRes getStudentPoint(@RequestParam(defaultValue = "1") int page,@AuthenticationPrincipal MyUserDetails details) {
+    public StudentSelPointRes getStudentPoint(@AuthenticationPrincipal MyUserDetails details) {
         StudentSelPointDto dto = new StudentSelPointDto();
         dto.setIstudent(details.getIuser());
-        dto.setPage(page);
         return service.selStudentRemainingPoint(dto);
     }
 

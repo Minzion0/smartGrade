@@ -3,9 +3,10 @@ package com.green.smartGrade.student.model;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
-public class StudentSelProfileVo {
+public class StudentSelProfile {
     private Long istudent;
     private Long StudentNum;
     private Long imajor;
@@ -16,6 +17,7 @@ public class StudentSelProfileVo {
     private String phone;
     private String email;
     private String address;
+    private LocalDateTime createdAt;
     private int finishedYn;
     private int score;
 
