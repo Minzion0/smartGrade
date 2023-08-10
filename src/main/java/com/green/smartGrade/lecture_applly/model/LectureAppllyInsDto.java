@@ -16,10 +16,10 @@ public class LectureAppllyInsDto {
     private LocalDate lectureEndDate;
     private String lectureStrTime;
     private String lectureEndTime;
+    private String dayWeek;
     private int attendance;
     private int midtermExamination;
     private int finalExamination;
-    private String dayWeek;
     private int lectureMaxPeople;
     private int garedLimit;
     private int delYn;

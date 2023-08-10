@@ -17,28 +17,16 @@ public class LectureAppllyService {
     private final LectureAppllyMapper mapper;
 
 
-    public LectureAppllyRes InsApplly(LectureAppllyInsParam param){
-        LectureAppllyInsDto dto = new LectureAppllyInsDto();
+    public LectureAppllyRes InsApplly(LectureAppllyInsDto dto){
+
         String msg="";
         LectureAppllyRes res= new LectureAppllyRes();
 
-        dto.setIlectureName(param.getIlectureName());
-        dto.setIlectureRoom(param.getIlectureRoom());
-        dto.setIprofessor(param.getIprofessor());
-        dto.setIsemester(param.getIsemester());
-        dto.setOpeningProcedures(param.getOpeningProcedures());
-        dto.setLectureStrDate(param.getLectureStrDate());
-        dto.setLectureEndDate(param.getLectureEndDate());
-        dto.setLectureStrTime(param.getLectureStrTime());
-        dto.setLectureEndTime(param.getLectureEndTime());
-        dto.setDayWeek(param.getDayWeek());
-
-
 
         // 입력 값들을 가져온다
-        int attendance = param.getAttendance();
-        int midtermExamination = param.getMidtermExamination();
-        int finalExamination = param.getFinalExamination();
+        int attendance = dto.getAttendance();
+        int midtermExamination = dto.getMidtermExamination();
+        int finalExamination = dto.getFinalExamination();
 
 
         // 출석, 중간고사, 기말고사 점수의 합을 계산
@@ -61,21 +49,21 @@ public class LectureAppllyService {
         dto.setFinalExamination(finalExamination);
 
 
-        int garedLimit = param.getGaredLimit();
+        int garedLimit = dto.getGaredLimit();
         if (garedLimit < 1 || garedLimit > 5) {
             // garedLimit 값이 1부터 5 사이에 없는 경우, 기본값으로 1을 설정
             garedLimit = 1;
         }
         dto.setGaredLimit(garedLimit);
 
-        int lectureMaxPeople = param.getLectureMaxPeople();
+        int lectureMaxPeople = dto.getLectureMaxPeople();
         // lectureMaxPeople 값이 1부터 30 사이에 없는 경우, 기본값으로 10을 설정
         if (lectureMaxPeople < 1 || lectureMaxPeople >= 30) {
             lectureMaxPeople = 10;
         }
         dto.setLectureMaxPeople(lectureMaxPeople);
 
-        int openingProcedures = param.getOpeningProcedures();
+        int openingProcedures = dto.getOpeningProcedures();
         if (openingProcedures <= 0 || openingProcedures > 5) {
             openingProcedures = 1;
         }
@@ -94,15 +82,15 @@ public class LectureAppllyService {
         String dayWeek = dto.getDayWeek();
         String[] split = dayWeek.split(",");
 
-        List<LectureApllyDto> liss = new ArrayList<>();
+        List<LectureApllyDto> list = new ArrayList<>();
         for (String s : split) {
-            LectureApllyDto apllyDto = new LectureApllyDto();
-            apllyDto.setDayWeek(s);
-            apllyDto.setIlecture(dto.getIlecture());
-            liss.add(apllyDto);
+            LectureApllyDto applyDto = new LectureApllyDto();
+            applyDto.setDayWeek(s);
+            applyDto.setIlecture(dto.getIlecture());
+            list.add(applyDto);
         }
 
-        int re = mapper.InsDayWeek(liss);
+        int re = mapper.InsDayWeek(list);
         if (re ==0){
             return null;
         }
