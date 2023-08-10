@@ -1,6 +1,5 @@
 package com.green.smartGrade.config.exception;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum CommonErrorCode implements ErrorCode{
     ADMIN_EXCEPTION(HttpStatus.BAD_REQUEST, "에러 발생 : 개발자 이민용을 찾아주세요"),
-    FIX_EXCEPTION(HttpStatus.NOT_FOUND, "에러 발생 : 관리자를 찾아주세요"),
+    OTHER_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "에러 발생 : 관리자를 찾아주세요"),
     ADMIN_PROFESSOR_ERROR(HttpStatus.NOT_EXTENDED,"계정등록 오류");
 
     private final HttpStatus httpStatus;

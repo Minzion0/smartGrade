@@ -1,7 +1,6 @@
 package com.green.smartGrade.config.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ import java.util.List;
 @Builder
 public class MyErrorResponse {
     private final String code;
+    private final String dateTime;
     private final String message;
 
 
