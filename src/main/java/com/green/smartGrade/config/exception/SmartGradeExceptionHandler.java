@@ -32,8 +32,7 @@ public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
         return handleAdminExceptionSet(CommonErrorCode.ADMIN_EXCEPTION, e.getMsg(),request.getRequestURI());
     }
 
-//    @ExceptionHandler(HttpClientErrorException.class)
-//    public
+
 
     // IllegalArgumentException 에러 처리
     @ExceptionHandler(IllegalArgumentException.class)
