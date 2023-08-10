@@ -3,9 +3,6 @@ package com.green.smartGrade.admin;
 
 import com.green.smartGrade.admin.model.*;
 import com.green.smartGrade.config.exception.AdminException;
-import com.green.smartGrade.config.exception.CommonErrorCode;
-import com.green.smartGrade.config.exception.ErrorCode;
-import com.green.smartGrade.config.exception.MyErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +41,7 @@ public class AdminController {
     @Operation(summary = "해당 강의 수강학생 리스트")
     public ResponseEntity<?> findProfessors(@PathVariable Long ilecture){
 
-        return SERVICE.findlectureStudent(ilecture);
+        return SERVICE.findLectureStudent(ilecture);
     }
 
     @GetMapping("/lecture")
