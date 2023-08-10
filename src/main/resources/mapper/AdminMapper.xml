@@ -48,7 +48,7 @@
             </if>
 
             <if test="nm!=null">
-               and C.nm in (#{nm})
+               and C.nm like CONCAT('%', #{nm}, '%')
             </if>
 
 
@@ -82,7 +82,17 @@
         </foreach>
 
     </update>
+    <select id="findLectureCondition">
+        select opening_procedures
+        from lecture_applly
+        where ilecture = #{ilecture}
+    </select>
 
+    <select id="lectureCondition">
+        select ilecture,return_ctnt returnCtnt,date(return_date) returnDate
+        from leture_condition
+        where ilecture= #{ilecture}
+    </select>
 
     <select id="lectureInStudent">
         SELECT C.istudent,C.nm,D.major_name majorNm,A.attendance,A.midterm_examination minEx,A.final_examination finEx,A.total_score totalScore

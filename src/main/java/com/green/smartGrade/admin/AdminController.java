@@ -42,7 +42,7 @@ public class AdminController {
 
     @GetMapping("/lecture/{ilecture}")
     @Operation(summary = "해당 강의 수강학생 리스트")
-    public AdminLectureStudentResm findProfessors(@PathVariable Long ilecture){
+    public ResponseEntity<?> findProfessors(@PathVariable Long ilecture){
 
         return SERVICE.findlectureStudent(ilecture);
     }

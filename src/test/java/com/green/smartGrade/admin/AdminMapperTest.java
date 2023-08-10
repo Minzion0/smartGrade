@@ -93,12 +93,34 @@ class AdminMapperTest {
 
     @Test
     void lectureModify(){
+        AdminSelLectureDto dto1 = new AdminSelLectureDto();
+        dto1.setNm("재경");
+        dto1.setProcedures(-1);
+        dto1.setStrIdx(0);
+        dto1.setRow(10);
+        List<AdminSelLectureRes> res = mapper.selLecture(dto1);
+        AdminSelLectureRes res1 = res.get(0);
+        assertEquals(res1.getIlecture(),4);
+        assertEquals(res1.getProcedures(),0);
+
         AdminUpdLectureDto dto = new AdminUpdLectureDto();
-        dto.setIlecture(1L);
+        dto.setIlecture(4L);
         dto.setProcedures(2);
         int i = mapper.updLecture(dto);
+        List<AdminSelLectureRes> res2 = mapper.selLecture(dto1);
+        AdminSelLectureRes res3 = res2.get(0);
 
-        Assertions.assertEquals(i,1);
+        Assertions.assertEquals(res3.getIlecture(),res1.getIlecture());
+        assertNotEquals(res3.getProcedures(),res1.getProcedures());
+        assertEquals(res3.getNm(),res1.getNm());
+        assertEquals(res3.getSemester(), res1.getSemester());
+        assertEquals(res3.getLectureNm(),res1.getLectureNm());
+        assertEquals(res3.getEndTime(),res1.getEndTime());
+
+
+
     }
+
+
 
 }

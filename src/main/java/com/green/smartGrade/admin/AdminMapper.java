@@ -14,6 +14,8 @@ public interface AdminMapper {
     int lectureModify(AdminUpdLectureDto dto);
     int updLecture(AdminUpdLectureDto dto);
     List<AdminLectureInStudentRes> lectureInStudent(AdminLectureInStudentDto dto);
+    int findLectureCondition(Long ilecture);
+    AdminLectureConditionVo lectureCondition(Long ilecture);
 
     int semesterIns(AdminInsSemesterDto dto);
     List<AdminGetSemesterVo> getSemester(String year);
