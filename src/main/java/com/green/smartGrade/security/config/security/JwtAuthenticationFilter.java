@@ -1,8 +1,6 @@
 package com.green.smartGrade.security.config.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.smartGrade.security.config.RedisService;
-import com.green.smartGrade.security.config.security.model.EntryPointErrorResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +14,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Slf4j @RequiredArgsConstructor
+@Slf4j
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider PROVIDER;
@@ -32,10 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            Authentication auth = PROVIDER.getAuthentication(token);
 //            SecurityContextHolder.getContext().setAuthentication(auth);
 //        }
-if (token != null){
-    Authentication auth = PROVIDER.getAuthentication(token);
-    SecurityContextHolder.getContext().setAuthentication(auth);
-}
+
         if(token != null && PROVIDER.isValidateToken(token, PROVIDER.ACCESS_KEY)) {
             Authentication auth = PROVIDER.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -44,12 +40,8 @@ if (token != null){
 //        if(token != null) {
 //
 //            if (!PROVIDER.isValidateToken(token, PROVIDER.ACCESS_KEY)){
-//                ObjectMapper objectMapper = new ObjectMapper();
-//                EntryPointErrorResponse msg = new EntryPointErrorResponse();
-//                msg.setMsg("인증이 실패하였습니다.");
 //                res.setStatus(401);
-//                res.getWriter().write(objectMapper.writeValueAsString(msg));
-//
+//                res.getWriter();
 //            }else {
 //                String isLogout = redisService.getValues(token);
 //                if (ObjectUtils.isEmpty(isLogout)){
@@ -58,11 +50,10 @@ if (token != null){
 //                    log.info("JwtAuthenticationFilter - doFilterInternal: 토큰 유효성 체크 완료");
 //
 //                }
-//                filterChain.doFilter(req, res);
 //
 //            }
 //        }
 
-        filterChain.doFilter(req, res);
+      filterChain.doFilter(req, res);
     }
 }
