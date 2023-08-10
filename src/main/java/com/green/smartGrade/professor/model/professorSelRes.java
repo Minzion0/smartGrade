@@ -9,5 +9,6 @@ import java.util.List;
 @Getter
 @Builder
 public class professorSelRes {
-    private List<ProfessorVo> list;
+    ProfessorVo list;
+
 }

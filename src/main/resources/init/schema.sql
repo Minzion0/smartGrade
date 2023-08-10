@@ -1,8 +1,6 @@
 set foreign_key_checks = 0;
 
-CREATE DATABASE IF NOT EXISTS `smart_grade_test`;
-USE `smart_grade_test`;
-
+drop table if EXISTS `admin`;
 
 CREATE TABLE IF NOT EXISTS admin (
   `iadmin` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -13,6 +11,8 @@ CREATE TABLE IF NOT EXISTS admin (
   `secret_key` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`iadmin`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+drop table if EXISTS `board`;
 
 CREATE TABLE IF NOT EXISTS board (
   `iboard` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS major (
   `major_name` varchar(50) NOT NULL COMMENT '전공이름',
   `graduation_score` int(10) unsigned NOT NULL COMMENT '졸업학점',
   `del_yn` int(10) unsigned DEFAULT 0 COMMENT '삭제여부',
+  `remarks` varchar(50) DEFAULT ' ' COMMENT '비고',
   PRIMARY KEY (`imajor`),
   UNIQUE KEY `major_name` (`major_name`)
   ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='전공';

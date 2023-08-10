@@ -1,8 +1,11 @@
-set foreign_key_checks = 0;
-INSERT ignore  `admin` (`iadmin`, `admin_Id`, `admin_password`, `del_yn`, `role`, `secret_key`) VALUES
+set
+foreign_key_checks = 0;
+INSERT
+ignore  `admin` (`iadmin`, `admin_Id`, `admin_password`, `del_yn`, `role`, `secret_key`) VALUES
 (1, 'admin', '{bcrypt}$2a$10$JaMwQdbpjKN/BgycWDDRKurWqpA9WFufe42h1ToIIipI1TO5ztRWm', 0, 'ROLE_ADMIN', NULL);
 
-INSERT ignore  `board` (`iboard`, `iadmin`, `ctnt`, `created_at`, `updated_at`, `importance`, `board_view`, `del_yn`, `title`) VALUES
+INSERT
+ignore  `board` (`iboard`, `iadmin`, `ctnt`, `created_at`, `updated_at`, `importance`, `board_view`, `del_yn`, `title`) VALUES
 (1, 1, 'dlddldldldldlld', '2023-07-21 16:40:22', '2023-08-02 17:40:43', 1, 2, 1, 'dlddldldldldlld'),
 (2, 1, 'ㅁㄴㅇ', '2023-07-21 16:40:39', '2023-07-21 16:40:39', 0, 0, 1, 'ㅁㄴㅇ'),
 (3, 1, 'ㅁㄴㅇ', '2023-07-21 16:41:19', '2023-07-21 16:41:19', 0, 0, 0, 'ㅁㄴㅇ'),
@@ -30,7 +33,8 @@ INSERT ignore  `board` (`iboard`, `iadmin`, `ctnt`, `created_at`, `updated_at`, 
 (25, 1, 'qwe', '2023-08-03 15:16:41', '2023-08-03 15:16:41', 0, 0, 0, 'qwe');
 
 
-INSERT ignore  `board_pics` (`ipic`, `iboard`, `pic`) VALUES
+INSERT
+ignore  `board_pics` (`ipic`, `iboard`, `pic`) VALUES
 (1, 24, '460dcb0e-f349-46bf-a8f7-6fb8d93c897b.png'),
 (2, 24, 'e2283de2-03ac-4435-a190-2e3ffe22bff2.png');
 
@@ -40,7 +44,8 @@ INSERT ignore  `board_pics` (`ipic`, `iboard`, `pic`) VALUES
 
 
 
-INSERT ignore  `lecture_day_week` (`ilecture`, `day_week`, `del_yn`) VALUES
+INSERT
+ignore  `lecture_day_week` (`ilecture`, `day_week`, `del_yn`) VALUES
 (4, 5, 0),
 (5, 3, 0),
 (5, 2, 0),
@@ -62,7 +67,8 @@ INSERT ignore  `lecture_day_week` (`ilecture`, `day_week`, `del_yn`) VALUES
 (56, 2, 0),
 (56, 3, 0);
 
-INSERT ignore  `lecture_name` (`ilecture_name`, `lecture_name`, `score`, `del_yn`) VALUES
+INSERT
+ignore  `lecture_name` (`ilecture_name`, `lecture_name`, `score`, `del_yn`) VALUES
 (1, '물리1', 1, 0),
 (17, '물리학1', 1, 0),
 (18, '수학1', 1, 0),
@@ -176,7 +182,8 @@ INSERT ignore  `lecture_name` (`ilecture_name`, `lecture_name`, `score`, `del_yn
 
 
 
-INSERT ignore  `lecture_room` (`ilecture_room`, `lecture_room_name`, `building_name`, `max_capacity`, `del_yn`) VALUES
+INSERT
+ignore  `lecture_room` (`ilecture_room`, `lecture_room_name`, `building_name`, `max_capacity`, `del_yn`) VALUES
 (1, '502호', '백매관', 30, 0),
 (2, '503호', '백매관', 30, 0),
 (3, '504호', '백매관', 30, 0),
@@ -184,7 +191,8 @@ INSERT ignore  `lecture_room` (`ilecture_room`, `lecture_room_name`, `building_n
 (5, '506호', '백매관', 30, 0);
 
 
-INSERT ignore  `lecture_applly` (`ilecture`, `ilecture_name`, `ilecture_room`, `iprofessor`, `isemester`, `opening_procedures`, `lecture_str_date`, `lecture_end_date`, `lecture_str_time`, `lecture_end_time`, `attendance`, `midterm_examination`, `final_examination`, `lecture_max_people`, `grade_limit`, `del_yn`, `created_at`) VALUES
+INSERT
+ignore  `lecture_applly` (`ilecture`, `ilecture_name`, `ilecture_room`, `iprofessor`, `isemester`, `opening_procedures`, `lecture_str_date`, `lecture_end_date`, `lecture_str_time`, `lecture_end_time`, `attendance`, `midterm_examination`, `final_examination`, `lecture_max_people`, `grade_limit`, `del_yn`, `created_at`) VALUES
                     (4, 17, 2, 100029, 21, 0, '2023-03-04', '2023-06-30', '09:00:00', '10:00:00', 30, 40, 30, 27, 3, 0, '2023-07-24 16:32:44'),
                     (5, 19, 2, 100007, 21, 0, '2023-03-04', '2023-06-30', '10:00:00', '11:00:00', 20, 40, 40, 30, 1, 0, '2023-07-24 16:37:26'),
                     (6, 78, 1, 100023, 21, 2, '2023-03-04', '2023-06-30', '10:00:00', '11:00:00', 20, 40, 40, 30, 1, 0, '2023-07-24 16:38:03'),
@@ -230,7 +238,8 @@ INSERT ignore  `lecture_applly` (`ilecture`, `ilecture_name`, `ilecture_room`, `
 
 
 
-INSERT ignore  `lecture_student` (`ilecture_student`, `istudent`, `ilecture`, `finished_yn`, `attendance`, `midterm_examination`, `final_examination`, `total_score`, `created_at`, `update_at`, `finished_at`, `correction_at`, `del_yn`) VALUES
+INSERT
+ignore  `lecture_student` (`ilecture_student`, `istudent`, `ilecture`, `finished_yn`, `attendance`, `midterm_examination`, `final_examination`, `total_score`, `created_at`, `update_at`, `finished_at`, `correction_at`, `del_yn`) VALUES
 (1, 1, 4, 1, 10, 10, 10, 30, '2023-07-24 16:46:29', '2023-08-02 18:22:20', '2023-07-24', '2023-08-11 12:39:14', 0),
 (2, 3, 4, 1, 10, 10, 10, 30, '2023-07-24 16:47:03', '2023-07-27 21:37:30', '2023-07-25', '2023-08-10 21:37:30', 0),
 (3, 4, 4, 1, 20, 25, 35, 80, '2023-07-24 16:47:14', '2023-07-24 16:47:14', NULL, NULL, 0),
@@ -288,7 +297,8 @@ INSERT ignore  `lecture_student` (`ilecture_student`, `istudent`, `ilecture`, `f
 (60, 26, 21, 1, 0, 0, 0, 0, '2023-08-07 17:55:14', '2023-08-07 17:55:14', NULL, NULL, 0),
 (61, 26, 22, 1, 0, 0, 0, 0, '2023-08-07 17:55:22', '2023-08-07 17:55:22', NULL, NULL, 0);
 
-INSERT ignore  `leture_condition` (`ilecture`, `return_ctnt`, `return_date`, `del_yn`) VALUES
+INSERT
+ignore  `leture_condition` (`ilecture`, `return_ctnt`, `return_date`, `del_yn`) VALUES
 (4, '진짜수업 개별로', '2023-07-24 18:21:11', 0),
 (5, '', '2023-08-07 20:17:00', 0),
 (18, '교수 개인 사정', '2023-08-04 18:09:55', 0),
@@ -296,60 +306,62 @@ INSERT ignore  `leture_condition` (`ilecture`, `return_ctnt`, `return_date`, `de
 (20, '반려', '2023-07-24 17:03:55', 0),
 (21, '개별로임', '2023-07-24 18:03:36', 0);
 
-INSERT ignore  `major` (`imajor`, `major_name`, `graduation_score`, `del_yn`) VALUES
-(1, 'IT융합학과', 120, 0),
-(2, '건축공학과', 120, 0),
-(3, '게임공학과', 115, 0),
-(4, '고분자공학과', 125, 0),
-(5, '건축설비과', 130, 0),
-(6, '광학공학과', 132, 0),
-(7, '건설정보과', 125, 0),
-(8, '건축과', 120, 0),
-(9, '건축학과', 130, 0),
-(10, '게임콘텐츠과', 3, 0),
-(11, '공업화학과', 125, 0),
-(12, '교양공학부', 130, 0),
-(13, '교통공학과', 120, 0),
-(14, '국방기술학과', 140, 0),
-(15, '금형설계과', 136, 0),
-(16, '기계과', 130, 0),
-(17, '기계설계과', 140, 0),
-(18, '냉동공조공학과', 120, 0),
-(19, '국방기술과', 126, 0),
-(20, '금속공학과', 130, 0),
-(21, '기계공학과', 135, 0),
-(22, '기계설계공학과', 135, 0),
-(23, '나노공학과', 140, 0),
-(24, '도시건설과', 130, 0),
-(25, '도시공학과', 130, 0),
-(26, '디지털콘텐츠학과', 135, 0),
-(27, '로봇공학과', 125, 0),
-(28, '멀티미디어과', 120, 0),
-(29, '멀티미디어학과', 125, 0),
-(30, '시스템공학과', 130, 0),
-(31, '스마트폰과', 135, 0),
-(32, '시스템경영공학과', 135, 0),
-(33, '신소재공학과', 120, 0),
-(34, '전기과', 120, 0),
-(35, '자동차공학과', 130, 0),
-(36, '전자과', 140, 0),
-(37, '조선공학과', 130, 0),
-(38, '컴퓨터공학과', 130, 0),
-(39, '소프트웨어공학과', 135, 0),
-(40, '토목과', 135, 0),
-(41, '항공정비과', 140, 0),
-(42, '항해학과', 130, 0),
-(43, '화장품과', 130, 0),
-(44, '화학공업과', 130, 0),
-(45, '환경화학과', 130, 0),
-(46, '원자력공학과', 140, 0),
-(47, '안경광학과', 120, 0),
-(48, '인터넷정보과', 120, 0),
-(49, '재료공학과', 120, 0),
-(50, '조경과', 130, 0);
 
+INSERT IGNORE `major`
+(`imajor`, `major_name`, `graduation_score`, `del_yn`, `remarks`)
+VALUES (1, 'q과', 120, 1, '구 ㅇㅇ'),
+       (2, '건축공학과', 120, 1, ' '),
+       (3, '무과과과과', 115, 1, '무과과과과'),
+       (4, '무과', 125, 1, '고분자공학과'),
+       (5, '무과과', 130, 0, '건축설비과'),
+       (6, '안하이과', 132, 0, '구 하이과'),
+       (7, '건설정보과', 125, 0, ' '),
+       (8, '건축과', 120, 1, ' '),
+       (9, '건축학과', 130, 1, ' '),
+       (10, '게임콘텐츠과', 130, 1, ' '),
+       (11, '공업화학과', 125, 0, ' '),
+       (12, '교양공학부', 130, 0, ' '),
+       (13, '교통공학과', 120, 0, ' '),
+       (14, '국방기술학과', 140, 0, ' '),
+       (15, '금형설계과', 136, 0, ' '),
+       (16, '기계과', 130, 0, ' '),
+       (17, '기계설계과', 140, 0, ' '),
+       (18, '냉동공조공학과', 120, 0, ' '),
+       (19, '국방기술과', 126, 0, ' '),
+       (20, '금속공학과', 130, 0, ' '),
+       (21, '기계공학과', 135, 0, ' '),
+       (22, '기계설계공학과', 135, 0, ' '),
+       (23, '나노공학과', 140, 0, ' '),
+       (24, '도시건설과', 130, 0, ' '),
+       (25, '도시공학과', 130, 0, ' '),
+       (26, '디지털콘텐츠학과', 135, 0, ' '),
+       (27, '로봇공학과', 125, 0, ' '),
+       (28, '멀티미디어과', 120, 0, ' '),
+       (29, '멀티미디어학과', 125, 0, ' '),
+       (30, '시스템공학과', 130, 0, ' '),
+       (31, '스마트폰과', 135, 0, ' '),
+       (32, '시스템경영공학과', 135, 0, ' '),
+       (33, '신소재공학과', 120, 0, ' '),
+       (34, '전기과', 120, 0, ' '),
+       (35, '자동차공학과', 130, 0, ' '),
+       (36, '전자과', 140, 0, ' '),
+       (37, '조선공학과', 130, 0, ' '),
+       (38, '컴퓨터공학과', 130, 0, ' '),
+       (39, '소프트웨어공학과', 135, 0, ' '),
+       (40, '토목과', 135, 0, ' '),
+       (41, '항공정비과', 140, 0, ' '),
+       (42, '항해학과', 130, 0, ' '),
+       (43, '화장품과', 130, 0, ' '),
+       (44, '화학공업과', 130, 0, ' '),
+       (45, '환경화학과', 130, 0, ' '),
+       (46, '원자력공학과', 140, 0, ' '),
+       (47, '안경광학과', 120, 0, ' '),
+       (48, '인터넷정보과', 120, 0, ' '),
+       (49, '재료공학과', 120, 0, ' '),
+       (50, '조경과', 130, 0, ' ');
 
-INSERT ignore  `professor` (`iprofessor`, `imajor`, `professor_password`, `nm`, `gender`, `pic`, `birthdate`, `phone`, `email`, `address`, `created_at`, `updated_at`, `del_yn`, `role`, `secret_key`) VALUES
+INSERT
+ignore  `professor` (`iprofessor`, `imajor`, `professor_password`, `nm`, `gender`, `pic`, `birthdate`, `phone`, `email`, `address`, `created_at`, `updated_at`, `del_yn`, `role`, `secret_key`) VALUES
 (100007, 2, '{bcrypt}$2a$10$8Qr6J57BbEcsmEfpNjdkZeKFEkmI8hfbBZqewQ7ey30fAqAyHcvby', 'sㅇㄴㅁ', 'F', '1442ae49-1579-4242-bd4c-682b4d0925f4.png', '2023-07-21', '010-9999-8888', 'pppp@naver.com', '대구 어딘가', '2023-07-21 16:59:53', '2023-08-04 10:56:27', 0, 'ROLE_PROFESSOR', NULL),
 (100009, 14, 'ae2c9bf215760b887504c847bf9b8dfa0e63dcb970f097e167df2695f8791fad', 'sㅇㄴㅁ', 'F', NULL, '2023-07-21', '010-123-456', 'dlsioz@naver.com', '아앙', '2023-07-21 17:00:13', '2023-07-21 17:00:13', 0, 'ROLE_PROFESSOR', NULL),
 (100011, 23, 'ae2c9bf215760b887504c847bf9b8dfa0e63dcb970f097e167df2695f8791fad', '배성현', 'F', NULL, '2023-07-21', '010-4567-4561', 'zlal@naver.com', '마마아', '2023-07-21 17:00:47', '2023-07-21 17:00:47', 0, 'ROLE_PROFESSOR', 'GMQWAUCRTRICGQ2MKS6ZRUHTYXXKTKF7'),
@@ -372,12 +384,14 @@ INSERT ignore  `professor` (`iprofessor`, `imajor`, `professor_password`, `nm`, 
 (100045, 1, '{bcrypt}$2a$10$SBNGOdIjxnh41zJfjrsb5uW0ZYdoK7m4UPRCtXh.ALfOwsjVX.ZGG', '교수교수', 'M', NULL, '1996-11-11', '010-1010-1010', 'aer1242@naver.com', NULL, '2023-08-04 19:48:02', '2023-08-04 19:48:02', 0, 'ROLE_PROFESSOR', 'GVNT2IMR4NFHQTOWYFACCD6EBAFACH75');
 
 
-INSERT ignore  `semester` (`isemester`, `year`, `semester`, `semester_str_date`, `semester_end_date`, `del_yn`) VALUES
+INSERT
+ignore  `semester` (`isemester`, `year`, `semester`, `semester_str_date`, `semester_end_date`, `del_yn`) VALUES
 (20, '2023', 1, '2023-03-02', '2023-06-30', 0),
 (21, '2023', 2, '2023-08-12', '2023-12-24', 0);
 
 
-INSERT ignore  `student` (`istudent`, `student_num`, `student_password`, `imajor`, `grade`, `nm`, `gender`, `pic`, `birthdate`, `phone`, `email`, `address`, `finished_yn`, `created_at`, `updated_at`, `del_yn`, `role`, `secret_key`) VALUES
+INSERT
+ignore  `student` (`istudent`, `student_num`, `student_password`, `imajor`, `grade`, `nm`, `gender`, `pic`, `birthdate`, `phone`, `email`, `address`, `finished_yn`, `created_at`, `updated_at`, `del_yn`, `role`, `secret_key`) VALUES
 (1, '23100001', '{bcrypt}$2a$10$aBwAsRU/ASrd68/qO8YiXeFDmPEhGCCikXC7jghzqoAbjYzxHJqXa', 10, 4, '재경킴', 'F', 'b9f4aa36-bc02-44b4-a6d5-931413b7e51b.jpg', '2023-07-21', '010-5555-7777', 'dkai@namve.com', '대구어딘', 2, '2023-07-21 17:00:14', '2023-08-04 11:37:32', 0, 'ROLE_STUDENT', '6TSLUM2XW65ZCHMG77SVIUUIW36C73YB'),
 (3, '23100002', 'ea0a97b661aee91b3b11cb37895fa8354edcd7a07c19d725c4d7309f11891194', 2, 3, '지녹제', 'F', NULL, '2023-07-21', '010-2120-3636', 'aert12341@naver.com', '대구시어쩌고저쩌고', 1, '2023-07-21 17:03:42', '2023-07-21 17:03:42', 0, 'ROLE_STUDENT', NULL),
 (4, '2310003', 'ea0a97b661aee91b3b11cb37895fa8354edcd7a07c19d725c4d7309f11891194', 3, 3, '지코바', 'F', NULL, '2023-07-21', '010-2120-3636', 'aert11@naver.com', '대구시어쩌고저쩌고', 1, '2023-07-21 17:06:01', '2023-07-21 17:06:01', 0, 'ROLE_STUDENT', '3D7DGBBA2FOMQHXMSF6RUN5AYMKK4DOF'),
@@ -429,7 +443,8 @@ INSERT ignore  `student` (`istudent`, `student_num`, `student_password`, `imajor
 (61, '23010019', '{bcrypt}$2a$10$qB9mE.jxpFxPhepXg.4VbesDPRl0PDvp2esR5Sx78YEXaXDPaEq92', 1, 1, '김재경 테스트', 'M', NULL, '1995-12-12', '010-0101-0101', NULL, NULL, 1, '2023-08-07 19:55:09', '2023-08-07 19:55:09', 0, 'ROLE_STUDENT', 'J6CWFDEV5N22QAFCIORWZDLNAF3HGLTT'),
 (62, '23040004', '{bcrypt}$2a$10$zewBULYN/PDRreSQIQjIL.z1y/2HmKLl/KwjRxqi/79oADkMX0JUq', 4, 1, 'adfadfadfadf', 'F', NULL, '1919-11-11', '010-1010-1010', NULL, NULL, 1, '2023-08-07 20:21:08', '2023-08-07 20:21:08', 0, 'ROLE_STUDENT', 'U4JIRPMEY6JZN6QUEPMHSEAAI6RA3X6N');
 
-INSERT ignore  `student_semester_score` (`istudent`, `isemester`, `score`, `grade`, `del_yn`, `avg_score`, `rating`) VALUES
+INSERT
+ignore  `student_semester_score` (`istudent`, `isemester`, `score`, `grade`, `del_yn`, `avg_score`, `rating`) VALUES
 (1, 20, 21, 3, 0, 38, 4.5),
 (1, 21, 16, 1, 0, 38, 2.6),
 (3, 20, 21, 1, 0, 90, 4.2),
@@ -446,7 +461,8 @@ INSERT ignore  `student_semester_score` (`istudent`, `isemester`, `score`, `grad
 (30, 20, 23, 3, 0, 70, 3.8),
 (30, 21, 21, 3, 0, 80, 2.6);
 
-INSERT ignore  `user_token` (`iuser`, `ip`, `created_at`, `updated_at`, `role`) VALUES
+INSERT
+ignore  `user_token` (`iuser`, `ip`, `created_at`, `updated_at`, `role`) VALUES
 (1, '0:0:0:0:0:0:0:1', '2023-08-02 17:08:42', '2023-08-03 14:17:45', 'ROLE_ADMIN'),
 (35, '0:0:0:0:0:0:0:1', '2023-08-02 17:24:32', '2023-08-02 17:24:32', 'ROLE_STUDENT'),
 (37, '127.0.0.1', '2023-08-02 17:39:54', '2023-08-02 17:41:57', 'ROLE_STUDENT'),
@@ -468,4 +484,5 @@ INSERT ignore  `user_token` (`iuser`, `ip`, `created_at`, `updated_at`, `role`) 
 (100040, '127.0.0.1', '2023-08-07 15:31:15', '2023-08-07 15:31:15', 'ROLE_PROFESSOR'),
 (100041, '0:0:0:0:0:0:0:1', '2023-08-07 17:42:44', '2023-08-07 17:42:44', 'ROLE_PROFESSOR'),
 (100045, '172.17.0.1', '2023-08-07 17:21:57', '2023-08-07 17:21:57', 'ROLE_PROFESSOR');
-set foreign_key_checks = 1;
+set
+foreign_key_checks = 1;

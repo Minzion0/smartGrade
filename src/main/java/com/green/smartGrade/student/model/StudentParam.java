@@ -6,8 +6,6 @@ import java.time.LocalDate;
 
 @Data
 public class StudentParam {
-
-    private Long istudent;
     private Long ilecture;
     private int finishedYn;
 
