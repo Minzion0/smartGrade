@@ -1,10 +1,12 @@
 package com.green.smartGrade.lecture_applly;
 
 import com.green.smartGrade.lecture_applly.model.*;
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,9 +26,25 @@ public class LectureAppllyController {
     +"attendace : 출결 배점<br>"+"midtermExamination : 중간고사 배점<br>"+"finalExamination : 기말고사 배점<br>"
     +"lectureMaxPeople : 강의최대 인원 1~30<br>"+"gradeLimit : 신청할수있는 학년범위 1~4<br>"+"delYn : 삭제 여부<br>"
            +"<br>" +"기본 배점 출결(20),중간고사(40),기말고사(40)<br>")
-    public LectureAppllyRes postApply(@RequestBody LectureAppllyInsParam param){
-
-            return service.InsApplly(param);
+    public LectureAppllyRes postApply(@AuthenticationPrincipal MyUserDetails details, @RequestBody LectureAppllyInsParam param){
+        LectureAppllyInsDto dto = new LectureAppllyInsDto();
+        dto.setIlectureName(param.getIlectureName());
+        dto.setIlectureRoom(param.getIlectureRoom());
+        dto.setIprofessor(details.getIuser());
+        dto.setIsemester(param.getIsemester());
+        dto.setOpeningProcedures(param.getOpeningProcedures());
+        dto.setLectureStrDate(param.getLectureStrDate());
+        dto.setLectureEndDate(param.getLectureEndDate());
+        dto.setLectureEndTime(param.getLectureEndTime());
+        dto.setLectureStrTime(param.getLectureStrTime());
+        dto.setDayWeek(param.getDayWeek());
+        dto.setAttendance(param.getAttendance());
+        dto.setMidtermExamination(param.getMidtermExamination());
+        dto.setFinalExamination(param.getFinalExamination());
+        dto.setLectureMaxPeople(param.getLectureMaxPeople());
+        dto.setGaredLimit(param.getGaredLimit());
+        dto.setDelYn(param.getDelYn());
+        return service.InsApplly(dto);
 
 
     }
@@ -38,10 +56,10 @@ public class LectureAppllyController {
     +"lectureStrTime : 강의 시작시간<br>"+"lectureEndTime : 강의 종료시간<br>"+"lectureMaxPeople : 수강인원 최대 30명<br>"+"gradeLimit : 신청할수있는 학년범위 1~4<br>"
     +"openingProcedures : 신청절차  0 반려 1개강신청 2개강인원모집중 3개강 4수강종료 1만나오게함<br>")
   public LectureApllySelRes getLectureApplly
-            (@RequestParam(defaultValue = "1") int page,@RequestParam (required = false) Long iprofessor){
+            (@RequestParam(defaultValue = "1") int page,@AuthenticationPrincipal MyUserDetails details){
 
 
 
-        return service.selLectureApplly(page,iprofessor);
+        return service.selLectureApplly(page,details.getIuser());
     }
 }

@@ -8,7 +8,6 @@ import java.time.LocalDate;
 public class LectureAppllyInsParam {
     private Long ilectureName;
     private Long ilectureRoom;
-    private Long iprofessor;
     private Long isemester;
     private int openingProcedures;
     private LocalDate lectureStrDate;

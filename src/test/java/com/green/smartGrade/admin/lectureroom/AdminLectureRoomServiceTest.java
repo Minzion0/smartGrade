@@ -52,18 +52,33 @@
 //    void selLectureRoom() {
 //        LectureRoomDetailDto dto = new LectureRoomDetailDto();
 //        List<LectureRoomVo> voList = new ArrayList<>();
-//        dto.setBuildingName("백매관");
-//        dto.setLectureRoomName("510호");
-//        dto.setIlectureRoom(1L);
+//        voList.add(new LectureRoomVo(1L, "502호", "백매관", 30, 0));
 //
 //        when(mapper.selLectureRoom(any())).thenReturn(voList);
 //
 //        LectureRoomFindRes res = service.selLectureRoom(dto);
 //
+//
+//        assertEquals(voList.get(0).getLectureRoomName(), res.getLectureRoom().get(0).getLectureRoomName());
+//        assertEquals(voList.get(0).getBuildingName(), res.getLectureRoom().get(0).getBuildingName());
+//        assertEquals(voList.get(0).getIlectureRoom(), res.getLectureRoom().get(0).getIlectureRoom());
+//
+//        verify(mapper).selLectureRoom(any());
 //    }
 //
 //    @Test
 //    void delLectureRoom() {
+//        LectureRoomDelDto dto = new LectureRoomDelDto();
+//        LectureRoomDelParam p = new LectureRoomDelParam();
+//
+//        dto.setIlectureRoom(p.getIlectureRoom());
+//
+//        when(mapper.delLectureRoom(any())).thenReturn(1);
+//
+//        LectureRoomRes res = service.delLectureRoom(p);
+//
+//        assertEquals(dto.getIlectureRoom(),res.getIlectureRoom());
+//
 //
 //    }
 //}
