@@ -12,7 +12,7 @@
 
     <select id="selProfessor">
         select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address,del_yn delYn
-        ,created_at createdAt
+        ,created_at createdAt,secret_key secretKey
         from professor
         WHERE iprofessor = #{iprofessor}
     </select>

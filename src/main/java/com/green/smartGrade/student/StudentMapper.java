@@ -14,7 +14,7 @@ public interface StudentMapper {
 
     int StudentCount();
 
-    List<StudentSelProfile> selStudentProfile(StudentSelProfileDto dto);
+    //List<StudentSelProfile> selStudentProfile(StudentSelProfileDto dto);
 
     List<StudentSelPointVo> selStudentRemainingPoint(StudentSelPointDto dto);
 
@@ -30,4 +30,7 @@ public interface StudentMapper {
     String picFilePathByStudent(Long istudent);
 
     void updateFilePathNullByStudent(Long istudent);
+
+    StudentSelProfile selStudentProfile(StudentSelProfileDto dto);
+    List<StudentMajor> selStudentMajor(StudentSelProfileDto dto);
 }

@@ -32,10 +32,11 @@ public class GradeMngmnController {
             , @RequestParam(required = false, defaultValue = "0") int grade
             , @RequestParam String studentNum) {
         GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
+        dto.setPage(page);
         dto.setGrade(grade);
         dto.setStudentNum(studentNum);
 
-        return SERVICE.selGradeFindStudentVo(dto, page);
+        return SERVICE.selGradeFindStudentVo(dto);
     }
 
     @GetMapping("/{istudent}")

@@ -17,4 +17,5 @@ public class ProfessorDatilProfile {
     private Long imajor;
     private LocalDateTime createdAt;
     private int delYn;
+    private String secretKey;
 }

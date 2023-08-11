@@ -20,5 +20,5 @@ public class StudentSelProfile {
     private LocalDateTime createdAt;
     private int finishedYn;
     private int score;
-
+    private String secretKey;
 }

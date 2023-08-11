@@ -55,7 +55,7 @@ public class StudentController {
     @Operation(summary = "학생 프로필 조회",description = "istudent : 학생pk<br>"+"studentNum : 학번<br>"+"imajor : 전공<br>"+
     "grade : 학년<br>"+ "nm : 이름<br>"+"pic : 사진<br>"+"birthdate : 생년월일<br>"+"phone : 폰번호<br>"+"email : 이메일<br>"+"address : 주소<br>"
     +"finishedYn : 재학여부<br> 1->재학중, 2-> 졸업<br>"+"score : 현재 채운 학점")
-    public StudentSelProfileRes getStudentProfile(@AuthenticationPrincipal MyUserDetails details) {
+    public StudentDatilProFileVo getStudentProfile(@AuthenticationPrincipal MyUserDetails details) {
         StudentSelProfileDto dto = new StudentSelProfileDto();
         dto.setIstudent(details.getIuser());
         return service.selStudentProfile(dto);
