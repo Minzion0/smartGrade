@@ -29,6 +29,8 @@ public class ProfessorService {
         List<ProfessorMajor> major = mapper.professorMajor(dto);
         ProfessorDatilProfile profile = mapper.selProfessor(dto);
 
+        profile.setSecretKey( profile.getSecretKey() == null ? "false" : "true");
+
 
         return ProfessoreDatailProFileVo.builder().profile(profile).lectureList(major).build();
     }
@@ -57,16 +59,16 @@ public class ProfessorService {
         dto.setEmail(param.getEmail());
         dto.setIprofessor(param.getIprofessor());
 
-        dto.setIprofessor(param.getIprofessor());
-        if (param.getPhone() != null && !param.getPhone().equals("string")) {
-            dto.setPhone(param.getPhone());
-        }
-        if (param.getEmail() != null && !param.getEmail().equals("string")) {
-            dto.setEmail(param.getEmail());
-        }
-        if (param.getAddress() != null && !param.getAddress().equals("string")) {
-            dto.setAddress(param.getAddress());
-        }
+//        dto.setIprofessor(param.getIprofessor());
+//        if (param.getPhone() != null && !param.getPhone().equals("string")) {
+//            dto.setPhone(param.getPhone());
+//        }
+//        if (param.getEmail() != null && !param.getEmail().equals("string")) {
+//            dto.setEmail(param.getEmail());
+//        }
+//        if (param.getAddress() != null && !param.getAddress().equals("string")) {
+//            dto.setAddress(param.getAddress());
+//        }
 
 
         result = mapper.upProfessor(dto);
@@ -110,11 +112,11 @@ public class ProfessorService {
         }
         return null;
     }
-    private boolean isAnyFieldSetExceptPic(ProfessorUpDto dto) {
-        return (dto.getAddress() != null && !dto.getAddress().equals("string"))
-                || (dto.getPhone() != null && !dto.getPhone().equals("string"))
-                || (dto.getEmail() != null && !dto.getEmail().equals("string"));
-    }
+//    private boolean isAnyFieldSetExceptPic(ProfessorUpDto dto) {
+//        return (dto.getAddress() != null && !dto.getAddress().equals("string"))
+//                || (dto.getPhone() != null && !dto.getPhone().equals("string"))
+//                || (dto.getEmail() != null && !dto.getEmail().equals("string"));
+//    }
 
 
 

@@ -9,4 +9,5 @@ import java.util.List;
 @Builder
 public class StudentDatilProFileVo {
     List<StudentMajor> lectureList;
+    StudentSelProfile profile;
 }
