@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                                     ,"/swagger.html"
                                     , "/swagger-ui/**"
                                     , "/v3/api-docs/**"
-
+                                    ,"/imgs/**"
                                     , "/index.html"
                                     ,"/static/**"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.

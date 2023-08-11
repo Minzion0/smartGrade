@@ -121,6 +121,42 @@ class AdminMapperTest {
 
     }
 
+    @Test
+    void findLectureCondition(){
+        AdminSelLectureDto dto = new AdminSelLectureDto();
+        dto.setRow(10);
+        dto.setStrIdx(0);
+        dto.setProcedures(-1);
+        List<AdminSelLectureRes> res = mapper.selLecture(dto);
+        for (AdminSelLectureRes num : res) {
+
+            int condition = mapper.findLectureCondition(num.getIlecture());
+            assertEquals(condition,num.getProcedures());
+        }
+        AdminSelLectureDto dto1 = new AdminSelLectureDto();
+        dto1.setRow(10);
+        dto1.setStrIdx(0);
+        dto1.setProcedures(1);
+
+        List<AdminSelLectureRes> res1 = mapper.selLecture(dto1);
+
+        for (AdminSelLectureRes test : res1) {
+            int condition = mapper.findLectureCondition(test.getIlecture());
+            assertEquals(condition,test.getProcedures());
+        }
+    }
+
+
+    @Test
+    void lectureCondition(){
+        AdminLectureConditionVo vo = mapper.lectureCondition(4L);
+
+        assertEquals(vo.getIlecture(),4L);
+//        assertEquals(vo.getReturnCtnt(),);
+
+
+
+    }
 
 
 }
