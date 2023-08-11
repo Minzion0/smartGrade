@@ -52,10 +52,10 @@
         WHERE iboard = #{iboard} AND del_yn = 0
     </select>
 
-    <select id="countBoard">
-        SELECT COUNT(*)
-        FROM board
-    </select>
+<!--    <select id="countBoard">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM board-->
+<!--    </select>-->
 
     <update id="updDelYnBoard">
         UPDATE board
@@ -70,17 +70,25 @@
     </update>
 
     <select id="selSearchBoard">
-        SELECT iboard, iadmin, title,importance, created_at createdAt, del_yn delYn, board_view boardView
-        FROM board
-        WHERE title LIKE CONCAT('%', #{title}, '%') AND del_yn = 0
-        ORDER BY createdAt DESC
-        LIMIT #{staIdx}, #{row}
+       SELECT iboard, iadmin, title,importance, created_at createdAt, del_yn delYn, board_view boardView
+       FROM board
+       <where>
+           <if test="title != null">
+               title LIKE CONCAT('%', #{title}, '%') AND del_yn = 0
+           </if>
+       </where>
+       ORDER BY createdAt DESC
+       LIMIT #{staIdx}, #{row}
     </select>
 
     <select id="countSearchBoard">
         SELECT COUNT(*)
         FROM board
-        WHERE title LIKE CONCAT('%', #{title}, '%') AND del_yn = 0
+        <where>
+            <if test="title != null">
+                title LIKE CONCAT('%', #{title}, '%') AND del_yn = 0
+            </if>
+        </where>
     </select>
 
 </mapper>

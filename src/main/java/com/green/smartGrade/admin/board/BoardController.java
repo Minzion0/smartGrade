@@ -1,11 +1,13 @@
 package com.green.smartGrade.admin.board;
 
 import com.green.smartGrade.admin.board.model.*;
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,9 +29,14 @@ public class BoardController {
                             "      \"title\": 제목,<br>\n" +
                             "      \"ctnt\": 내용,<br>\n" +
                             "      \"importance\": 중요도<br>")
-    public BoardInsRes insBoard (@RequestPart BoardInsParam param,
+    public BoardInsRes insBoard (BoardInsParam param, @AuthenticationPrincipal MyUserDetails details,
                                  @RequestPart(required = false) List<MultipartFile> pics) {
-        return SERVICE.insBoard(param,pics);
+        BoardInsDto dto = new BoardInsDto();
+        dto.setIadmin(details.getIuser());
+        dto.setTitle(param.getTitle());
+        dto.setCtnt(param.getCtnt());
+        dto.setImportance(param.getImportance());
+        return SERVICE.insBoard(dto,pics);
     }
 
     @PutMapping
@@ -39,8 +46,14 @@ public class BoardController {
                     "      \"title\": 제목,<br>\n" +
                     "      \"ctnt\": 내용,<br>\n" +
                     "      \"importance\": 중요도<br>")
-    public BoardUpdRes UpdBoard(@RequestBody BoardUpdParam param) {
-        return SERVICE.updBoard(param);
+    public BoardUpdRes UpdBoard(@AuthenticationPrincipal MyUserDetails details,@RequestBody BoardUpdParam param) {
+        BoardUpdDto dto = new BoardUpdDto();
+        dto.setTitle(param.getTitle());
+        dto.setIadmin(details.getIuser());
+        dto.setImportance(param.getImportance());
+        dto.setCtnt(param.getCtnt());
+        dto.setIboard(param.getIboard());
+        return SERVICE.updBoard(dto);
     }
 
     @GetMapping
@@ -54,8 +67,10 @@ public class BoardController {
             "      \"createdAt\": 작성날짜<br>\n" +
             "      \"delYn\": 삭제여부<br>\n" +
             "      \"boardView\": 조회수<br>")
-    public BoardRes selBoard (@RequestParam (defaultValue = "1") int page) {
-        return SERVICE.selBoard(page);
+    public BoardRes selBoard (@RequestParam (defaultValue = "1") int page, @RequestParam(required = false)String keyword) {
+        BoardSelSearchDto dto = new BoardSelSearchDto();
+        dto.setTitle(keyword);
+        return SERVICE.selBoard(page, dto);
     }
 
     @GetMapping("/importanceList")
@@ -89,23 +104,23 @@ public class BoardController {
         return SERVICE.updDelYnBoard(dto);
     }
 
-    @GetMapping("/search")
-    @Operation(summary = "게시글 검색",
-            description =
-            "      \"iboard\": \"board pk<br>\",\n" +
-            "      \"iadmin\": \"작성자 pk<br>\",\n" +
-            "      \"title\": 제목,<br>\n" +
-            "      \"ctnt\": 내용,<br>\n" +
-            "      \"importance\": 중요도<br>\n" +
-            "      \"createdAt\": 작성날짜<br>\n" +
-            "      \"delYn\": 삭제여부<br>\n" +
-            "      \"boardView\": 조회수<br>")
-
-    public  BoardRes getSearchBoard (@RequestParam (defaultValue = "1") int page,
-                                             String keyword) {
-        BoardSelSearchDto dto = new BoardSelSearchDto();
-        dto.setTitle(keyword);
-        dto.setPage(page);
-        return SERVICE.selSearchBoard(dto);
-    }
+//    @GetMapping("/search")
+//    @Operation(summary = "게시글 검색",
+//            description =
+//            "      \"iboard\": \"board pk<br>\",\n" +
+//            "      \"iadmin\": \"작성자 pk<br>\",\n" +
+//            "      \"title\": 제목,<br>\n" +
+//            "      \"ctnt\": 내용,<br>\n" +
+//            "      \"importance\": 중요도<br>\n" +
+//            "      \"createdAt\": 작성날짜<br>\n" +
+//            "      \"delYn\": 삭제여부<br>\n" +
+//            "      \"boardView\": 조회수<br>")
+//
+//    public  BoardRes getSearchBoard (@RequestParam (defaultValue = "1") int page,
+//                                             String keyword) {
+//        BoardSelSearchDto dto = new BoardSelSearchDto();
+//        dto.setTitle(keyword);
+//        dto.setPage(page);
+//        return SERVICE.selSearchBoard(dto);
+//    }
 }

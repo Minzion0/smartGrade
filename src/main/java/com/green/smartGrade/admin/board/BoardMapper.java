@@ -19,7 +19,6 @@ public interface BoardMapper {
     List<BoardSelVo> selSearchBoard (BoardSelSearchDto dto);
     int countSearchBoard(BoardSelSearchDto dto);
     List <BoardSelImportanceVo> selBoardImportance ();
-    int countBoard();
     BoardSelDetailVo selByIdBoard(BoardSelDetailDto dto);
 
     // 게시판 삭제
