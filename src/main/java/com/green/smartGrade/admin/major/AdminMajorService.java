@@ -26,7 +26,8 @@ public class AdminMajorService {
 
         int result = MAPPER.insMajor(dto);
         if (result == 1) {
-            new MajorRes(dto);
+            MajorRes majorRes = new MajorRes(dto);
+            return majorRes;
         }
         return null;
     }

@@ -1,7 +1,7 @@
 //package com.green.smartGrade.admin.major;
 //
-//import com.green.smartGrade.admin.major.model.MajorInsParam;
-//import com.green.smartGrade.admin.major.model.MajorRes;
+//import com.green.smartGrade.admin.major.model.*;
+//import com.green.smartGrade.utils.PagingUtils;
 //import org.junit.jupiter.api.Test;
 //import org.junit.jupiter.api.extension.ExtendWith;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
 //
 //import javax.swing.*;
+//
+//import java.util.List;
 //
 //import static org.junit.jupiter.api.Assertions.*;
 //import static org.mockito.ArgumentMatchers.any;

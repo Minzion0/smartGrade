@@ -164,7 +164,7 @@
 
     <select id="selPasswordCurrent">
         SELECT iprofessor id, role,
-        professor_password currentStudentPassword
+        professor_password currentProfessorPassword
         FROM professor
         WHERE iprofessor = #{iprofessor} AND role = #{role}
     </select>

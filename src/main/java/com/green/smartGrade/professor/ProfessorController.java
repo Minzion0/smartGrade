@@ -73,7 +73,7 @@ public class ProfessorController {
 
     @PutMapping("/changPassword")
     @Operation(summary = "비밀번호 변경",
-            description = "studentPassword : 바꿀 비밀번호 <br>" + "currentStudentPassword : 현재 비밀번호")
+            description = "studentPassword : 바꿀 비밀번호 <br>" + "currentProfessorPassword : 현재 비밀번호")
     public ResponseEntity<?> updPassword(@AuthenticationPrincipal MyUserDetails details,
                                          @RequestBody ProfessorUpdPasswordParam param) throws Exception {
         ProfessorUpdPasswordDto dto = new ProfessorUpdPasswordDto();
