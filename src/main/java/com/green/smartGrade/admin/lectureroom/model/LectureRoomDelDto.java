@@ -7,5 +7,5 @@ public class LectureRoomDelDto {
     private Long ilectureRoom;
     private String lectureRoomName;
     private String buildingName;
-
+    private int delYn;
 }

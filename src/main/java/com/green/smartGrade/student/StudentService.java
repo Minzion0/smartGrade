@@ -25,10 +25,9 @@ public class StudentService {
 
 
     public StudentInsRes insSdy(StudentInsDto dto) {
-        StudentParam param = new StudentParam();
 
-        dto.setIlecture(param.getIlecture());
-        dto.setFinishedYn(param.getFinishedYn());
+//        dto.setIlecture(param.getIlecture());
+//        dto.setFinishedYn(param.getFinishedYn());
 
 //        StudentInsDto apllyDto = new StudentInsDto();
 //        apllyDto.setDayWeek(String.valueOf(integer));
@@ -71,14 +70,14 @@ public class StudentService {
 
     }
 
-    public StudentSelProfileRes selStudentProfile(StudentSelProfileDto dto) {
+    public StudentDatilProFileVo selStudentProfile(StudentSelProfileDto dto) {
+        List<StudentMajor> major = mapper.selStudentMajor(dto);
+        StudentSelProfile profile = mapper.selStudentProfile(dto);
 
+        profile.setSecretKey(profile.getSecretKey() == null ? "false" : "true");
 
-        dto.setIstudent(dto.getIstudent());
-
-        List<StudentSelProfile> list = mapper.selStudentProfile(dto);
-
-        return StudentSelProfileRes.builder().list(list).build();
+        return StudentDatilProFileVo.builder()
+                .profile(profile).lectureList(major).build();
     }
 
     public StudentSelPointRes selStudentRemainingPoint(StudentSelPointDto dto) {
