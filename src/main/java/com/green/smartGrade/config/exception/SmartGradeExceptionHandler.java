@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.naming.AuthenticationException;
@@ -32,14 +31,13 @@ public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
         return handleAdminExceptionSet(CommonErrorCode.ADMIN_EXCEPTION, e.getMsg(),request.getRequestURI());
     }
 
-//    @ExceptionHandler(HttpClientErrorException.class)
-//    public
+
 
     // IllegalArgumentException 에러 처리
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException e,HttpServletRequest request) {
         log.warn("handleIllegalArgument", e);
-        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, e.getMessage(),request.getRequestURI());
+        return handleExceptionInternal(CommonErrorCode.GLOBAL_EXCEPTION, e.getMessage(),request.getRequestURI());
     }
 
     // 대부분의 에러 처리
@@ -48,9 +46,9 @@ public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleAllException", ex);
         if (ex.getMessage().length()<30){
 
-            return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION, ex.getMessage(),request.getRequestURI());
+            return handleExceptionInternal(CommonErrorCode.GLOBAL_EXCEPTION, ex.getMessage(),request.getRequestURI());
         }
-        return handleExceptionInternal(CommonErrorCode.OTHER_EXCEPTION,CommonErrorCode.OTHER_EXCEPTION.getMessage(),request.getRequestURI());
+        return handleExceptionInternal(CommonErrorCode.GLOBAL_EXCEPTION,CommonErrorCode.GLOBAL_EXCEPTION.getMessage(),request.getRequestURI());
     }
 
     // RuntimeException과 대부분의 에러 처리 메세지를 보내기 위한 메소드
@@ -68,7 +66,7 @@ public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
         return MyErrorResponse.builder()
                 .code(errorCode.name())
                 .dateTime(now())
-                .message(CommonErrorCode.OTHER_EXCEPTION.getMessage())
+                .message(CommonErrorCode.GLOBAL_EXCEPTION.getMessage())
                 .build();
     }
 
