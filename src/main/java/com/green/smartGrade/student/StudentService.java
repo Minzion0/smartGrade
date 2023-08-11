@@ -148,14 +148,14 @@ public class StudentService {
         return null;
 
     }
-    public String updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) {
+    public String updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) throws Exception {
         StudentSelCurrentPasswordDto passwordDto = new StudentSelCurrentPasswordDto();
         passwordDto.setRole(dto.getRole());
         passwordDto.setIstudent(dto.getIstudent());
         StudentSelCurrentPasswordVo vo = mapper.selPasswordCurrent(passwordDto);
 
         if (!PW_ENCODER.matches(param.getCurrentStudentPassword(), vo.getCurrentStudentPassword())){
-            return "비밀번호 변경을 실패했습니다.";
+            throw  new Exception("기존 비밀번호 입력을 다시 확인해주세요");
         }
         dto.setStudentPassword(param.getStudentPassword());
         String npw = PW_ENCODER.encode(dto.getStudentPassword());

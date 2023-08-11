@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class BoardSelSearchDto {
     private String title;
-    private int page;
     private int staIdx;
     private int row;
 }

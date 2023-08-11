@@ -88,7 +88,7 @@ public class StudentController {
     @PutMapping("/changPassword")
     @Operation(summary = "비밀번호 변경",
     description = "studentPassword : 바꿀 비밀번호 <br>" + "currentStudentPassword : 현재 비밀번호")
-    public ResponseEntity<?> updPassword(@AuthenticationPrincipal MyUserDetails details, @RequestBody StudentUpdPasswordParam param ) {
+    public ResponseEntity<?> updPassword(@AuthenticationPrincipal MyUserDetails details, @RequestBody StudentUpdPasswordParam param ) throws Exception {
         StudentUpdPasswordDto dto = new StudentUpdPasswordDto();
         Long  iuser = details.getIuser();
         String role = details.getRoles().get(0);

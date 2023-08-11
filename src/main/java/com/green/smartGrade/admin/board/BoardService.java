@@ -23,14 +23,8 @@ public class BoardService {
     @Value("${file.dir}")
     private String fileDir;
 
-    public BoardInsRes insBoard(BoardInsParam param, List<MultipartFile> pics) {
+    public BoardInsRes insBoard(BoardInsDto dto, List<MultipartFile> pics) {
         int result = 0;
-
-        BoardInsDto dto = new BoardInsDto();
-        dto.setImportance(param.getImportance());
-        dto.setCtnt(param.getCtnt());
-        dto.setIadmin(param.getIadmin());
-        dto.setTitle(param.getTitle());
 
         result = MAPPER.insBoard(dto);
 
@@ -69,12 +63,8 @@ public class BoardService {
         return null;
     }
 
-    public BoardUpdRes updBoard (BoardUpdParam param) {
-        BoardUpdDto dto = new BoardUpdDto();
-        dto.setCtnt(param.getCtnt());
-        dto.setTitle(param.getTitle());
-        dto.setImportance(param.getImportance());
-        dto.setIboard(param.getIboard());
+    public BoardUpdRes updBoard (BoardUpdDto dto) {
+
         int result = MAPPER.updBoard(dto);
         if (result == 1) {
             return new BoardUpdRes(dto);
@@ -82,40 +72,48 @@ public class BoardService {
         return null;
     }
 
-    public BoardRes selBoard (int page) {
-        int maxPage = MAPPER.countBoard();
+    public BoardRes selBoard (int page, BoardSelSearchDto dto) {
+//        int maxPage = MAPPER.countBoard();
+        int searchCount = MAPPER.countSearchBoard(dto);
         int row = 10;
         final int MAX_ROW = 3;
 
         List<BoardSelVo> list = new ArrayList<>();
         PagingUtils utils = new PagingUtils();
 
-        if (selBoardImportance().size() < MAX_ROW ) {
-            utils = new PagingUtils(page, maxPage, row);
-            list = MAPPER.selBoard(utils.getStaIdx(), row - selBoardImportance().size());
+        if (dto.getTitle() == null) {
+            if (selBoardImportance().size() < MAX_ROW ) {
+                utils = new PagingUtils(page, searchCount, row);
+                list = MAPPER.selBoard(utils.getStaIdx(), row - selBoardImportance().size());
+            } else {
+                utils = new PagingUtils(page, searchCount, row);
+                list = MAPPER.selBoard(utils.getStaIdx(), utils.getROW() - MAX_ROW);
+            }
         } else {
-            utils = new PagingUtils(page, maxPage, row);
-            list = MAPPER.selBoard(utils.getStaIdx(), utils.getROW() - MAX_ROW);
+            utils = new PagingUtils(page,searchCount);
+            dto.setStaIdx(utils.getStaIdx());
+            dto.setRow(row);
+            list = MAPPER.selSearchBoard(dto);
         }
         return BoardRes.builder()
                 .page(utils)
                 .list(list)
                 .build();
     }
-    public BoardRes selSearchBoard (BoardSelSearchDto dto) {
-
-        int maxPage = MAPPER.countSearchBoard(dto);
-
-        PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
-        dto.setRow(utils.getROW());
-        List<BoardSelVo> list = MAPPER.selSearchBoard(dto);
-        log.info("list : {}", list);
-        return BoardRes.builder()
-                .list(list)
-                .page(utils)
-                .build();
-
-    }
+//    public BoardRes selSearchBoard (BoardSelSearchDto dto) {
+//
+//        int maxPage = MAPPER.countSearchBoard(dto);
+//
+//        PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
+//        dto.setRow(utils.getROW());
+//        List<BoardSelVo> list = MAPPER.selSearchBoard(dto);
+//        log.info("list : {}", list);
+//        return BoardRes.builder()
+//                .list(list)
+//                .page(utils)
+//                .build();
+//
+//    }
     public List <BoardSelImportanceVo> selBoardImportance () {
        return MAPPER.selBoardImportance();
     }
