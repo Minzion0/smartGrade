@@ -46,12 +46,12 @@ public class AdminLectureRoomService {
 
 
 
-    public LectureRoomRes delLectureRoom(LectureRoomDelParam p) {
+    public LectureRoomDelRes delLectureRoom(LectureRoomDelParam p) {
         LectureRoomDelDto dto = new LectureRoomDelDto();
         dto.setIlectureRoom(p.getIlectureRoom());
         int result = MAPPER.delLectureRoom(dto);
         if (result == 1) {
-            new LectureRoomRes(dto);
+            new LectureRoomDelRes(dto);
         }
         return null;
     }

@@ -5,13 +5,10 @@
 <mapper namespace="com.green.smartGrade.admin.grade_mngmn.GradeMngmnMapper">
 
     <select id="selGradeFindStudent">
-        SELECT A.istudent istudent, G.nm name, G.student_num studentNum,
-        A.grade grade,B.semester semester,
+        SELECT distinct A.grade grade,B.semester semester,
         D.lecture_name lectureName,
         E.nm professorName, D.score lectureScore,
-        F.total_score totalScore,
-        A.grade grade, B.semester semester,
-        A.avg_score avgScore, A.rating avgRating
+        F.total_score totalScore
         FROM student_semester_score A
         INNER JOIN semester B
         ON A.isemester = B.isemester
@@ -74,7 +71,6 @@
                 and A.student_num = #{studentNum}
             </if>
         </where>
-        LIMIT #{staIdx}, 7
     </select>
 
     <select id="selGradeFindStudentVo">

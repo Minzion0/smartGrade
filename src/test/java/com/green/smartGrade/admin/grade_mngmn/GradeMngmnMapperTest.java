@@ -46,10 +46,6 @@
 //    }
 //
 //    @Test
-//    void selGradeFindStudentVo() {
-//    }
-//
-//    @Test
 //    void selGradeFindStudent() {
 //        GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
 //        List<GradeMngmnVo> voList = mapper.selGradeFindStudent(dto);
@@ -75,9 +71,5 @@
 //        assertEquals(vo.getAvgScore(), 38);
 //        assertEquals(vo.getAvgRating(), 4.5);
 //        assertEquals(vo.getGrade(), 3);
-//    }
-//
-//    @Test
-//    void selGradeMngmnStudent() {
 //    }
 //}
