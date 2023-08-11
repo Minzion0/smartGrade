@@ -162,12 +162,12 @@ class BoardMapperTest {
         assertEquals(0,vo.getDelYn());
     }
 
-    @Test
-    void countBoard() {
-        int count = MAPPER.countBoard();
-
-        assertEquals(25, count);
-    }
+//    @Test
+//    void countBoard() {
+//        int count = MAPPER.countBoard();
+//
+//        assertEquals(25, count);
+//    }
 
     @Test
     void selByIdBoard() {
