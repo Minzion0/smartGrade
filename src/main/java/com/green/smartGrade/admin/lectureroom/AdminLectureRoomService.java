@@ -46,14 +46,14 @@ public class AdminLectureRoomService {
 
 
 
-    public LectureRoomDelRes delLectureRoom(LectureRoomDelParam p) {
+    public LectureRoomDelRes delLectureRoom(LectureRoomDelParam p) throws Exception{
         LectureRoomDelDto dto = new LectureRoomDelDto();
         dto.setIlectureRoom(p.getIlectureRoom());
         int result = MAPPER.delLectureRoom(dto);
         if (result == 1) {
-            new LectureRoomDelRes(dto);
+            return new LectureRoomDelRes(dto);
         }
-        return null;
+        throw new Exception("삭제 안됨");
     }
 
 }
