@@ -1,5 +1,6 @@
 package com.green.smartGrade.admin;
 
+import com.green.smartGrade.admin.model.AdminInsSemesterParam;
 import com.green.smartGrade.security.config.RedisService;
 import com.green.smartGrade.security.config.security.JwtTokenProvider;
 import com.green.smartGrade.security.config.security.SecurityConfiguration;
@@ -15,11 +16,15 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 @WebMvcTest(controllers = AdminController.class)
 @Import({SecurityConfiguration.class, JwtTokenProvider.class})
 class AdminControllerTest {
@@ -55,6 +60,17 @@ class AdminControllerTest {
 
     @Test
     void semesterIns() {
+        AdminInsSemesterParam param= new AdminInsSemesterParam();
+        param.setSemester(2);
+        param.setYear("2034");
+        param.setSemesterStrDate(LocalDate.now());
+        param.setSemesterEndDate(LocalDate.of(2024,12,25));
+        String path = "/api/admin";
+
+
+       // mvc.perform(MockMvcRequestBuilders.post(path+"/semester"))
+               // .param("semester","2","year","2034","semesterStrDate",LocalDate.now().toString(),"semesterEndDate",LocalDate.of(2024,12,25).toString())
+
     }
 
     @Test
