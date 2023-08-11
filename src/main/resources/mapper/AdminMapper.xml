@@ -72,15 +72,13 @@
         GROUP BY A.istudent
         HAVING score>= C.graduation_score
 
-
     </select>
     <update id="updGraduationStudent">
-        <foreach collection="list" item="item" open="" close="">
+        <foreach collection="list" item="item" open=""  close="">
             update student
             set finished_yn=2
-            where istudent =#{item.istudent}
+            where istudent =#{item.istudent};
         </foreach>
-
     </update>
     <select id="findLectureCondition">
         select opening_procedures

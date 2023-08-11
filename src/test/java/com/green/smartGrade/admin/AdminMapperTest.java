@@ -2,6 +2,7 @@ package com.green.smartGrade.admin;
 
 
 import com.green.smartGrade.admin.model.*;
+import com.green.smartGrade.admin.student.model.AdminGraduationStudentVo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -152,11 +155,64 @@ class AdminMapperTest {
         AdminLectureConditionVo vo = mapper.lectureCondition(4L);
 
         assertEquals(vo.getIlecture(),4L);
-//        assertEquals(vo.getReturnCtnt(),);
+        assertEquals(vo.getReturnCtnt(),"진짜수업 개별로");
+        assertEquals(vo.getReturnDate(),"2023-07-24");
 
 
+        AdminLectureConditionVo vo1 = mapper.lectureCondition(18L);
+
+        assertEquals(vo1.getIlecture(),18L);
+        assertEquals(vo1.getReturnCtnt(),"교수 개인 사정");
+        assertEquals(vo1.getReturnDate(),"2023-08-04");
 
     }
 
+    @Test
+    void semesterIns(){
+        AdminInsSemesterParam param = new AdminInsSemesterParam();
+        param.setSemester(1);
+        param.setYear("2025");
 
+        param.setSemesterStrDate(LocalDate.now());
+        param.setSemesterEndDate(LocalDate.of(2024,04,20));
+        AdminInsSemesterDto dto = new AdminInsSemesterDto(param);
+         mapper.semesterIns(dto);
+         assertEquals(dto.getIsemester(),34);
+
+    }
+
+    @Test
+    void getSemester(){
+        List<AdminGetSemesterVo> semester = mapper.getSemester(null);
+        AdminGetSemesterVo vo = semester.get(0);
+        assertEquals(vo.getSemester(),1);
+        assertEquals(vo.getYear(),"2023");
+        assertEquals(vo.getSemesterStrDate().toString(),"2023-03-02");
+        assertEquals(vo.getSemesterEndDate().toString(),"2023-06-30");
+    }
+
+    @Test
+    void graduationStudent(){
+        List<AdminGraduationStudentVo> vos = mapper.graduationStudent();
+        int size = vos.size();
+        assertEquals(size,0);
+    }
+
+
+    @Test
+    void updGraduationStudent(){
+        List<AdminGraduationStudentVo> vo =new ArrayList<>();
+        AdminGraduationStudentVo studentVo = new AdminGraduationStudentVo();
+        studentVo.setIstudent(4L);
+        AdminGraduationStudentVo studentVo2 = new AdminGraduationStudentVo();
+        studentVo2.setIstudent(6L);
+        AdminGraduationStudentVo studentVo3 = new AdminGraduationStudentVo();
+        studentVo3.setIstudent(7L);
+        vo.add(studentVo);
+        vo.add(studentVo2);
+        vo.add(studentVo3);
+
+        int i = mapper.updGraduationStudent(vo);
+        assertEquals(i,1);
+    }
 }
