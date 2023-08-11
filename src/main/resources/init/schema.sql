@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS board (
   CONSTRAINT `board_ibfk_1` FOREIGN KEY (`iadmin`) REFERENCES `admin` (`iadmin`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+drop table if EXISTS board_pics;
+
 CREATE TABLE IF NOT EXISTS board_pics (
   `ipic` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `iboard` bigint(20) unsigned NOT NULL,
@@ -38,7 +40,7 @@ CREATE TABLE IF NOT EXISTS board_pics (
   CONSTRAINT `board_pics_ibfk_1` FOREIGN KEY (`iboard`) REFERENCES `board` (`iboard`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
+drop table if EXISTS lecture_name;
 
 CREATE TABLE IF NOT EXISTS lecture_name (
   `ilecture_name` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의pk',
@@ -50,7 +52,7 @@ CREATE TABLE IF NOT EXISTS lecture_name (
   ) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의';
 
 
-
+drop table if EXISTS major;
 
 CREATE TABLE IF NOT EXISTS major (
   `imajor` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '전공pk',
@@ -61,6 +63,8 @@ CREATE TABLE IF NOT EXISTS major (
   PRIMARY KEY (`imajor`),
   UNIQUE KEY `major_name` (`major_name`)
   ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='전공';
+
+drop table if EXISTS professor;
 
 CREATE TABLE IF NOT EXISTS professor (
   `iprofessor` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '교수pk',
@@ -84,6 +88,8 @@ CREATE TABLE IF NOT EXISTS professor (
   CONSTRAINT `professor_ibfk_1` FOREIGN KEY (`imajor`) REFERENCES `major` (`imajor`)
   ) ENGINE=InnoDB AUTO_INCREMENT=100046 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='교수프로필';
 
+drop table if EXISTS semester;
+
 CREATE TABLE IF NOT EXISTS semester (
   `isemester` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `year` year(4) DEFAULT year(current_timestamp()),
@@ -100,7 +106,7 @@ CREATE TABLE IF NOT EXISTS semester (
 
 
 
-
+drop table if EXISTS student;
 
 
 
@@ -131,7 +137,7 @@ CREATE TABLE IF NOT EXISTS student (
 ) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-
+drop table if EXISTS student_semester_score;
 
 
 CREATE TABLE IF NOT EXISTS student_semester_score (
@@ -150,6 +156,8 @@ CREATE TABLE IF NOT EXISTS student_semester_score (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+drop table if EXISTS user_token;
+
 CREATE TABLE IF NOT EXISTS user_token (
   `iuser` bigint(20) unsigned NOT NULL,
   `ip` varchar(15) NOT NULL,
@@ -159,6 +167,7 @@ CREATE TABLE IF NOT EXISTS user_token (
   PRIMARY KEY (`iuser`,`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+drop table if EXISTS lecture_applly;
 
 CREATE TABLE IF NOT EXISTS lecture_applly (
   `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의신청pk',
@@ -188,6 +197,9 @@ CREATE TABLE IF NOT EXISTS lecture_applly (
   CONSTRAINT `lecture_applly_ibfk_3` FOREIGN KEY (`iprofessor`) REFERENCES `professor` (`iprofessor`),
   CONSTRAINT `lecture_applly_ibfk_4` FOREIGN KEY (`isemester`) REFERENCES `semester` (`isemester`)
   ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 신청';
+
+drop table if EXISTS lecture_day_week;
+
 CREATE TABLE IF NOT EXISTS lecture_day_week (
   `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
   `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
@@ -195,6 +207,9 @@ CREATE TABLE IF NOT EXISTS lecture_day_week (
   KEY `ilecture` (`ilecture`),
   CONSTRAINT `lecture_day_week_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 요일';
+
+drop table if EXISTS lecture_student;
+
 CREATE TABLE IF NOT EXISTS lecture_student (
   `ilecture_student` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `istudent` bigint(20) unsigned NOT NULL,
@@ -215,6 +230,9 @@ CREATE TABLE IF NOT EXISTS lecture_student (
   CONSTRAINT `lecture_student_ibfk_1` FOREIGN KEY (`istudent`) REFERENCES `student` (`istudent`),
   CONSTRAINT `lecture_student_ibfk_2` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+drop table if EXISTS lecture_day_week;
+
 CREATE TABLE IF NOT EXISTS lecture_day_week (
   `ilecture` bigint(20) unsigned DEFAULT NULL COMMENT '강의신청pk',
   `day_week` int(11) NOT NULL DEFAULT 0 COMMENT '강의요일',
@@ -222,6 +240,9 @@ CREATE TABLE IF NOT EXISTS lecture_day_week (
   KEY `ilecture` (`ilecture`),
   CONSTRAINT `lecture_day_week_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 요일';
+
+drop table if EXISTS lecture_room;
+
 CREATE TABLE IF NOT EXISTS lecture_room (
   `ilecture_room` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '강의실pk',
   `lecture_room_name` varchar(50) NOT NULL COMMENT '강의실이름',
@@ -231,7 +252,7 @@ CREATE TABLE IF NOT EXISTS lecture_room (
   PRIMARY KEY (`ilecture_room`)
   ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의실';
 
-
+drop table if EXISTS leture_condition;
 
 CREATE TABLE IF NOT EXISTS `leture_condition` (
   `ilecture` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '수강반려pk',
@@ -241,4 +262,6 @@ CREATE TABLE IF NOT EXISTS `leture_condition` (
   PRIMARY KEY (`ilecture`),
   CONSTRAINT `leture_condition_ibfk_1` FOREIGN KEY (`ilecture`) REFERENCES `lecture_applly` (`ilecture`)
   ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='강의 상태';
+
+
 set foreign_key_checks = 1;

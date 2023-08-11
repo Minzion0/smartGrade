@@ -1,5 +1,6 @@
 set
 foreign_key_checks = 0;
+
 INSERT
 ignore  `admin` (`iadmin`, `admin_Id`, `admin_password`, `del_yn`, `role`, `secret_key`) VALUES
 (1, 'admin', '{bcrypt}$2a$10$JaMwQdbpjKN/BgycWDDRKurWqpA9WFufe42h1ToIIipI1TO5ztRWm', 0, 'ROLE_ADMIN', NULL);
