@@ -33,6 +33,7 @@ public class AdminLectureRoomService {
     public LectureRoomFindRes selLectureRoom(LectureRoomDetailDto dto) {
         int maxPage = MAPPER.countLectureRoom();
         PagingUtils utils = new PagingUtils(dto.getPage(),maxPage);
+        dto.setStaIdx(utils.getStaIdx());
 
         List<LectureRoomVo> lectureRoom = MAPPER.selLectureRoom(dto);
         List<LectureRoomListVo> lectureRoomList = MAPPER.lectureRoomList(dto);

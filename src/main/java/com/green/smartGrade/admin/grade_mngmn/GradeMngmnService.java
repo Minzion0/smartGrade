@@ -19,10 +19,11 @@ public class GradeMngmnService {
     private final GradeMngmnMapper MAPPER;
 
 
-    public GradeMngmnDetailAvgVo selGradeFindStudentVo(GradeMngmnAvgDto dto, int page) {
+    public GradeMngmnDetailAvgVo selGradeFindStudentVo(GradeMngmnAvgDto dto) {
         int maxPage = MAPPER.countGradeFindStudent();
 
-        PagingUtils utils = new PagingUtils(page, maxPage);
+        PagingUtils utils = new PagingUtils(dto.getPage(), maxPage);
+        dto.setStaIdx(utils.getStaIdx());
 
         if (dto.getStudentNum() != null) {
             dto.setStudentNum(dto.getStudentNum().replaceAll(" ", ""));
