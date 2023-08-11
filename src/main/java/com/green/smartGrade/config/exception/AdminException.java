@@ -7,7 +7,7 @@ import lombok.Getter;
 
 public class AdminException extends RuntimeException {
     private  ErrorCode errorCode;
-    private  String  msg;
+    private  String   msg;
 
 
     public AdminException(String msg){
