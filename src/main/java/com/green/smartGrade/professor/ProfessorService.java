@@ -137,7 +137,7 @@ public class ProfessorService {
         passwordDto.setIprofessor(dto.getIprofessor());
         ProfessorSelCurrentPasswordVo vo = mapper.selPasswordCurrent(passwordDto);
 
-        if (!PW_ENCODER.matches(param.getCurrentStudentPassword(), vo.getCurrentStudentPassword())){
+        if (!PW_ENCODER.matches(param.getCurrentProfessorPassword(), vo.getCurrentStudentPassword())){
             throw  new Exception("기존 비밀번호 입력을 다시 확인해주세요");
         }
         dto.setProfessorPassword(param.getProfessorPassword());
