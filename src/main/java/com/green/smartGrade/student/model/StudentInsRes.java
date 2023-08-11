@@ -37,18 +37,6 @@ public class StudentInsRes {
         this.delYn = dto.getFinishedYn();
     }
 
-//    public void setDto(StudentInsDto dto) {
-//        this.ilectureStudent = dto.getIlectureStudent();
-//        this.istudent = dto.getIstudent();
-//        this.ilecture = dto.getIlecture();
-//        this.finishedYn =  dto.getFinishedYn();
-//        this.dayWeek = dto.getDayWeek();
-//        this.attendance = dto.getAttendance();
-//        this.midtermExamination = dto.getMidtermExamination();
-//        this.finalExamination =dto.getFinalExamination();
-//        this.totalScore = dto.getTotalScore();
-//        this.createdAt = LocalDate.now();
-//        this.delYn = dto.getFinishedYn();
-//    }
+
 
 }

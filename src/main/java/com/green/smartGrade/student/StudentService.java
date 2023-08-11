@@ -25,8 +25,6 @@ public class StudentService {
 
 
     public StudentInsRes insSdy(StudentInsDto dto) {
-        StudentParam param = new StudentParam();
-
 
 //        dto.setIlecture(param.getIlecture());
 //        dto.setFinishedYn(param.getFinishedYn());
