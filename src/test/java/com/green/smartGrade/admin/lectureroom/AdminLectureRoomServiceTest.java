@@ -77,11 +77,10 @@
 //
 //        when(mapper.delLectureRoom(any())).thenReturn(1);
 //
-//        LectureRoomDelRes res = service.delLectureRoom(any());
+//        LectureRoomDelRes res = service.delLectureRoom(p);
 //
 //        assertEquals(res.getIlectureRoom(), p.getIlectureRoom());
 //
-//
-//        verify(mapper.delLectureRoom(any()));
+//        verify(mapper).delLectureRoom(any());
 //    }
 //}

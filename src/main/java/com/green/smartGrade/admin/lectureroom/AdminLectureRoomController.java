@@ -48,7 +48,7 @@ public class AdminLectureRoomController {
             "ilectureRoom : 강의실 pk \n" +
             "\n lectureRoomName : 강의실 호수 \n" +
             "\n buildingName : 건물 이름")
-    public LectureRoomDelRes delLectureRoom(@RequestParam Long ilectureRoom) {
+    public LectureRoomDelRes delLectureRoom(@RequestParam Long ilectureRoom) throws Exception{
         LectureRoomDelParam p = new LectureRoomDelParam();
         p.setIlectureRoom(ilectureRoom);
         return SERVICE.delLectureRoom(p);
