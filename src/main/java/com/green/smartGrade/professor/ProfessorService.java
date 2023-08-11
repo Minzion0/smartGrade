@@ -70,7 +70,6 @@ public class ProfessorService {
 
 
         result = mapper.upProfessor(dto);
-
         if (result == 1 ) {
             if (pic != null) {
 
@@ -111,7 +110,11 @@ public class ProfessorService {
         }
         return null;
     }
-
+    private boolean isAnyFieldSetExceptPic(ProfessorUpDto dto) {
+        return (dto.getAddress() != null && !dto.getAddress().equals("string"))
+                || (dto.getPhone() != null && !dto.getPhone().equals("string"))
+                || (dto.getEmail() != null && !dto.getEmail().equals("string"));
+    }
 
 
 
