@@ -67,6 +67,14 @@ class GradeMngmnMapperTest {
 
     @Test
     void gradeMngmnAvg() {
+        GradeMngmnAvgDto dto = new GradeMngmnAvgDto();
+        List<GradeMngmnAvgVo> voList = mapper.GradeMngmnAvg(dto);
+
+        GradeMngmnAvgVo vo = voList.get(0);
+        assertEquals(vo.getSemester(),1);
+        assertEquals(vo.getAvgScore(), 38);
+        assertEquals(vo.getAvgRating(), 4.5);
+        assertEquals(vo.getGrade(), 3);
     }
 
     @Test
