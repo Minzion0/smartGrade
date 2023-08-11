@@ -65,7 +65,7 @@
 //
 //        verify(mapper).selLectureRoom(any());
 //    }
-
+//
 //    @Test
 //    void delLectureRoom() {
 //        LectureRoomDelDto dto = new LectureRoomDelDto();
