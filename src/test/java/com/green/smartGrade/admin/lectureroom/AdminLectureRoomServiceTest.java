@@ -78,7 +78,5 @@ class AdminLectureRoomServiceTest {
         LectureRoomRes res = service.delLectureRoom(p);
 
         assertEquals(dto.getIlectureRoom(),res.getIlectureRoom());
-
-
     }
 }
