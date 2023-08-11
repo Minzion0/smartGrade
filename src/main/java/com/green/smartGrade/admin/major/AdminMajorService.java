@@ -3,6 +3,7 @@ package com.green.smartGrade.admin.major;
 import com.green.smartGrade.admin.lectureroom.model.LectureRoomRes;
 import com.green.smartGrade.admin.major.model.*;
 import com.green.smartGrade.utils.PagingUtils;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class AdminMajorService {
     }
 
     public MajorfindRes selMajor(MajorSelDto dto) {
-        int maxPage = MAPPER.countMajor();
+        int maxPage = MAPPER.countMajor(dto);
         PagingUtils utils = new PagingUtils(dto.getPage(),maxPage);
-
+        dto.setStaIdx(utils.getStaIdx());
 
         List<MajorVo> major = MAPPER.selMajor(dto);
         return MajorfindRes.builder()

@@ -104,7 +104,7 @@
 
     <select id="selGradeMngmnStudent">
         SELECT distinct B.istudent istudent, A.nm name, A.student_num studentNum
-        from student A
+        FROM student A
         INNER JOIN student_semester_score B
         ON A.istudent = B.istudent
         <where>

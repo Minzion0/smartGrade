@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class MajorSelDto {
     private String majorName;
+    private String delYn;
     private int page;
     private int staIdx;
 }

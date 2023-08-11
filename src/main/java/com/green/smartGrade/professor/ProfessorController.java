@@ -24,7 +24,7 @@ public class ProfessorController {
 
     @GetMapping
     @Operation(summary = "교수 프로필 보기")
-    public ProfessoreDatailProFileVo getProfessor(@AuthenticationPrincipal MyUserDetails details) {
+    public ProfessoreDatailProFileVo getProfessor(@AuthenticationPrincipal MyUserDetails details)  {
         ProfessorSelDto dto = new ProfessorSelDto();
         dto.setIprofessor(details.getIuser());
 
