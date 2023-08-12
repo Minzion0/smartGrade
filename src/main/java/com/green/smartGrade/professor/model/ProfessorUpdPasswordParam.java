@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ProfessorUpdPasswordParam {
     private String professorPassword;
-    private String currentStudentPassword;
+    private String currentProfessorPassword;
 }

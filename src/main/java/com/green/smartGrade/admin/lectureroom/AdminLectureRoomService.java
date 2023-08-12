@@ -51,7 +51,8 @@ public class AdminLectureRoomService {
         dto.setIlectureRoom(p.getIlectureRoom());
         int result = MAPPER.delLectureRoom(dto);
         if (result == 1) {
-            new LectureRoomDelRes(dto);
+            LectureRoomDelRes res = new LectureRoomDelRes(dto);
+            return res;
         }
         return null;
     }

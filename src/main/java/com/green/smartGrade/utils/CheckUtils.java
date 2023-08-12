@@ -52,8 +52,7 @@ public class CheckUtils {
         Pattern regexPattern = Pattern.compile(pattern);
         Matcher matcher = regexPattern.matcher(phoneNum);
 
-        log.info("phoneNum : {}",phoneNum);
-        log.info("matcher.matches() : {}",matcher.matches());
+
         return matcher.matches();
 
     }

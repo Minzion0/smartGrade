@@ -23,9 +23,11 @@ public class AdminMajorService {
         MajorInsDto dto = new MajorInsDto();
         dto.setMajorName(p.getMajorName());
         dto.setGraduationScore(p.getGraduationScore());
+
         int result = MAPPER.insMajor(dto);
         if (result == 1) {
-            new MajorRes(dto);
+            MajorRes majorRes = new MajorRes(dto);
+            return majorRes;
         }
         return null;
     }

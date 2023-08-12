@@ -63,7 +63,7 @@
         , iuser = #{iuser}
     </insert>
     <select id="getStudentNum">
-        select student_num
+        select istudent
         from student
         where student_num =#{studentNum}
     </select>

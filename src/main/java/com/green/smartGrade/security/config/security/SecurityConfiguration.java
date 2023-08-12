@@ -36,6 +36,8 @@ public class SecurityConfiguration {
                                     ,"/static/**"
                                     ,"/api/student/**"
                                     ,"/api/board/**"
+                                    ,"/api/forgetPassword"
+                                    ,"/api/changPassword"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.
                         //  .requestMatchers("/api/refresh-token").hasAnyRole("STUDENT", "PROFESSOR", "ADMIN") 다중 권한
                             .requestMatchers("/logout").hasAnyRole("STUDENT", "PROFESSOR", "ADMIN")

@@ -3,6 +3,9 @@ package com.green.smartGrade.admin;
 
 import com.green.smartGrade.admin.model.*;
 import com.green.smartGrade.config.exception.AdminException;
+import com.green.smartGrade.config.exception.CommonErrorCode;
+import com.green.smartGrade.config.exception.ErrorCode;
+import com.green.smartGrade.config.exception.MyErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -82,13 +85,13 @@ public class AdminController {
     }
 
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<?> adminException(ErrorCode e){
-//        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
-//        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
-//
-//        return ResponseEntity.status(400).body(builder);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> adminException(ErrorCode e){
+        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
+        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
+
+        return ResponseEntity.status(400).body(builder);
+    }
 
 
 
