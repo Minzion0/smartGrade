@@ -10,4 +10,7 @@ import java.util.List;
 public class ProfessoreDatailProFileVo {
     List<ProfessorMajor> lectureList;
     ProfessorDatilProfile profile;
+
+
+
 }

@@ -29,10 +29,10 @@ public class LectureAppllyService {
         int finalExamination = dto.getFinalExamination();
 
 
-        // 출석, 중간고사, 기말고사 점수의 합을 계산
+        // 출석, 중간고사, 기말고사 점수의 배점을 계산
         int totalScore = attendance + midtermExamination + finalExamination;
 
-        // 합이 100을 넘는 경우 예외 처리.
+
         if (totalScore > 100) {
            msg+= "출석, 중간고사, 기말고사 점수의 합은 100을 넘을 수 없습니다.";
            res.setMsg(msg);
@@ -97,8 +97,6 @@ public class LectureAppllyService {
         res.setDto(dto);
 
         return res;
-
-
     }
 
 
