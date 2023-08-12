@@ -118,7 +118,6 @@ public class SignController {
 
         SignInResultDto otpe = SERVICE.otpValid(req,param);
 
-
         return ResponseEntity.ok().body(otpe);
     }
 
