@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -34,8 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -230,6 +230,24 @@ class AdminControllerTest {
     }
 
     @Test
-    void updLecture() {
+    void updLecture() throws Exception {
+        AdminUpdLectureDto dto= new AdminUpdLectureDto();
+        dto.setIlecture(1L);
+        dto.setProcedures(2);
+
+        AdminUpdLectureRes res = new AdminUpdLectureRes(dto);
+
+        when(service.lectureModify(dto)).thenReturn(res);
+
+        String valueAsString = objectMapper.writeValueAsString(dto);
+
+        ResultActions perform = mvc.perform(patch(path + "/lecture").contentType(MediaType.APPLICATION_JSON).content(valueAsString));
+
+        perform.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.ilecture").value(dto.getIlecture()))
+                .andExpect(jsonPath("$.procedures").value(dto.getProcedures()))
+                .andDo(print());
+
+        verify(service).lectureModify(dto);
     }
 }
