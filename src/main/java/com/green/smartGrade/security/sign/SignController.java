@@ -32,7 +32,7 @@ public class SignController {
     //RequestParam은 http 로부터 요청 온 정보를 받아오기 위한 스프링 어노테이션이다.
 
 
-//    @PostMapping("/sign-in")   로그인 하자마자 토큰
+    //    @PostMapping("/sign-in")   로그인 하자마자 토큰
 //    @Operation(summary = "로그인")
 //    public SignInResultDto signIn(HttpServletRequest req, @RequestParam String id, @RequestParam String password, @RequestParam String role) throws Exception {
 //
@@ -85,7 +85,7 @@ public class SignController {
 
     @PostMapping("/logout")
     @Operation(summary = "로그아웃")
-    public ResponseEntity<?> logout (HttpServletRequest req) {
+    public ResponseEntity<?> logout(HttpServletRequest req) {
         SERVICE.logout(req);
         ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
                 .maxAge(0)
@@ -96,8 +96,9 @@ public class SignController {
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
     }
+
     @GetMapping("/otp")
-    @Operation(summary = "otp 등록 어플에 등록",description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
+    @Operation(summary = "otp 등록 어플에 등록", description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번" +
             "<br>\"barcodeUrl : qr코드 주소")
     public ResponseEntity<?> otp(@AuthenticationPrincipal MyUserDetails details) throws Exception {
@@ -107,31 +108,31 @@ public class SignController {
 
         String role = details.getRoles().get(0);
 
-        return SERVICE.otp(result,role);
+        return SERVICE.otp(result, role);
     }
 
     @PostMapping("/otp-valid")
-    @Operation(summary = "otp 인증" ,description = "otpNum : otp번호" +
+    @Operation(summary = "otp 인증", description = "otpNum : otp번호" +
             "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번")
     public ResponseEntity<?> otpValid(HttpServletRequest req, @RequestBody OtpValidParam param) throws Exception {
 
-        SignInResultDto otpe = SERVICE.otpValid(req,param);
+        SignInResultDto otpe = SERVICE.otpValid(req, param);
 
         return ResponseEntity.ok().body(otpe);
     }
 
     @PutMapping("/forgetPassword")
     @Operation(summary = "비밀번호 찾기(변경) 아이디와 OTP 확인")
-    public boolean updForgetPassword (String uid, String role, String inputCode) {
+    public boolean updForgetPassword(String uid, String role, String inputCode) {
         return SERVICE.updForgetPassword(uid, role, inputCode);
     }
+
     @PutMapping("/changPassword")
     @Operation(summary = "비밀번호 변경")
     public String updPasswordNew(@RequestBody SignSelPasswordTrueDto dto) {
         return SERVICE.updPasswordNew(dto);
     }
-
 
 
 }

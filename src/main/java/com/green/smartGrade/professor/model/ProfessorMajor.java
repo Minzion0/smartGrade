@@ -1,5 +1,6 @@
 package com.green.smartGrade.professor.model;
 
+
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -11,4 +12,5 @@ public class ProfessorMajor {
     private String  lectureStrTime;
     private String  lectureEndTime;
     private String lectureName;
+
 }

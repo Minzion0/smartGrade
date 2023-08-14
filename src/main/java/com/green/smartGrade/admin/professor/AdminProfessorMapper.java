@@ -13,7 +13,7 @@ public interface AdminProfessorMapper {
 
     List<AdminFindProfessorRes> findProfessors(AdminFindProfessorDto dto);
 
-    AdminProfessorDetailVo findProfessorDetail(AdminProfessorDetailDto dto);
+
 
     AdminProfessorDetailProfile professorProfile(AdminProfessorDetailDto dto);
 
