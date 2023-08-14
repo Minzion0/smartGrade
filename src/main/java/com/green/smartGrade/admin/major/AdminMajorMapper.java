@@ -16,5 +16,4 @@ public interface AdminMajorMapper {
     int delMajor(MajorDelDto dto);
 
     int countMajor(MajorSelDto dto);
-
 }
