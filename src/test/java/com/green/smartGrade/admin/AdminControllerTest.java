@@ -68,8 +68,8 @@ class AdminControllerTest {
         String path = "/api/admin";
 
 
-       // mvc.perform(MockMvcRequestBuilders.post(path+"/semester"))
-               // .param("semester","2","year","2034","semesterStrDate",LocalDate.now().toString(),"semesterEndDate",LocalDate.of(2024,12,25).toString())
+//        mvc.perform(MockMvcRequestBuilders.post(path+"/semester"))
+//                .param("semester","2","year","2034","semesterStrDate",LocalDate.now().toString(),"semesterEndDate",LocalDate.of(2024,12,25).toString())
 
     }
 
