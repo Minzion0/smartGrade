@@ -48,16 +48,10 @@ public class SignController {
     @PostMapping("/sign-in")
     @Operation(summary = "로그인")
     public SignInResultDto signIn(HttpServletRequest req, @RequestBody SignInParam param) throws Exception {
-//@RequestParam String id, @RequestParam String password, @RequestParam String role
         String ip = req.getRemoteAddr();
         log.info("[signIn] 로그인을 시도하고 있습니다. id: {}, pw: {}, role: {}, ip: {}", param.getId(), param.getPassword(), param.getRole(), ip);
 
         SignInResultDto dto = SERVICE.signIn(param, ip);
-
-//
-//        if(dto.getCode() == CommonRes.SUCCESS.getCode()) {
-//            log.info("[signIn] 정상적으로 로그인 되었습니다. id: {}, token: {}", id, dto.getAccessToken());
-//        }
 
         return dto;
 
@@ -124,8 +118,9 @@ public class SignController {
 
     @PutMapping("/forgetPassword")
     @Operation(summary = "비밀번호 찾기(변경) 아이디와 OTP 확인")
-    public boolean updForgetPassword(String uid, String role, String inputCode) {
-        return SERVICE.updForgetPassword(uid, role, inputCode);
+    public ResponseEntity<?> updForgetPassword(String uid, String role, String inputCode) {
+        boolean result = SERVICE.updForgetPassword(uid, role, inputCode);
+        return result ?  ResponseEntity.ok().body(result) : ResponseEntity.status(405).body(result);
     }
 
     @PutMapping("/changPassword")
