@@ -12,6 +12,7 @@
 //
 //import javax.swing.*;
 //
+//import java.util.ArrayList;
 //import java.util.List;
 //
 //import static org.junit.jupiter.api.Assertions.*;
@@ -47,10 +48,29 @@
 //
 //    @Test
 //    void selMajor() {
+//        MajorSelDto dto = new MajorSelDto();
+//        List<MajorVo> voList = new ArrayList<>();
+//        when(mapper.selMajor(any())).thenReturn(voList);
+//
+//        MajorfindRes res = service.selMajor(dto);
+//
+//        assertEquals(res.getMajor().get(0).getMajorName(),voList.get(0).getMajorName());
+//
 //    }
 //
 //    @Test
 //    void delMajor() {
+//        MajorDelDto dto = new MajorDelDto();
+//
+//        dto.setImajor(1L);
+//
+//        when(mapper.delMajor(any())).thenReturn(1);
+//
+//        int result = service.delMajor(dto);
+//
+//        assertEquals(result,dto.getImajor());
+//
+//        verify(mapper).delMajor(any());
 //    }
 //
 //    @Test
