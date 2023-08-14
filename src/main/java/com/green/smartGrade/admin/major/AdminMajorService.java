@@ -49,16 +49,18 @@ public class AdminMajorService {
         return MAPPER.delMajor(dto);
     }
 
-    public MajorUpdRes updMajor(MajorUpdParam p) {
+    public MajorUpdRes updMajor(MajorUpdParam p)throws Exception{
         MajorUpdDto dto = new MajorUpdDto();
         dto.setMajorName(p.getMajorName());
         dto.setImajor(p.getImajor());
 
-        int result = MAPPER.updMajor(dto);
-        if (result == 1) {
-            return new MajorUpdRes(p);
+        try {
+            int result = MAPPER.updMajor(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("이미 존재하는 학과입니다");
         }
-        return null;
+        return new MajorUpdRes(p);
     }
 
 }
