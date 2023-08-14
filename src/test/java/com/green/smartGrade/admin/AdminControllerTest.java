@@ -4,13 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.smartGrade.admin.major.model.MajorInsDto;
 import com.green.smartGrade.admin.major.model.MajorRes;
-import com.green.smartGrade.admin.model.AdminGetSemesterVo;
-import com.green.smartGrade.admin.model.AdminInsSemesterParam;
-import com.green.smartGrade.admin.model.AdminInsSemesterRes;
+import com.green.smartGrade.admin.model.*;
 import com.green.smartGrade.security.config.RedisService;
 import com.green.smartGrade.security.config.security.JwtTokenProvider;
 import com.green.smartGrade.security.config.security.SecurityConfiguration;
 import com.green.smartGrade.security.config.security.model.MyUserDetails;
+import com.green.smartGrade.utils.PagingUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -126,26 +126,107 @@ class AdminControllerTest {
         String result = objectMapper.writeValueAsString(list);
         when(service.getSemester(any())).thenReturn(list);
 
-//        mvc.perform(get(path+"/semester")
-//                .param("page","1")
-//                .contentType(MediaType.ALL)
-//                .content(result))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(jsonPath("$.list[0].isemester").value(1L))
-//                .andDo(print());
-//
-//        verify(service).getSemester(any());
-//
+        mvc.perform(get(path+"/semester")
+                .param("page","1")
+                .content(result))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.[0].isemester").value(vo.getIsemester()))
+                .andExpect(jsonPath("$.[0].semesterStrDate").value(vo.getSemesterStrDate().toString()))
+                .andExpect(jsonPath("$.[0].semesterEndDate").value(vo.getSemesterEndDate().toString()))
+                .andExpect(jsonPath("$.[1].isemester").value(vo1.getIsemester()))
+                .andExpect(jsonPath("$.[1].semesterStrDate").value(vo1.getSemesterStrDate().toString()))
+                .andExpect(jsonPath("$.[1].semesterEndDate").value(vo1.getSemesterEndDate().toString()))
+
+                .andDo(print());
+
+        verify(service).getSemester(any());
+
 
 
     }
 
     @Test
-    void findProfessors() {
+    void findProfessors() throws Exception{
+        List<AdminLectureInStudentRes>list = new ArrayList<>();
+        AdminLectureInStudentRes res = new AdminLectureInStudentRes();
+        res.setIstudent(1L);
+        res.setNm("민용리");
+        res.setGread("A");
+        res.setMinEx(20);
+        res.setFinEx(30);
+        res.setAvg(4.5);
+        res.setMajorNm("초전도학");
+        res.setTotalScore(65);
+        res.setAttendance(15);
+        AdminLectureInStudentRes res1 = new AdminLectureInStudentRes();
+        res1.setIstudent(1L);
+        res1.setNm("민용리");
+        res1.setGread("A");
+        res1.setMinEx(20);
+        res1.setFinEx(30);
+        res1.setAvg(4.5);
+        res1.setMajorNm("초전도학");
+        res1.setTotalScore(65);
+        res1.setAttendance(15);
+
+        list.add(res1);
+
+        AdminLectureStudentResm resm = new AdminLectureStudentResm();
+        resm.setList(list);
+
+
+       // when(service.findLectureStudent(any())).thenReturn(ResponseEntity.ok().body(resm));
+
     }
 
     @Test
-    void selLecture() {
+    void selLecture() throws Exception {
+        List<AdminSelLectureRes> res= new ArrayList<>();
+        AdminSelLectureRes vo= new AdminSelLectureRes();
+        vo.setIlecture(1L);
+        vo.setNm("호");
+        vo.setLectureNm("이것저것");
+        vo.setProcedures(2);
+        vo.setStrDate(LocalDate.now());
+        vo.setEndDate(LocalDate.of(2030,10,20));
+        vo.setEndTime("10:20");
+        vo.setEndTime("11:20");
+        res.add(vo);
+        AdminSelLectureRes vo1= new AdminSelLectureRes();
+        vo1.setIlecture(2L);
+        vo1.setNm("불");
+        vo1.setLectureNm("이것저것");
+        vo1.setProcedures(2);
+        vo1.setStrDate(LocalDate.now());
+        vo1.setEndDate(LocalDate.of(2030,10,20));
+        vo1.setEndTime("10:20");
+        vo1.setEndTime("11:20");
+
+        res.add(vo1);
+        PagingUtils utils = new PagingUtils(1,10);
+
+        AdminSelRes build = AdminSelRes.builder().lectures(res).page(utils).build();
+
+        when(service.selLecture(any())).thenReturn(build);
+
+        String s = objectMapper.writeValueAsString(build);
+
+        mvc.perform(get(path+"/lecture")
+                .param("page","1").content(s))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.lectures[0].ilecture").value(1L))
+                .andExpect(jsonPath("$.lectures[0].nm").value(vo.getNm()))
+                .andExpect(jsonPath("$.lectures[0].lectureNm").value(vo.getLectureNm()))
+                .andExpect(jsonPath("$.lectures[1].ilecture").value(2L))
+                .andExpect(jsonPath("$.lectures[1].nm").value(vo1.getNm()))
+                .andExpect(jsonPath("$.lectures[1].lectureNm").value(vo1.getLectureNm()))
+                .andDo(print());
+
+
+
+        verify(service).selLecture(any());
+
+
     }
 
     @Test
