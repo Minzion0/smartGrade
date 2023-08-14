@@ -218,9 +218,10 @@ public class SignService {
         OtpRes res = OtpRes.builder().barcodeUrl(barcodeUrl).secretKey(secretKey).build();
 
         try {
+
             updSecretKey(uid, role, secretKey);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            throw new Exception("등록 오류 입니다");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(res);
