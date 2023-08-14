@@ -29,7 +29,7 @@ public class BoardController {
                             "      \"title\": 제목,<br>\n" +
                             "      \"ctnt\": 내용,<br>\n" +
                             "      \"importance\": 중요도<br>")
-    public BoardInsRes insBoard (BoardInsParam param, @AuthenticationPrincipal MyUserDetails details,
+    public BoardInsRes insBoard (@RequestPart BoardInsParam param, @AuthenticationPrincipal MyUserDetails details,
                                  @RequestPart(required = false) List<MultipartFile> pics) {
         BoardInsDto dto = new BoardInsDto();
         dto.setIadmin(details.getIuser());
