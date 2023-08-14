@@ -100,7 +100,20 @@ public class BoardService {
                 .list(list)
                 .build();
     }
-//    public BoardRes selSearchBoard (BoardSelSearchDto dto) {
+    public BoardSelDetailVo selBoardDetail (BoardSelDetailDto dto) {
+        MAPPER.updViewBoard(dto);
+        return MAPPER.selByIdBoard(dto);
+    }
+
+    public int updDelYnBoard (BoardUpdYnDto dto) {
+        return MAPPER.updDelYnBoard(dto);
+    }
+
+    public List <BoardSelImportanceVo> selBoardImportance () {
+        return MAPPER.selBoardImportance();
+    }
+
+    //    public BoardRes selSearchBoard (BoardSelSearchDto dto) {
 //
 //        int maxPage = MAPPER.countSearchBoard(dto);
 //
@@ -114,16 +127,4 @@ public class BoardService {
 //                .build();
 //
 //    }
-    public List <BoardSelImportanceVo> selBoardImportance () {
-       return MAPPER.selBoardImportance();
-    }
-
-    public BoardSelDetailVo selBoardDetail (BoardSelDetailDto dto) {
-        MAPPER.updViewBoard(dto);
-        return MAPPER.selByIdBoard(dto);
-    }
-
-    public int updDelYnBoard (BoardUpdYnDto dto) {
-        return MAPPER.updDelYnBoard(dto);
-    }
 }

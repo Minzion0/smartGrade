@@ -44,7 +44,6 @@ public class SignService {
     private final TOTPTokenGenerator totp;
 
 
-
     public SignInResultDto signIn(SignInParam param, String ip) throws Exception {
         SignInResultDto dto = SignInResultDto.builder().build();
         log.info("[getSignInResult] signDataHandler로 회원 정보 요청");
@@ -59,27 +58,18 @@ public class SignService {
             log.info("비밀번호 다름");
             //throw new RuntimeException("비밀번호 다름");
             setFileResult(dto);
-           return dto;
+            return dto;
         }
         log.info("[getSignInResult] 패스워드 일치");
-////        /// -- opt
-////        // RT가 이미 있을 경우
-//        if (user.getSecretKey()==null){
-//            //토큰 발행 메소드
-//            return issueToken(ip, role, user);
-//        }else {
-//            //otp 확인 메소드
-//
-//             return null;
-//        }
+
         setSuccessResult(dto);
-        if (role.equals("ROLE_ADMIN")||user.getSecretKey()==null ){
-            dto=issueToken(ip, user.getUid(),role);
+        if (role.equals("ROLE_ADMIN") || user.getSecretKey() == null) {
+            dto = issueToken(ip, user.getUid(), role);
             dto.setSecretKey(false);
 
         }
 
-       return dto;
+        return dto;
 
     }
 
@@ -140,14 +130,14 @@ public class SignService {
     } */
 
     public SignInResultDto refreshToken(HttpServletRequest req, String refreshToken) {
-        if(!(JWT_PROVIDER.isValidateToken(refreshToken, JWT_PROVIDER.REFRESH_KEY))) {
+        if (!(JWT_PROVIDER.isValidateToken(refreshToken, JWT_PROVIDER.REFRESH_KEY))) {
             return null;
         }
 
         Claims claims = null;
         try {
             claims = JWT_PROVIDER.getClaims(refreshToken, JWT_PROVIDER.REFRESH_KEY);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (claims == null) {
@@ -164,11 +154,11 @@ public class SignService {
             return null; // -> 재로그인 요청
         }
         try {
-            if(!redisRt.equals(refreshToken)) {
+            if (!redisRt.equals(refreshToken)) {
                 return null;
             }
 
-            List<String> roles = (List<String>)claims.get("roles");
+            List<String> roles = (List<String>) claims.get("roles");
             String reAccessToken = JWT_PROVIDER.generateJwtToken(strIuser, roles, JWT_PROVIDER.ACCESS_TOKEN_VALID_MS, JWT_PROVIDER.ACCESS_KEY);
 
             return SignInResultDto.builder()
@@ -216,17 +206,11 @@ public class SignService {
         System.out.println("uid = " + uid);
         System.out.println("role = " + role);
 
-//        String s = JWT_PROVIDER.resolveToken(haber, JWT_PROVIDER.TOKEN_TYPE);
-//        log.info("sssssssssss : {}",s);
-//        Object details = JWT_PROVIDER.getAuthentication(s);
-//        System.out.println("authentication = " + details);
-
-
         String secretKey = totp.generateSecretKey();//설정할 secretKey를 생성
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String email = vo.getEmail();
-        if (email==null){
-            throw new Exception("이메일 등록 필요");
+        if (email == null) {
+            throw new Exception("이메일 등록이 필요합니다");
         }
         String issuer = "GreenUniversity";
         String account = email;
@@ -234,9 +218,10 @@ public class SignService {
         OtpRes res = OtpRes.builder().barcodeUrl(barcodeUrl).secretKey(secretKey).build();
 
         try {
+
             updSecretKey(uid, role, secretKey);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            throw new Exception("등록 오류 입니다");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(res);
@@ -253,24 +238,23 @@ public class SignService {
         if (result == 0) {
             throw new Exception();
         }
-
         return result;
     }
 
-    public SignInResultDto otpValid(HttpServletRequest req,OtpValidParam param) throws Exception {
+    public SignInResultDto otpValid(HttpServletRequest req, OtpValidParam param) throws Exception {
         String ip = req.getRemoteAddr();
         String inputCode = param.getOtpNum();
         String uid = param.getUid();
         String role = param.getRole();
-        if ("ROLE_STUDENT".equals(role)){
-            uid= MAPPER.getStudentNum(uid);
+        if ("ROLE_STUDENT".equals(role)) {
+            uid = MAPPER.getStudentNum(uid);
         }
 
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
         String otpCode = getOtpCode(vo.getSecretKey());
 
         boolean result = otpCode.equals(inputCode);
-        if (!result){
+        if (!result) {
             throw new Exception("유효하지 않은 otp 코드");
         }
         return issueToken(ip, uid, role);
@@ -284,18 +268,19 @@ public class SignService {
 
         return TOTP.getOTP(hexKey);
     }
-    private SignInResultDto issueToken(String ip, String iuser,String role) throws JsonProcessingException {
+
+    private SignInResultDto issueToken(String ip, String iuser, String role) throws JsonProcessingException {
 
         System.out.println("iuser = " + iuser);
         UserEntity user = MAPPER.getByUid(iuser, role);
-        if ("ROLE_STUDENT".equals(role)){
+        if ("ROLE_STUDENT".equals(role)) {
             user = MAPPER.getUserSecret(iuser, role);
 
         }
 
 
         System.out.println("user = " + user);
-        String  redisKey = String.format("b:RT(%s):%s:%s", "Server", user.getIuser(), ip);
+        String redisKey = String.format("b:RT(%s):%s:%s", "Server", user.getIuser(), ip);
         if (REDIS_SERVICE.getValues(redisKey) != null) {
             REDIS_SERVICE.deleteValues(redisKey);
         }
@@ -319,7 +304,7 @@ public class SignService {
                 .role(role)
                 .ip(ip)
                 .build();
-        REDIS_SERVICE.setValues(redisKey,refreshToken);
+        REDIS_SERVICE.setValues(redisKey, refreshToken);
 
         int result = MAPPER.updUserToken(tokenEntity);
 
@@ -334,7 +319,7 @@ public class SignService {
         return dto;
     }
 
-    public boolean  updForgetPassword (String uid, String role, String inputCode) {
+    public boolean updForgetPassword(String uid, String role, String inputCode) {
         UserEntity entity = MAPPER.getByUid(uid, role);
         String otpCode = getOtpCode(entity.getSecretKey());
         boolean result = otpCode.equals(inputCode);
@@ -343,23 +328,23 @@ public class SignService {
             MAPPER.updForgetPasswordTrue(uid, role);
             return true;
         }
-            return false;
+        return false;
     }
 
     public String updPasswordNew(SignSelPasswordTrueDto dto) {
         SignSelPasswordTrueVo result = MAPPER.selTruePassword(dto);
 
         log.info("result.getUpw() : {}", result.getUpw());
-       if (result.getUpw().equals("true")) {
-           UpdForgetPasswordDto passwordDto = new UpdForgetPasswordDto();
-           String npw = PW_ENCODER.encode(dto.getUpw());
-           passwordDto.setUpw(npw);
-           passwordDto.setRole(result.getRole());
-           passwordDto.setUid(result.getUid());
-           MAPPER.updForgetPassword(passwordDto);
-           return "비밀번호 변경이 완료되었습니다.";
-       }
-       return "비밀번호 변경이 실패하였습니다.";
+        if (result.getUpw().equals("true")) {
+            UpdForgetPasswordDto passwordDto = new UpdForgetPasswordDto();
+            String npw = PW_ENCODER.encode(dto.getUpw());
+            passwordDto.setUpw(npw);
+            passwordDto.setRole(result.getRole());
+            passwordDto.setUid(result.getUid());
+            MAPPER.updForgetPassword(passwordDto);
+            return "비밀번호 변경이 완료되었습니다.";
+        }
+        return "비밀번호 변경이 실패하였습니다.";
     }
 }
 

@@ -52,4 +52,5 @@
                     from major WHERE imajor = #{imajor})
         WHERE imajor = #{imajor}
     </insert>
+
 </mapper>

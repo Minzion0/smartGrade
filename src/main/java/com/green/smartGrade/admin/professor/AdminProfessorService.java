@@ -29,7 +29,7 @@ public class AdminProfessorService {
         dto.setProfessorPassword(nPw);
         log.info("{}", dto.getPhone());
 
-        //이메일 유효성검사도 해야할듯?
+
         CheckUtils utils = CheckUtils
                 .builder()
                 .nm(dto.getNm())

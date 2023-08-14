@@ -23,34 +23,36 @@
     </select>
 
     <select id="selLecture">
-        SELECT A.ilecture,D.lecture_name lectureNm,F.semester,G.major_name majorName,C.nm,B.lecture_room_name lectureRoomNm,B.building_name buildingNm,A.grade_limit gradeLimit,D.score,lecture_str_date strDate,lecture_end_date endDate,date_format(lecture_str_time ,'%H:%i')strTime,date_format(lecture_end_time,'%H:%i' )endTime
-        ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn,COUNT(E.ilecture) currentPeople
+        SELECT A.ilecture,D.lecture_name lectureNm,F.semester,G.major_name majorName,C.nm,B.lecture_room_name
+            lectureRoomNm,B.building_name buildingNm,A.grade_limit gradeLimit,D.score,lecture_str_date strDate
+            ,lecture_end_date endDate,date_format(lecture_str_time ,'%H:%i')strTime
+            ,date_format(lecture_end_time,'%H:%i' )endTime
+            ,lecture_max_people maxPeople,opening_procedures procedures,A.del_yn delYn,COUNT(E.ilecture) currentPeople
         from lecture_applly A
-        INNER JOIN lecture_room B
-        ON A.ilecture_room=B.ilecture_room
-        INNER JOIN professor C
-        ON A.iprofessor=C.iprofessor
-        INNER JOIN lecture_name D
-        ON A.ilecture_name=D.ilecture_name
-        INNER JOIN lecture_student E
-        ON E.ilecture=A.ilecture
-        inner JOIN semester F
-        ON F.isemester= A.isemester
-        INNER JOIN major G
-        ON G.imajor= C.imajor
+            INNER JOIN lecture_room B
+            ON A.ilecture_room=B.ilecture_room
+            INNER JOIN professor C
+            ON A.iprofessor=C.iprofessor
+            INNER JOIN lecture_name D
+            ON A.ilecture_name=D.ilecture_name
+            INNER JOIN lecture_student E
+            ON E.ilecture=A.ilecture
+            inner JOIN semester F
+            ON F.isemester= A.isemester
+            INNER JOIN major G
+            ON G.imajor= C.imajor
 
         <where>
             <if test="procedures==-2">
-                and  A.opening_procedures BETWEEN 0 AND 2
+                and A.opening_procedures BETWEEN 0 AND 2
             </if>
             <if test="procedures>=0">
-                and  A.opening_procedures=#{procedures}
+                and A.opening_procedures=#{procedures}
             </if>
 
             <if test="nm!=null">
-               and C.nm like CONCAT('%', #{nm}, '%')
+                and C.nm like CONCAT('%', #{nm}, '%')
             </if>
-
 
         </where>
         GROUP BY A.ilecture
@@ -58,7 +60,8 @@
     </select>
     <!--졸업 요건을 충족한 학생들 리스트 -->
     <select id="graduationStudent">
-        SELECT A.istudent,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score,C.graduation_score graduationScore
+        SELECT A.istudent,sum(case when B.finished_at IS NULL then 0 ELSE G.score END) score,C.graduation_score
+        graduationScore
         FROM student A
         left JOIN lecture_student B
         ON A.istudent=B.istudent
@@ -74,7 +77,7 @@
 
     </select>
     <update id="updGraduationStudent">
-        <foreach collection="list" item="item" open=""  close="">
+        <foreach collection="list" item="item" open="" close="">
             update student
             set finished_yn=2
             where istudent =#{item.istudent};
@@ -93,7 +96,8 @@
     </select>
 
     <select id="lectureInStudent">
-        SELECT C.istudent,C.nm,D.major_name majorNm,A.attendance,A.midterm_examination minEx,A.final_examination finEx,A.total_score totalScore
+        SELECT C.istudent,C.nm,D.major_name majorNm,A.attendance,A.midterm_examination minEx,A.final_examination
+        finEx,A.total_score totalScore
         FROM lecture_student A
         INNER JOIN lecture_applly B
         ON B.ilecture=A.ilecture
@@ -111,17 +115,17 @@
         from lecture_applly A
         inner join professor B
         on A.iprofessor=B.iprofessor
-       <where>
-           <if test="procedures>=0">
-              and A.opening_procedures=#{procedures}
-           </if>
+        <where>
+            <if test="procedures>=0">
+                and A.opening_procedures=#{procedures}
+            </if>
 
 
-           <if test="nm!=null">
-              and B.nm in (#{nm})
-           </if>
+            <if test="nm!=null">
+                and B.nm in (#{nm})
+            </if>
 
-       </where>
+        </where>
     </select>
     <insert id="lectureModify">
         insert into leture_condition

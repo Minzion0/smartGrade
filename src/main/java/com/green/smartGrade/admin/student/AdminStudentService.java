@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,6 @@ public class AdminStudentService {
         String year = String.valueOf(LocalDate.now().getYear()).substring(2);
         String format = String.format("%s%02d", year, param.getImajor());
         AdminInsStudentDto dto = new AdminInsStudentDto(param);
-        AdminIInsStudentRes res = new AdminIInsStudentRes();
 
         dto.setStudentNum(format);
 
@@ -51,7 +51,7 @@ public class AdminStudentService {
 
         }
 
-        res = MAPPER.selStudent(dto.getStudentPassword());
+        AdminIInsStudentRes   res = MAPPER.selStudent(dto.getStudentPassword());
 
         return res;
 
@@ -81,24 +81,23 @@ public class AdminStudentService {
         }
 
     }
+
     // todo 매년 연말에 4학년을 제외한 모든 학생들을 진학
     @Scheduled(cron = "0 59 23 31 12 ?")
-    //@Scheduled(cron = "0 0 15 * * ?")
-    public void grade(){
+    public void grade() {
         int result = MAPPER.promotionGrade();
-        log.info("{}년도 진학한 학생의수 : {}", LocalDateTime.now().plusYears(1).getYear(),result);
+        log.info("{}년도 진학한 학생의수 : {}", LocalDateTime.now().plusYears(1).getYear(), result);
 
     }
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handlerAdminStudent(Exception e){
-        StackTraceElement element = Thread.currentThread().getStackTrace()[1];
-        String methodName = element.getMethodName();
-        String className = element.getClassName().substring(element.getClassName().lastIndexOf(".")+1);
-
-        String path = String.format("class :%s  ", className);
-        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(path);
-
-    }
+//      smartGradeExceptionHandler 로 일괄 처리
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<?> handlerAdminStudent(Exception e) {
+//        StackTraceElement element = Thread.currentThread().getStackTrace()[1];
+//        String className = element.getClassName().substring(element.getClassName().lastIndexOf(".") + 1);
+//        String path = String.format("class :%s  ", className);
+//        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(path);
+//
+//    }
 
 }
 
