@@ -32,15 +32,5 @@ public class ProfessorGradeMngmnUpRes {
         this.ilectureStudent = dto.getIlectureStudent();
     }
 
-    public void setUpDto(ProfessorGradeMngmnUpDto dto) {
-        this.attendance = dto.getAttendance();
-        this.midtermExamination = dto.getMidtermExamination();
-        this.finalExamination = dto.getFinalExamination();
 
-        this.finishedYn = dto.getFinishedYn();
-        this.point = dto.getPoint();
-        this.rating = dto.getRating();
-        this.ilecture = dto.getIlecture();
-        this.ilectureStudent = dto.getIlectureStudent();
-    }
 }
