@@ -13,6 +13,8 @@ public class ProfessorUpRes {
     private LocalDateTime updatedAt;
     private String pic;
 
+    public ProfessorUpRes() {
+    }
 
     public ProfessorUpRes(ProfessorUpDto dto) {
         this.phone = dto.getPhone();

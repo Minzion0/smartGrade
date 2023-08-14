@@ -33,7 +33,7 @@ public class ProfessorController {
 
 
 
-    @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PutMapping(value = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "프로필 수정", description = "phone : 폰번호<br>"+
             "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>" + "pic : 사진")
     public ProfessorUpRes putPicProfessor(@RequestPart(required = false) MultipartFile pic,@AuthenticationPrincipal MyUserDetails details,
@@ -45,14 +45,6 @@ public class ProfessorController {
         param.setIprofessor(details.getIuser());
         return service.upProfessor(pic, param);
     }
-
-//    @PutMapping
-//    @Operation(summary = "교수 프로필 수정",description = "imajor : 전공pk<br>"+"phone : 폰번호<br>"+
-//            "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>")
-//    public ProfessorUpRes putProfessor(@RequestBody ProfessorParam param) {
-//
-//        return service.upProfessor(param);
-//    }
 
 
 
