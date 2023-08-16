@@ -202,7 +202,7 @@ public class SignService {
         REDIS_SERVICE.setValuesWithTimeout(accessToken, "logout", expiration);  //남은시간 이후가 되면 삭제가 되도록 함.
     }
 
-    public ResponseEntity<?> otp(String uid, String role) throws Exception {
+    public ResponseEntity<OtpRes> otp(String uid, String role) throws Exception {
         System.out.println("uid = " + uid);
         System.out.println("role = " + role);
 
