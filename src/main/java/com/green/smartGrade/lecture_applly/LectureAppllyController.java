@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/professorlecture")
+@RequestMapping("/api/professor/lecture")
 @AllArgsConstructor
 @Slf4j
 @Tag(name = "교수 강의 신청")

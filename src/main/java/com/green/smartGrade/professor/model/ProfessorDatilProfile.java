@@ -15,6 +15,7 @@ public class ProfessorDatilProfile {
     private String address;
     private String email;
     private Long imajor;
+    private String majorName;
     private LocalDateTime createdAt;
     private int delYn;
     private String secretKey;
