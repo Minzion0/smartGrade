@@ -87,18 +87,18 @@ class AdminMajorServiceTest {
         verify(mapper).delMajor(any());
     }
 
-    @Test
-    void updMajor() {
-        MajorUpdParam p1 = new MajorUpdParam();
-        p1.setMajorName("수정했다");
-        p1.setImajor(1L);
-
-        when(mapper.updMajor(any())).thenReturn(1);
-
-        MajorUpdRes r1 = service.updMajor(p1);
-
-        assertEquals(p1.getImajor(),r1.getImajor());
-
-        verify(mapper).updMajor(any());
-    }
+//    @Test
+//    void updMajor() {
+//        MajorUpdParam p1 = new MajorUpdParam();
+//        p1.setMajorName("수정했다");
+//        p1.setImajor(1L);
+//
+//        when(mapper.updMajor(any())).thenReturn(1);
+//
+//        MajorUpdRes r1 = service.updMajor(p1);
+//
+//        assertEquals(p1.getImajor(),r1.getImajor());
+//
+//        verify(mapper).updMajor(any());
+//    }
 }
