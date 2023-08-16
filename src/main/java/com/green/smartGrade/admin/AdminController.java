@@ -36,7 +36,7 @@ public class AdminController {
 
     @PostMapping("/lecture-name")
     @Operation(summary = "강의명 등록",description = "강의명 등록과 필요 학점 꼭 등록해야함")
-    public ResponseEntity<AdminInsLectureNameRes> insLectureName(@RequestBody AdminInsLectureNameParam param){
+    public ResponseEntity<AdminInsLectureNameRes> insLectureName(@RequestBody AdminInsLectureNameParam param)throws AdminException{
         AdminInsLectureNameRes res = SERVICE.insLectureName(param);
         return ResponseEntity.ok().body(res);
     }
@@ -100,13 +100,13 @@ public class AdminController {
     }
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> adminException(ErrorCode e){
-        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
-        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
-
-        return ResponseEntity.status(400).body(builder);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<?> adminException(ErrorCode e){
+//        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
+//        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
+//
+//        return ResponseEntity.status(500).body(builder);
+//    }
 
 
 
