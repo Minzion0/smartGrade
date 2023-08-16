@@ -46,7 +46,6 @@ public class AdminService {
     @Transactional(rollbackFor = Exception.class)
     public AdminUpdLectureRes lectureModify(AdminUpdLectureDto dto){
 
-
            int upded = MAPPER.updLecture(dto);
            if (dto.getProcedures()==0){
                MAPPER.lectureModify(dto);
