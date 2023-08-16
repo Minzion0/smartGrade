@@ -34,6 +34,21 @@ public class AdminController {
         return SERVICE.semesterIns(param);
     }
 
+    @PostMapping("/lecture-name")
+    @Operation(summary = "강의명 등록",description = "강의명 등록과 필요 학점 꼭 등록해야함")
+    public ResponseEntity<AdminInsLectureNameRes> insLectureName(@RequestBody AdminInsLectureNameParam param){
+        AdminInsLectureNameRes res = SERVICE.insLectureName(param);
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/lecture-name")
+    @Operation(summary = "강의명 검색")
+    public ResponseEntity<AdminFindLectureNameRes>findLectureName(@RequestParam (required = false)String lectureName  ){
+        AdminFindLectureNameRes res = SERVICE.findLectureName(lectureName);
+        return ResponseEntity.ok().body(res);
+    }
+
+
     @GetMapping("/semester")
     @Operation(summary = "학기 확인")
     public List<AdminGetSemesterVo> getSemester(@RequestParam(required = false) String year){

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 
@@ -125,7 +126,35 @@ public class AdminService {
     }
 
 
+    public AdminInsLectureNameRes insLectureName(AdminInsLectureNameParam param){
+        if (param.getScore() <= 0 ){throw new AdminException("학점은 0점 이상이여야 합니다");}
+        AdminInsLectureNameDto dto = new AdminInsLectureNameDto();
+        dto.setLectureName(param.getLectureName());
 
+        dto.setScore(param.getScore());
+
+        try {
+
+            int result = MAPPER.insLectureName(dto);
+            if (result==0){
+                throw new AdminException("강의명 등록 실패");
+            }
+        }catch (Exception e){
+            throw new AdminException("강의명이 이미 존제 합니다");
+        }
+        AdminInsLectureNameRes res = new AdminInsLectureNameRes();
+        res.setDto(dto);
+
+        return res;
+
+    }
+
+    public AdminFindLectureNameRes findLectureName(String lectureName){
+        AdminFindLectureNameVo vo = MAPPER.findLectureName(lectureName);
+        AdminFindLectureNameRes res = new AdminFindLectureNameRes();
+        res.setVo(vo);
+        return  res;
+    }
 
 
 }
