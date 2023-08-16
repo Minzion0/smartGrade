@@ -50,7 +50,7 @@
             ON A.iprofessor=C.iprofessor
             INNER JOIN lecture_name D
             ON A.ilecture_name=D.ilecture_name
-            INNER JOIN lecture_student E
+            LEFT JOIN lecture_student E
             ON E.ilecture=A.ilecture
             inner JOIN semester F
             ON F.isemester= A.isemester
