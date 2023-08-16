@@ -134,7 +134,6 @@ public class AdminService {
         dto.setScore(param.getScore());
 
         try {
-
             int result = MAPPER.insLectureName(dto);
             if (result==0){
                 throw new AdminException("강의명 등록 실패");
@@ -152,7 +151,7 @@ public class AdminService {
     }
 
     public AdminFindLectureNameRes findLectureName(String lectureName){
-        AdminFindLectureNameVo vo = MAPPER.findLectureName(lectureName);
+        List<AdminFindLectureNameVo> vo = MAPPER.findLectureName(lectureName);
         AdminFindLectureNameRes res = new AdminFindLectureNameRes();
         res.setVo(vo);
         return  res;
