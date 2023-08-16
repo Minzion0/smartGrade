@@ -74,6 +74,7 @@ public class SignController {
                                                         @RequestParam String refreshToken) {
 
         SignUpResultDto dto = SERVICE.refreshToken(req, refreshToken);
+
         return dto == null ? ResponseEntity.status(405).body(null) : ResponseEntity.ok(dto);
     }
 
