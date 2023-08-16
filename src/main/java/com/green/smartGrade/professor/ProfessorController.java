@@ -33,7 +33,7 @@ public class ProfessorController {
 
 
 
-    @PutMapping(value = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "프로필 수정", description = "phone : 폰번호<br>"+
             "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>" + "pic : 사진")
     public ProfessorUpRes putPicProfessor(@RequestPart(required = false) MultipartFile pic,@AuthenticationPrincipal MyUserDetails details,
