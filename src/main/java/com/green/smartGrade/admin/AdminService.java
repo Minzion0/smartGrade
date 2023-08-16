@@ -126,8 +126,8 @@ public class AdminService {
     }
 
 
-    public AdminInsLectureNameRes insLectureName(AdminInsLectureNameParam param){
-        if (param.getScore() <= 0 ){throw new AdminException("학점은 0점 이상이여야 합니다");}
+    public AdminInsLectureNameRes insLectureName(AdminInsLectureNameParam param) throws AdminException {
+            if (param.getScore() <= 0 ){throw new AdminException("학점은 0점 이상이여야 합니다");}
         AdminInsLectureNameDto dto = new AdminInsLectureNameDto();
         dto.setLectureName(param.getLectureName());
 
@@ -139,13 +139,15 @@ public class AdminService {
             if (result==0){
                 throw new AdminException("강의명 등록 실패");
             }
+            AdminInsLectureNameRes res = new AdminInsLectureNameRes();
+            res.setDto(dto);
+
+            return res;
+
         }catch (Exception e){
             throw new AdminException("강의명이 이미 존제 합니다");
         }
-        AdminInsLectureNameRes res = new AdminInsLectureNameRes();
-        res.setDto(dto);
 
-        return res;
 
     }
 
