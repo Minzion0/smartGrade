@@ -11,7 +11,22 @@
         ,semester_str_date =#{semesterStrDate}
         ,semester_end_date =#{semesterEndDate}
     </insert>
+    
+    <insert id="insLectureName" useGeneratedKeys="true" keyProperty="ilectureName">
+        insert into lecture_name
+        set lecture_name=#{lectureName}
+        ,score= #{score}
+    </insert>
 
+    <select id="findLectureName">
+        select ilecture_name ilectureName,lecture_name lectureName,score,del_yn delYn
+        from lecture_name
+        <where>
+            <if test="lectureName != null">
+                and lecture_name like CONCAT('%', #{lectureName}, '%')
+            </if>
+        </where>
+    </select>
     <select id="getSemester">
         SELECT isemester,year,semester,semester_str_date semesterStrDate,semester_end_date semesterEndDate
         FROM semester
