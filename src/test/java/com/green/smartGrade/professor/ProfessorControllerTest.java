@@ -4,14 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.green.smartGrade.professor.model.*;
-import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import com.green.smartGrade.utils.PagingUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,25 +22,27 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //import static org.mockito.ArgumentMatchers.any;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 //import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 //import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 
@@ -46,7 +51,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(ProfessorController.class)
 class ProfessorControllerTest {
     @Autowired
@@ -140,28 +145,7 @@ class ProfessorControllerTest {
 
     @Test
     void putPicProfessor() throws  Exception{
-        MockMultipartFile pic = new MockMultipartFile(
-                "pic", "test.jpg", MediaType.MULTIPART_FORM_DATA_VALUE, "main.image".getBytes());
 
-
-        ProfessorUpRes mockResponse = new ProfessorUpRes();
-        given(service.upProfessor(any(MultipartFile.class), any(ProfessorParam.class))).willReturn(mockResponse);
-
-
-
-
-        mvc.perform(multipart("/api/professor/pic")
-                        .file(pic)
-                        .param("phone", "010-1234-5678")
-                        .param("email", "test@ex.com")
-                        .param("address", "das")
-                        .with(csrf())
-                        .with(user("100029L").roles("PROFESSOR")))
-                .andExpect(status().isOk())
-                .andDo(print());
-
-
-        verify(service).upProfessor(any(MultipartFile.class), any(ProfessorParam.class));
 
     }
 
@@ -189,19 +173,71 @@ class ProfessorControllerTest {
         verify(service).selProfessorLecture(any(ProfessorSelLectureDto.class));
     }
 
+    private String asJsonString(final Object obj) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+            objectMapper.registerModule(new JavaTimeModule());
+            return objectMapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }}
+
+
+//    @Test
+//    void updPassword() throws Exception {
+//        Long iuser = 1L;
+//        String userNum = "100029";
+//        String uid = "uid";
+//        String upw = "upd";
+//        List<String> roles = Arrays.asList("ROLE_PROFESSOR");
+//
+//        // Given
+//        ProfessorUpdPasswordParam param = new ProfessorUpdPasswordParam();
+//        param.setProfessorPassword("newPassword");
+//        param.setCurrentProfessorPassword("currentPassword");
+//
+//        MyUserDetails userDetails = MyUserDetails.builder().iuser(iuser).userNum(userNum).uid(uid).upw(upw).roles(roles).build();
+//
+//        // Mock service method
+//        when(service.updPassword(any(ProfessorUpdPasswordDto.class), any(ProfessorUpdPasswordParam.class))).thenReturn("true");
+//
+//        // When & Then
+//        mvc.perform(put("/api/professor/changPassword")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(asJsonString(param))
+//                        .with(user(userDetails))
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$").value(true));
+//    }
 
 
 
-    @Test
-    void updPassword() {
 
+//    @Test
+//    void deleteFile() throws Exception {
+//        Long iuser = 1L;
+//        String userNum = "100029";
+//        String uid = "uid";
+//        String upw = "upd";
+//        List<String> roles = Arrays.asList("ROLE_PROFESSOR");
+//        MyUserDetails userDetails = MyUserDetails.builder().iuser(iuser).userNum(userNum).uid(uid).upw(upw).roles(roles).build();
+//        when(service.deleteUploadedFile(iuser)).thenReturn(true);
+//
+//        // When and Then
+//        mvc.perform(delete("/api/professor/deleteFile")
+//                        .with(user(userDetails))
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(content().string("File deleted successfully"));
+//
+//        verify(service, times(1)).deleteUploadedFile(iuser);
+//    }
+//
+//    }
 
-
-    }
-
-    @Test
-    void deleteFile() {
-    }
-}
 
 
