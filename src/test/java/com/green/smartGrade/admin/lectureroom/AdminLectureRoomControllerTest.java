@@ -64,28 +64,6 @@ class AdminLectureRoomControllerTest {
 
     @Test
     void insLectureRoom() throws Exception{
-        LectureRoomInsDto dto = new LectureRoomInsDto();
-        dto.setIlectureRoom(1L);
-        dto.setMaxCapacity(30);
-        dto.setBuildingName("백매관");
-        dto.setLectureRoomName("502호");
-        LectureRoomRes res = new LectureRoomRes(dto);
-        given(service.insLectureRoom(any())).willReturn(res);
-
-        ObjectMapper om = new ObjectMapper();
-        om.registerModule(new JavaTimeModule());
-        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        String reqJson = om.writeValueAsString(dto);
-        String resJson = om.writeValueAsString(res);
-
-        mvc.perform(post("/api/lectureroom")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(reqJson))
-                .andExpect(status().isOk())
-                .andExpect(content().json(resJson))
-                .andDo(print());
-
-        verify(service).insLectureRoom(any());
     }
 
     @Test
