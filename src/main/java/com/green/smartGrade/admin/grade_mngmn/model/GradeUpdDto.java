@@ -3,9 +3,8 @@ package com.green.smartGrade.admin.grade_mngmn.model;
 import lombok.Data;
 
 @Data
-public class GradeMngmnInsParam {
+public class GradeUpdDto {
     private Long istudent;
-    private Long isemester;
-    private Long ilectureName;
     private int semester;
+    private double rating;
 }

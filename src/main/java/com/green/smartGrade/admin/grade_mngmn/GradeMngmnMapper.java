@@ -1,6 +1,7 @@
 package com.green.smartGrade.admin.grade_mngmn;
 
 import com.green.smartGrade.admin.grade_mngmn.model.*;
+import com.green.smartGrade.professor.professorgradeMngmn.model.ProfessorGradeUpdDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public interface GradeMngmnMapper {
     GradeMngmnStudentVo selGradeMngmnStudent(GradeMngmnAvgDto dto);
 
     int countGradeFindStudent();
+
+    int insGradeMngmn(GradeMngmnInsDto dto);
+
+    int updAvgScore(GradeUpdDto dto);
 
 
 
