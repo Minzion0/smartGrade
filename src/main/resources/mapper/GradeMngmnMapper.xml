@@ -74,7 +74,7 @@
     </select>
 
     <select id="selGradeFindStudentVo">
-        SELECT B.istudent istudent, B.ilecture ilecture
+        SELECT C.istudent istudent, B.ilecture ilecture
         , A.imajor imajor, A.student_num studentNum,
         A.nm name, A.gender gender, A.birthdate birthDate
         , C.score score, C.rating, A.grade grade ,C.isemester isemester
@@ -99,13 +99,11 @@
     </select>
 
     <select id="selGradeMngmnStudent">
-        SELECT distinct B.istudent istudent, A.nm name, A.student_num studentNum
-        FROM student A
-        INNER JOIN student_semester_score B
-        ON A.istudent = B.istudent
+        SELECT istudent istudent, nm name, student_num studentNum
+        FROM student
         <where>
             <if test="studentNum != null and studentNum != ''">
-                and A.student_num = #{studentNum}
+                and student_num = #{studentNum}
             </if>
         </where>
     </select>
