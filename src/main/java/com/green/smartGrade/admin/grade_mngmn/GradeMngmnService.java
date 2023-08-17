@@ -1,6 +1,9 @@
 package com.green.smartGrade.admin.grade_mngmn;
 
 import com.green.smartGrade.admin.grade_mngmn.model.*;
+import com.green.smartGrade.professor.professorgradeMngmn.model.ProfessorGradeUpdDto;
+import com.green.smartGrade.professor.professorgradeMngmn.model.ProfessorGradeUpdParam;
+import com.green.smartGrade.professor.professorgradeMngmn.model.ProfessorGradeUpdRes;
 import com.green.smartGrade.utils.GradeUtils;
 import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,41 @@ public class GradeMngmnService {
 
     @Autowired
     private final GradeMngmnMapper MAPPER;
+
+    public GradeMngmnRes insGradeMngmn(GradeMngmnInsParam p) {
+        GradeMngmnInsDto dto = new GradeMngmnInsDto();
+        dto.setIsemester(p.getIsemester());
+        dto.setIstudent(p.getIstudent());
+        dto.setSemester(p.getSemester());
+        dto.setIlectureName(p.getIlectureName());
+        int result = MAPPER.insGradeMngmn(dto);
+        if (result == 1) {
+            GradeMngmnRes.builder()
+                    .istudent(dto.getIstudent())
+                    .isemester(dto.getIsemester())
+                    .ilectureName(dto.getIlectureName())
+                    .semester(dto.getSemester())
+                    .build();
+        }
+        return null;
+    }
+
+    public GradeUpdRes updAvgScore(GradeUpdParam p) {
+        GradeUpdDto dto = new GradeUpdDto();
+        dto.setSemester(p.getSemester());
+        dto.setIstudent(p.getIstudent());
+
+        GradeUtils utils = new GradeUtils(p.getTotalScore());
+        double rating = utils.totalScore();
+        p.setRating(utils);
+        dto.setRating(rating);
+
+        MAPPER.updAvgScore(dto);
+
+        return GradeUpdRes.builder()
+                .rating(rating)
+                .build();
+    }
 
 
     public GradeMngmnDetailAvgVo selGradeFindStudentVo(GradeMngmnAvgDto dto) {

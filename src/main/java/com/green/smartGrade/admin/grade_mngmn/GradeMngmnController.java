@@ -1,6 +1,8 @@
 package com.green.smartGrade.admin.grade_mngmn;
 
 import com.green.smartGrade.admin.grade_mngmn.model.*;
+import com.green.smartGrade.professor.professorgradeMngmn.model.ProfessorGradeUpdParam;
+import com.green.smartGrade.professor.professorgradeMngmn.model.ProfessorGradeUpdRes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,13 @@ public class GradeMngmnController {
 
     @Autowired
     private final GradeMngmnService SERVICE;
+
+
+    @PostMapping
+    public GradeMngmnRes insGradeMngmn(GradeMngmnInsParam p) {
+        return SERVICE.insGradeMngmn(p);
+    }
+
 
     @GetMapping
     @Operation(summary = "이름 학번으로 검색 ", description = "" +
@@ -58,5 +67,14 @@ public class GradeMngmnController {
         GradeMngmnDetailSelDto dto = new GradeMngmnDetailSelDto();
         dto.setIstudent(istudent);
         return SERVICE.selGradeFindStudentDetail(dto);
+    }
+
+    @PatchMapping
+    @Operation(summary = "총점 + 평점 수정하기")
+    public GradeUpdRes updAvgScore(@RequestParam Long istudent, @RequestParam int semester) {
+        GradeUpdParam p = new GradeUpdParam();
+        p.setIstudent(istudent);
+        p.setSemester(semester);
+        return SERVICE.updAvgScore(p);
     }
 }
