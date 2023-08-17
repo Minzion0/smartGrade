@@ -25,7 +25,6 @@ import java.util.List;
 @Tag(name = "관리자 강의 관리")
 public class AdminController {
 
-    @Autowired
     private final AdminService SERVICE;
 
     @PostMapping("/semester")
@@ -81,12 +80,13 @@ public class AdminController {
             "      \"currentPeople\": 현 수강인원,<br>\n" +
             "      \"procedures\": 강의 상태 0 : 반려 1강의 개설 신청 2개설 인가 수강신청 가능 3 개강 -2 개강중 빼고 모두 보기 ,<br>\n" +
             "      \"delYn\": 삭제여부<br>")
-    public AdminSelRes selLecture(HttpServletRequest req,@RequestParam (defaultValue = "1") int page, @RequestParam (required = false,defaultValue = "-1")int  procedures, @RequestParam (required = false) String nm){
+    public AdminSelRes selLecture(HttpServletRequest req,@RequestParam (defaultValue = "1") int page, @RequestParam (required = false,defaultValue = "-1")int  procedures, @RequestParam (required = false) String nm,@RequestParam(required = false,defaultValue = "0")int ilectureName){
        log.info("hd : {}",req.getHeader("Authorization"));
         AdminSelLectureParam param = new AdminSelLectureParam();
         param.setNm(nm);
         param.setPage(page);
         param.setProcedures(procedures);
+        param.setIlectureName(ilectureName);
         return SERVICE.selLecture(param);
     }
 
@@ -100,13 +100,13 @@ public class AdminController {
     }
 
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<?> adminException(ErrorCode e){
-//        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
-//        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
-//
-//        return ResponseEntity.status(500).body(builder);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> adminException(ErrorCode e){
+        MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
+        builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
+
+        return ResponseEntity.status(500).body(builder);
+    }
 
 
 

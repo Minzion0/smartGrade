@@ -68,6 +68,9 @@
             <if test="nm!=null">
                 and C.nm like CONCAT('%', #{nm}, '%')
             </if>
+            <if test="ilectureName != 0">
+                and D.ilecture_name = #{ilectureName}
+            </if>
 
         </where>
         GROUP BY A.ilecture
