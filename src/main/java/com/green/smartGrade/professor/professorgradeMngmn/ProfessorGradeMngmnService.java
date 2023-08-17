@@ -85,22 +85,6 @@ public class ProfessorGradeMngmnService {
         return  null;
     }
 
-    public ProfessorGradeUpdRes updAvgScore(ProfessorGradeUpdParam p) {
-        ProfessorGradeUpdDto dto = new ProfessorGradeUpdDto();
-        dto.setSemester(p.getSemester());
-        dto.setIstudent(p.getIstudent());
-
-        GradeUtils utils = new GradeUtils(p.getTotalScore());
-        double rating = utils.totalScore();
-        p.setRating(utils);
-        dto.setRating(rating);
-
-        mapper.updAvgScore(dto);
-
-        return ProfessorGradeUpdRes.builder()
-                .rating(rating)
-                .build();
-    }
 
 
 
