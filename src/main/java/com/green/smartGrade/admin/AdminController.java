@@ -25,7 +25,6 @@ import java.util.List;
 @Tag(name = "관리자 강의 관리")
 public class AdminController {
 
-    @Autowired
     private final AdminService SERVICE;
 
     @PostMapping("/semester")
@@ -33,6 +32,21 @@ public class AdminController {
     public AdminInsSemesterRes semesterIns(@RequestBody AdminInsSemesterParam param) throws AdminException {
         return SERVICE.semesterIns(param);
     }
+
+    @PostMapping("/lecture-name")
+    @Operation(summary = "강의명 등록",description = "강의명 등록과 필요 학점 꼭 등록해야함")
+    public ResponseEntity<AdminInsLectureNameRes> insLectureName(@RequestBody AdminInsLectureNameParam param)throws AdminException{
+        AdminInsLectureNameRes res = SERVICE.insLectureName(param);
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/lecture-name")
+    @Operation(summary = "강의명 검색")
+    public ResponseEntity<AdminFindLectureNameRes>findLectureName(@RequestParam (required = false)String lectureName  ){
+        AdminFindLectureNameRes res = SERVICE.findLectureName(lectureName);
+        return ResponseEntity.ok().body(res);
+    }
+
 
     @GetMapping("/semester")
     @Operation(summary = "학기 확인")
@@ -66,12 +80,13 @@ public class AdminController {
             "      \"currentPeople\": 현 수강인원,<br>\n" +
             "      \"procedures\": 강의 상태 0 : 반려 1강의 개설 신청 2개설 인가 수강신청 가능 3 개강 -2 개강중 빼고 모두 보기 ,<br>\n" +
             "      \"delYn\": 삭제여부<br>")
-    public AdminSelRes selLecture(HttpServletRequest req,@RequestParam (defaultValue = "1") int page, @RequestParam (required = false,defaultValue = "-1")int  procedures, @RequestParam (required = false) String nm){
+    public AdminSelRes selLecture(HttpServletRequest req,@RequestParam (defaultValue = "1") int page, @RequestParam (required = false,defaultValue = "-1")int  procedures, @RequestParam (required = false) String nm,@RequestParam(required = false,defaultValue = "0")int ilectureName){
        log.info("hd : {}",req.getHeader("Authorization"));
         AdminSelLectureParam param = new AdminSelLectureParam();
         param.setNm(nm);
         param.setPage(page);
         param.setProcedures(procedures);
+        param.setIlectureName(ilectureName);
         return SERVICE.selLecture(param);
     }
 
@@ -90,7 +105,7 @@ public class AdminController {
         MyErrorResponse.MyErrorResponseBuilder builder = MyErrorResponse.builder();
         builder.code(CommonErrorCode.ADMIN_EXCEPTION.getMessage()).message(e.getMessage()).build();
 
-        return ResponseEntity.status(400).body(builder);
+        return ResponseEntity.status(500).body(builder);
     }
 
 

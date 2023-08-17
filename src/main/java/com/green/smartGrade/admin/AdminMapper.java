@@ -10,6 +10,8 @@ import java.util.List;
 public interface AdminMapper {
     List<AdminSelLectureRes>selLecture(AdminSelLectureDto dto);
     int countLceture(AdminSelLectureDto dto);
+    int insLectureName(AdminInsLectureNameDto dto);
+    List<AdminFindLectureNameVo> findLectureName( String lectureName );
 
     int lectureModify(AdminUpdLectureDto dto);
     int updLecture(AdminUpdLectureDto dto);

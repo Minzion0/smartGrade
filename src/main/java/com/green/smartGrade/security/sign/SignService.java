@@ -50,7 +50,7 @@ public class SignService {
         String id = param.getId();
         String password = param.getPassword();
         String role = param.getRole();
-        UserEntity user = MAPPER.getByUid(id, role); // null 처리를 지금은 안 한상태
+        UserEntity user = MAPPER.getByUid(id, role);
 
         log.info("[getSignInResult] id: {}", id);
         log.info("[getSignInResult] 패스워드 비교");
@@ -160,11 +160,12 @@ public class SignService {
 
             List<String> roles = (List<String>) claims.get("roles");
             String reAccessToken = JWT_PROVIDER.generateJwtToken(strIuser, roles, JWT_PROVIDER.ACCESS_TOKEN_VALID_MS, JWT_PROVIDER.ACCESS_KEY);
-
-            return SignInResultDto.builder()
+            SignInResultDto dto = SignInResultDto.builder()
                     .accessToken(reAccessToken)
                     .refreshToken(refreshToken)
                     .build();
+                    dto.setSuccess(true);
+            return dto;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -202,9 +203,7 @@ public class SignService {
         REDIS_SERVICE.setValuesWithTimeout(accessToken, "logout", expiration);  //남은시간 이후가 되면 삭제가 되도록 함.
     }
 
-    public ResponseEntity<?> otp(String uid, String role) throws Exception {
-        System.out.println("uid = " + uid);
-        System.out.println("role = " + role);
+    public OtpRes otp(String uid, String role) throws Exception {
 
         String secretKey = totp.generateSecretKey();//설정할 secretKey를 생성
         UserSelRoleEmailVo vo = MAPPER.getUserRoleEmail(uid, role);
@@ -212,20 +211,18 @@ public class SignService {
         if (email == null) {
             throw new Exception("이메일 등록이 필요합니다");
         }
+
         String issuer = "GreenUniversity";
         String account = email;
         String barcodeUrl = totp.getGoogleAuthenticatorBarcode(secretKey, account, issuer);
         OtpRes res = OtpRes.builder().barcodeUrl(barcodeUrl).secretKey(secretKey).build();
 
         try {
-
             updSecretKey(uid, role, secretKey);
         }catch (Exception e){
             throw new Exception("등록 오류 입니다");
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(res);
-
+        return res;
     }
 
 
@@ -246,6 +243,7 @@ public class SignService {
         String inputCode = param.getOtpNum();
         String uid = param.getUid();
         String role = param.getRole();
+
         if ("ROLE_STUDENT".equals(role)) {
             uid = MAPPER.getStudentNum(uid);
         }
@@ -257,6 +255,7 @@ public class SignService {
         if (!result) {
             throw new Exception("유효하지 않은 otp 코드");
         }
+        //인증 성공시 토큰 토큰 발행
         return issueToken(ip, uid, role);
     }
 

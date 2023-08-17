@@ -33,9 +33,11 @@ public class SmartGradeExceptionHandler extends ResponseEntityExceptionHandler {
     //설정한것 이외의 모든 에러 처리
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAllException(Exception ex, HttpServletRequest request) {
-        log.info("handleAllException", ex);
-        if (ex.getMessage().length() < 30) {
-            return handleExceptionInternal(CommonErrorCode.GLOBAL_EXCEPTION, ex.getMessage(), request.getRequestURI());
+        log.warn("handleAllException", ex);
+        if (ex.getMessage()!=null) {
+            if (ex.getMessage().length() < 30) {
+                return handleExceptionInternal(CommonErrorCode.GLOBAL_EXCEPTION, ex.getMessage(), request.getRequestURI());
+            }
         }
         return handleExceptionInternal(CommonErrorCode.GLOBAL_EXCEPTION, CommonErrorCode.GLOBAL_EXCEPTION.getMessage(), request.getRequestURI());
     }

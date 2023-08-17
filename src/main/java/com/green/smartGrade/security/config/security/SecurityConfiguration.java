@@ -41,8 +41,10 @@ public class SecurityConfiguration {
                                     ,"/api/changPassword"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.
                         //  .requestMatchers("/api/refresh-token").hasAnyRole("STUDENT", "PROFESSOR", "ADMIN") 다중 권한
-                            .requestMatchers("/logout").hasAnyRole("STUDENT", "PROFESSOR", "ADMIN")
+                            .requestMatchers("/api/logout").hasAnyRole("STUDENT", "PROFESSOR", "ADMIN")
+
                             .requestMatchers(HttpMethod.GET, "/api/refresh-token").permitAll()
+
                             .requestMatchers(HttpMethod.GET, "/api/board/**").permitAll()
                             .requestMatchers("**exception**").permitAll()
                             .requestMatchers("/api/professor/**").hasRole("PROFESSOR") // 권한있는 사람만 필터링 한거다

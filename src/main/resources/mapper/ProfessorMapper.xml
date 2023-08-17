@@ -11,10 +11,13 @@
 
 
     <select id="selProfessor">
-        select iprofessor,imajor,nm name,gender,pic,birthdate,phone,email,address,del_yn delYn
-        ,created_at createdAt,secret_key secretKey
-        from professor
-        WHERE iprofessor = #{iprofessor}
+        select A.iprofessor,A.imajor,B.major_name majorName,A.nm name,A.gender,A.pic,A.birthdate,A.phone,A.email,A.address
+        ,A.del_yn delYn
+        ,A.created_at createdAt,A.secret_key secretKey
+        from professor A
+        inner join major B
+        on A.imajor = B.imajor
+        WHERE A.iprofessor = #{iprofessor}
     </select>
 
     <select id="professorMajor">

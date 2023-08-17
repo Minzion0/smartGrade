@@ -4,6 +4,7 @@ package com.green.smartGrade.security.sign;
 import com.green.smartGrade.security.CommonRes;
 import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import com.green.smartGrade.security.config.security.model.OtpValidParam;
+import com.green.smartGrade.security.config.security.otp.OtpRes;
 import com.green.smartGrade.security.sign.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -74,6 +75,7 @@ public class SignController {
                                                         @RequestParam String refreshToken) {
 
         SignUpResultDto dto = SERVICE.refreshToken(req, refreshToken);
+
         return dto == null ? ResponseEntity.status(405).body(null) : ResponseEntity.ok(dto);
     }
 
@@ -95,14 +97,16 @@ public class SignController {
     @Operation(summary = "otp 등록 어플에 등록", description = "role : ROLE_ 기본 관리자 : ADMIN ,학생 : STUDENT , 교수 : PROFESSOR" +
             "<br>iuser : 여기엔 관리자인 경우 pk 교수 및 학생은 학번" +
             "<br>\"barcodeUrl : qr코드 주소")
-    public ResponseEntity<?> otp(@AuthenticationPrincipal MyUserDetails details) throws Exception {
+    public ResponseEntity<OtpRes> otp(@AuthenticationPrincipal MyUserDetails details) throws Exception {
 
         Long iuser = details.getIuser();
         String result = String.valueOf(iuser);
 
         String role = details.getRoles().get(0);
 
-        return SERVICE.otp(result, role);
+        OtpRes res = SERVICE.otp(result, role);
+
+        return ResponseEntity.ok().body(res);
     }
 
     @PostMapping("/otp-valid")
