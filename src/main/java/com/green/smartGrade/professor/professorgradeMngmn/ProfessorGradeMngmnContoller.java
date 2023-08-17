@@ -51,12 +51,5 @@ public class ProfessorGradeMngmnContoller {
         dto.setStudentNum(studentNum);
         return service.selStudentScore(dto);
     }
-    @PatchMapping
-    @Operation(summary = "총점 + 평점 수정하기")
-    public ProfessorGradeUpdRes updAvgScore(@RequestParam Long istudent, @RequestParam int semester) {
-        ProfessorGradeUpdParam p = new ProfessorGradeUpdParam();
-        p.setIstudent(istudent);
-        p.setSemester(semester);
-        return service.updAvgScore(p);
-    }
+
 }
