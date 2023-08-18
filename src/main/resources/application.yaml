@@ -33,7 +33,7 @@ springdoc:
 
 
 file:
-  dir: /home/download/smartGrade
+  dir: /home/smartGrade
 
 ---
 
@@ -63,6 +63,6 @@ spring:
   datasource:
     url: jdbc:mariadb://192.168.0.144:3306/team_b
 file:
-  dir: /home/download/smartGrade
+  dir: /home/smartGrade
 server:
   port: 8080
