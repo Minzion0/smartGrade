@@ -22,6 +22,7 @@
         INNER JOIN professor G
         ON G.iprofessor = E.iprofessor
         <where>
+            D.finished_yn = 1
         <if test="studentNum != null and studentNum != ''">
             and B.student_num = #{studentNum}
         </if>
