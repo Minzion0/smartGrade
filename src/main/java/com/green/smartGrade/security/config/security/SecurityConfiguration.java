@@ -26,6 +26,8 @@ public class SecurityConfiguration {
                             authz.requestMatchers(
                                     "/"
                                     ,"/admin/**"
+                                    ,"/professor/**"
+                                    ,"/student/**"
                                    ,"/api/sign-in"
                                     ,"/api/otp-valid"
                                     ,"/api/otp"
@@ -37,7 +39,7 @@ public class SecurityConfiguration {
                                     ,"/static/**"
                                     ,"/api/student/**"
                                     ,"/api/board/**"
-                                    ,"/favicon/**"
+                                    ,"/favicon/**/*"
                                     ,"/api/forgetPassword"
                                     ,"/api/changPassword"
                             ).permitAll() // 권한 상관없이 전부 사용이 가능하다.
