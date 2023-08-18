@@ -23,9 +23,9 @@
         ON G.iprofessor = E.iprofessor
         <where>
             D.finished_yn = 1
-        <if test="studentNum != null and studentNum != ''">
-            and B.student_num = #{studentNum}
-        </if>
+            <if test="studentNum != null and studentNum != ''">
+                and B.student_num = #{studentNum}
+            </if>
             <if test="grade > 0">
                 and A.grade = #{grade}
             </if>
@@ -115,16 +115,16 @@
         #{isemester},
         A.grade,
         B.score,
-        AVG(LS.total_score) AS avg_total_score,
+        AVG(C.total_score) AS avg_total_score,
         CASE
-        WHEN AVG(LS.total_score) > 94 THEN 4.5
-        WHEN AVG(LS.total_score) >= 90 THEN 4.0
-        WHEN AVG(LS.total_score) > 84 THEN 3.5
-        WHEN AVG(LS.total_score) >= 80 THEN 3.0
-        WHEN AVG(LS.total_score) > 74 THEN 2.5
-        WHEN AVG(LS.total_score) >= 70 THEN 2.0
-        WHEN AVG(LS.total_score) > 64 THEN 1.5
-        WHEN AVG(LS.total_score) >= 60 THEN 1.0
+        WHEN AVG(C.total_score) > 94 THEN 4.5
+        WHEN AVG(C.total_score) >= 90 THEN 4.0
+        WHEN AVG(C.total_score) > 84 THEN 3.5
+        WHEN AVG(C.total_score) >= 80 THEN 3.0
+        WHEN AVG(C.total_score) > 74 THEN 2.5
+        WHEN AVG(C.total_score) >= 70 THEN 2.0
+        WHEN AVG(C.total_score) > 64 THEN 1.5
+        WHEN AVG(C.total_score) >= 60 THEN 1.0
         ELSE 0
         END rating
         FROM student A
@@ -145,25 +145,29 @@
         UPDATE student_semester_score A
         INNER JOIN semester B
         ON A.isemester = B.isemester
-        SET A.avg_score = (SELECT AVG(total_score)
-                            FROM lecture_student C
-                            INNER JOIN student_semester_score D
-                            on C.istudent = D.istudent
-                            INNER JOIN semester E
-                            ON D.isemester = E.isemester
-                            WHERE C.istudent = #{istudent}
-                            AND E.semester = #{semester}) ,
-        A.`rating` = CASE WHEN A.avg_score > 94 THEN 4.5
-        WHEN A.avg_score >= 90 THEN 4.0
-        WHEN A.avg_score > 84 THEN 3.5
-        WHEN A.avg_score >= 80 THEN 3.0
-        WHEN A.avg_score > 74 THEN 2.5
-        WHEN A.avg_score >= 70 THEN 2.0
-        WHEN A.avg_score > 64 THEN 1.5
-        WHEN A.avg_score >= 60 THEN 1.0
-        ELSE 0 END
-        WHERE A.istudent = #{istudent}
-        AND B.semester = #{semester};
+        SET A.avg_score = (
+					    SELECT AVG(C.total_score) avg_total_score
+					    FROM lecture_student C
+					    INNER JOIN student_semester_score D
+						 ON C.istudent = D.istudent
+					    INNER JOIN semester E
+						 ON D.isemester = E.isemester
+					    WHERE C.istudent = #{istudent}
+						 AND E.semester = #{semester}
+					),
+        A.rating = CASE
+                    WHEN A.avg_score > 94 THEN 4.5
+                    WHEN A.avg_score >= 90 THEN 4.0
+                    WHEN A.avg_score > 84 THEN 3.5
+                    WHEN A.avg_score >= 80 THEN 3.0
+                    WHEN A.avg_score > 74 THEN 2.5
+                    WHEN A.avg_score >= 70 THEN 2.0
+                    WHEN A.avg_score > 64 THEN 1.5
+                    WHEN A.avg_score >= 60 THEN 1.0
+                    ELSE 0
+                    END
+                    WHERE A.istudent = #{istudent}
+                    AND B.semester = #{semester};
          ]]>
     </update>
 
