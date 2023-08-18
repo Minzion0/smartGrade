@@ -88,6 +88,7 @@
             <if test="title != null">
                 title LIKE CONCAT('%', #{title}, '%') AND del_yn = 0
             </if>
+            importance = 0
         </where>
     </select>
 
