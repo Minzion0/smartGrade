@@ -31,6 +31,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         return new ClassPathResource("/static/index.html");
                     }
                 });
-        //reg.addResourceHandler("/imgs/**").addResourceLocations("file:" + fileDir+"/")
+    //    reg.addResourceHandler("/imgs/**").addResourceLocations("file:" + fileDir+"/");
     }
 }

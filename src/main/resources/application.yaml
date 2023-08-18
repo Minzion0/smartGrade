@@ -12,6 +12,7 @@ spring:
     multipart:
       max-file-size: 3MB
       max-request-size: 12MB
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://192.168.0.144:3306/team_b?allowMultiQueries=true
@@ -32,7 +33,7 @@ springdoc:
 
 
 file:
-  dir: /home/smart_grade
+  dir: /home/download/smartGrade
 
 ---
 

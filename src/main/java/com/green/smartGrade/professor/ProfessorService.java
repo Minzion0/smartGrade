@@ -5,6 +5,7 @@ import com.green.smartGrade.utils.CommonUtils;
 import com.green.smartGrade.utils.FileUtils;
 import com.green.smartGrade.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProfessorService {
@@ -66,6 +67,8 @@ public class ProfessorService {
                 String savedFilePath = String.format("%s/%s", centerPath, savedFileName);
                 String targetPath = String.format("%s/%s", FileUtils.getAbsolutePath(fileDir), savedFilePath);
 
+                log.info("targetPath ____________________________: {}",targetPath);
+
                 File target = new File(targetPath);
 
                 try {
@@ -74,7 +77,7 @@ public class ProfessorService {
                     throw new RuntimeException(temp);
                 }
                 dto.setPic(savedFileName);
-
+                 //   dto.setPic(targetPath);
                 try {
                     result = mapper.upProfessor(dto);
                     if (result == Integer.parseInt(temp)){
