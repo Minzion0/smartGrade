@@ -1,5 +1,6 @@
 package com.green.smartGrade.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -8,14 +9,26 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Slf4j
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${file.dir}")
     private String fileDir;
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry reg) {
-        reg.addResourceHandler("/**", "/imgs/**")
-                .addResourceLocations("classpath:/static/**", "file:" + fileDir+"/")
+        Path uploadDir = Paths.get(fileDir);
+        String uploadPath = uploadDir.toFile().getAbsolutePath();
+        if (fileDir.startsWith("../")) fileDir = fileDir.replace("../", "");
+        log.info("uploadPath {}", uploadPath);
+
+        reg.addResourceHandler( "/imgs/**")
+                .addResourceLocations(String.format("file:%s/", fileDir));
+
+        reg.addResourceHandler( "/**")
+                .addResourceLocations("classpath:/static/**")
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver() {
                     @Override
@@ -29,6 +42,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         return new ClassPathResource("/static/index.html");
                     }
                 });
-        //reg.addResourceHandler("/imgs/**").addResourceLocations("file:" + fileDir+"/")
     }
 }
