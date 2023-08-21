@@ -51,12 +51,13 @@
         ON A.istudent = D.istudent
         WHERE D.istudent = #{istudent} AND D.finished_yn = 1
     </select>
-    
+
     <select id="selStudentMajor">
         SELECT A.ilecture_student ilectureStudent, A.istudent,A.ilecture
         ,D.ilecture_name ilectureName,A.finished_yn finishedYn,B.day_week dayWeek,C.opening_procedures openingProcedures
         ,C.lecture_str_date lectureStrDate ,C.lecture_end_date lectureEndDate
-        ,C.lecture_str_time lectureStrTime,C.lecture_end_time lectureEndTime,C.attendance,C.midterm_examination midtermExamination
+        ,C.lecture_str_time lectureStrTime,C.lecture_end_time lectureEndTime,C.attendance,C.midterm_examination
+        midtermExamination
         ,C.final_examination finalExamination,D.score
         from lecture_student A
         INNER JOIN lecture_day_week B
@@ -67,9 +68,7 @@
         ON C.ilecture_name = D.ilecture_name
         WHERE C.opening_procedures = 3 AND A.finished_yn = 0
     </select>
-    
-    
-    
+
 
     <select id="selStudentRemainingPoint">
         SELECT A.istudent,D.student_num studentNum
@@ -88,15 +87,25 @@
         WHERE A.istudent = #{istudent} AND A.finished_yn = 1
         LIMIT #{startIdx}, #{row}
     </select>
-    <update id="upStudent">
 
+
+    <update id="upStudent">
         update student
-        set
-        pic = #{pic},
-        phone = #{phone},
-        email = #{email},
-        address = #{address},
-        updated_at = current_timestamp
+        <set>
+            <if test="pic != null">
+                pic = #{pic},
+                phone = #{phone},
+                email = #{email},
+                address = #{address},
+                updated_at = current_timestamp
+            </if>
+            <if test="pic==null">
+                phone = #{phone}
+                , email = #{email}
+                , address = #{address}
+                , updated_at = current_timestamp
+            </if>
+        </set>
         where istudent = #{istudent}
     </update>
 

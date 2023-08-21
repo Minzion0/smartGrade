@@ -103,7 +103,7 @@ public class StudentController {
     public ResponseEntity<String> deleteFile(@AuthenticationPrincipal MyUserDetails details) {
         try {
             service.deleteUploadedFile(details.getIuser());
-            return ResponseEntity.ok("File deleted successfully");
+            return ResponseEntity.ok("사진파일이 삭제 완료되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting file: " + e.getMessage());
         }
