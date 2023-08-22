@@ -33,20 +33,35 @@ public class ProfessorController {
 
 
 
+//    @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @Operation(summary = "프로필 수정", description = "phone : 폰번호<br>"+
+//            "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>" + "pic : 사진")
+//    public ProfessorUpRes putPicProfessor(@RequestPart(required = false) MultipartFile pic,@AuthenticationPrincipal MyUserDetails details,
+//                                            @RequestPart  ProfessorUpdDto dto) {
+//        ProfessorParam param = new ProfessorParam();
+//        param.setPhone(dto.getPhone());
+//        param.setEmail(dto.getEmail());
+//        param.setAddress(dto.getAddress());
+//        param.setIprofessor(details.getIuser());
+//        return service.upProfessor(pic, param);
+//    }
+
     @PutMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "프로필 수정", description = "phone : 폰번호<br>"+
             "email : 이메일 <br>"+"address : 주소<br>"+"iprofessor : 교수pk<br>" + "pic : 사진")
-    public ProfessorUpRes putPicProfessor(@RequestPart(required = false) MultipartFile pic,@AuthenticationPrincipal MyUserDetails details,
-                                            @RequestPart  ProfessorUpdDto dto) {
+    public ProfessorUpRes putPicProfessor(@RequestPart(required = false) MultipartFile pic, @AuthenticationPrincipal MyUserDetails details,
+                                          @RequestPart ProfessorUpdDto dto) {
         ProfessorParam param = new ProfessorParam();
         param.setPhone(dto.getPhone());
         param.setEmail(dto.getEmail());
         param.setAddress(dto.getAddress());
         param.setIprofessor(details.getIuser());
+
+        // 이전 프로필 사진 삭제
+        service.deleteProfessorPic(param.getIprofessor());
+
         return service.upProfessor(pic, param);
     }
-
-
 
     @GetMapping("/lecture-List")
     @Operation(summary = "본인의 강의 목록 전체",description = "iprofessor : 교수pk<br>"+"openingProcedures : 개강절차 0 반려 1개강신청 2개강인원모집중 3개강 4수강종료<br>"

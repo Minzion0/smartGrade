@@ -1,5 +1,6 @@
 package com.green.smartGrade.student;
 
+import com.green.smartGrade.professor.model.ProfessorUpDto;
 import com.green.smartGrade.student.model.*;
 import com.green.smartGrade.utils.FileUtils;
 import com.green.smartGrade.utils.GradeUtils;
@@ -96,15 +97,6 @@ public class StudentService {
         dto.setEmail(param.getEmail());
         dto.setIstudent(param.getIstudent());
         int result = 0;
-//        if (dto.getPhone() != null && !dto.getPhone().equals("string")) {
-//            dto.setPhone(param.getPhone());
-//        }
-//        if (dto.getEmail() != null && !dto.getEmail().equals("string")) {
-//            dto.setEmail(param.getEmail());
-//        }
-//        if (dto.getAddress() != null && !dto.getAddress().equals("string")) {
-//            dto.setAddress(param.getAddress());
-//        }
 
          result = mapper.upStudent(dto);
         if (result == 1) {
@@ -147,6 +139,24 @@ public class StudentService {
         return null;
 
     }
+
+    public void deleteStudentPic(Long istudent) {
+        StudentUpdto getStudent = mapper.getStudentById(istudent); // 해당 학생의 정보 가져오기
+        if (getStudent != null && getStudent.getPic() != null) {
+            // 기존 사진이 있을 경우 삭제
+            String picPath = String.format("students/%d/%s", istudent, getStudent.getPic());
+            String fullPath = String.format("%s/%s", FileUtils.getAbsolutePath(fileDir), picPath);
+
+            File picFile = new File(fullPath);
+            if (picFile.exists()) {
+                picFile.delete();
+            }
+        }
+    }
+
+
+
+
     public String updPassword(StudentUpdPasswordDto dto,StudentUpdPasswordParam param) throws Exception {
         StudentSelCurrentPasswordDto passwordDto = new StudentSelCurrentPasswordDto();
         passwordDto.setRole(dto.getRole());

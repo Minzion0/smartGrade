@@ -134,4 +134,10 @@
         WHERE istudent = #{istudent}
     </update>
 
+    <select id="getStudentById">
+        SELECT *
+        FROM student
+        WHERE istudent = #{istudent}
+    </select>
+
 </mapper>

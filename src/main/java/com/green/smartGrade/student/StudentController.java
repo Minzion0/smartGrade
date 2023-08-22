@@ -1,5 +1,8 @@
 package com.green.smartGrade.student;
 
+import com.green.smartGrade.professor.model.ProfessorParam;
+import com.green.smartGrade.professor.model.ProfessorUpRes;
+import com.green.smartGrade.professor.model.ProfessorUpdDto;
 import com.green.smartGrade.professor.model.ProfessorUpdPasswordDto;
 import com.green.smartGrade.security.config.security.model.MyUserDetails;
 import com.green.smartGrade.student.model.*;
@@ -71,19 +74,40 @@ public class StudentController {
         return service.selStudentRemainingPoint(dto);
     }
 
+//    @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @Operation(summary = "학생 프로필 수정",description = "studentNum : 학번<br>"+"phone : 폰번호<br>"+"email : 이메일<br>"+"address : 주소<br>"
+//    +"updatedAt : 수정일자 <br>" + "pic : 사진")
+//    public StudentUpRes putStudentProfile(@RequestPart(required = false) MultipartFile pic
+//                ,@AuthenticationPrincipal MyUserDetails details
+//            ,@RequestPart(required = false) StudentUpdDto dto) {
+//        StudentUpParam param = new StudentUpParam();
+//        param.setPhone(dto.getPhone());
+//        param.setEmail(dto.getEmail());
+//        param.setAddress(dto.getAddress());
+//        param.setIstudent(details.getIuser());
+//        return service.upStudent(pic,param);
+//    }
+
     @PutMapping(name = "/pic", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "학생 프로필 수정",description = "studentNum : 학번<br>"+"phone : 폰번호<br>"+"email : 이메일<br>"+"address : 주소<br>"
     +"updatedAt : 수정일자 <br>" + "pic : 사진")
-    public StudentUpRes putStudentProfile(@RequestPart(required = false) MultipartFile pic
-                ,@AuthenticationPrincipal MyUserDetails details
-            ,@RequestPart(required = false) StudentUpdDto dto) {
+    public StudentUpRes putPicProfessor(@RequestPart(required = false) MultipartFile pic, @AuthenticationPrincipal MyUserDetails details,
+                                          @RequestPart StudentUpdDto dto) {
         StudentUpParam param = new StudentUpParam();
         param.setPhone(dto.getPhone());
         param.setEmail(dto.getEmail());
         param.setAddress(dto.getAddress());
         param.setIstudent(details.getIuser());
-        return service.upStudent(pic,param);
+
+        // 이전 프로필 사진 삭제
+        service.deleteStudentPic(param.getIstudent());
+
+        return service.upStudent(pic, param);
     }
+
+
+
+
 
     @PutMapping("/changPassword")
     @Operation(summary = "비밀번호 변경",

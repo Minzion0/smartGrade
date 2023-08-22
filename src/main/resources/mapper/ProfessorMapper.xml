@@ -172,4 +172,10 @@
         WHERE iprofessor = #{iprofessor} AND role = #{role}
     </select>
 
+    <select id="getProfessorById">
+        SELECT * FROM professor
+        WHERE iprofessor = #{iprofessor}
+    </select>
+
+
 </mapper>
