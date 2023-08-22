@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @Builder
 public class GradeUpdRes {
-    private int totalScore;
-    private int avgScore;
-    private double rating;
     private Long istudent;
+    private int grade;
     private int semester;
+    private int avgScore;
+    private double avgRating;
 }

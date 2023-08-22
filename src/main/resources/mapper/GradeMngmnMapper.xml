@@ -111,22 +111,8 @@
     <insert id="insGradeMngmn">
         INSERT INTO student_semester_score (istudent, isemester, grade, score, avg_score, rating)
         SELECT
-        #{istudent},
-        #{isemester},
-        A.grade,
-        B.score,
-        AVG(C.total_score) AS avg_total_score,
-        CASE
-        WHEN AVG(C.total_score) > 94 THEN 4.5
-        WHEN AVG(C.total_score) >= 90 THEN 4.0
-        WHEN AVG(C.total_score) > 84 THEN 3.5
-        WHEN AVG(C.total_score) >= 80 THEN 3.0
-        WHEN AVG(C.total_score) > 74 THEN 2.5
-        WHEN AVG(C.total_score) >= 70 THEN 2.0
-        WHEN AVG(C.total_score) > 64 THEN 1.5
-        WHEN AVG(C.total_score) >= 60 THEN 1.0
-        ELSE 0
-        END rating
+        #{istudent}, #{isemester}, A.grade,
+        B.score, #{avgScore}, #{rating}
         FROM student A
         INNER JOIN lecture_name B
         ON B.ilecture_name = #{ilectureName}
@@ -140,35 +126,25 @@
         AND E.semester = #{semester};
     </insert>
 
-    <update id="updAvgScore">
-        <![CDATA[
-        UPDATE student_semester_score A
-        INNER JOIN semester B
-        ON A.isemester = B.isemester
-        SET A.avg_score = (
-					    SELECT AVG(C.total_score) avg_total_score
-					    FROM lecture_student C
-					    INNER JOIN student_semester_score D
-						 ON C.istudent = D.istudent
-					    INNER JOIN semester E
-						 ON D.isemester = E.isemester
-					    WHERE C.istudent = #{istudent}
-						 AND E.semester = #{semester}
-					),
-        A.rating = CASE
-                    WHEN A.avg_score > 94 THEN 4.5
-                    WHEN A.avg_score >= 90 THEN 4.0
-                    WHEN A.avg_score > 84 THEN 3.5
-                    WHEN A.avg_score >= 80 THEN 3.0
-                    WHEN A.avg_score > 74 THEN 2.5
-                    WHEN A.avg_score >= 70 THEN 2.0
-                    WHEN A.avg_score > 64 THEN 1.5
-                    WHEN A.avg_score >= 60 THEN 1.0
-                    ELSE 0
-                    END
-                    WHERE A.istudent = #{istudent}
-                    AND B.semester = #{semester};
-         ]]>
-    </update>
+        <update id="updAvgScore">
+            UPDATE student_semester_score A
+            INNER JOIN semester B
+            ON A.isemester = B.isemester
+            SET A.avg_score = #{avgScore}
+            ,A.rating = #{avgRating}
+            WHERE A.istudent = #{istudent}
+            AND B.semester = #{semester}
+        </update>
+
+    <select id="selAvgScore">
+        SELECT AVG(C.total_score) avgScore
+        FROM lecture_student C
+        INNER JOIN student_semester_score D
+        ON C.istudent = D.istudent
+        INNER JOIN semester E
+        ON D.isemester = E.isemester
+        WHERE C.istudent = #{istudent}
+        AND E.semester = #{semester}
+    </select>
 
 </mapper>
