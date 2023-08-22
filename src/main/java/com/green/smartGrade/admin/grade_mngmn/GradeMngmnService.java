@@ -44,16 +44,31 @@ public class GradeMngmnService {
         dto.setSemester(p.getSemester());
         dto.setIstudent(p.getIstudent());
 
-        GradeUtils utils = new GradeUtils(p.getTotalScore());
-        double rating = utils.totalScore();
-        p.setRating(utils);
-        dto.setRating(rating);
 
-        MAPPER.updAvgScore(dto);
+        GradeAvgVo vo = MAPPER.selAvgScore(dto);
+        dto.setAvgScore(vo.getAvgScore());
+
+
+
+        GradeUtils utils = new GradeUtils();
+        int score = vo.getAvgScore();
+        double v = utils.totalScore2(score);
+        p.setAvgScore(score);
+
+
+
+        dto.setAvgRating(v);
+        int result = MAPPER.updAvgScore(dto);
+
 
         return GradeUpdRes.builder()
-                .rating(rating)
+                .istudent(p.getIstudent())
+                .semester(p.getSemester())
+                .avgScore(p.getAvgScore())
+                .avgRating(p.getAvgRating())
                 .build();
+
+
     }
 
 
