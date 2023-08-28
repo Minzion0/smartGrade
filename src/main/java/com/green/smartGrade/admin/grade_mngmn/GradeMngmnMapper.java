@@ -26,6 +26,8 @@ public interface GradeMngmnMapper {
 
     int updAvgScore(GradeUpdDto dto);
 
+    GradeAvgVo selAvgScore(GradeUpdDto dto);
+
 
 
 

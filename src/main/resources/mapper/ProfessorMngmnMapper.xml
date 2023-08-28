@@ -29,32 +29,7 @@
         WHERE A.ilecture_student = #{ilectureStudent} AND B.iprofessor = #{ipofessor} And B.ilecture = #{ilecture}
         ]]>
     </update>
-    <update id="updAvgScore">
-        <![CDATA[
-        UPDATE student_semester_score A
-        INNER JOIN semester B
-        ON A.isemester = B.isemester
-        SET A.avg_score = (SELECT AVG(total_score)
-                            FROM lecture_student C
-                            INNER JOIN student_semester_score D
-                            on C.istudent = D.istudent
-                            INNER JOIN semester E
-                            ON D.isemester = E.isemester
-                            WHERE C.istudent = #{istudent}
-                            AND E.semester = #{semester}) ,
-        A.`rating` = CASE WHEN A.avg_score > 94 THEN 4.5
-        WHEN A.avg_score >= 90 THEN 4.0
-        WHEN A.avg_score > 84 THEN 3.5
-        WHEN A.avg_score >= 80 THEN 3.0
-        WHEN A.avg_score > 74 THEN 2.5
-        WHEN A.avg_score >= 70 THEN 2.0
-        WHEN A.avg_score > 64 THEN 1.5
-        WHEN A.avg_score >= 60 THEN 1.0
-        ELSE 0 END
-        WHERE A.istudent = #{istudent}
-        AND B.semester = #{semester};
-         ]]>
-    </update>
+
 
 
     <select id="getMaxAttendance">

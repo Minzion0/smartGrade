@@ -3,12 +3,15 @@ package com.green.smartGrade.utils;
 public class GradeUtils {
     public int totalScore;
     public double rating;
-    private final String symbol = "+";
     private String result = "";
 
 
     public GradeUtils(int totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public GradeUtils() {
+
     }
 
 
@@ -63,6 +66,32 @@ public class GradeUtils {
         return rating;
     }
 
+    public double totalScore2(int score) {
+        if (score >= 90) {
+            this.rating = 4.0;
+            if (score > 94) {
+                this.rating = 4.5;
+            }
+        } else if (score >= 80) {
+            this.rating = 3.0;
+            if (score > 84) {
+                this.rating = 3.5;
+            }
+        } else if (score >= 70) {
+            this.rating = 2.0;
+            if (score > 74) {
+                this.rating = 2.5;
+            }
+        } else if (score >= 60) {
+            this.rating = 1.0;
+            if (score >= 64) {
+                this.rating = 1.5;
+            }
+        } else {
+            this.rating = 0;
+        }
+        return this.rating;
+    }
 
 }
 //class GradeUtils2{

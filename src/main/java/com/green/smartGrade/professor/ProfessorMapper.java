@@ -31,4 +31,7 @@ public interface ProfessorMapper {
     ProfessorDatilProfile selProfessor(ProfessorSelDto dto);
 
     List<ProfessorMajor> professorMajor(ProfessorSelDto dto);
+
+
+    ProfessorUpDto getProfessorById(Long iprofessor);
 }

@@ -1,5 +1,6 @@
 package com.green.smartGrade.student;
 
+import com.green.smartGrade.professor.model.ProfessorUpDto;
 import com.green.smartGrade.student.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -33,4 +34,6 @@ public interface StudentMapper {
 
     StudentSelProfile selStudentProfile(StudentSelProfileDto dto);
     List<StudentMajor> selStudentMajor(StudentSelProfileDto dto);
+
+    StudentUpdto getStudentById(Long istudent);
 }
