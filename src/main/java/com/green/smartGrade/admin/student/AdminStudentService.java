@@ -75,6 +75,7 @@ public class AdminStudentService {
             res.setLectureList(dataRes);//private List<AdminStudentLectureDataRes>lectureList;
             res.setProfile(vo);
             return res;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
